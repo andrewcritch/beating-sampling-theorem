@@ -1,0 +1,286 @@
+import BstLean.Part160ScTab
+import BstLean.Part187R143HidC
+import BstLean.Part187R143HidC2
+import BstLean.Part187R153PPs4
+import BstLean.Part187R153Final
+import BstLean.Part187R154C16
+import BstLean.Part187R154NumA16
+import BstLean.Part187R154NumB16
+import BstLean.Part187R154Num16
+import BstLean.Part187R160Event
+import BstLean.Part187R160Cov
+import BstLean.Part187R160ScEv
+import BstLean.Part187R160Sc
+
+/-! Part 187 (file `Part187R160ScTab`): copy of `Part160ScTab` re-proved at the floor `16250 ≤ n` (was `16384 ≤ n`).
+Only the declarations with the floor (and private helpers they use) are copied, in the nested
+namespace `….R`. -/
+
+
+
+namespace BstLean.Part160.R
+
+open MeasureTheory ProbabilityTheory Real
+open BstLean.Part29 (stdGauss)
+open BstLean.Part130
+open BstLean.Part150 (rhoC thetaC hO gO sO2 bO bT rhoC_sqP rhoC_posP)
+open BstLean.Part153 (nrm nuA GoodAs Pb)
+open BstLean.Part154 (GoodC16 csC)
+
+variable {n : ℕ}
+
+/-- `Tcos + τ² ≤ K·ρ²` for `θlo ≤ θ_in ≤ 0.55`, `n ≥ 16250`. -/
+theorem Tcos_window_gen (hn : 16250 ≤ n) (c : Fin n → ℝ) {τ : ℝ} (hτ : 0 < τ) {θlo K : ℝ}
+    (hlo : 46 / 100 ≤ θlo) (hlo1 : θlo ≤ 1) (hθ0 : θlo ≤ thetaC c τ)
+    (hθ1 : thetaC c τ ≤ 55 / 100)
+    (hK : (1 - θlo) * (1 - θlo + 55 / 100 / 16250) / ((1 - 3 / 100) ^ 2 * (99996 / 100000)) +
+      (1 - θlo) * (1504 / 10 ^ 6) ^ 2 + 55 / 100 / 16250 ≤ K) :
+    Tcos c τ + τ ^ 2 ≤ K * (normSq c + (n : ℝ) * τ ^ 2) := by
+  obtain ⟨hR, -, hS, hT⟩ := window_facts hn c hτ (hlo.trans hθ0) hθ1
+  have hN0 := normSq_nonneg c
+  have hN : normSq c ≤ (1 - θlo) * (normSq c + (n : ℝ) * τ ^ 2) := by
+    unfold thetaC at hθ0
+    rw [rhoC_sqP, le_div_iff₀ hR] at hθ0
+    linarith
+  have hτ2 : 0 < τ ^ 2 := by positivity
+  have hT' := Tcos_le (by omega : 2 ≤ n) c hτ (ε := 3 / 100) (by norm_num) (by norm_num)
+  obtain ⟨R, hRd⟩ : ∃ R : ℝ, R = normSq c + (n : ℝ) * τ ^ 2 := ⟨_, rfl⟩
+  rw [← hRd] at hR hN hS hT hT' ⊢
+  obtain ⟨N, hNd⟩ : ∃ N : ℝ, N = normSq c := ⟨_, rfl⟩
+  rw [← hNd] at hN hN0 hT'
+  obtain ⟨t, htd⟩ : ∃ t : ℝ, t = τ ^ 2 := ⟨_, rfl⟩
+  rw [← htd] at hT hτ2 hT' ⊢
+  obtain ⟨q, hq⟩ : ∃ q : ℝ, q = 1 - θlo := ⟨_, rfl⟩
+  rw [← hq] at hN hK
+  have hq0 : 0 ≤ q := by rw [hq]; linarith
+  have hQ : 99996 / 100000 * R ≤ R - t := by linarith
+  have hexp : exp (-((3 / 100 : ℝ) ^ 2 * (R - t)) / (2 * t)) ≤ (1504 / 10 ^ 6 : ℝ) ^ 2 := by
+    refine le_trans (Real.exp_le_exp.mpr ?_) exp_neg_13_le
+    rw [div_le_iff₀ (by positivity)]
+    nlinarith
+  have h1 : (N ^ 2 + t * N) / ((1 - 3 / 100 : ℝ) ^ 2 * (R - t)) ≤
+      q * (q + 55 / 100 / 16250) / ((1 - 3 / 100) ^ 2 * (99996 / 100000)) * R := by
+    have a1 : N ^ 2 + t * N ≤ q * R * (q * R + 55 / 100 / 16250 * R) := by
+      have : N + t ≤ q * R + 55 / 100 / 16250 * R := by linarith
+      calc N ^ 2 + t * N = N * (N + t) := by ring
+        _ ≤ q * R * (q * R + 55 / 100 / 16250 * R) :=
+          mul_le_mul hN this (by linarith) (by positivity)
+    have a2 : (1 - 3 / 100 : ℝ) ^ 2 * (99996 / 100000 * R) ≤ (1 - 3 / 100 : ℝ) ^ 2 * (R - t) :=
+      mul_le_mul_of_nonneg_left hQ (by positivity)
+    have a3 : (N ^ 2 + t * N) / ((1 - 3 / 100 : ℝ) ^ 2 * (R - t)) ≤
+        q * R * (q * R + 55 / 100 / 16250 * R) / ((1 - 3 / 100 : ℝ) ^ 2 * (99996 / 100000 * R)) :=
+      div_le_div₀ (by positivity) a1 (by positivity) a2
+    refine a3.trans (le_of_eq ?_)
+    field_simp
+  have h2 : N * exp (-((3 / 100 : ℝ) ^ 2 * (R - t)) / (2 * t)) ≤
+      q * (1504 / 10 ^ 6 : ℝ) ^ 2 * R := by
+    calc N * exp (-((3 / 100 : ℝ) ^ 2 * (R - t)) / (2 * t)) ≤ N * (1504 / 10 ^ 6 : ℝ) ^ 2 :=
+          mul_le_mul_of_nonneg_left hexp hN0
+      _ ≤ q * R * (1504 / 10 ^ 6 : ℝ) ^ 2 := mul_le_mul_of_nonneg_right hN (by positivity)
+      _ = _ := by ring
+  have h3 := mul_le_mul_of_nonneg_right hK hR.le
+  nlinarith
+
+/-- On `SSc`, for `θlo ≤ θ_in ≤ 0.55`: `s_h² ≥ 2X·ρ²/n`. -/
+theorem sO2_ge_gen (hn : 16250 ≤ n) {c : Fin n → ℝ} {τ : ℝ} (hτ : 0 < τ) {θlo K X : ℝ}
+    (hlo : 46 / 100 ≤ θlo) (hlo1 : θlo ≤ 1) (hθ0 : θlo ≤ thetaC c τ)
+    (hθ1 : thetaC c τ ≤ 55 / 100)
+    (hK : (1 - θlo) * (1 - θlo + 55 / 100 / 16250) / ((1 - 3 / 100) ^ 2 * (99996 / 100000)) +
+      (1 - θlo) * (1504 / 10 ^ 6) ^ 2 + 55 / 100 / 16250 ≤ K)
+    (hX : X ≤ 95 / 100 * (1 - 31832 / 100000 - (1 - θlo) / 2 - (1 / 2 - 3183 / 10000) * K))
+    {A₁ : Matrix (Fin (mA n)) (Fin n) ℝ} {A₂ : Matrix (Fin (mA n)) (Fin (mA n)) ℝ}
+    (hS : ((c, τ), (A₁, A₂)) ∈ SSc n) :
+    2 * X * (normSq c + (n : ℝ) * τ ^ 2) / n ≤ sO2 A₁ c τ := by
+  have hnR : (16250 : ℝ) ≤ n := by exact_mod_cast hn
+  have hn0 : (0 : ℝ) < n := by linarith
+  have h1 : 95 / 100 * scLow n c τ ≤ sO2 A₁ c τ := hS (hlo.trans hθ0) hθ1
+  have hW := Tcos_window_gen hn c hτ hlo hlo1 hθ0 hθ1 hK
+  obtain ⟨hR, -, -, -⟩ := window_facts hn c hτ (hlo.trans hθ0) hθ1
+  have hN : normSq c ≤ (1 - θlo) * (normSq c + (n : ℝ) * τ ^ 2) := by
+    unfold thetaC at hθ0
+    rw [rhoC_sqP, le_div_iff₀ hR] at hθ0
+    linarith
+  have hK0 : 0 ≤ K := by
+    have : (0 : ℝ) ≤ (1 - θlo) * (1 - θlo + 55 / 100 / 16250) /
+        ((1 - 3 / 100) ^ 2 * (99996 / 100000)) := by
+      have : (0 : ℝ) ≤ 1 - θlo := by linarith
+      positivity
+    have h2 : (0 : ℝ) ≤ (1 - θlo) * (1504 / 10 ^ 6) ^ 2 := by
+      have : (0 : ℝ) ≤ 1 - θlo := by linarith
+      positivity
+    linarith
+  obtain ⟨p, hp⟩ : ∃ p : ℝ, p = 1 / π := ⟨_, rfl⟩
+  have hp1 : (3183 : ℝ) / 10000 ≤ p := by
+    rw [hp, div_le_div_iff₀ (by norm_num) Real.pi_pos]
+    nlinarith [Real.pi_lt_d4]
+  have hp2 : p ≤ 31832 / 100000 := by
+    rw [hp, div_le_div_iff₀ Real.pi_pos (by norm_num)]
+    nlinarith [Real.pi_gt_d4]
+  refine le_trans ?_ h1
+  unfold scLow
+  rw [← hp]
+  obtain ⟨R, hRd⟩ : ∃ R : ℝ, R = normSq c + (n : ℝ) * τ ^ 2 := ⟨_, rfl⟩
+  rw [← hRd] at hR hN hW ⊢
+  have e : 2 * X * R / n = 2 / (n : ℝ) * (X * R) := by ring
+  have e' : 95 / 100 * (2 / (n : ℝ) * ((1 - p) * R - normSq c / 2 -
+      (1 / 2 - p) * (Tcos c τ + τ ^ 2))) = 2 / (n : ℝ) * (95 / 100 * ((1 - p) * R -
+      normSq c / 2 - (1 / 2 - p) * (Tcos c τ + τ ^ 2))) := by ring
+  rw [e, e']
+  refine mul_le_mul_of_nonneg_left ?_ (by positivity)
+  have h3 : (1 / 2 - p) * (Tcos c τ + τ ^ 2) ≤ (1 / 2 - 3183 / 10000) * (K * R) := by
+    have a : (1 / 2 - p) * (Tcos c τ + τ ^ 2) ≤ (1 / 2 - p) * (K * R) :=
+      mul_le_mul_of_nonneg_left hW (by linarith)
+    have b : (1 / 2 - p) * (K * R) ≤ (1 / 2 - 3183 / 10000) * (K * R) :=
+      mul_le_mul_of_nonneg_right (by linarith) (by positivity)
+    linarith
+  have h4 := mul_le_mul_of_nonneg_right hX hR.le
+  nlinarith
+
+/-- The centre energy on `GoodC16` and `SSc` for `θlo ≤ θ_in ≤ 0.55`, with free numbers. -/
+theorem eb16_sharp_gen (hn : 16250 ≤ n) {c : Fin n → ℝ} {τ : ℝ} (hτ : 0 < τ)
+    {θlo K X Eo e Eb : ℝ}
+    (hlo : 46 / 100 ≤ θlo) (hlo1 : θlo ≤ 1) (hθ0 : θlo ≤ thetaC c τ)
+    (hθ1 : thetaC c τ ≤ 55 / 100)
+    (hK : (1 - θlo) * (1 - θlo + 55 / 100 / 16250) / ((1 - 3 / 100) ^ 2 * (99996 / 100000)) +
+      (1 - θlo) * (1504 / 10 ^ 6) ^ 2 + 55 / 100 / 16250 ≤ K)
+    (hX0 : 0 < X)
+    (hX : X ≤ 95 / 100 * (1 - 31832 / 100000 - (1 - θlo) / 2 - (1 / 2 - 3183 / 10000) * K))
+    (hEo : (1001 / 1000 : ℝ) * (1 + 16 / 16250 + 48 / 16250 ^ 2) -
+        (3 / 2 - 2 * (31832 / 100000)) * X +
+        (1 / 2 - 3183 / 10000) * X ^ 2 / (1001 / 1000) ≤ Eo)
+    (he : 0 ≤ e) (hEe : Eo ≤ e ^ 2) (hEb : (e + 6 / 100000) ^ 2 ≤ Eb)
+    {A₁ : Matrix (Fin (mA n)) (Fin n) ℝ} {A₂ : Matrix (Fin (mA n)) (Fin (mA n)) ℝ}
+    (h : (A₁, A₂) ∈ GoodC16 n n c τ) (hS : ((c, τ), (A₁, A₂)) ∈ SSc n) :
+    2 / (mA n : ℝ) * normSq ((1 / rhoC c τ) • bT n n A₁ A₂ c τ) ≤ 2 / (n : ℝ) * Eb := by
+  have hn1 : 1 ≤ n := by omega
+  have hnR : (16250 : ℝ) ≤ n := by exact_mod_cast hn
+  have hn0 : (0 : ℝ) < n := by linarith
+  have hAs : (A₁, A₂) ∈ GoodAs n c τ := h.1.1
+  have hρ2 := rhoC_sqP c τ
+  have hρ : 0 < normSq c + (n : ℝ) * τ ^ 2 := by
+    have := rhoC_posP hn1 c hτ
+    rw [← hρ2]; positivity
+  have hE := energy16 hn hAs
+  have hs := sO2_ge_gen hn hτ hlo hlo1 hθ0 hθ1 hK hX hS
+  have hbe := BstLean.Part153.GoodA_be hAs
+  have hO : 2 / ((mA n : ℕ) : ℝ) * normSq (bO A₁ A₂ c τ) / (2 / (n : ℝ) * rhoC c τ ^ 2) ≤ Eo := by
+    obtain ⟨R, hR⟩ : ∃ R : ℝ, R = normSq c + (n : ℝ) * τ ^ 2 := ⟨_, rfl⟩
+    have hτ2 : 0 < τ ^ 2 := by positivity
+    rw [hρ2, ← hR]
+    rw [← hR] at hρ hE hs
+    obtain ⟨θ, hθd⟩ : ∃ θ : ℝ, θ = (n : ℝ) * τ ^ 2 / R := ⟨_, rfl⟩
+    have hθpos : 0 < θ := by rw [hθd]; positivity
+    have hsc : 2 * X / θ * τ ^ 2 ≤ sO2 A₁ c τ := by
+      refine le_trans (le_of_eq ?_) hs
+      rw [hθd]; field_simp
+    have key := eb_le_quad hn1 A₁ A₂ c τ (Lc := 12) (δ := 1 / 1000) (cs := 2 * X / θ)
+      (θlo := θ) (by rw [← hR]; exact hρ) (by norm_num) (by norm_num) (by rw [← hR]; exact hE)
+      (by positivity) hθpos hsc (by rw [← hR, hθd]) hbe
+    rw [← hR] at key
+    have ex : 2 * X / θ * θ / 2 = X := by field_simp
+    rw [ex] at key
+    exact key.trans (eb_num_gen hn (x := X) (a := X) (b := X) hX0.le le_rfl le_rfl hEo)
+  have h1 := eb_transfer hn hτ (hlo.trans hθ0) hθ1 h hO he hEe
+  exact h1.trans (mul_le_mul_of_nonneg_left hEb (by positivity))
+
+/-- `t_A|b|² ≤ 0.7314·γ_A` on `GoodC16` and `SSc` for `46/100 ≤ θ_in ≤ 0.55`. -/
+theorem eb16_sharp_46 (hn : 16250 ≤ n) {c : Fin n → ℝ} {τ : ℝ} (hτ : 0 < τ)
+    (hθ0 : 46 / 100 ≤ thetaC c τ) (hθ1 : thetaC c τ ≤ 55 / 100)
+    {A₁ : Matrix (Fin (mA n)) (Fin n) ℝ} {A₂ : Matrix (Fin (mA n)) (Fin (mA n)) ℝ}
+    (h : (A₁, A₂) ∈ GoodC16 n n c τ) (hS : ((c, τ), (A₁, A₂)) ∈ SSc n) :
+    2 / (mA n : ℝ) * normSq ((1 / rhoC c τ) • bT n n A₁ A₂ c τ) ≤
+      2 / (n : ℝ) * (3657 / 5000) :=
+  eb16_sharp_gen hn hτ (θlo := 46 / 100) (K := 309983 / 1000000) (X := 84397 / 250000) (Eo := 731213 / 1000000)
+    (e := 85511 / 100000) (by norm_num) (by norm_num) hθ0 hθ1 (by norm_num) (by norm_num)
+    (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) h hS
+
+/-- `t_A|b|² ≤ 0.7264·γ_A` on `GoodC16` and `SSc` for `47/100 ≤ θ_in ≤ 0.55`. -/
+theorem eb16_sharp_47 (hn : 16250 ≤ n) {c : Fin n → ℝ} {τ : ℝ} (hτ : 0 < τ)
+    (hθ0 : 47 / 100 ≤ thetaC c τ) (hθ1 : thetaC c τ ≤ 55 / 100)
+    {A₁ : Matrix (Fin (mA n)) (Fin n) ℝ} {A₂ : Matrix (Fin (mA n)) (Fin (mA n)) ℝ}
+    (h : (A₁, A₂) ∈ GoodC16 n n c τ) (hS : ((c, τ), (A₁, A₂)) ∈ SSc n) :
+    2 / (mA n : ℝ) * normSq ((1 / rhoC c τ) • bT n n A₁ A₂ c τ) ≤
+      2 / (n : ℝ) * (454 / 625) :=
+  eb16_sharp_gen hn hτ (θlo := 47 / 100) (K := 298611 / 1000000) (X := 344301 / 1000000) (Eo := 90781 / 125000)
+    (e := 426101 / 500000) (by norm_num) (by norm_num) hθ0 hθ1 (by norm_num) (by norm_num)
+    (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) h hS
+
+/-- `t_A|b|² ≤ 0.7215·γ_A` on `GoodC16` and `SSc` for `48/100 ≤ θ_in ≤ 0.55`. -/
+theorem eb16_sharp_48 (hn : 16250 ≤ n) {c : Fin n → ℝ} {τ : ℝ} (hτ : 0 < τ)
+    (hθ0 : 48 / 100 ≤ thetaC c τ) (hθ1 : thetaC c τ ≤ 55 / 100)
+    {A₁ : Matrix (Fin (mA n)) (Fin n) ℝ} {A₂ : Matrix (Fin (mA n)) (Fin (mA n)) ℝ}
+    (h : (A₁, A₂) ∈ GoodC16 n n c τ) (hS : ((c, τ), (A₁, A₂)) ∈ SSc n) :
+    2 / (mA n : ℝ) * normSq ((1 / rhoC c τ) • bT n n A₁ A₂ c τ) ≤
+      2 / (n : ℝ) * (1443 / 2000) :=
+  eb16_sharp_gen hn hτ (θlo := 48 / 100) (K := 5749 / 20000) (X := 350977 / 1000000) (Eo := 721327 / 1000000)
+    (e := 84931 / 100000) (by norm_num) (by norm_num) hθ0 hθ1 (by norm_num) (by norm_num)
+    (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) h hS
+
+/-- `t_A|b|² ≤ 0.7166·γ_A` on `GoodC16` and `SSc` for `49/100 ≤ θ_in ≤ 0.55`. -/
+theorem eb16_sharp_49 (hn : 16250 ≤ n) {c : Fin n → ℝ} {τ : ℝ} (hτ : 0 < τ)
+    (hθ0 : 49 / 100 ≤ thetaC c τ) (hθ1 : thetaC c τ ≤ 55 / 100)
+    {A₁ : Matrix (Fin (mA n)) (Fin n) ℝ} {A₂ : Matrix (Fin (mA n)) (Fin (mA n)) ℝ}
+    (h : (A₁, A₂) ∈ GoodC16 n n c τ) (hS : ((c, τ), (A₁, A₂)) ∈ SSc n) :
+    2 / (mA n : ℝ) * normSq ((1 / rhoC c τ) • bT n n A₁ A₂ c τ) ≤
+      2 / (n : ℝ) * (3583 / 5000) :=
+  eb16_sharp_gen hn hτ (θlo := 49 / 100) (K := 138251 / 500000) (X := 357617 / 1000000) (Eo := 22389 / 31250)
+    (e := 846433 / 1000000) (by norm_num) (by norm_num) hθ0 hθ1 (by norm_num) (by norm_num)
+    (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) h hS
+
+/-- `t_A|b|² ≤ 0.7118·γ_A` on `GoodC16` and `SSc` for `50/100 ≤ θ_in ≤ 0.55`. -/
+theorem eb16_sharp_50 (hn : 16250 ≤ n) {c : Fin n → ℝ} {τ : ℝ} (hτ : 0 < τ)
+    (hθ0 : 50 / 100 ≤ thetaC c τ) (hθ1 : thetaC c τ ≤ 55 / 100)
+    {A₁ : Matrix (Fin (mA n)) (Fin n) ℝ} {A₂ : Matrix (Fin (mA n)) (Fin (mA n)) ℝ}
+    (h : (A₁, A₂) ∈ GoodC16 n n c τ) (hS : ((c, τ), (A₁, A₂)) ∈ SSc n) :
+    2 / (mA n : ℝ) * normSq ((1 / rhoC c τ) • bT n n A₁ A₂ c τ) ≤
+      2 / (n : ℝ) * (3559 / 5000) :=
+  eb16_sharp_gen hn hτ (θlo := 50 / 100) (K := 265767 / 1000000) (X := 18211 / 50000) (Eo := 711613 / 1000000)
+    (e := 210893 / 250000) (by norm_num) (by norm_num) hθ0 hθ1 (by norm_num) (by norm_num)
+    (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) h hS
+
+/-- `t_A|b|² ≤ 0.707·γ_A` on `GoodC16` and `SSc` for `51/100 ≤ θ_in ≤ 0.55`. -/
+theorem eb16_sharp_51 (hn : 16250 ≤ n) {c : Fin n → ℝ} {τ : ℝ} (hτ : 0 < τ)
+    (hθ0 : 51 / 100 ≤ thetaC c τ) (hθ1 : thetaC c τ ≤ 55 / 100)
+    {A₁ : Matrix (Fin (mA n)) (Fin n) ℝ} {A₂ : Matrix (Fin (mA n)) (Fin (mA n)) ℝ}
+    (h : (A₁, A₂) ∈ GoodC16 n n c τ) (hS : ((c, τ), (A₁, A₂)) ∈ SSc n) :
+    2 / (mA n : ℝ) * normSq ((1 / rhoC c τ) • bT n n A₁ A₂ c τ) ≤
+      2 / (n : ℝ) * (707 / 1000) :=
+  eb16_sharp_gen hn hτ (θlo := 51 / 100) (K := 63811 / 250000) (X := 370787 / 1000000) (Eo := 706819 / 1000000)
+    (e := 420363 / 500000) (by norm_num) (by norm_num) hθ0 hθ1 (by norm_num) (by norm_num)
+    (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) h hS
+
+/-- `t_A|b|² ≤ 0.7022·γ_A` on `GoodC16` and `SSc` for `52/100 ≤ θ_in ≤ 0.55`. -/
+theorem eb16_sharp_52 (hn : 16250 ≤ n) {c : Fin n → ℝ} {τ : ℝ} (hτ : 0 < τ)
+    (hθ0 : 52 / 100 ≤ thetaC c τ) (hθ1 : thetaC c τ ≤ 55 / 100)
+    {A₁ : Matrix (Fin (mA n)) (Fin n) ℝ} {A₂ : Matrix (Fin (mA n)) (Fin (mA n)) ℝ}
+    (h : (A₁, A₂) ∈ GoodC16 n n c τ) (hS : ((c, τ), (A₁, A₂)) ∈ SSc n) :
+    2 / (mA n : ℝ) * normSq ((1 / rhoC c τ) • bT n n A₁ A₂ c τ) ≤
+      2 / (n : ℝ) * (3511 / 5000) :=
+  eb16_sharp_gen hn hτ (θlo := 52 / 100) (K := 122467 / 500000) (X := 94329 / 250000) (Eo := 702069 / 1000000)
+    (e := 104737 / 125000) (by norm_num) (by norm_num) hθ0 hθ1 (by norm_num) (by norm_num)
+    (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) h hS
+
+/-- `t_A|b|² ≤ 0.6975·γ_A` on `GoodC16` and `SSc` for `53/100 ≤ θ_in ≤ 0.55`. -/
+theorem eb16_sharp_53 (hn : 16250 ≤ n) {c : Fin n → ℝ} {τ : ℝ} (hτ : 0 < τ)
+    (hθ0 : 53 / 100 ≤ thetaC c τ) (hθ1 : thetaC c τ ≤ 55 / 100)
+    {A₁ : Matrix (Fin (mA n)) (Fin n) ℝ} {A₂ : Matrix (Fin (mA n)) (Fin (mA n)) ℝ}
+    (h : (A₁, A₂) ∈ GoodC16 n n c τ) (hS : ((c, τ), (A₁, A₂)) ∈ SSc n) :
+    2 / (mA n : ℝ) * normSq ((1 / rhoC c τ) • bT n n A₁ A₂ c τ) ≤
+      2 / (n : ℝ) * (279 / 400) :=
+  eb16_sharp_gen hn hτ (θlo := 53 / 100) (K := 234837 / 1000000) (X := 383809 / 1000000) (Eo := 8717 / 12500)
+    (e := 835081 / 1000000) (by norm_num) (by norm_num) hθ0 hθ1 (by norm_num) (by norm_num)
+    (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) h hS
+
+/-- `t_A|b|² ≤ 0.6928·γ_A` on `GoodC16` and `SSc` for `54/100 ≤ θ_in ≤ 0.55`. -/
+theorem eb16_sharp_54 (hn : 16250 ≤ n) {c : Fin n → ℝ} {τ : ℝ} (hτ : 0 < τ)
+    (hθ0 : 54 / 100 ≤ thetaC c τ) (hθ1 : thetaC c τ ≤ 55 / 100)
+    {A₁ : Matrix (Fin (mA n)) (Fin n) ℝ} {A₂ : Matrix (Fin (mA n)) (Fin (mA n)) ℝ}
+    (h : (A₁, A₂) ∈ GoodC16 n n c τ) (hS : ((c, τ), (A₁, A₂)) ∈ SSc n) :
+    2 / (mA n : ℝ) * normSq ((1 / rhoC c τ) • bT n n A₁ A₂ c τ) ≤
+      2 / (n : ℝ) * (433 / 625) :=
+  eb16_sharp_gen hn hτ (θlo := 54 / 100) (K := 28119 / 125000) (X := 78053 / 200000) (Eo := 346347 / 500000)
+    (e := 832283 / 1000000) (by norm_num) (by norm_num) hθ0 hθ1 (by norm_num) (by norm_num)
+    (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) h hS
+
+end BstLean.Part160.R
+
