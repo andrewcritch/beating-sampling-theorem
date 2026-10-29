@@ -1,0 +1,419 @@
+import BstLean.Part188All
+import BstLean.Part188MT169
+import BstLean.Part183Def
+
+
+
+namespace BstLean.Part190.Chain.M
+open BstLean.Part188.Chain.M
+open BstLean.Part179 BstLean.Part179.N30 BstLean.Part179.N30.N27 BstLean.Part179.N30.N27.N26 BstLean.Part179.N30.N27.N26.N25 BstLean.Part179.N30.N27.N26.N25.N24 BstLean.Part179.N30.N27.N26.N25.N24.N23 BstLean.Part179.N30.N27.N26.N25.N24.N23.N22 BstLean.Part179.N30.N27.N26.N25.N24.N23.N22.J1725 BstLean.Part179.N30.N27.N26.N25.N24.N23.N22.J1725.J17 BstLean.Part179.N30.N27.N26.N25.N24.N23.N22.J1725.J17.J1625 BstLean.Part179.N30.N27.N26.N25.N24.N23.N22.J1725.J17.J1625.M
+
+
+section SNodeLat
+open MeasureTheory Real
+open BstLean.Part130 BstLean.Part157 BstLean.Part169
+open BstLean.Part170 (windowW mkR)
+variable {n : ℕ}
+theorem node_lat0 (hn : 16200 ≤ n) {wr : WRet n} (hw : windowW wr) (θ : AHid n) {g : ℕ}
+    (_hg : g < Js n) : 0 ≤ nodeS (mkR wr θ) g ∧ 4043 / 10000 ≤ nodeS (mkR wr θ) g ^ 2 := by
+  obtain ⟨hτ, hθ0, hθ1⟩ := hw
+  set c := mkR wr θ with hcd
+  have hτ' : 0 < tauR c := hτ
+  have hθ0' : 46 / 100 ≤ BstLean.Part150.thetaC c.1.2 (tauR c) := hθ0
+  have hθ1' : BstLean.Part150.thetaC c.1.2 (tauR c) ≤ 55 / 100 := hθ1
+  obtain ⟨hLH, -, -⟩ := bulk_of_window (by omega) c hτ' hθ0' hθ1'
+  have hnR : (16200 : ℝ) ≤ n := by exact_mod_cast hn
+  have hn0 : (0 : ℝ) < n := by linarith
+  set ρ := rhoR c with hρ
+  have hρ2 : ρ ^ 2 = normSq c.1.2 + n * tauR c ^ 2 := by
+    rw [hρ]; unfold rhoR BstLean.Part150.rhoC
+    rw [Real.sq_sqrt (add_nonneg (normSq_nonneg _) (by positivity))]
+  have hρ0 : 0 < ρ := by
+    rw [hρ]; unfold rhoR BstLean.Part150.rhoC
+    exact Real.sqrt_pos.mpr (by have := normSq_nonneg c.1.2; positivity)
+  set a := √(normSq c.1.2) / ρ with ha
+  set b := tauR c / ρ with hb
+  have hb0 : 0 < b := div_pos hτ' hρ0
+  have ha0 : 0 ≤ a := div_nonneg (Real.sqrt_nonneg _) hρ0.le
+  have hθ : BstLean.Part150.thetaC c.1.2 (tauR c) = n * b ^ 2 := by
+    unfold BstLean.Part150.thetaC; rw [← rhoR, ← hρ, hb, div_pow]; ring
+  have hab : a ^ 2 + n * b ^ 2 = 1 := by
+    rw [ha, hb, div_pow, div_pow, Real.sq_sqrt (normSq_nonneg _)]
+    field_simp; rw [hρ2]
+  rw [hθ] at hθ0' hθ1'
+  have hL : nodeL c = a - 6 * b := by unfold nodeL; rw [← hρ]; ring
+  have ha2 : 45 / 100 ≤ a ^ 2 := by linarith
+  have hb2 : b ^ 2 ≤ 55 / 100 / n := by rw [le_div_iff₀ hn0]; linarith
+  have hb2' : b ^ 2 ≤ 55 / 100 / 16200 :=
+    hb2.trans (div_le_div_of_nonneg_left (by norm_num) (by norm_num) hnR)
+  have hbs : b ≤ 5827 / 1000000 := by nlinarith
+  have has : 67082 / 100000 ≤ a := by nlinarith
+  have hD : 0 ≤ nodeD c := by
+    unfold nodeD
+    exact div_nonneg (by linarith) (by positivity)
+  have hS : nodeL c ≤ nodeS c g := by
+    unfold nodeS
+    have : 0 ≤ ((g : ℝ) + 1 / 2) * nodeD c := mul_nonneg (by positivity) hD
+    linarith
+  rw [hL] at hS
+  have h1 : 0 ≤ a - 6 * b := by linarith
+  refine ⟨by linarith, ?_⟩
+  have h2 : 63585 / 100000 ≤ a - 6 * b := by linarith
+  nlinarith
+
+
+theorem node_lat_q (hn : 16200 ≤ n) {wr : WRet n} (hw : windowW wr) (θ : AHid n) {g : ℕ}
+    (hg : g < Js n) : 1 - nodeS (mkR wr θ) g ^ 2 ≤ 5957 / 10000 := by
+  have := (node_lat0 hn hw θ hg).2
+  linarith
+
+end SNodeLat
+
+-- ===== from Part170Mom.lean =====
+section SPart170Mom
+open BstLean.Part170
+open MeasureTheory ProbabilityTheory Real Matrix
+open BstLean.Part29 (stdGauss)
+open BstLean.Part130 BstLean.Part157 BstLean.Part169
+open BstLean.Part161 (latC Ix muI xLat)
+open BstLean.Part136 (HidParam hidGauss)
+open BstLean.Part153 (nuA)
+variable {n : ℕ}
+
+lemma node_bulk (hn : 16200 ≤ n) {wr : WRet n} (hw : windowW wr) (θ : AHid n) {g : ℕ}
+    (hg : g < Js n) : nodeS (mkR wr θ) g ^ 2 ≤ 1 := by
+  obtain ⟨hτ, hθ0, hθ1⟩ := hw
+  obtain ⟨hLH, hb, -⟩ := bulk_of_window (by omega) (mkR wr θ) hτ hθ0 hθ1
+  have hq := qB_pos hn
+  have hJ : (0 : ℝ) < Js n := by exact_mod_cast (show 0 < Js n by unfold Js; omega)
+  have hD : 0 ≤ nodeD (mkR wr θ) := div_nonneg (by linarith) hJ.le
+  have hg' : (g : ℝ) + 1 / 2 ≤ Js n := by
+    have : (g : ℝ) + 1 ≤ Js n := by exact_mod_cast hg
+    linarith
+  have h1 : nodeL (mkR wr θ) ≤ nodeS (mkR wr θ) g := by
+    unfold nodeS; have : 0 ≤ ((g : ℝ) + 1 / 2) * nodeD (mkR wr θ) := by positivity
+    linarith
+  have h2 : nodeS (mkR wr θ) g ≤ nodeH (mkR wr θ) := by
+    unfold nodeS
+    have e : nodeH (mkR wr θ) = nodeL (mkR wr θ) + (Js n : ℝ) * nodeD (mkR wr θ) := by
+      unfold nodeD; field_simp; ring
+    rw [e]
+    have := mul_le_mul_of_nonneg_right hg' hD
+    linarith
+  have := hb _ h1 h2
+  linarith
+
+
+theorem nodeMomF_of_bias (hF : BstLean.Part184.EnFB_stmt) (hn : 16200 ≤ n) {O : ℝ} (hO : 0 < O)
+    {Gb : Set (WRet n × Matrix (Fin (mA n)) (Fin n) ℝ)} (hGb : MeasurableSet Gb) {B : ℝ}
+    (hB0 : 0 < B) (hB : BiasMomF O Gb B) (wr : WRet n) (hw : windowW wr) (g : ℕ) (hg : g < Js n) :
+    ∫⁻ θ in {θ | (wr, θ) ∈ GsOf O Gb}, ENNReal.ofReal (exFn (mkR wr θ) g ^ 8) ∂nuA n ≤
+      ENNReal.ofReal ((BstLean.Part184.FflB n O (5957 / 10000) + B) ^ 8) := by
+  set G₁ : Set (Matrix (Fin (mA n)) (Fin n) ℝ) := {A₁ | A₁ ∈ opSet n O ∧ (wr, A₁) ∈ Gb}
+  have hG₁ : MeasurableSet G₁ :=
+    (measurableSet_opSet O).inter (measurable_prodMk_left hGb)
+  have e : {θ : AHid n | (wr, θ) ∈ GsOf O Gb} = {θ : AHid n | θ.1 ∈ G₁} := rfl
+  have mf : Measurable (fun θ : AHid n => ENNReal.ofReal (exFn (mkR wr θ) g ^ 8)) :=
+    ENNReal.measurable_ofReal.comp ((measurable_exFn_comp (measurable_mkR.comp
+      (measurable_const.prodMk measurable_id)) measurable_const).pow_const 8)
+  rw [e, lint_nuA_restrict hG₁ mf]
+  have hin : ∀ A₁ ∈ G₁, ∫⁻ A₂, ENNReal.ofReal (exFn (mkR wr (A₁, A₂)) g ^ 8)
+      ∂gaussMat (mA n) (mA n) (2 / ((mA n : ℕ) : ℝ)) ≤ ENNReal.ofReal ((BstLean.Part184.FflB n O (5957 / 10000) + B) ^ 8) := by
+    intro A₁ hA₁
+    exact hF (by omega) (mkR wr (A₁, 0)) g (node_bulk hn hw _ hg) hO hA₁.1 (q := 5957 / 10000)
+      (by norm_num) (node_lat_q hn hw (A₁, 0) hg) hB0 (hB wr hw g hg A₁ hA₁.1 hA₁.2)
+  calc ∫⁻ A₁ in G₁, ∫⁻ A₂, ENNReal.ofReal (exFn (mkR wr (A₁, A₂)) g ^ 8)
+        ∂gaussMat (mA n) (mA n) (2 / ((mA n : ℕ) : ℝ)) ∂gaussMat (mA n) n (2 / (n : ℝ))
+      ≤ ∫⁻ _A₁ in G₁, ENNReal.ofReal ((BstLean.Part184.FflB n O (5957 / 10000) + B) ^ 8) ∂gaussMat (mA n) n (2 / (n : ℝ)) :=
+        setLIntegral_mono measurable_const hin
+    _ ≤ ENNReal.ofReal ((BstLean.Part184.FflB n O (5957 / 10000) + B) ^ 8) := by
+        rw [setLIntegral_const]
+        calc ENNReal.ofReal ((BstLean.Part184.FflB n O (5957 / 10000) + B) ^ 8) * gaussMat (mA n) n (2 / (n : ℝ)) G₁
+            ≤ ENNReal.ofReal ((BstLean.Part184.FflB n O (5957 / 10000) + B) ^ 8) * 1 := by gcongr; exact prob_le_one
+          _ = _ := mul_one _
+
+end SPart170Mom
+
+-- ===== from Part170End.lean =====
+section SPart170End
+open BstLean.Part170
+open MeasureTheory ProbabilityTheory Real
+open BstLean.Part29 (stdGauss)
+open BstLean.Part130 BstLean.Part157 BstLean.Part169
+open BstLean.Part161 (latC Ix muI xLat)
+open BstLean.Part136 (HidParam hidGauss)
+open BstLean.Part153 (nuA)
+open BstLean.Part166 (goodD)
+variable {n : ℕ}
+
+theorem momZ_of_Ebias (hn : 1 ≤ n) {Gs : Set (WRet n × AHid n)} {Af Aw : ℝ} {c : Ret n}
+    (hc : c ∈ Ebias Gs Af Aw) (hw : windowW c.1) : BstLean.Part179.N30.N27.N26.N25.N24.N23.N22.J1725.MomZ c Af Aw := by
+  obtain ⟨-, hF, hW⟩ := hc hw
+  exact ⟨(int_pow8_le_univ (measurable_exF c) (bdd_exF hn c) _).trans hF,
+    (int_pow8_le_univ (measurable_exW c) (bdd_exW hn c) _).trans hW⟩
+
+
+theorem classifier_paper_node22k (hHQ : BstLean.Part188.M.HQG n) (hn : 16200 ≤ n) (t : ℝ)
+    {EA : Set (Ret n)} (hEA : MeasurableSet EA) {δA : ℝ}
+    (hA : (retDist (paperCentres n)).real (BstLean.Part159.HP n ∩
+      BstLean.Part159.Ethm (paperCentres n) ∩ BstLean.Part159.Ethp (paperCentres n) ∩ EAᶜ) ≤ δA)
+    {Een : Set (Ret n)} (hEenm : MeasurableSet Een)
+    (hEen : (retDist (paperCentres n)).real Eenᶜ ≤ 1 / 10 ^ 6)
+    (hfE : ∀ c ∈ Een, 0 < (paperDesignP n).tau0 c → (∫ a in BstLean.Part179.N30.N27.N26.N25.N24.N23.N22.J1725.KR c, fbR c a ^ 4 ∂BstLean.Part161.muI n ≤ (1005 / 1000) ^ 4) ∧
+      (∫ a in BstLean.Part179.N30.N27.N26.N25.N24.N23.N22.J1725.KR c, fbR c a ^ 24 ∂BstLean.Part161.muI n ≤ (1005 / 1000) ^ 24))
+    {Gs : Set (WRet n × AHid n)} (hG : MeasurableSet Gs) {δG : ℝ}
+    (hδG : ∀ wr : WRet n, (nuA n).real {θ | (wr, θ) ∉ Gs} ≤ δG)
+    {F E Af Aw : ℝ} (hAf : 0 < Af) (hAw : 0 < Aw) (hlin : Aw + 201 / 100 * Af ≤ 2747 / 10000) (hAf' : Af ≤ 715 / 10000)
+    (hM : NodeMom Gs F E)
+    (hroom : δA + (δG + (F / Af) ^ 8 + (E / Aw) ^ 8) + 1 / 10 ^ 6 ≤ roomK + BstLean.Part181.roomX + BstLean.Part188.M.roomL - 9 / 10 ^ 6) :
+    99 / 100 ≤ ((mlpTriple 2 n).prod (sampMeas (10 ^ 12) n)).real
+      {x | successNet x.1 t (progOut (paperDesignP n) t BstLean.Part156.aL (10 ^ 12) x.1 x.2)} := by
+  have hn1 : 1 ≤ n := by omega
+  exact classifier_paper_AE30 hHQ hn t hEA (measurableSet_Ebias hG Af Aw) hEenm hA
+    (Ebias_charge hn1 (paperCentres n) hG hAf hAw hM hδG) hEen hfE hroom hAf hAw hlin hAf'
+    (fun c hc => momZ_of_Ebias hn1 (Ebias_of_goodD hc) (BstLean.Part188.Base170_R.windowW_of_goodD (by omega) hc))
+
+end SPart170End
+
+-- ===== from Part170Fin.lean =====
+section SPart170Fin
+open BstLean.Part170
+open MeasureTheory ProbabilityTheory Real Matrix
+open BstLean.Part29 (stdGauss)
+open BstLean.Part130 BstLean.Part157 BstLean.Part169
+open BstLean.Part161 (latC Ix muI xLat)
+open BstLean.Part136 (HidParam hidGauss)
+open BstLean.Part153 (nuA)
+open BstLean.Part166 (goodD)
+variable {n : ℕ}
+
+theorem momZ_of_EbiasF (hn : 16200 ≤ n) {Gb : Set (WRet n × Matrix (Fin (mA n)) (Fin n) ℝ)}
+    {Af Aw : ℝ} {EA : Set (Ret n)} {c : Ret n}
+    (hc : c ∈ goodD n (paperDesignP n) (EA ∩ EbiasF (O1n n) Gb Af Aw)) : BstLean.Part179.N30.N27.N26.N25.N24.N23.N22.J1725.MomZ c Af Aw := by
+  have hn1 : 1 ≤ n := by omega
+  have hw := BstLean.Part188.Base170_R.windowW_of_goodD (by omega) hc
+  have hE : c ∈ EbiasF (O1n n) Gb Af Aw := Ebias_of_goodD hc
+  have hop := (BstLean.Part188.Base169_R.opB_goodD (by omega) hc).1
+  have hGs : (c.1, c.2.1.1) ∈ GsOf (O1n n) Gb := ⟨hop, hE.2 hw⟩
+  obtain ⟨hF, hW⟩ := hE.1 hw hGs
+  exact ⟨(int_pow8_le_univ (measurable_exF c) (bdd_exF hn1 c) _).trans hF,
+    (int_pow8_le_univ (measurable_exW c) (bdd_exW hn1 c) _).trans hW⟩
+
+
+lemma FflB_le (hn : 16200 ≤ n) : BstLean.Part184.FflB n (O1n n) (5957 / 10000) ≤ 1116 / 100000 := by
+  have hnR : (16200 : ℝ) ≤ n := by exact_mod_cast hn
+  have hn0 : (0 : ℝ) < n := by linarith
+  have hs : 0 < √(n : ℝ) := Real.sqrt_pos.mpr hn0
+  have hsq : √(n : ℝ) ^ 2 = n := Real.sq_sqrt hn0.le
+  have hs242 : 12727 / 100 ≤ √(n : ℝ) := by
+    rw [Real.le_sqrt (by norm_num) hn0.le]; nlinarith
+  have hX : (n : ℝ) * (tA n * (5957 / 10000 * O1n n ^ 2 / ((n : ℝ) - 2))) =
+      5957 / 10000 * (4 * (1 + 2 / √(n : ℝ)) ^ 2) / ((n : ℝ) - 2) := by
+    unfold tA O1n mA
+    push_cast
+    rw [mul_pow, Real.sq_sqrt (by positivity)]
+    set r := √(n : ℝ) with hr
+    have hnr : (n : ℝ) = r ^ 2 := hsq.symm
+    have hr2 : r ^ 2 - 2 ≠ 0 := by nlinarith
+    rw [hnr]
+    field_simp
+    ring
+  have hX2 : 5957 / 10000 * (4 * (1 + 2 / √(n : ℝ)) ^ 2) / ((n : ℝ) - 2) ≤ (12323 / 1000000) ^ 2 := by
+    have h1 : 2 / √(n : ℝ) ≤ 2 / (12727 / 100) := div_le_div_of_nonneg_left (by norm_num) (by norm_num) hs242
+    have h2 : (1 + 2 / √(n : ℝ)) ^ 2 ≤ (1 + 2 / (12727 / 100)) ^ 2 :=
+      pow_le_pow_left₀ (by positivity) (by linarith) 2
+    rw [div_le_iff₀ (by linarith)]
+    nlinarith
+  have hroot : √(n : ℝ) * √(tA n * (5957 / 10000 * O1n n ^ 2 / ((n : ℝ) - 2))) ≤ 12323 / 1000000 := by
+    rw [← Real.sqrt_mul hn0.le, hX]
+    rw [Real.sqrt_le_left (by norm_num)]; exact hX2
+  unfold BstLean.Part184.FflB
+  have e : 181 / 100 * √(n : ℝ) * √(tA n * (5957 / 10000 * O1n n ^ 2 / ((n : ℝ) - 2))) / 2 =
+      181 / 200 * (√(n : ℝ) * √(tA n * (5957 / 10000 * O1n n ^ 2 / ((n : ℝ) - 2)))) := by
+    ring
+  rw [e]
+  have h1 : (181 / 200 : ℝ) * (√(n : ℝ) * √(tA n * (5957 / 10000 * O1n n ^ 2 / ((n : ℝ) - 2)))) ≤
+      181 / 200 * (12323 / 1000000) := mul_le_mul_of_nonneg_left hroot (by norm_num)
+  have h2 : (181 / 200 : ℝ) * (12323 / 1000000) ≤ 1116 / 100000 := by norm_num
+  linarith
+
+
+theorem classifier_paper_fl22k (hHQ : BstLean.Part188.M.HQG n) (hn : 16200 ≤ n) (t : ℝ)
+    {Gb : Set (WRet n × Matrix (Fin (mA n)) (Fin n) ℝ)} (hGb : MeasurableSet Gb) {δG : ℝ}
+    (hδ0 : 0 ≤ δG)
+    (hδG : ∀ wr : WRet n, windowW wr → (nuA n).real {θ | (wr, θ.1) ∉ Gb} ≤ δG)
+    {Een : Set (Ret n)} (hEenm : MeasurableSet Een)
+    (hEen : (retDist (paperCentres n)).real Eenᶜ ≤ 1 / 10 ^ 6)
+    (hfE : ∀ c ∈ Een, 0 < (paperDesignP n).tau0 c → (∫ a in BstLean.Part179.N30.N27.N26.N25.N24.N23.N22.J1725.KR c, fbR c a ^ 4 ∂BstLean.Part161.muI n ≤ (1005 / 1000) ^ 4) ∧
+      (∫ a in BstLean.Part179.N30.N27.N26.N25.N24.N23.N22.J1725.KR c, fbR c a ^ 24 ∂BstLean.Part161.muI n ≤ (1005 / 1000) ^ 24))
+    {Bf E Af Aw : ℝ} (hBf : 0 < Bf) (hAf : 0 < Af) (hAw : 0 < Aw)
+    (hlin : Aw + 201 / 100 * Af ≤ 2747 / 10000) (hAf' : Af ≤ 715 / 10000)
+    (hBias : BiasMomF (O1n n) Gb Bf) (hW : NodeMomW (GsOf (O1n n) Gb) E)
+    (hroom : δG + ((BstLean.Part184.FflB n (O1n n) (5957 / 10000) + Bf) / Af) ^ 8 + (E / Aw) ^ 8 + 1 / 10 ^ 6 ≤ roomK + BstLean.Part181.roomX + BstLean.Part188.M.roomL - 9 / 10 ^ 6) :
+    99 / 100 ≤ ((mlpTriple 2 n).prod (sampMeas (10 ^ 12) n)).real
+      {x | successNet x.1 t (progOut (paperDesignP n) t BstLean.Part156.aL (10 ^ 12) x.1 x.2)} := by
+  have hn1 : 1 ≤ n := by omega
+  have hO : 0 < O1n n := O1n_pos hn1
+  have hM : NodeMom (GsOf (O1n n) Gb) (BstLean.Part184.FflB n (O1n n) (5957 / 10000) + Bf) E := fun wr hw g hg =>
+    ⟨nodeMomF_of_bias hHQ.2.2.2 hn hO hGb hBf hBias wr hw g hg, hW wr hw g hg⟩
+  have hA : (retDist (paperCentres n)).real (BstLean.Part159.HP n ∩
+      BstLean.Part159.Ethm (paperCentres n) ∩ BstLean.Part159.Ethp (paperCentres n) ∩
+      (Set.univ : Set (Ret n))ᶜ) ≤ 0 := by
+    rw [Set.compl_univ, Set.inter_empty, measureReal_empty]
+  exact classifier_paper_AE30 hHQ hn t MeasurableSet.univ (measurableSet_EbiasF (O1n n) hGb Af Aw) hEenm hA
+    (EbiasF_charge hn1 (paperCentres n) hGb hδ0 hAf hAw hM hδG) hEen hfE (by linarith) hAf hAw hlin hAf'
+    (fun c hc => momZ_of_EbiasF hn hc)
+
+end SPart170Fin
+
+-- ===== from Part170FinW.lean =====
+section SPart170FinW
+open BstLean.Part170
+open MeasureTheory ProbabilityTheory Real Matrix
+open BstLean.Part29 (stdGauss)
+open BstLean.Part130 BstLean.Part157 BstLean.Part169
+open BstLean.Part161 (latC Ix muI xLat)
+open BstLean.Part136 (HidParam hidGauss)
+open BstLean.Part153 (nuA)
+open BstLean.Part166 (goodD)
+variable {n : ℕ}
+
+theorem nodeMomW_of_bias (hEn : BstLean.Part184.EnB_stmt) (hn : 16200 ≤ n) {O : ℝ} (hO : 0 < O)
+    {Gb : Set (WRet n × Matrix (Fin (mA n)) (Fin n) ℝ)} (hGb : MeasurableSet Gb) {B : ℝ}
+    (hB0 : 0 < B) (hB : BiasMomW O Gb B) : NodeMomW (GsOf O Gb) (BstLean.Part184.WflB n O (5957 / 10000) + B) := by
+  intro wr hw g hg
+  set G₁ : Set (Matrix (Fin (mA n)) (Fin n) ℝ) := {A₁ | A₁ ∈ opSet n O ∧ (wr, A₁) ∈ Gb}
+  have hG₁ : MeasurableSet G₁ :=
+    (measurableSet_opSet O).inter (measurable_prodMk_left hGb)
+  have e : {θ : AHid n | (wr, θ) ∈ GsOf O Gb} = {θ : AHid n | θ.1 ∈ G₁} := rfl
+  have mf : Measurable (fun θ : AHid n => ENNReal.ofReal (exWn (mkR wr θ) g ^ 8)) :=
+    ENNReal.measurable_ofReal.comp ((measurable_exWn_comp (measurable_mkR.comp
+      (measurable_const.prodMk measurable_id)) measurable_const).pow_const 8)
+  rw [e, lint_nuA_restrict hG₁ mf]
+  have hin : ∀ A₁ ∈ G₁, ∫⁻ A₂, ENNReal.ofReal (exWn (mkR wr (A₁, A₂)) g ^ 8)
+      ∂gaussMat (mA n) (mA n) (2 / ((mA n : ℕ) : ℝ)) ≤ ENNReal.ofReal ((BstLean.Part184.WflB n O (5957 / 10000) + B) ^ 8) := by
+    intro A₁ hA₁
+    exact hEn (by omega) (mkR wr (A₁, 0)) g (node_bulk hn hw _ hg) hO hA₁.1 (q := 5957 / 10000)
+      (by norm_num) (node_lat_q hn hw (A₁, 0) hg) hB0 (hB wr hw g hg A₁ hA₁.1 hA₁.2)
+  calc ∫⁻ A₁ in G₁, ∫⁻ A₂, ENNReal.ofReal (exWn (mkR wr (A₁, A₂)) g ^ 8)
+        ∂gaussMat (mA n) (mA n) (2 / ((mA n : ℕ) : ℝ)) ∂gaussMat (mA n) n (2 / (n : ℝ))
+      ≤ ∫⁻ _A₁ in G₁, ENNReal.ofReal ((BstLean.Part184.WflB n O (5957 / 10000) + B) ^ 8) ∂gaussMat (mA n) n (2 / (n : ℝ)) :=
+        setLIntegral_mono measurable_const hin
+    _ ≤ ENNReal.ofReal ((BstLean.Part184.WflB n O (5957 / 10000) + B) ^ 8) := by
+        rw [setLIntegral_const]
+        calc ENNReal.ofReal ((BstLean.Part184.WflB n O (5957 / 10000) + B) ^ 8) * gaussMat (mA n) n (2 / (n : ℝ)) G₁
+            ≤ ENNReal.ofReal ((BstLean.Part184.WflB n O (5957 / 10000) + B) ^ 8) * 1 := by gcongr; exact prob_le_one
+          _ = _ := mul_one _
+
+
+theorem classifier_paper_flw22k (hHQ : BstLean.Part188.M.HQG n) (hn : 16200 ≤ n) (t : ℝ)
+    {Gb : Set (WRet n × Matrix (Fin (mA n)) (Fin n) ℝ)} (hGb : MeasurableSet Gb) {δG : ℝ}
+    (hδ0 : 0 ≤ δG)
+    (hδG : ∀ wr : WRet n, windowW wr → (nuA n).real {θ | (wr, θ.1) ∉ Gb} ≤ δG)
+    {Een : Set (Ret n)} (hEenm : MeasurableSet Een)
+    (hEen : (retDist (paperCentres n)).real Eenᶜ ≤ 1 / 10 ^ 6)
+    (hfE : ∀ c ∈ Een, 0 < (paperDesignP n).tau0 c → (∫ a in BstLean.Part179.N30.N27.N26.N25.N24.N23.N22.J1725.KR c, fbR c a ^ 4 ∂BstLean.Part161.muI n ≤ (1005 / 1000) ^ 4) ∧
+      (∫ a in BstLean.Part179.N30.N27.N26.N25.N24.N23.N22.J1725.KR c, fbR c a ^ 24 ∂BstLean.Part161.muI n ≤ (1005 / 1000) ^ 24))
+    {Bf Bw Af Aw : ℝ} (hBf : 0 < Bf) (hBw : 0 < Bw) (hAf : 0 < Af) (hAw : 0 < Aw)
+    (hlin : Aw + 201 / 100 * Af ≤ 2747 / 10000) (hAf' : Af ≤ 715 / 10000)
+    (hBiasF : BiasMomF (O1n n) Gb Bf) (hBiasW : BiasMomW (O1n n) Gb Bw)
+    (hroom : δG + ((BstLean.Part184.FflB n (O1n n) (5957 / 10000) + Bf) / Af) ^ 8 + ((BstLean.Part184.WflB n (O1n n) (5957 / 10000) + Bw) / Aw) ^ 8 +
+      1 / 10 ^ 6 ≤ roomK + BstLean.Part181.roomX + BstLean.Part188.M.roomL - 9 / 10 ^ 6) :
+    99 / 100 ≤ ((mlpTriple 2 n).prod (sampMeas (10 ^ 12) n)).real
+      {x | successNet x.1 t (progOut (paperDesignP n) t BstLean.Part156.aL (10 ^ 12) x.1 x.2)} := by
+  have hO : 0 < O1n n := O1n_pos (by omega)
+  exact classifier_paper_fl22k hHQ hn t hGb hδ0 hδG hEenm hEen hfE hBf hAf hAw hlin hAf' hBiasF
+    (nodeMomW_of_bias hHQ.2.2.1 hn hO hGb hBw hBiasW) hroom
+
+end SPart170FinW
+
+-- ===== from Part170NumW.lean =====
+section SPart170NumW
+open BstLean.Part170
+open MeasureTheory ProbabilityTheory Real Matrix
+open BstLean.Part130 BstLean.Part157 BstLean.Part169
+open BstLean.Part153 (nuA)
+variable {n : ℕ}
+
+lemma WflB_le (hn : 16200 ≤ n) : BstLean.Part184.WflB n (O1n n) (5957 / 10000) ≤ 4954 / 100000 := by
+  have hnR : (16200 : ℝ) ≤ n := by exact_mod_cast hn
+  have hn0 : (0 : ℝ) < n := by linarith
+  set r := √(n : ℝ) with hrd
+  have hr2 : r ^ 2 = n := Real.sq_sqrt hn0.le
+  have hr : 12727 / 100 ≤ r := by rw [hrd, Real.le_sqrt (by norm_num) hn0.le]; nlinarith
+  have hr0 : 0 < r := by linarith
+  have hO2 : O1n n ^ 2 = 2 * (r + 2) ^ 2 := by
+    unfold O1n
+    rw [mul_pow, Real.sq_sqrt (by positivity), ← hrd, ← hr2]
+    field_simp
+  have htA : tA n = 2 / r ^ 4 := by
+    unfold tA mA
+    push_cast
+    rw [← hr2]; ring
+  have hmA : ((mA n : ℕ) : ℝ) = r ^ 4 := by unfold mA; push_cast; rw [← hr2]; ring
+  have hd2 : 0 < r ^ 2 - 2 := by nlinarith
+  set d := r - 12727 / 100 with hdd
+  have hd : 0 ≤ d := by linarith
+  have hrd' : r = 12727 / 100 + d := by linarith
+  set L := √(tA n * (5957 / 10000 * O1n n ^ 2 / ((n : ℝ) - 2))) with hLd
+  set S := √((mA n : ℝ) * tA n * (5957 / 10000 * n * O1n n ^ 2 / ((n : ℝ) - 2)) / 2) with hSd
+  have hL0 : 0 ≤ L := Real.sqrt_nonneg _
+  have hLS : L * S ≤ 13685 / 1000000 := by
+    rw [hLd, hSd, ← Real.sqrt_mul (by rw [htA, hO2, ← hr2]; positivity)]
+    rw [Real.sqrt_le_left (by norm_num)]
+    have key : tA n * (5957 / 10000 * O1n n ^ 2 / ((n : ℝ) - 2)) *
+        ((mA n : ℝ) * tA n * (5957 / 10000 * n * O1n n ^ 2 / ((n : ℝ) - 2)) / 2) =
+        8 * (5957 / 10000) ^ 2 * (r + 2) ^ 4 / (r ^ 2 * (r ^ 2 - 2) ^ 2) := by
+      rw [htA, hmA, hO2, ← hr2]; field_simp; ring
+    rw [key, div_le_iff₀ (by positivity)]
+    have hP : (13685 / 1000000) ^ 2 * (r ^ 2 * (r ^ 2 - 2) ^ 2) - 8 * (5957 / 10000) ^ 2 * (r + 2) ^ 4 =
+        7491169 / 40000000000 * d ^ 6 + 286020323589 / 2000000000000 * d ^ 5 + 3413011295365203 / 80000000000000 * d ^ 4 + 12506253377124243527 / 2000000000000000 * d ^ 3 + 361855680638322841280387 / 800000000000000000 * d ^ 2 + 2596897163859396829419421349 / 200000000000000000000 * d + 117217509525658286475214116241 / 40000000000000000000000 := by
+      rw [hrd']; ring
+    have : 0 ≤ 7491169 / 40000000000 * d ^ 6 + 286020323589 / 2000000000000 * d ^ 5 + 3413011295365203 / 80000000000000 * d ^ 4 + 12506253377124243527 / 2000000000000000 * d ^ 3 + 361855680638322841280387 / 800000000000000000 * d ^ 2 + 2596897163859396829419421349 / 200000000000000000000 * d + 117217509525658286475214116241 / 40000000000000000000000 := by positivity
+    linarith
+  have hS0 : 0 ≤ S := Real.sqrt_nonneg _
+  unfold BstLean.Part184.WflB
+  rw [← hLd, ← hSd]
+  have e : 2 * (181 / 100 * L) * S = 362 / 100 * (L * S) := by ring
+  rw [e]
+  have h1 : 362 / 100 * (L * S) ≤ 362 / 100 * (13685 / 1000000) :=
+    mul_le_mul_of_nonneg_left hLS (by norm_num)
+  have h3 : (362 / 100 : ℝ) * (13685 / 1000000) ≤ 4954 / 100000 := by norm_num
+  linarith
+
+
+theorem classifier_paper_bias_num22k (hHQ : BstLean.Part188.M.HQG n) (hn : 16200 ≤ n) (t : ℝ)
+    {Gb : Set (WRet n × Matrix (Fin (mA n)) (Fin n) ℝ)} (hGb : MeasurableSet Gb)
+    (hδG : ∀ wr : WRet n, windowW wr → (nuA n).real {θ | (wr, θ.1) ∉ Gb} ≤ 122 / 1000000)
+    {Een : Set (Ret n)} (hEenm : MeasurableSet Een)
+    (hEen : (retDist (paperCentres n)).real Eenᶜ ≤ 1 / 10 ^ 6)
+    (hfE : ∀ c ∈ Een, 0 < (paperDesignP n).tau0 c → (∫ a in BstLean.Part179.N30.N27.N26.N25.N24.N23.N22.J1725.KR c, fbR c a ^ 4 ∂BstLean.Part161.muI n ≤ (1005 / 1000) ^ 4) ∧
+      (∫ a in BstLean.Part179.N30.N27.N26.N25.N24.N23.N22.J1725.KR c, fbR c a ^ 24 ∂BstLean.Part161.muI n ≤ (1005 / 1000) ^ 24))
+    (hBiasF : BiasMomF (O1n n) Gb (1198 / 100000)) (hBiasW : BiasMomW (O1n n) Gb (914 / 100000)) :
+    99 / 100 ≤ ((mlpTriple 2 n).prod (sampMeas (10 ^ 12) n)).real
+      {x | successNet x.1 t (progOut (paperDesignP n) t BstLean.Part156.aL (10 ^ 12) x.1 x.2)} := by
+  refine classifier_paper_flw22k hHQ hn t hGb (by norm_num) hδG hEenm hEen hfE (by norm_num) (by norm_num)
+    (Af := 613 / 10000) (Aw := 1514 / 10000) (by norm_num) (by norm_num) (by norm_num) (by norm_num) hBiasF hBiasW ?_
+  have hF := FflB_le hn
+  have hW := WflB_le hn
+  have hF0 : 0 ≤ BstLean.Part184.FflB n (O1n n) (5957 / 10000) := by unfold BstLean.Part184.FflB; positivity
+  have hW0 : 0 ≤ BstLean.Part184.WflB n (O1n n) (5957 / 10000) := by
+    unfold BstLean.Part184.WflB; positivity
+  have h1 : ((BstLean.Part184.FflB n (O1n n) (5957 / 10000) + 1198 / 100000) / (613 / 10000)) ^ 8 ≤
+      ((1116 / 100000 + 1198 / 100000) / (613 / 10000)) ^ 8 :=
+    pow_le_pow_left₀ (by positivity) (by gcongr) 8
+  have h2 : ((BstLean.Part184.WflB n (O1n n) (5957 / 10000) + 914 / 100000) / (1514 / 10000)) ^ 8 ≤
+      ((4954 / 100000 + 914 / 100000) / (1514 / 10000)) ^ 8 :=
+    pow_le_pow_left₀ (by positivity) (by gcongr) 8
+  have hr := roomK_ge
+  have hX := BstLean.Part181.roomX_eq
+  have hT21 := BstLean.Part188.M.roomL_eq
+  have h3 : (122 : ℝ) / 1000000 + ((1116 / 100000 + 1198 / 100000) / (613 / 10000)) ^ 8 +
+      ((4954 / 100000 + 914 / 100000) / (1514 / 10000)) ^ 8 + 1 / 10 ^ 6 ≤ 1046 / 10 ^ 6 := by
+    norm_num
+  linarith
+
+end SPart170NumW
+
+end BstLean.Part190.Chain.M
+

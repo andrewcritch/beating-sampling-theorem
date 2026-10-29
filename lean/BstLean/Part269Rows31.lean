@@ -1,0 +1,106 @@
+import BstLean.Part268Cells31
+import BstLean.Part268Scalar31
+import BstLean.Part263ScalarSupply
+namespace BstLean.Part269
+open Real BstLean.Part263 BstLean.Part268
+noncomputable def scalarRow13125 : BstLean.Part263.ScalarRow 13125 :=
+  ⟨(437593255156481 / 5000000000000000 : ℝ), (320064077389531 / 200000000000000000 : ℝ), (20188096380913 / 625000000000000 : ℝ), (531481 / 1000000 : ℝ), (729982298171 / 500000000000 : ℝ), cell13125, grid13125, rfl, rfl, rfl,
+    cells13125, energyAllowanceBound13125, frameNeeded13125, sourceContainment13125⟩
+
+noncomputable def scalarRow13126 : BstLean.Part263.ScalarRow 13126 :=
+  ⟨(54697517753237 / 625000000000000 : ℝ), (1600198428278977 / 1000000000000000000 : ℝ), (80746092550163 / 2500000000000000 : ℝ), (531481 / 1000000 : ℝ), (1459936471397 / 1000000000000 : ℝ), cell13126, grid13126, rfl, rfl, rfl,
+    cells13126, energyAllowanceBound13126, frameNeeded13126, sourceContainment13126⟩
+
+noncomputable def scalarRow13127 : BstLean.Part263.ScalarRow 13127 :=
+  ⟨(13673969712731 / 156250000000000 : ℝ), (400019122049389 / 250000000000000000 : ℝ), (20184950141057 / 625000000000000 : ℝ), (531481 / 1000000 : ℝ), (1459908089479 / 1000000000000 : ℝ), cell13127, grid13127, rfl, rfl, rfl,
+    cells13127, energyAllowanceBound13127, frameNeeded13127, sourceContainment13127⟩
+
+noncomputable def scalarRow13128 : BstLean.Part263.ScalarRow 13128 :=
+  ⟨(43755392150053 / 500000000000000 : ℝ), (1599954566699141 / 1000000000000000000 : ℝ), (64586807652481 / 2000000000000000 : ℝ), (531481 / 1000000 : ℝ), (729939841907 / 500000000000 : ℝ), cell13128, grid13128, rfl, rfl, rfl,
+    cells13128, energyAllowanceBound13128, frameNeeded13128, sourceContainment13128⟩
+
+noncomputable def scalarRow13129 : BstLean.Part263.ScalarRow 13129 :=
+  ⟨(437540814104871 / 5000000000000000 : ℝ), (319966532755897 / 200000000000000000 : ℝ), (322908878216151 / 10000000000000000 : ℝ), (531481 / 1000000 : ℝ), (1459851283549 / 1000000000000 : ℝ), cell13129, grid13129, rfl, rfl, rfl,
+    cells13129, energyAllowanceBound13129, frameNeeded13129, sourceContainment13129⟩
+
+noncomputable def scalarRow13130 : BstLean.Part263.ScalarRow 13130 :=
+  ⟨(437527708619977 / 5000000000000000 : ℝ), (799855389717171 / 500000000000000000 : ℝ), (32288372211717 / 1000000000000000 : ℝ), (531481 / 1000000 : ℝ), (729873166247 / 500000000000 : ℝ), cell13130, grid13130, rfl, rfl, rfl,
+    cells13130, energyAllowanceBound13130, frameNeeded13130, sourceContainment13130⟩
+
+noncomputable def scalarRow13131 : BstLean.Part263.ScalarRow 13131 :=
+  ⟨(875029210090819 / 10000000000000000 : ℝ), (1599588913659467 / 1000000000000000000 : ℝ), (1008933031139 / 31250000000000 : ℝ), (531481 / 1000000 : ℝ), (729858983593 / 500000000000 : ℝ), cell13131, grid13131, rfl, rfl, rfl,
+    cells13131, energyAllowanceBound13131, frameNeeded13131, sourceContainment13131⟩
+
+noncomputable def scalarRow13132 : BstLean.Part263.ScalarRow 13132 :=
+  ⟨(875003006761461 / 10000000000000000 : ℝ), (199933383306327 / 125000000000000000 : ℝ), (322833421757103 / 10000000000000000 : ℝ), (531481 / 1000000 : ℝ), (364922403273 / 250000000000 : ℝ), cell13132, grid13132, rfl, rfl, rfl,
+    cells13132, energyAllowanceBound13132, frameNeeded13132, sourceContainment13132⟩
+
+noncomputable def scalarRow13133 : BstLean.Part263.ScalarRow 13133 :=
+  ⟨(218744201812751 / 2500000000000000 : ℝ), (1599345237803547 / 1000000000000000000 : ℝ), (16140413874703 / 500000000000000 : ℝ), (531481 / 1000000 : ℝ), (729830638017 / 500000000000 : ℝ), cell13133, grid13133, rfl, rfl, rfl,
+    cells13133, energyAllowanceBound13133, frameNeeded13133, sourceContainment13133⟩
+
+noncomputable def scalarRow13134 : BstLean.Part263.ScalarRow 13134 :=
+  ⟨(218737652889643 / 2500000000000000 : ℝ), (1599223427714019 / 1000000000000000000 : ℝ), (322783137174371 / 10000000000000000 : ℝ), (531481 / 1000000 : ℝ), (1459632956007 / 1000000000000 : ℝ), cell13134, grid13134, rfl, rfl, rfl,
+    cells13134, energyAllowanceBound13134, frameNeeded13134, sourceContainment13134⟩
+
+noncomputable def scalarRow13135 : BstLean.Part263.ScalarRow 13135 :=
+  ⟨(87492441968329 / 1000000000000000 : ℝ), (12492981532639 / 7812500000000000 : ℝ), (161379000398529 / 5000000000000000 : ℝ), (531481 / 1000000 : ℝ), (182450580897 / 125000000000 : ℝ), cell13135, grid13135, rfl, rfl, rfl,
+    cells13135, energyAllowanceBound13135, frameNeeded13135, sourceContainment13135⟩
+
+noncomputable def scalarRow13136 : BstLean.Part263.ScalarRow 13136 :=
+  ⟨(874898231624283 / 10000000000000000 : ℝ), (799489931595313 / 500000000000000000 : ℝ), (322732868361143 / 10000000000000000 : ℝ), (531481 / 1000000 : ℝ), (291915269907 / 200000000000 : ℝ), cell13136, grid13136, rfl, rfl, rfl,
+    cells13136, energyAllowanceBound13136, frameNeeded13136, sourceContainment13136⟩
+
+noncomputable def scalarRow13137 : BstLean.Part263.ScalarRow 13137 :=
+  ⟨(34994881895227 / 400000000000000 : ℝ), (799429054374143 / 500000000000000000 : ℝ), (322707739865649 / 10000000000000000 : ℝ), (531481 / 1000000 : ℝ), (364887017227 / 250000000000 : ℝ), cell13137, grid13137, rfl, rfl, rfl,
+    cells13137, energyAllowanceBound13137, frameNeeded13137, sourceContainment13137⟩
+
+noncomputable def scalarRow13138 : BstLean.Part263.ScalarRow 13138 :=
+  ⟨(874845866951593 / 10000000000000000 : ℝ), (319747274569307 / 200000000000000000 : ℝ), (322682615309597 / 10000000000000000 : ℝ), (531481 / 1000000 : ℝ), (1459519799459 / 1000000000000 : ℝ), cell13138, grid13138, rfl, rfl, rfl,
+    cells13138, energyAllowanceBound13138, frameNeeded13138, sourceContainment13138⟩
+
+noncomputable def scalarRow13139 : BstLean.Part263.ScalarRow 13139 :=
+  ⟨(874819690336161 / 10000000000000000 : ℝ), (799307327740569 / 500000000000000000 : ℝ), (322657494692011 / 10000000000000000 : ℝ), (531481 / 1000000 : ℝ), (364872886753 / 250000000000 : ℝ), cell13139, grid13139, rfl, rfl, rfl,
+    cells13139, energyAllowanceBound13139, frameNeeded13139, sourceContainment13139⟩
+
+noncomputable def scalarRow13140 : BstLean.Part263.ScalarRow 13140 :=
+  ⟨(174958703506701 / 2000000000000000 : ℝ), (799246478323931 / 500000000000000000 : ℝ), (64526475602383 / 2000000000000000 : ℝ), (531481 / 1000000 : ℝ), (364846709671 / 250000000000 : ℝ), cell13140, grid13140, rfl, rfl, rfl,
+    cells13140, energyAllowanceBound13140, frameNeeded13140, sourceContainment13140⟩
+
+noncomputable def scalarRow13141 : BstLean.Part263.ScalarRow 13141 :=
+  ⟨(874767348542753 / 10000000000000000 : ℝ), (63934851053699 / 40000000000000000 : ℝ), (80651816317083 / 2500000000000000 : ℝ), (531481 / 1000000 : ℝ), (36483965381 / 25000000000 : ℝ), cell13141, grid13141, rfl, rfl, rfl,
+    cells13141, energyAllowanceBound13141, frameNeeded13141, sourceContainment13141⟩
+
+noncomputable def scalarRow13142 : BstLean.Part263.ScalarRow 13142 :=
+  ⟨(87474118336303 / 1000000000000000 : ℝ), (799124807280373 / 500000000000000000 : ℝ), (322582156460287 / 10000000000000000 : ℝ), (531481 / 1000000 : ℝ), (729665204389 / 500000000000 : ℝ), cell13142, grid13142, rfl, rfl, rfl,
+    cells13142, energyAllowanceBound13142, frameNeeded13142, sourceContainment13142⟩
+
+noncomputable def scalarRow13143 : BstLean.Part263.ScalarRow 13143 :=
+  ⟨(437357510996731 / 5000000000000000 : ℝ), (319625594259689 / 200000000000000000 : ℝ), (80639262896701 / 2500000000000000 : ℝ), (531481 / 1000000 : ℝ), (1459302207641 / 1000000000000 : ℝ), cell13143, grid13143, rfl, rfl, rfl,
+    cells13143, energyAllowanceBound13143, frameNeeded13143, sourceContainment13143⟩
+
+noncomputable def scalarRow13144 : BstLean.Part263.ScalarRow 13144 :=
+  ⟨(437344432216589 / 5000000000000000 : ℝ), (319601269310269 / 200000000000000000 : ℝ), (80632987661727 / 2500000000000000 : ℝ), (531481 / 1000000 : ℝ), (729637011737 / 500000000000 : ℝ), cell13144, grid13144, rfl, rfl, rfl,
+    cells13144, energyAllowanceBound13144, frameNeeded13144, sourceContainment13144⟩
+
+noncomputable def scalarRow13145 : BstLean.Part263.ScalarRow 13145 :=
+  ⟨(109332838835163 / 1250000000000000 : ℝ), (798942370157609 / 500000000000000000 : ℝ), (40313356704953 / 1250000000000000 : ℝ), (531481 / 1000000 : ℝ), (1459245856273 / 1000000000000 : ℝ), cell13145, grid13145, rfl, rfl, rfl,
+    cells13145, energyAllowanceBound13145, frameNeeded13145, sourceContainment13145⟩
+
+noncomputable def scalarRow13146 : BstLean.Part263.ScalarRow 13146 :=
+  ⟨(874636560736967 / 10000000000000000 : ℝ), (1597763152585839 / 1000000000000000000 : ℝ), (322481760563979 / 10000000000000000 : ℝ), (531481 / 1000000 : ℝ), (729608850103 / 500000000000 : ℝ), cell13146, grid13146, rfl, rfl, rfl,
+    cells13146, energyAllowanceBound13146, frameNeeded13146, sourceContainment13146⟩
+
+noncomputable def scalarRow13147 : BstLean.Part263.ScalarRow 13147 :=
+  ⟨(874610414599297 / 10000000000000000 : ℝ), (1597641583358983 / 1000000000000000000 : ℝ), (161228335709499 / 5000000000000000 : ℝ), (531481 / 1000000 : ℝ), (364797390273 / 250000000000 : ℝ), cell13147, grid13147, rfl, rfl, rfl,
+    cells13147, energyAllowanceBound13147, frameNeeded13147, sourceContainment13147⟩
+
+noncomputable def scalarRow13148 : BstLean.Part263.ScalarRow 13148 :=
+  ⟨(43729213613371 / 500000000000000 : ℝ), (1597520032630427 / 1000000000000000000 : ℝ), (80607896550927 / 2500000000000000 : ℝ), (531481 / 1000000 : ℝ), (14591614331 / 10000000000 : ℝ), cell13148, grid13148, rfl, rfl, rfl,
+    cells13148, energyAllowanceBound13148, frameNeeded13148, sourceContainment13148⟩
+
+noncomputable def scalarRow13149 : BstLean.Part263.ScalarRow 13149 :=
+  ⟨(174911626748093 / 2000000000000000 : ℝ), (31947970007919 / 20000000000000000 : ℝ), (20150406557321 / 625000000000000 : ℝ), (531481 / 1000000 : ℝ), (11399479033 / 7812500000 : ℝ), cell13149, grid13149, rfl, rfl, rfl,
+    cells13149, energyAllowanceBound13149, frameNeeded13149, sourceContainment13149⟩
+
+end BstLean.Part269

@@ -1,0 +1,1586 @@
+\documentclass[10pt]{article}
+
+\usepackage[top=0.85in,bottom=0.85in,left=1.5in,right=1.5in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\setlist[enumerate]{topsep=10pt plus 2pt,partopsep=0pt}
+\usepackage{booktabs,longtable}
+\usepackage[spaces]{url}
+\def\UrlBreaks{\do\.\do\,\do\ \do\*}
+\usepackage{xcolor,relsize,xspace}
+\usepackage[round]{natbib}
+\usepackage[colorlinks,citecolor=blue,linkcolor=black,urlcolor=black]{hyperref}
+
+% ---------------------------------------------------------------------------
+% Pointers to the Lean formalization. \leanrepo is the URL of the extracted
+% Lean project at the release tag v1.0. \leanref{Part157Defs,Part156Out} cites modules of bsp/lean under
+% BstLean, printed as (BstLean:Part157Defs,Part156Out); \leanmod{BSP} cites a
+% module outside BstLean. check_coverage.py checks that the groups of the Lean
+% files appendix cover every module of the project.
+\newcommand{\leanrepo}{https://github.com/andrewcritch/beating-sampling-theorem/tree/v1.0/lean}
+\newcommand{\leanmod}[1]{{\relscale{0.78}\color{gray}\hypersetup{urlcolor=gray}%
+  \textup{(\href{\leanrepo}{\nolinkurl{#1}})}}}
+\newcommand{\leanref}[1]{\leanmod{BstLean:#1}}
+\newcommand{\bstlean}{\texttt{BstLean}}
+% \leanname{Part289.progOut_run2} names a declaration in namespace BstLean.
+\newcommand{\leanname}[1]{\nolinkurl{#1}}
+\input{steps.tex}
+\newcommand{\leanparts}[1]{{\relscale{0.78}\color{gray}\hypersetup{urlcolor=gray}%
+  \textup{(Lean: \href{\leanrepo}{#1})}}}
+% Numbered Lean notes: \leanmark{1} in the text, and after the paragraph
+% \begin{leanitems}\leanitem[1]{Part157Paper,Part169Pass}\end{leanitems}.
+\newcommand{\leanmark}[1]{{\relscale{0.78}\color{gray}[#1]}}
+\newcommand{\leanlist}[1]{\href{\leanrepo}{\nolinkurl{BstLean:#1}}}
+% \leanitem[N]{Part1,Part2} lists BstLean modules; \leanitem*[N]{text} links other text to the repository.
+\NewDocumentCommand{\leanitem}{s O{1} m}{\item[{[#2]}] \IfBooleanTF{#1}{\href{\leanrepo}{#3}}{\leanlist{#3}}}
+\newenvironment{leanitems}{\par\smallskip\relscale{0.78}\color{gray}\hypersetup{urlcolor=gray}\raggedright%
+  \begin{list}{}{\setlength{\leftmargin}{2em}\setlength{\labelwidth}{1.6em}%
+  \setlength{\labelsep}{0.4em}\setlength{\itemsep}{0pt}\setlength{\topsep}{0pt}%
+  \setlength{\parsep}{0pt}}}{\end{list}\par\medskip}
+% ---------------------------------------------------------------------------
+
+\emergencystretch=2em
+\newtheorem*{bstheorem}{Theorem (Beating Sampling Theorem)}
+% \bst links to the Beating Sampling Theorem.
+\newcommand{\bst}{\hyperref[thm:main]{Beating Sampling Theorem}}
+\newtheorem{lemma}{Lemma}
+\newtheorem{conjecture}{Conjecture}
+\newcommand{\RR}{\mathbb{R}}
+% \Xx is \mathcal{X} and \XX is \mathbb{X} (\AAA, \SSS where \AA, \SS exist).
+\newcommand{\Dd}{\mathcal{D}}\newcommand{\Ee}{\mathcal{E}}
+\newcommand{\Gg}{\mathcal{G}}\newcommand{\Hh}{\mathcal{H}}
+\newcommand{\SSS}{\mathbb{S}}\newcommand{\Kk}{\mathcal{K}}\newcommand{\Nn}{\mathcal{N}}\newcommand{\Bb}{\mathcal{B}}
+% Tags for areas to improve: \futurework and \Futurework print the phrase in orange
+% (xspace adds a following space where needed).
+\newcommand{\futurework}{\textcolor{orange}{future work}\xspace}
+\newcommand{\Futurework}{\textcolor{orange}{Future work}\xspace}
+\newcommand{\Est}{\mathrm{Est}}
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\relu}{\operatorname{ReLU}}
+\newcommand{\chat}{\hat c}
+
+\title{Beating Sampling:\\ Mechanistic Estimation of the Failure Rate\\ of a Neural Network at Frontier Scale}
+\author{Andrew Critch\\ MAISI}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+When can the failure rate of a neural network be estimated more efficiently by analyzing its internals than by sampling its outputs? We investigate this question for a class of random ReLU MLP ``agents'', and prove that the answer is ``usually'', with a single explicit estimation procedure which upper-bounds the failure rate $p$ within a factor of 10, or else by at most 1\%, for at least 99\% of networks and random seeds. The result holds for every input dimension $n\ge8{,}000$. For agents in our class with $8{,}000\le n\le16{,}384$ (comparable to the embedding width of current frontier transformers), the agent MLP has between $4.1\cdot10^{15}$ and $7.2\cdot10^{16}$ parameters, and the procedure costs about as much as a single exact sample of the agent's behavior. By contrast, consider a naive estimator that sees only the outcomes of exact samples and must succeed with probability $0.99$ for every value of the failure rate $p$. When $p \leq 0.1\%$, the naive estimator needs more than $448$ samples on average. For such low failure rates, our procedure is thus more than $447$ times more efficient than naive sampling. The Beating Sampling Theorem and its proof are checked in Lean, and the translation of the Beating Sampling Theorem's assumptions and conclusions into Lean has been checked by GPT-6-Astra (high effort) and Claude Opus~5.5 (medium effort).
+\end{abstract}
+
+\section{Introduction}\label{sec:motivation}
+
+This paper is the result of an experiment in human--LLM collaboration on mathematical interpretability research and exposition.  While I, Andrew Critch, wrote the title and this introduction, the remainder of the content was written primarily by Claude-Opus-5.5 (medium effort, in Claude Code), with heavy editorial input from myself and GPT-6-Astra (high effort, in Codex). The paper describes technical work produced and formalized primarily by the same two models, in a collaboration enabled by javascript tools for them to send messages to each other. If you are primarily interested in how LLM agents were used to produce, formalize, and explain the result, please see Section \ref{sec:llm-usage}. 
+
+I called our main result the Beating Sampling Theorem, because it shows how ``white-box'' statistical methods --- or arguably, mechanistic interpretability techniques --- are much more efficient than naive statistical sampling methods for estimating the frequency of rare events in neural network behavior.  Notably, mechanistic analysis is applied not only to the ``agent'' networks, but to the world (or world model) from which their inputs are drawn.
+
+I was inspired to pursue this question by the Alignment Research Center (ARC), and by my own nagging sense that the mechanistic interpretability of the world should also be represented in mathematical intepretability research, as well as the cost of sampling from or analyzing the world. Previous work by ARC in this area has represented and analyzed primarily the mechanisms and sampling costs of the agent, not the world.  I also wanted to produce concrete, non-aysmptotic estimates of the computational costs and savings enabled by mechanistic analysis, at network scales somewhat comparable to current frontier AI models.
+
+I'm not sure if everyone will consider the methods here ``mechanistic'' enough to be deserving of the term ``mechanistic estimation''.  In case of objections, I would offer the term ``perspicacious estimation'', as the estimation method peers into the innards of the network, and makes use of that insight to drastically reduce estimation costs.
+
+\section{Motivation}\label{sec:motivation}
+
+The statistical behavior of a neural network over an input distribution is usually estimated by sampling: collect inputs, evaluate the network on the inputs, count. However, behavior estimation by analyzing the internals of a network can be preferable to black-box sampling, for a variety of reasons:
+\begin{enumerate}
+\item \textbf{(sample count)} low-probability catastrophic events may require large numbers of samples to rule out, yielding high costs for eval-based safety assessments;
+\item \textbf{(cost per sample)} for certain high-risk applications, access to real-world inputs is difficult, yielding a prohibitively high cost per sample; and
+\item \textbf{(evaluation risk)} even in a testing environment, running a network with powerful cyberspace capabilities can compromise its containment, as in the infamous OpenAI–Huggingface intrusion.
+\end{enumerate}
+
+By contrast, mechanistic interpretability methods aim to understand a network's behavior by analyzing its internal structure after training. Alignment problems may thus be addressed by looking for sources of malignment inside the network and ruling them out, or validating the presence of alignment mechanisms. If successful, mechanistic safety approaches could hence reduce all three of the costs above: large sampling counts, high costs per sample, and evaluation risks.
+
+This note exhibits a process for estimating the failure rate of a random MLP, under a random failure metric and an arbitrary threshold.  It follows on the work of the Alignment Research Center (ARC) on their ``Matching Sampling Principle'' \citep{arc-2025-competing,arc-2026-wide-mlps} as discussed in the Related Work section at the end.  Unlike ARC's asymptotic width guarantees, our guarantees use explicit network dimensions, and we analyze a non-Gaussian input distribution generated by another, larger neural network rather than the Gaussian inputs of \citet{arc-2026-wide-mlps}.
+
+% The size-comparison table, shown in Section 3 and again in Appendix A.
+\newcommand{\sizestable}{%
+\setlength{\tabcolsep}{2.4pt}%
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+Network & $n$ & $h$ & $\ell$ & $n'$ & Parameters \\
+\midrule
+Kimi K3 MLPs (routed experts)~\citep{kimi-2026-k3} & $3{,}584$ & $2{,}752{,}512$ & $1$ & $3{,}584$ & $2.8\cdot10^{12}$ \\
+GLM-5.3 MLPs~\citep{zai-2026-glm53} & $6{,}144$ & $524{,}288$ & $1$ & $6{,}144$ & $7.53\cdot10^{11}$ \\
+DeepSeek V4 Pro MLPs~\citep{deepseek-2026-v4} & $7{,}168$ & $1{,}179{,}648$ & $1$ & $7{,}168$ & $1.6\cdot10^{12}$ \\
+Qwen3.8-2.4T-A95B MLPs~\citep{qwen-2026-38} & $8{,}192$ & $1{,}048{,}576$ & $1$ & $8{,}192$ & $2.4\cdot10^{12}$ \\
+Muse Spark Open MLPs~\citep{meta-2026-muse} & $4{,}096$ & $1{,}048{,}576$ & $1$ & $4{,}096$ & $8.16\cdot10^{11}$ \\
+\midrule
+\textbf{\bst, Agent ($\boldsymbol{A}$)} & $\boldsymbol{8{,}000}$ & $\boldsymbol{64{,}000{,}000}$ & $\boldsymbol{2}$ & $\boldsymbol{8{,}000}$ & $\boldsymbol{4.1\cdot10^{15}}$ \\
+\textbf{\bst, World ($\boldsymbol{W}$)} & $\boldsymbol{16{,}000}$ & $\boldsymbol{4.58\cdot10^{13}}$ & $\boldsymbol{2}$ & $\boldsymbol{8{,}000}$ & $\boldsymbol{2.1\cdot10^{27}}$ \\
+\bottomrule
+\end{tabular}}
+
+
+\section{Setting and result}\label{sec:setting}
+
+\paragraph{MLP notation.} For positive integers $n,h,\ell,n'$, let $\mathrm{MLP}(n,h,\ell,n')$ denote the set of multi-layer perceptrons (MLPs) with ReLU activation functions and no biases, with input dimension $n$, hidden width $h$, $\ell$ hidden layers and output dimension $n'$.
+
+\paragraph{Network sizes.} Rather than working asymptotically, our Beating Sampling Theorem will apply to agent MLPs above a certain size.  Table~\ref{tab:sizes} compares this size with the MLP components of open-weight frontier LLMs. Appendix~\ref{app:sizes} gives more details. Amongst these real-world models, $h\approx n^{1.6}$. The Beating Sampling Theorem uses $h=n^2$.
+
+\begin{table}[h]
+\centering\small
+\sizestable
+\caption{The agent and world networks of the \bst{} at $n=8{,}000$, and the MLP
+blocks of large open-weight transformers. For a mixture-of-experts layer,
+$h$ is the total width of its routed experts. The last column counts the
+parameters of the whole model; see Appendix~\ref{app:sizes}.}
+\label{tab:sizes}
+\end{table}
+
+\paragraph{The agent and world networks.}  Consider an ``agent'' $A\in\mathrm{MLP}(n,n^2,2,n)$.  We also need some way of representing the complexity of the broader world from which the agent will receive inputs.  For that, consider a much larger ``world'' network $W\in\mathrm{MLP}(2n,\lceil n^{3.5}\rceil,2,n)$.  This world and agent will not interact sequentially, so the ``agent'' is not very agent-like; these terms were chosen mainly to represent their relative sizes.  Their dimensions were chosen somewhat arbitrarily to achieve about $n^3$ (roughly a trillion) times more parameters in the world network than in the agent network when we later prove the \bst{}.  The world network will transform a high-entropy input $u$ into a normalized input $W(u)/|W(u)|$ for the network $A$, where $u$ is sampled uniformly from the unit sphere of $\RR^{2n}$.  The normalization step reflects the practice of neural network developers choosing reasonably bounded units in which the networks receive their inputs from the world.
+
+Now suppose the agent network $A$ is being evaluated by a smaller ``failure metric'' network $F\in\mathrm{MLP}(n,\lceil n^{1.5}\rceil,2,1)$, with a threshold $t\in\RR$ defining a Boolean failure classifier $C(y)\coloneqq \mathbf 1[F(y)>t]$. Suppose the threshold $t$ is arbitrary but fixed, and $(W,A,F)$ are drawn independently with independent centered Gaussian weights, where the variance of each weight is $2/d$, and $d$ is the number of inputs to the layer containing it (He initialization).
+
+Given $(W,A,F,t)$, we wish to estimate the failure probability 
+\[p\coloneqq \PP_u\left[C\left(A\left(\frac{W(u)}{|W(u)|}\right)\right)=1\right]\]
+with $u$ sampled from the unit sphere as above. The Beating Sampling Theorem will give a concrete procedure $\Est(W,A,F,r;t)$, which will use the weights of $W$ and $A$ but never evaluate either network on an input; here $r$ is a random seed. Even accounting for $W$, $\Est(W,A,F,r;t)$ will use fewer than $1.0003\cdot2n^7$ arithmetic operations, which is about the cost of one exact sample of $C(A(x))$. For every $n\ge8{,}000$ and every $t$, for at least $99\%$ of inputs $(W,A,F,r)$, $\Est(W,A,F,r;t)$ will return an upper bound $U$ with $p\le U\le\max(10p,1/100)$. The success-probability and operation-count bounds of the \bst{} are proved in Lean, for the definitions and cost model used here.
+
+\paragraph{Success and cost.}
+Let $x_0\coloneqq(1,0,\dots,0)\in\RR^n$ be the first standard basis vector. When $|W(u)|>0$ let
+$x\coloneqq W(u)/|W(u)|$, else let $x\coloneqq x_0$. Then $p=\PP_u[F(A(x))>t]$. A program
+outputting $U$ \emph{succeeds} if $p\le U\le\max(10p,1/100)$~\leanmark{1}. Its \emph{cost} is the
+number of operations it performs on real numbers: additions, subtractions,
+multiplications, divisions, square roots, $\relu$s, comparisons, branches and
+table reads at computed indices; here $v/0\coloneqq0$, $\sqrt v\coloneqq$ the nonnegative square
+root of $\max(0,v)$, and $\relu(v)\coloneqq\max(0,v)$ for $v\in\RR$. Reading an input (an entry of the seed $r$ or a weight of $W$, $A$ or $F$), a stored intermediate value or a rational constant costs nothing in the cost model in Lean~\leanmark{2}, although future work could easily include these costs, as they are negligible (see the program below).
+\begin{leanitems}
+\leanitem[1]{Part157Defs,Part156Out}; \href{\leanrepo}{\leanstepA}.
+\leanitem[2]{Part130Cost,Part282Join,Part288Search,Part289Run}.
+\end{leanitems}
+
+\phantomsection\label{thm:main}
+\begin{bstheorem}
+Let $n\ge 8{,}000$ be an integer and $t\in\RR$. Then $\Est(W,A,F,r;t)$ applies
+neither $W$ nor $A$ to any input, performs
+fewer than $1.0003\cdot 2n^7$ operations, and for at least $99\%$ of inputs
+$(W,A,F,r)$ its output $U$ satisfies
+\[
+  p\;\le\;U\;\le\;\max(10p,\,1/100).
+\]
+\end{bstheorem}
+
+For comparison, collecting a single $C(A(x))$ sample by evaluating $W$, $A$ and $F$ layer by layer needs at least $2n^7$
+operations (Section~\ref{sec:program}). Both bounds of the \bst{} are checked in Lean, using only the axioms
+\texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}~\leanmark{1}.
+\begin{leanitems}
+\leanitem[1]{Part293FinalAudit,Part289Cost}; declarations \texttt{Part293.classifier\_stated2\_8000} and \texttt{Part289.progOut\_run2}; \href{\leanrepo}{\nolinkurl{BSP}}.
+\end{leanitems}
+
+\section{Comparison with estimation by naive sampling}\label{sec:comparison}
+
+The \bst{} says that $\Est$ costs less than $1.0003$ times as much as one
+exact sample of $C(A(x))$. How many samples would we need if we estimated 
+$p$ just by naively sampling and tallying $C$-values?
+
+Drawing independent inputs $u$ and naively evaluating $C(A(x))$ on each gives independent samples, like coin flips, each equal to
+$1$ with probability $p$. Recall that a program outputting $U$
+\emph{succeeds} if $p\le U\le\max(10p,1/100)$ (Section~\ref{sec:setting}). We call a program a \emph{naive-99\% sampler} if it sees only these flips and
+its own independent random numbers, decides after each flip whether to stop,
+and stops with probability $1$ and succeeds with probability at least $0.99$,
+for \emph{every} value $p\in[0,1]$. Such a program is naive in three ways: it
+evaluates every network in full on every input; it ignores the
+weights of $W$, $A$ and $F$, which it uses only through the flips; and it
+insists on succeeding with probability $0.99$ for every $p$, instead
+of for $99\%$ of inputs $(W,A,F,r)$ as $\Est$ will.
+
+Let $N$ be the number of flips that a naive-99\% sampler uses. For
+$s\in[0,1]$ and $v\in(0,1)$, let
+$\mathrm{KL}(s\Vert v)\coloneqq s\ln(s/v)+(1-s)\ln((1-s)/(1-v))$, with
+$0\ln0\coloneqq0$. Say that an output $U$ \emph{succeeds at} a flip
+probability $s$ if $s\le U\le\max(10s,1/100)$.
+
+\begin{lemma}\label{lem:wald}
+Let $p\in[0,1]$ and $q\in(0,1)$, and suppose that no $U$
+succeeds both at $p$ and at $q$. Then every naive-99\% sampler satisfies
+$\EE_pN\ge0.98\ln99/\mathrm{KL}(p\Vert q)$.
+\end{lemma}
+\begin{proof}
+Lemma~\ref{lem:wald} extends to randomized samplers Wald's lower bound on
+the expected number of observations of a sequential
+test~\citep[Section~4.7, eq.~(4.80)]{wald-1945}. In the present terms,
+Wald's bound states the following. Let a non-randomized sequential test
+between flip probabilities $p$ and $q$ stop with probability $1$ at both,
+and let $a$ and $b$ be its error probabilities at $p$ and at $q$. Then
+$\EE_pN\cdot\mathrm{KL}(p\Vert q)\ge\mathrm{KL}(1-a\Vert b)$, where
+we extend $\mathrm{KL}$ to $v\in\{0,1\}$ by $s\ln(s/0)\coloneqq\infty$ for
+$s>0$ (Wald does not treat zero error probabilities; the bound holds trivially there). (Wald writes $-\mathrm{KL}(p\Vert q)$ as $E_0(z)$.)
+
+The outputs that succeed at
+$p$ and the outputs that succeed at $q$ form two disjoint nonempty intervals,
+so one interval lies above the other. Let the sampler decide for the flip
+probability of the upper interval if $U$ lies above the lower interval, and
+for the other flip probability otherwise. At each of $p$ and $q$, success
+implies the correct decision, so both error probabilities $a$ and $b$ are at
+most $0.01$. Let $V$ be the sampler's own random numbers, which are
+independent of the flips. For almost every value $v$ of $V$, the sampler with
+$V=v$ is a non-randomized sequential test that stops with probability $1$ at
+both $p$ and $q$. Let $a(v)$ and $b(v)$ be its error probabilities, so that
+$\EE a(V)=a$ and $\EE b(V)=b$. Wald's bound gives
+$\EE_p[N\mid V=v]\cdot\mathrm{KL}(p\Vert q)\ge\mathrm{KL}(1-a(v)\Vert b(v))$.
+$\mathrm{KL}$ is jointly convex in its two arguments, so averaging over $V$
+gives $\EE_pN\cdot\mathrm{KL}(p\Vert q)\ge\mathrm{KL}(1-a\Vert b)$. For
+$s\ge v$, $\mathrm{KL}(s\Vert v)$ increases in $s$ and decreases in $v$; since
+$1-a\ge0.99\ge0.01\ge b$, this gives
+$\mathrm{KL}(1-a\Vert b)\ge\mathrm{KL}(0.99\Vert0.01)=0.98\ln99$. Finally,
+$p\ne q$, since otherwise $U=p$ would succeed at both, so
+$\mathrm{KL}(p\Vert q)>0$. Hence
+$\EE_pN\ge0.98\ln99/\mathrm{KL}(p\Vert q)$, as claimed.
+\end{proof}
+
+For $p\le1/1000$, Lemma \ref{lem:wald} implies that every naive-99\% sampler needs more than $448$ samples on
+average, as follows. In this range, $\max(10p,1/100)=1/100$, so success at
+$p$ requires $U\le1/100$. For every $q\in(1/100,1)$, success at $q$ requires
+$U\ge q>1/100$. So Lemma~\ref{lem:wald} gives
+$\EE_pN\ge0.98\ln99/\mathrm{KL}(p\Vert q)$, and letting $q$ decrease to $1/100$
+gives $\EE_pN\ge0.98\ln99/\mathrm{KL}(p\Vert1/100)$. The denominator decreases
+in $p$ on $[0,1/100)$, so the bound is least at $p=0$, where it equals
+$0.98\ln99/\ln(100/99)>448$. Hence, for $p\le1/1000$, every naive-99\%
+sampler needs more than $448$ samples on average, as claimed.
+Each flip is a naively computed exact sample of $C(A(x))$, which costs at
+least $2n^7$ operations~\leanmark{1}. So when $p\le1/1000$, every naive-99\%
+sampler has expected cost more than $448\cdot2n^7$, which is more than $447$
+times the cost bound $1.0003\cdot2n^7$ of $\Est$.
+
+\begin{leanitems}
+\leanitem[1]{Part189Baseline}. The bounds from Wald's inequality and
+their numerical values were not checked in Lean.
+\end{leanitems}
+
+
+Now, for $1/1000<p<1/10$, every naive-99\% sampler needs more than $31$ samples on
+average, and for $p\ge1/10$ more than $1.95$ samples, as follows. If
+$1/1000<p<1/10$, success at $p$ requires $U\le10p$, while success at
+$q$ requires $U\ge q>10p$ for every $q\in(10p,1)$. If $p>1/100$, success at
+$p$ requires $U\ge p$, while success at $q$ requires
+$U\le\max(10q,1/100)<p$ for every $q\in(0,p/10)$. So Lemma~\ref{lem:wald} applies to these pairs.
+Letting $q$ decrease to $10p$ or increase to $p/10$ in Lemma~\ref{lem:wald}
+gives $\EE_pN\ge0.98\ln99/\mathrm{KL}(p\Vert10p)$ or
+$\EE_pN\ge0.98\ln99/\mathrm{KL}(p\Vert p/10)$, respectively. Both bounds
+decrease in $p$. Hence $\EE_pN>31.16$ for $1/1000<p<1/10$ and $\EE_pN>1.955$
+for $p\ge1/10$, using the first bound up to $p=1/100$ and the second above it,
+as claimed.
+Since each flip costs at least $2n^7$ operations, the expected cost of every
+naive-99\% sampler
+is more than $31$ times the cost bound of $\Est$ when $1/1000<p<1/10$, and
+more than $1.95$ times it when $p\ge1/10$. 
+
+
+In summary, every naive-99\% sampler has a higher expected cost than $\Est$
+at every $p$: more than $1.95$ times for $p\ge1/10$, more than $31$ times for
+$1/1000<p<1/10$, and more than $447$ times for $p\le1/1000$. This trend underscores the
+importance of using statistical tests that are ``perspicacious'' in that they
+can read and use network weights, and/or ``pragmatic'' in that they work on a large
+fraction of inputs instead of all inputs, especially for low-probability
+high-cost events.
+
+\section{The program $\Est$ and the proof of the \bst{}}\label{sec:program}
+
+$\Est$ takes the input $(W,A,F,r;t)$ and follows the order of the networks'
+own computation, i.e., through $W$, then $A$, then $F$, with draws from the seed $r$ in place of $u$~\leanmark{1}.
+Each step below says what $\Est$ computes, then analyzes it, stating each
+lemma where the analysis establishes it, and then says what the step
+costs~\leanmark{2}. The closing paragraphs combine the lemmas into the \bst{}.
+\begin{leanitems}
+\leanitem[1]{Part157Paper,Part169Pass,Part272Stated,Part289Design};
+  \href{\leanrepo}{\leanstepB}.
+\leanitem[2]{Part282World,Part282Agent2,Part150Prog4,Part282RowData,Part282Grid,Part282NodeFull,Part282NodeAny,Part282Draw,Part282Out,Part282JoinCost,Part289Hit,Part289Run,Part289Cost}.
+\end{leanitems}
+
+\paragraph{Notation.} For vectors, $|\cdot|$ is the Euclidean norm, $\langle\cdot,\cdot\rangle$
+the inner product, and $\cos\angle(y,z)\coloneqq \langle y,z\rangle/(|y||z|)$. $I$ is
+the identity matrix of the size the context requires. $\SSS^{k-1}$ is the
+unit sphere of $\RR^k$. A subscript on $\PP$ or
+$\EE$ names the variables averaged over, with the others fixed. An
+unsubscripted $\PP$ or $\EE$ is over $(W,A,F,r)$.
+
+\paragraph{Weight matrices.}
+With $\relu$ applied coordinatewise to real vectors, for $z\in\RR^{2n}$ and $z'\in\RR^n$ write
+\[W(z)\coloneqq W_3\relu(W_2\relu(W_1z)),\qquad A(z')\coloneqq A_3\relu(A_2\relu(A_1z')),\]
+and $m_W\coloneqq \lceil n^{3.5}\rceil$~\leanmark{1}.
+\begin{leanitems}
+\leanitem[1]{Part130Defs,Part157Triple}.
+\end{leanitems}
+
+%AC: reviewed up to here.
+
+\subsection{High-level overview}
+\begin{lemma}\label{lem:samplecost}
+One exact sample of $C(A(x))$, computed by evaluating $W$, $A$ and $F$ layer by
+layer, costs at least $2n^7$ operations, which is more
+than $4.1\cdot10^{27}$ at $n=8{,}000$.
+\end{lemma}
+\begin{proof}
+An exact sample computes the product of $W_2$ and the world's first hidden
+vector at $u$. Since $W_2$ is an $m_W\times m_W$ matrix, this product takes
+$2m_W^2-m_W$ operations. The product $W_1u$ takes more than $m_W$ further
+operations. Hence an exact sample costs at least $2m_W^2\ge2n^7$
+operations, since $m_W\ge n^{3.5}$, as claimed.
+\end{proof}
+$\Est$ multiplies $W_2$ by one vector only: an estimate of the world's mean first
+hidden vector. $\Est$ never applies $W$ or $A$ to an input.
+
+\begin{lemma}\label{lem:gauss}
+Let $M$ be a random matrix with independent $\Nn(0,\sigma^2)$ entries, and let
+$D$ be random data independent of $M$. Let $g$ be a fixed measurable function
+from the values of $D$ to vectors, and let $v\coloneqq g(D)$. Let $\Pi_v$ be the orthogonal
+projection onto the directions orthogonal to $v$, i.e.,
+$\Pi_v\coloneqq I-vv^\top/|v|^2$ if $v\ne0$, and $\Pi_0\coloneqq I$. Then, given
+$D$, the matrix $M\Pi_v$ is Gaussian and independent of $Mv$~\leanmark{1}.
+\end{lemma}
+\begin{proof}
+Lemma~\ref{lem:gauss} is standard; see \citet[arXiv v3, Lemmas~G.6--G.7]{yang-2019-tp1},
+which extend \citet[arXiv v4, Lemmas~11--12]{bayati-montanari-2011} to singular constraints. First let $v$ be fixed. Each entry of $M\Pi_v$ and of $Mv$ is a
+linear combination of the entries of $M$, so the pair $(M\Pi_v,Mv)$ is
+jointly Gaussian with mean zero. The rows of $M$ are independent
+$\Nn(0,\sigma^2I)$ vectors, so the cross-covariances are
+$\EE[(M\Pi_v)_{ij}(Mv)_k]=\delta_{ik}\sigma^2(\Pi_vv)_j=0$, since
+$\Pi_vv=0$. Jointly Gaussian vectors with zero cross-covariance are
+independent, so $M\Pi_v$ is independent of $Mv$. Now let $D$ be random.
+Since $D$ is independent of $M$, the distribution of $M$ given $D$ is the
+distribution of $M$, and $v$ is fixed given $D$. Hence, by the case of a fixed $v$ applied to
+each value of $D$, given $D$ the matrix $M\Pi_v$ is Gaussian and
+independent of $Mv$, as claimed.
+\end{proof}
+\begin{leanitems}
+\leanitem[1]{Part134Split,Part157Reg}.
+\end{leanitems}
+
+Lemma~\ref{lem:gauss} applied first to the world and then to the agent
+implies that $\Est$ can avoid fully evaluating $W$ or $A$ on any inputs.
+
+Applied to the world, Lemma~\ref{lem:gauss} gives a proxy input, as follows. The only use $\Est$ makes
+of the last layer $W_3$ is to compute one vector $\chat\in\RR^n$. Step~2 will
+compute $\chat\coloneqq W_3b_W$ for an estimate $b_W$ of the world's mean
+last hidden vector. Call $\Omega_W\coloneqq W_3\Pi_{b_W}$ the residual part of
+$W_3$. By Lemma~\ref{lem:gauss}, $\Omega_W$ is
+Gaussian, even given $W_1$, $W_2$ and $\chat$, which are all that $\Est$ uses of
+$W$. So for each $u$, over
+$\Omega_W$, the input $x$ is the direction of the sum of a multiple of
+$\chat$ and isotropic Gaussian noise. The scale of this noise depends on
+$u$. $\Est$ replaces this scale by an estimate $\tau_0$ that is the same for every
+$u$. Hence, with this replacement,
+Lemma~\ref{lem:gauss} applied to the world gives a \emph{proxy input} $\tilde x$, whose
+distribution depends only on $\chat$ and $\tau_0$, which $\Est$ computes, as claimed.
+Lemma~\ref{lem:noisy} in step~2 will state the distribution of $x$ precisely.
+
+Applied to the agent, Lemma~\ref{lem:gauss} gives the distribution of the agent's output,
+as follows.
+The only use $\Est$ makes of $A_3$ is to compute $c_A\coloneqq A_3b_A$ for an
+estimate $b_A$ of the agent's mean last hidden vector (step~3). Call $\Omega_A\coloneqq A_3\Pi_{b_A}$ the residual part of $A_3$.
+By Lemma~\ref{lem:gauss}, $\Omega_A$ is Gaussian, even given $W$, $A_1$, $A_2$ and
+$c_A$. Hence, over $\Omega_A$, the agent's output at each input is the sum
+of a multiple of $c_A$ and isotropic Gaussian noise, as claimed.
+Lemma~\ref{lem:agentout} in step~3 will state the distribution of the agent's output precisely.
+
+$\Est$ computes $b_W$ and $b_A$ from the earlier layers alone, so Lemma~\ref{lem:gauss}
+applies to $b_W$ and $b_A$. The proof will not assume that $b_W$ and $b_A$ are accurate.
+Their accuracy will enter only
+through the error bounds $\Delta_W$ and $\Delta_A$ of the chain~\eqref{eq:chain} below and through the frame bounds of Lemma~\ref{lem:frame}.
+
+At the proxy input, the coefficient of $c_A$ and the variance of the noise
+in the agent's output of Lemma~\ref{lem:agentout} depend mainly on one number: the component of $\tilde x$
+along $\chat/|\chat|$, which step~4 will call the \emph{height} of $\tilde x$. So
+steps~4--5 will tabulate the coefficient and the variance at $512n$ heights
+that depend only on the data $\Dd$ defined below, called \emph{nodes}. Step~6 will then compute $K=10^{12}$
+\emph{proxy outputs} from the tables and the seed $r$. $\Est$
+evaluates $F$ once on each proxy output, instead of evaluating $W$, $A$ and
+$F$ once per exact sample. Finally, step~7 will scale and clip the fraction $R$
+of proxy outputs that fail, and output the result.
+
+Let $\Dd\coloneqq (W_1,W_2,\chat,A_1,A_2,c_A,F)$ be the data that $\Est$
+uses apart from the seed $r$; $\Est$ reads $W_3$ and $A_3$ only to compute $\chat$ and $c_A$. Let $\tilde p$, which step~3 will define, be the failure probability at
+the proxy input, and let $\tilde q$, which step~6 will define, be the
+probability that a proxy output fails. The proof follows a chain of approximations from $p$
+to $R$:
+\begin{equation}\label{eq:chain}p\ \underset{\text{conc.}}{\approx}\ \EE_{\Omega_W}p\ \underset{\Delta_W}{\approx}\ \tilde p
+\ \underset{\text{conc.}}{\approx}\ \EE_{\Omega_A}\tilde p\ \underset{\Delta_A}{\approx}\ \tilde q
+\ \underset{\Delta_s}{\approx}\ R.\end{equation}
+The two links marked ``conc.''\ will be concentration bounds over
+$\Omega_W$ and $\Omega_A$. The other three will be bounds on the
+\emph{square-root scale}, i.e., of the form $|\sqrt a-\sqrt b|\le\Delta$, with errors $\Delta_W$, $\Delta_A$ and $\Delta_s$. Step~6 will prove the
+$\Delta_A$ link, and step~7 the $\Delta_s$ link. The paragraph ``Bounds over
+the residual parts'' will prove the $\Delta_W$ link and the concentration bounds for the two
+links marked ``conc.'', on a good set $\Gg$ of values of $\Dd$. The paragraph ``Assembly''
+will combine all five links.
+
+\subsection{Detailed overview}
+\begin{enumerate}[leftmargin=*,itemsep=8pt,topsep=10pt plus 2pt]
+\item \textbf{Constants for the layers of $W$.} This step computes
+  constants that depend only on $n$.
+
+  \emph{Computation:} Let $N\coloneqq 2n$. For any integer $T\ge1$ and
+  $v\in\RR$, let $P_T$ and $Q_T$ be the truncated Taylor series of $\arctan$
+  and $\arcsin$, i.e.,
+  \[P_T(v)\coloneqq \sum_{0\le j<T}\frac{(-1)^jv^{2j+1}}{2j+1},\qquad
+  Q_T(v)\coloneqq \sum_{0\le j<T}\binom{2j}{j}\frac{v^{2j+1}}{4^j(2j+1)}.\]
+  Let $T_\pi$ be the least integer $T\ge1$ with $25^T\ge10^{23}N^2$.
+  Compute Machin's approximation of $\pi$, i.e.,
+  $\tilde\pi\coloneqq 16P_{T_\pi}(1/5)-4P_{T_\pi}(1/239)$. Compute an
+  approximation of the mean of $\relu(u_1)$, i.e.,
+  $\tilde c\coloneqq \tilde\pi^{-1}\prod_{j=1}^{n-1}\frac{2j}{2j+1}$. Compute
+  an approximation of twice the variance of $\relu(u_1)$, i.e.,
+  $\tilde d\coloneqq N^{-1}-2\tilde c^2$. Compute an approximation of the correlation of the
+  first-layer features of two independent inputs, i.e.,
+  $\tilde r\coloneqq 2N\tilde c^2$. Let $T_\kappa$ be the least integer
+  $T\ge1$ with $0.355\cdot0.1014^T\le10^{-5}/n^2$. Compute an approximation
+  of the first-order arc-cosine kernel at $\tilde r$, i.e.,
+  \[\tilde\kappa\coloneqq \bigl(\sqrt{1-\tilde r^2}+\tilde r(\tilde\pi/2+Q_{T_\kappa}(\tilde r))\bigr)/\tilde\pi.\]
+
+  \emph{Analysis:} The constant $\tilde\pi$ truncates the series of Machin's
+  formula $\pi=16\arctan(1/5)-4\arctan(1/239)$, and the error $|\tilde\pi-\pi|$ falls
+  geometrically in $T_\pi$.
+  \begin{lemma}\label{lem:pi}
+    $|\tilde\pi-\pi|\le4\cdot25^{-T_\pi}$~\leanmark{1}.
+  \end{lemma}
+  \begin{proof}
+  Lemma~\ref{lem:pi} is standard: its proof combines Machin's formula with a
+  bound on the tail of the Taylor series of $\arctan$. Let
+  $T\coloneqq T_\pi$ and $0\le v<1$. Since
+  $\arctan v=\sum_{j\ge0}(-1)^jv^{2j+1}/(2j+1)$, the tail after $T$ terms is
+  at most the geometric sum $\sum_{j\ge T}v^{2j+1}$ in absolute value, i.e.,
+  $|\arctan v-P_T(v)|\le v^{2T+1}/(1-v^2)$. By Machin's formula,
+  $\tilde\pi-\pi=16(P_T(1/5)-\arctan\tfrac15)-4(P_T(1/239)-\arctan\tfrac1{239})$.
+  Hence, by this tail bound at $v=1/5$ and at $v=1/239$, and since
+  $239^{-2T}\le25^{-T}$,
+  \[|\tilde\pi-\pi|\le\frac{16/5}{1-1/25}\,25^{-T}+\frac{4/239}{1-1/239^2}\,25^{-T}
+  =\Bigl(\frac{10}{3}+\frac{956}{57{,}120}\Bigr)25^{-T}<4\cdot25^{-T},\]
+  as claimed.
+  \end{proof}
+  \begin{leanitems}
+  \leanitem[1]{Part157Paper,Part159Pi}.
+  \end{leanitems}
+  The constants $\tilde c$ and $\tilde d$ approximate $\EE_u\relu(u_1)$ and
+  $2\operatorname{Var}_u\relu(u_1)$, respectively.
+  \begin{lemma}\label{lem:cd}
+    Let $c\coloneqq\pi^{-1}\prod_{j=1}^{n-1}\frac{2j}{2j+1}$ and
+    $d\coloneqq N^{-1}-2c^2$, i.e., $\tilde c$ and $\tilde d$
+    with $\pi$ in place of $\tilde\pi$. Then $c=\EE_u\relu(u_1)$ and
+    $d=2\operatorname{Var}_u\relu(u_1)$~\leanmark{1}.
+  \end{lemma}
+  \begin{proof}
+  Lemma~\ref{lem:cd} is an elementary computation. Since $u$ is uniform on $\SSS^{N-1}$, the coordinate $u_1$ has density
+  proportional to $(1-s^2)^{(N-3)/2}$ on $(-1,1)$. Substituting
+  $s=\sin\theta$, and using $N-2=2n-2$, gives
+  \[\EE_u\relu(u_1)=\frac{\int_0^{\pi/2}\sin\theta\cos^{2n-2}\theta\,d\theta}
+  {2\int_0^{\pi/2}\cos^{2n-2}\theta\,d\theta}
+  =\frac{1/(2n-1)}{\pi\prod_{j=1}^{n-1}\frac{2j-1}{2j}},\]
+  by Wallis' formula $\int_0^{\pi/2}\cos^{2n-2}\theta\,d\theta
+  =\frac\pi2\prod_{j=1}^{n-1}\frac{2j-1}{2j}$, which follows from
+  \citet[eqs.~5.12.1--5.12.2]{dlmf}, with $\Gamma(1/2)=\sqrt\pi$ and $\Gamma(v+1)=v\Gamma(v)$. Since
+  $(2n-1)\prod_{j=1}^{n-1}\frac{2j-1}{2j+1}=1$, the right side of the display equals $c$, so
+  $\EE_u\relu(u_1)=c$.
+  Next, $\relu(s)^2+\relu(-s)^2=s^2$ for $s\in\RR$, the map $u\mapsto-u$
+  preserves the distribution of $u$, and $\EE_uu_1^2=1/N$, since
+  $\sum_iu_i^2=1$ and the coordinates of $u$ have the same distribution. So
+  $\EE_u\relu(u_1)^2=1/(2N)$. Hence
+  $2\operatorname{Var}_u\relu(u_1)=N^{-1}-2c^2=d$, as claimed.
+  \end{proof}
+  \begin{leanitems}
+  \leanitem[1]{Part159CN,Part137Hat2}. Lean checks the formula for $c$ and
+  the second moment $\EE_u\relu(u_1)^2=1/(2N)$; the identity for $d$ then
+  follows by the last line of the proof.
+  \end{leanitems}
+  The constant $\tilde\kappa$ approximates the first-order arc-cosine kernel of
+  \citet[eqs.~(3) and~(6)]{cho-saul-2009} at unit vectors with inner
+  product $v$, i.e., $\kappa(v)\coloneqq (\sqrt{1-v^2}+v(\pi/2+\arcsin
+  v))/\pi$ for $v\in[-1,1]$, at $\tilde r$. $\tilde\kappa$ replaces $\pi$ and $\arcsin$ by
+  $\tilde\pi$ and $Q_{T_\kappa}$, with an error that shrinks as $T_\kappa$ grows.
+
+  \emph{Cost:} none for $\tilde c$, $\tilde d$ and $\tilde\pi$ in the cost
+  model in Lean, which charges nothing for rational constants; the square
+  root, addition and division that form $\tilde\kappa$ are charged in step~2. For $8{,}000\le n\le16{,}384$, $T_\pi=23$ and
+  $T_\kappa\le14$. Computing $\tilde c$, $\tilde\pi$ and $\tilde\kappa$ would
+  then take at most $4n+250$ operations: about $4n$ for the product in
+  $\tilde c$, about $6T_\pi\le150$ for $\tilde\pi$, and about
+  $6T_\kappa\le90$ for $\tilde\kappa$. So $4n+250\le65{,}786$. Since
+  $n\ge8{,}000$, also $4n+250<10^{-23}\cdot2n^7$.
+
+\item \textbf{The proxy input.} This step computes the vector $\chat$ and
+  the proxy noise scale $\tau_0$, which together define the proxy input. This step is the only
+  one that multiplies by $W_2$.
+
+  \emph{Computation:} Let $v_1,\dots,v_{m_W}\in\RR^N$ be the rows of $W_1$.
+  Compute the estimated mean of each first-layer unit, i.e.,
+  $\psi_i\coloneqq \tilde c|v_i|$ for $1\le i\le m_W$. Compute the mean
+  squared row norm, i.e., $\Sigma_W\coloneqq m_W^{-1}\sum_i|v_i|^2$. Use $\Sigma_W$ to
+  estimate the spread of the second-layer pre-activations, i.e.,
+  $\varsigma_W\coloneqq \sqrt{\Sigma_W\tilde d}$. For any integer $J\ge1$ and
+  any function $\Phi:\RR\to\RR$, let $B_J[\Phi]$ be the mean of $\Phi$ at a
+  sum of $J$ independent uniform random signs divided by $\sqrt J$, i.e.,
+  \[B_J[\Phi]\coloneqq \sum_{j=0}^J2^{-J}\binom Jj\,\Phi\bigl((2j-J)/\sqrt J\bigr).\]
+  Let $J_W\coloneqq \lceil\sqrt{m_W}\rceil$, and let $\nu_W\coloneqq 2/m_W$ be
+  the variance of an entry of $W_2$ and $W_3$. Compute the estimated mean
+  $b_W$ of the world's last hidden layer, the image $\chat$ of $b_W$ under $W_3$, the estimated
+  cosine $\ell_0$ between a last hidden vector of the world and $b_W$, and
+  the proxy noise scale $\tau_0$, i.e.,
+  \begin{gather*}
+  b_{W,i}\coloneqq B_{J_W}[z\mapsto\relu((W_2\psi)_i+\varsigma_Wz)]\ \text{for }1\le i\le m_W,\qquad
+  \chat\coloneqq W_3b_W,\\
+  \ell_0\coloneqq \sqrt{\frac{\Sigma_W\tilde\kappa^2}{N\nu_W|b_W|^2}},\qquad
+  \tau_0\coloneqq \sqrt{\nu_W|b_W|^2\max\bigl(0,\,\tfrac1{\ell_0^2}-1\bigr)}.
+  \end{gather*}
+
+  \emph{Analysis:} Let $h_W:\RR^N\to\RR^{m_W}$ be the map to the world's
+  last hidden layer, i.e., $h_W\coloneqq \relu\circ W_2\circ\relu\circ W_1$.
+  The estimates are computed layer by layer. The first-layer unit $i$ has mean
+  $\EE_u\relu(v_i\cdot u)=|v_i|\,\EE_u\relu(u_1)$, and $\psi_i$ estimates this mean.
+  The vector $b_W$ estimates $\EE_uh_W(u)$ by treating each second-layer
+  pre-activation as a Gaussian with mean $(W_2\psi)_i$ and variance
+  $\varsigma_W^2$. The rule $B_J$ approximates each such Gaussian expectation:
+  $B_J[\Phi]\to\EE_Z\Phi(Z)$ as $J\to\infty$, for $Z\sim\Nn(0,1)$ and
+  continuous $\Phi$ of polynomial growth. The arc-cosine kernel motivates
+  $\ell_0^2$ as an estimate of $\cos^2\angle(h_W(u),b_W)$ for most $u$. The
+  proof will use about $\psi$, $b_W$ and $\ell_0$ only the
+  bound $\Delta_W$, the frame bound of Lemma~\ref{lem:frame}, and the events
+  that define the good set $\Gg$ of ``Bounds over the residual parts''.
+
+  Let $\Omega_W$ be the residual part of $W_3$,
+  i.e., $\Omega_W\coloneqq W_3\Pi_{b_W}$, with $\Pi_{b_W}$ as in
+  Lemma~\ref{lem:gauss}. For each $u$, split
+  $h_W(u)$ along $b_W$, i.e., $h_W(u)=\lambda_W(u)b_W+h_W^\perp(u)$ with
+  $\lambda_W(u)\coloneqq \langle h_W(u),b_W\rangle/|b_W|^2$ and
+  $h_W^\perp(u)\coloneqq h_W(u)-\lambda_W(u)b_W$.
+  \begin{lemma}\label{lem:wsplit}
+    For every $u$, $W(u)=\lambda_W(u)\chat+\Omega_Wh_W^\perp(u)$.
+  \end{lemma}
+  \begin{proof}
+  Since $h_W^\perp(u)$ is orthogonal to $b_W$,
+  $W_3h_W^\perp(u)=\Omega_Wh_W^\perp(u)$. Hence, since $W_3b_W=\chat$,
+  $W(u)=W_3h_W(u)=\lambda_W(u)\chat+\Omega_Wh_W^\perp(u)$, as claimed.
+  \end{proof}
+  Lemma~\ref{lem:wsplit} gives the distribution of $x$. For each $u$ with
+  $\lambda_W(u)>0$, let the \emph{world noise scale} be
+  \[\tau_W(u)\coloneqq \frac{\sqrt{\nu_W}\,|h_W^\perp(u)|}{\lambda_W(u)}.\]
+  \begin{lemma}\label{lem:noisy}
+    For each $u$ with $\lambda_W(u)>0$, $x$ is the direction of a noisy copy
+    of $\chat$, i.e., given $W_1$, $W_2$ and $\chat$, the distribution of $x$
+    over $\Omega_W$ is that of $(\chat+\tau_W(u)\xi)/|\chat+\tau_W(u)\xi|$,
+    with $\xi\sim\Nn(0,I)$ in $\RR^n$, and with $x_0$ in place of this
+    quotient when $\chat+\tau_W(u)\xi=0$~\leanmark{1}.
+  \end{lemma}
+  \begin{proof}
+  Fix $u$ with
+  $\lambda_W(u)>0$. The vector $b_W$ is a fixed function of $(W_1,W_2)$, and
+  $W_3$ is independent of $(W_1,W_2)$. So, by Lemma~\ref{lem:gauss} with
+  $M=W_3$ and $D=(W_1,W_2)$, given $W_1$ and $W_2$, the matrix
+  $\Omega_W=W_3\Pi_{b_W}$ is Gaussian and independent of $\chat=W_3b_W$. The
+  rows of $\Omega_W$ are independent $\Nn(0,\nu_W\Pi_{b_W})$ vectors, and
+  $\Pi_{b_W}h_W^\perp(u)=h_W^\perp(u)$, where $h_W^\perp(u)$ is a fixed function of
+  $(W_1,W_2)$. So given $W_1$, $W_2$ and $\chat$, the second term of
+  Lemma~\ref{lem:wsplit}, $\Omega_Wh_W^\perp(u)$, has the distribution
+  $\Nn(0,\nu_W|h_W^\perp(u)|^2I)$, i.e., the distribution of
+  $\sqrt{\nu_W}\,|h_W^\perp(u)|\,\xi$. Hence $W(u)$ has the distribution of
+  $\lambda_W(u)(\chat+\tau_W(u)\xi)$. Multiplication by $\lambda_W(u)>0$
+  changes neither the direction of a vector nor whether the vector is $0$.
+  Hence $x$ has the distribution of
+  $(\chat+\tau_W(u)\xi)/|\chat+\tau_W(u)\xi|$, with $x_0$ in place of this
+  quotient when $\chat+\tau_W(u)\xi=0$, as claimed.
+  \end{proof}
+  \begin{leanitems}
+  \leanitem[1]{Part157Reg,Part157Gp,Part157Repl,Part132Cos}. Lean takes
+  $x_0=(1,0,\dots,0)$, and states the lemma as the law of the direction of
+  $\lambda_W(u)\chat+\sigma_W(u)\gamma$, with
+  $\sigma_W(u)\coloneqq\sqrt{\nu_W}\,|h_W^\perp(u)|$ and
+  $\gamma\sim\Nn(0,I)$, and also averaged over $u$; that form needs no condition on
+  $\lambda_W(u)$, and dividing by $\lambda_W(u)>0$ gives the form of the lemma.
+  \end{leanitems}
+  The world noise scale $\tau_W(u)$ depends on $u$ only through a cosine, i.e.,
+  \[\tau_W(u)^2=\nu_W|b_W|^2\bigl(\cos^{-2}\angle(h_W(u),b_W)-1\bigr).\]
+  Replacing the squared cosine by $\ell_0^2$ gives $\tau_0^2$, which $\Est$
+  computes. Replacing $\tau_W(u)$ by $\tau_0$ in Lemma~\ref{lem:noisy} gives
+  the \emph{proxy input}, i.e.,
+  $\tilde x\coloneqq (\chat+\tau_0\xi)/|\chat+\tau_0\xi|$ if
+  $\chat+\tau_0\xi\ne0$ and $\tilde x\coloneqq x_0$ otherwise, with
+  $\xi\sim\Nn(0,I)$ in $\RR^n$. Unlike the distribution of $x$, the
+  distribution of $\tilde x$ does not depend on the residual part $\Omega_W$: it
+  depends only on $\chat$ and $\tau_0$, which $\Est$ computes. So $\Est$ can
+  estimate averages over $\tilde x$ (step~5) and draw exact samples of its
+  height (step~6).
+  The bound $\Delta_W$ will cover the error of replacing $x$ by $\tilde x$, and also the
+  rare inputs with $\lambda_W(u)\le0$.
+
+  \emph{Cost:} $2m_W^2+4m_WJ_W+O(nm_W)$ operations. Almost all of these
+  operations compute the product $W_2\psi$, which costs $2m_W^2-m_W$. At $n=8{,}000$,
+  $J_W=6{,}767{,}177$ and $4m_WJ_W/(2m_W^2)<3\cdot10^{-7}$. The cost model
+  in Lean does not charge for the weights $2^{-J_W}\binom{J_W}j$ of $B_{J_W}$.
+  These weights $a_j$ satisfy $a_0=2^{-J_W}$ and $a_{j+1}=a_j(J_W-j)/(j+1)$.
+  Computing all these weights by this recursion would take about $3J_W$ operations, i.e., about $2\cdot10^7$ at
+  $n=8{,}000$ and $7\cdot10^7$ at $n=16{,}384$, less than $10^{-20}$ times
+  $2m_W^2$.
+
+\item \textbf{The agent's output distribution.} This step computes the vector
+  $b_A$ along which $\Est$ splits the agent's last hidden layer, and the image
+  $c_A$ of $b_A$ under $A_3$, as step~2 did for the world.
+
+  \emph{Computation:} Let $a_1,\dots,a_{n^2}\in\RR^n$ be the rows of $A_1$, and
+  let $\nu_A\coloneqq 2/n^2$ be the variance of an entry of $A_2$ and $A_3$.
+  Compute the root-mean-square norm of the unnormalized proxy
+  input, i.e., $\rho\coloneqq \sqrt{|\chat|^2+n\tau_0^2}$. For
+  $1\le i\le n^2$, let $\phi_i$ be the activation of first-layer unit $i$ at the
+  unnormalized proxy input, i.e., $\phi_i(z)\coloneqq \relu(a_i\cdot\chat+\tau_0|a_i|z)$
+  for $z\in\RR$. Estimate the first two moments of $\phi_i$ at a standard
+  Gaussian by
+  $\hat h_i\coloneqq B_n[\phi_i]$ and $\hat h^{(2)}_i\coloneqq B_n[\phi_i^2]$.
+  Estimate the spread of the second-layer pre-activations, i.e.,
+  $\hat\varsigma\coloneqq \sqrt{\nu_A(\sum_i\hat h^{(2)}_i-|\hat h|^2)}$.
+  Compute the estimated mean $b_A$ of the agent's last hidden layer and the
+  image $c_A$ of $b_A$ under $A_3$, i.e.,
+  \[b_{A,j}\coloneqq \rho^{-1}B_n[z\mapsto\relu((A_2\hat h)_j+\hat\varsigma z)]\ \text{for }1\le j\le n^2,\qquad
+  c_A\coloneqq A_3b_A.\]
+
+  \emph{Analysis:} Let $h:\RR^n\to\RR^{n^2}$ be the map to the agent's last
+  hidden layer, i.e., $h\coloneqq \relu\circ A_2\circ\relu\circ A_1$. Since
+  $A$ has no biases, $h(\tilde x)=h(\chat+\tau_0\xi)/|\chat+\tau_0\xi|$ whenever
+  $\chat+\tau_0\xi\ne0$, and
+  $\rho^2=\EE_\xi|\chat+\tau_0\xi|^2$. Each first-layer pre-activation
+  $a_i\cdot(\chat+\tau_0\xi)$ has the distribution of
+  $a_i\cdot\chat+\tau_0|a_i|Z$ with $Z\sim\Nn(0,1)$, and the second layer is
+  as in step~2. So $b_A$ is designed to approximate $\EE_{\tilde x}h(\tilde x)$.
+
+  As for the world in step~2, split the agent's last hidden layer along
+  $b_A$. For $z\in\RR^n$, let
+  $\lambda(z)$ be the coefficient of $h(z)$ along $b_A$, $h^\perp(z)$ the rest
+  of $h(z)$, and $S(z)$ the noise variance, i.e.,
+  \[\lambda(z)\coloneqq \frac{\langle h(z),b_A\rangle}{|b_A|^2},\qquad
+  h^\perp(z)\coloneqq h(z)-\lambda(z)b_A,\qquad
+  S(z)\coloneqq \nu_A|h^\perp(z)|^2.\]
+  Let $\Omega_A$ be the residual part of $A_3$,
+  i.e., $\Omega_A\coloneqq A_3\Pi_{b_A}$, with $\Pi_{b_A}$ as in
+  Lemma~\ref{lem:gauss}.
+  \begin{lemma}\label{lem:asplit}
+    For every $z\in\RR^n$, $A(z)=\lambda(z)c_A+\Omega_Ah^\perp(z)$.
+  \end{lemma}
+  \begin{proof}
+  Since $h^\perp(z)$ is orthogonal to $b_A$,
+  $A_3h^\perp(z)=\Omega_Ah^\perp(z)$. Hence, since $A_3b_A=c_A$,
+  $A(z)=A_3h(z)=\lambda(z)c_A+\Omega_Ah^\perp(z)$, as claimed.
+  \end{proof}
+  \begin{lemma}\label{lem:agentout}
+    The agent's output is $c_A$ times a coefficient plus isotropic
+    noise, i.e., let $z$ be a fixed function of $W$, $A_1$, $A_2$, $c_A$ and
+    $\xi$, with values in $\RR^n$. Then, given $W$, $A_1$, $A_2$, $c_A$ and
+    $\xi$, the distribution of $A(z)$ over $\Omega_A$ is that of
+    $\lambda(z)c_A+\sqrt{S(z)}\,\eta$, with $\eta\sim\Nn(0,I)$ in
+    $\RR^n$~\leanmark{1}.
+  \end{lemma}
+  \begin{proof}
+  Lemma~\ref{lem:agentout} is the Gaussian conditioning trick with the single
+  constraint $c_A=A_3b_A$; see \citet[arXiv v3, Lemma~G.7]{yang-2019-tp1}. The vector $b_A$ is a fixed function of $W$, $A_1$ and $A_2$, and
+  $A_3$ is independent of $(W,A_1,A_2,\xi)$. So, by Lemma~\ref{lem:gauss}
+  with $M=A_3$ and $D=(W,A_1,A_2,\xi)$, given $W$, $A_1$, $A_2$ and $\xi$,
+  the matrix $\Omega_A$ is Gaussian and independent of $c_A=A_3b_A$, and the
+  rows of $\Omega_A$ are independent $\Nn(0,\nu_A\Pi_{b_A})$ vectors. So
+  given $W$, $A_1$, $A_2$, $c_A$ and $\xi$, the vector $z$ is fixed,
+  $\Omega_A$ has the same distribution, and, since
+  $\Pi_{b_A}h^\perp(z)=h^\perp(z)$, the term $\Omega_Ah^\perp(z)$ has the
+  distribution $\Nn(0,\nu_A|h^\perp(z)|^2I)=\Nn(0,S(z)I)$. Hence, by
+  Lemma~\ref{lem:asplit}, $A(z)$ has the distribution
+  of $\lambda(z)c_A+\sqrt{S(z)}\,\eta$ given $W$, $A_1$, $A_2$, $c_A$ and $\xi$, as claimed.
+  \end{proof}
+  \begin{leanitems}
+  \leanitem[1]{Part157Reg,Part157Net,Part157Triple}. Lean proves a joint
+  form (\texttt{triple\_disint}): $\Dd$ and the three networks
+  have the law obtained by rebuilding $W_3$ and $A_3$ from $\Dd$
+  and from Gaussian matrices $G_W$ and $G_A$, independent of each other and of
+  $\Dd$, whose entries have variances $\nu_W$ and $\nu_A$,
+  respectively; the residual parts are $G_W\Pi_{b_W}$ and $G_A\Pi_{b_A}$. With
+  \texttt{mlp2\_reb}, which proves Lemma~\ref{lem:asplit} at every input, and
+  \texttt{resid\_gauss}, this gives Lemma~\ref{lem:agentout} at each input.
+  \end{leanitems}
+  The splitting of $A_3$ in Lemma~\ref{lem:asplit} is the Gaussian
+  conditioning trick of \citet{bolthausen-2014}, also used by
+  \citet{bayati-montanari-2011} and by \citet{yang-2019-tp1} in Tensor Programs. Let $\tilde p$ be the
+  failure probability at the proxy input, i.e.,
+  $\tilde p\coloneqq \PP_\xi[F(A(\tilde x))>t]$, a function of $\Dd$ and
+  $\Omega_A$.
+
+  \emph{Cost:} $2n^4+20n^3+O(n^2)$ operations, including $2n^3$ for $c_A=A_3b_A$. Almost all of these
+  operations compute the product $A_2\hat h$. The cost model in Lean does not
+  charge for the weights of $B_n$. Computing these weights as in step~2 would
+  take about $3n$ more operations.
+
+\item \textbf{A grid of heights.} By Lemma~\ref{lem:agentout}, the agent's output at $z$ is
+  determined in distribution by $\lambda(z)$ and $S(z)$. This step defines the
+  \emph{nodes}: a grid of $512n$ heights. Step~5 will tabulate estimates of
+  two hidden-layer averages at the nodes, and step~6 will use these estimates to estimate $\lambda$ and
+  $S$.
+
+  \emph{Computation:} Let $e_1$ be the first standard basis vector of $\RR^n$,
+  and let $\hat u$ be the direction of $\chat$, i.e.,
+  $\hat u\coloneqq \chat/|\chat|$ if $\chat\ne0$, else
+  $\hat u\coloneqq -e_1$. Call $z\cdot\hat u$ the \emph{height} of a unit
+  vector $z\in\RR^n$. Compute the central height $s_c\coloneqq |\chat|/\rho$
+  and the \emph{nodes}, i.e., the $512n$ heights around $s_c$ given by
+  $s_g\coloneqq s_c+(6\tau_0/\rho)\bigl((2g+1)/(512n)-1\bigr)$ for integers
+  $0\le g<512n$. At $n=8{,}000$, there are $512n=4{,}096{,}000$ nodes. Compute the
+  component of each row $a_i$ along $\hat u$, and the length of the component of
+  $a_i$ orthogonal to $\hat u$, i.e.,
+  $\alpha_i\coloneqq a_i\cdot\hat u$ and
+  $\alpha^\perp_i\coloneqq \sqrt{|a_i|^2-\alpha_i^2}$ for $1\le i\le n^2$.
+  Compute the energy of $b_A$, i.e., $e_A\coloneqq |b_A|^2/n$, which steps~5--6
+  will use.
+
+  \emph{Analysis:} The distribution of $\xi$ is invariant under all
+  rotations, so the distribution of $\tilde x$ is invariant under the
+  rotations that fix $\hat u$.
+  \begin{lemma}\label{lem:height}
+    Given $\Dd$, assume $\chat\ne0$ and $\tau_0>0$, and let $s$ be the height of
+    the proxy input $\tilde x$. Then $\tilde x=s\hat u+\sqrt{1-s^2}\,\chi$, with
+    $\chi$ uniform on the unit sphere orthogonal to $\hat u$ and independent of
+    $s$. So, given $s$, the first-layer pre-activation $a_i\cdot\tilde x$ has
+    the distribution of $s\alpha_i+\sqrt{1-s^2}\,\alpha^\perp_iV$ for each
+    $i$, with $V$ a coordinate of a uniform point of
+    $\SSS^{n-2}$~\leanmark{1}.
+  \end{lemma}
+  \begin{proof}
+  The lemma rests on the polar decomposition of a standard Gaussian vector
+  $g$: $g/|g|$ is uniform on the unit sphere and independent of $|g|$
+  \citep[Exercise~3.3.7]{vershynin-2018-hdp}. Given $\Dd$, the vectors
+  $\chat$ and $\hat u=\chat/|\chat|$ and the scale $\tau_0$ are fixed, and
+  $\xi$ is independent of $\Dd$. Write $\xi=\xi_1\hat u+\xi^\perp$ with
+  $\xi_1\coloneqq\xi\cdot\hat u$. Then $\xi_1\sim\Nn(0,1)$, $\xi^\perp$ is a
+  standard Gaussian vector in the hyperplane orthogonal to $\hat u$, and
+  $\xi_1$ and $\xi^\perp$ are independent. Let $\chi\coloneqq\xi^\perp/|\xi^\perp|$,
+  which is defined almost surely since $n\ge2$. By the polar decomposition
+  applied to $\xi^\perp$, $\chi$ is uniform on the unit sphere orthogonal to
+  $\hat u$ and independent of $(\xi_1,|\xi^\perp|)$. Since
+  $\chat+\tau_0\xi=(|\chat|+\tau_0\xi_1)\hat u+\tau_0|\xi^\perp|\,\chi$, the
+  height $s$ is a function of $(\xi_1,|\xi^\perp|)$, and so $\chi$ is
+  independent of $s$. The coefficient of $\chi$ in $\tilde x$ is nonnegative,
+  and $|\tilde x|=1$, so the coefficient is $\sqrt{1-s^2}$. Finally,
+  $a_i\cdot \chi=a_i^\perp\cdot \chi$, with $a_i^\perp\coloneqq a_i-\alpha_i\hat u$
+  and $|a_i^\perp|=\alpha^\perp_i$. Since the distribution of $\chi$ is invariant
+  under the rotations that fix $\hat u$, $a_i^\perp\cdot \chi$ has the
+  distribution of $\alpha^\perp_iV$. Hence $a_i\cdot\tilde x$ has the
+  distribution of $s\alpha_i+\sqrt{1-s^2}\,\alpha^\perp_iV$ given $s$, as
+  claimed.
+  \end{proof}
+  \begin{leanitems}
+  \leanitem[1]{Part161Lat,Part272Reduce}.
+  \end{leanitems}
+  The height of $\tilde x$ lies near $s_c$, with spread about $\tau_0/\rho$,
+  and the nodes span six spreads on each side of $s_c$. $\lambda$ and $S$ vary
+  little among proxy inputs of equal height. Step~6 will bound the variation
+  of $\lambda$ and $S$.
+
+  \emph{Cost:} $4n^3+O(n^2)$ operations. Almost all of these operations compute the products
+  $a_i\cdot\hat u$ and $|a_i|^2$.
+
+\item \textbf{Tables by height.} So that step~6 can estimate $\lambda$ and
+  $S$, this step tabulates two quantities of the agent's last hidden vector $h(z)$: the
+  alignment of $h(z)$ with $b_A$ and the energy of $h(z)$, i.e.,
+  \[f(z)\coloneqq \frac{\langle h(z),b_A\rangle}{\sqrt n\,|b_A|},\qquad
+  \omega(z)\coloneqq \frac{|h(z)|^2}{n}\qquad\text{for }z\in\RR^n.\]
+  This step estimates the averages of $f$ and $\omega$ over proxy inputs whose
+  height is a node.
+
+  \emph{Computation:} Let $J_z\coloneqq \lceil n^{1.5}\rceil-1$, and let $V$ be
+  as in step~4. For each node $g$ and $1\le i\le n^2$, let $X_{g,i}$ be
+  first-layer unit $i$ at height $s_g$, i.e.,
+  $X_{g,i}\coloneqq \relu(s_g\alpha_i+\sqrt{1-s_g^2}\,\alpha^\perp_iV)$.
+  Compute estimates $\bar h_{g,i}$ and $\bar h^{(2)}_{g,i}$ of $\EE_VX_{g,i}$
+  and $\EE_VX_{g,i}^2$. For even $n$, use the exact closed forms of these expectations. For odd
+  $n$, use a finite arithmetic rule whose error the Numerical certificates
+  will bound~\leanmark{1}. Estimate the spread of the second-layer
+  pre-activations, i.e.,
+  $\varsigma_g\coloneqq \sqrt{\nu_A(\sum_i\bar h^{(2)}_{g,i}-|\bar h_g|^2)}$.
+  For $1\le j\le n^2$, let
+  $\phi_{g,j}(z)\coloneqq \relu((A_2\bar h_g)_j+\varsigma_gz)$, and estimate
+  the first two moments of last-hidden-layer unit $j$ by
+  $\beta_{g,j}\coloneqq B_{J_z}[\phi_{g,j}]$ and
+  $\beta^{(2)}_{g,j}\coloneqq B_{J_z}[\phi_{g,j}^2]$. Store the estimates
+  $\tilde f_g$ and $\tilde\omega_g$ of the averages of $f$ and $\omega$ at
+  height $s_g$, i.e.,
+  \[\tilde f_g\coloneqq \frac{1}{\sqrt n\,|b_A|}\sum_j\beta_{g,j}b_{A,j},\qquad
+  \tilde\omega_g\coloneqq \frac1n\sum_j\beta^{(2)}_{g,j}.\]
+  \begin{leanitems}
+  \leanitem[1]{Part272Stated,Part272Even,Part278Err}.
+  \end{leanitems}
+
+  \emph{Analysis:} This step tabulates $f$ and $\omega$ because the
+  coefficient and the noise variance are functions of them.
+  \begin{lemma}\label{lem:fomega}
+    The coefficient and the noise variance of Lemma~\ref{lem:agentout} are
+    functions of $f$, $\omega$ and $e_A$, i.e.,
+    $\lambda(z)=f(z)/\sqrt{e_A}$ and $S(z)=\gamma_A(\omega(z)-f(z)^2)$ for
+    every $z\in\RR^n$, where $\gamma_A\coloneqq n\nu_A=2/n$~\leanmark{1}.
+  \end{lemma}
+  \begin{proof}
+  Fix $z\in\RR^n$, and write $h$, $h^\perp$, $\lambda$, $S$, $f$ and $\omega$
+  for their values at $z$. First let $b_A\ne0$. Then
+  $\sqrt{e_A}=|b_A|/\sqrt n$, so
+  $f/\sqrt{e_A}=\langle h,b_A\rangle/|b_A|^2=\lambda$. Since
+  $h=\lambda b_A+h^\perp$ with $h^\perp$ orthogonal to $b_A$,
+  $|h^\perp|^2=|h|^2-\lambda^2|b_A|^2
+  =|h|^2-\langle h,b_A\rangle^2/|b_A|^2=n(\omega-f^2)$. So
+  $S=\nu_A|h^\perp|^2=n\nu_A(\omega-f^2)=\gamma_A(\omega-f^2)$. Now let
+  $b_A=0$. Then $f/\sqrt{e_A}=0=\lambda$, since $v/0=0$; so $h^\perp=h$, and
+  $S=\nu_A|h|^2=\gamma_A\omega=\gamma_A(\omega-f^2)$. In both cases,
+  $\nu_A=2/n^2$, so $\gamma_A=2/n$. Hence the two identities hold for every
+  $z$, as claimed.
+  \end{proof}
+  \begin{leanitems}
+  \leanitem[1]{Part169Var,Part169Red}. Lean proves the identity for
+  $\lambda$ in the form $f(z)=\sqrt{e_A}\,\lambda(z)$ as \texttt{fX\_eq\_lam},
+  and the identity for $S$ as \texttt{sA\_eq}, which assumes $b_A\ne0$.
+  \end{leanitems}
+  By
+  Lemma~\ref{lem:height}, when $n$ is even, $\bar h_{g,i}$ and
+  $\bar h^{(2)}_{g,i}$ are the first two moments of first-layer unit $i$ over
+  proxy inputs of height $s_g$; when $n$ is odd, $\bar h_{g,i}$ and $\bar h^{(2)}_{g,i}$ estimate these moments.
+  The second layer is estimated as in step~3.
+  So $\tilde f_g$ and $\tilde\omega_g$ are designed to approximate the averages
+  of $f$ and $\omega$ over proxy inputs of height $s_g$.
+
+  \emph{Cost:} $1024n^5+O(n^{4.5})$ operations, i.e., $512n$ nodes at
+  $2n^4+O(n^{3.5})$ each. Almost all of these operations compute the products $A_2\bar h_g$. At
+  $n=8{,}000$, the leading term $1024n^5$ is $8\cdot10^{-6}$ times $2n^7$.
+  The cost model in Lean does not charge for the weights of $B_{J_z}$ or for
+  the coefficients of the arithmetic rules for $\bar h_{g,i}$ and
+  $\bar h^{(2)}_{g,i}$, such as $(-1)^q\binom Pq/(2q+j+1)$ with
+  $P\coloneqq (n-4)/2$ for even $n$. Computing these weights and coefficients once would take about
+  $3J_z+O(n)$ operations, i.e., about $2\cdot10^6$ at $n=8{,}000$, less than
+  $10^{-16}$ times $1024n^5$.
+
+\item \textbf{Proxy outputs.} This step draws the heights of $K$ proxy
+  inputs. For each proxy input, this step draws a proxy output from the
+  distribution of Lemma~\ref{lem:agentout}, with $\lambda$ and $S$ replaced by their tabulated
+  estimates.
+
+  \emph{Computation:} To keep the noise variance positive, $\Est$ uses a
+  floor $S_0$ for $\tilde\omega_g-\tilde f_g^2$: let $S_0\coloneqq 0.17$ if $n<11{,}883$ and $S_0\coloneqq 0.2$
+  otherwise. Read the seed as $r=(r_k)_{k=1}^K$ with $K\coloneqq 10^{12}$ and
+  independent standard Gaussian vectors
+  $r_k=(Z_k,G_{k,1},\dots,G_{k,n-1},\eta_k)\in\RR\times\RR^{n-1}\times\RR^n$.
+  For each $k=1,\dots,K$, compute the height $s_k$ of the $k$-th proxy
+  input from the coordinate $w_k$ of the unnormalized proxy input along
+  $\hat u$, i.e.,
+  \[w_k\coloneqq |\chat|+\tau_0Z_k,\qquad
+  s_k\coloneqq \frac{w_k}{\sqrt{w_k^2+\tau_0^2\sum_iG_{k,i}^2}}.\]
+  Let $g_k\in\{0,\dots,512n-1\}$ index the node nearest to $s_k$, the larger
+  at a tie. Compute the coefficient $\tilde\lambda_k$ and the noise variance $\tilde S_k$
+  from $\tilde f_{g_k}$ and $\tilde\omega_{g_k}$ by Lemma~\ref{lem:fomega}, and form the proxy output $y_k$, i.e.,
+  \[\tilde\lambda_k\coloneqq \frac{\tilde f_{g_k}}{\sqrt{e_A}},\qquad
+  \tilde S_k\coloneqq \gamma_A\max(S_0,\tilde\omega_{g_k}-\tilde f_{g_k}^2),\qquad
+  y_k\coloneqq \tilde\lambda_kc_A+\sqrt{\tilde S_k}\,\eta_k.\]
+
+  \emph{Analysis:} The vector $(w_k,\tau_0G_{k,1},\dots,\tau_0G_{k,n-1})$ has
+  the distribution of the unnormalized proxy input $\chat+\tau_0\xi$ in
+  coordinates whose first axis is $\hat u$.
+  \begin{lemma}\label{lem:seedheight}
+    Given $\Dd$, if $\chat\ne0$ or $\tau_0>0$, then $s_k$ has exactly the
+    distribution of the height $\tilde x\cdot\hat u$~\leanmark{1}.
+  \end{lemma}
+  \begin{proof}
+  The lemma rests on the rotation invariance of the standard Gaussian
+  distribution \citep[Proposition~3.3.2]{vershynin-2018-hdp}. Given $\Dd$,
+  the vectors $\chat$ and $\hat u$ and the scale $\tau_0$ are fixed, and
+  $\chat=|\chat|\hat u$, also when $\chat=0$. Let $\mathcal Q$ be an orthogonal
+  $n\times n$ matrix with first column $\hat u$, and let
+  $\xi'\coloneqq \mathcal Q^\top\xi$. Then $\xi'\sim\Nn(0,I)$, and
+  $\mathcal Q^\top(\chat+\tau_0\xi)=(|\chat|+\tau_0\xi'_1,\tau_0\xi'_2,\dots,\tau_0\xi'_n)$.
+  Since $\mathcal Q^\top$ preserves lengths and maps $\hat u$ to $e_1$,
+  \[\tilde x\cdot\hat u=\frac{|\chat|+\tau_0\xi'_1}
+  {\sqrt{(|\chat|+\tau_0\xi'_1)^2+\tau_0^2\sum_{i=2}^n\xi_i'^2}}.\]
+  The right side is the formula for $s_k$, with $\xi'$ in place
+  of $(Z_k,G_{k,1},\dots,G_{k,n-1})$. Both of these vectors have the
+  distribution $\Nn(0,I)$. If $\tau_0>0$, the denominator is $0$ only on an
+  event of probability $0$; if $\tau_0=0$, then $\chat\ne0$ and both $\tilde x\cdot\hat u$ and $s_k$
+  equal $1$. Hence $s_k$ has the distribution of $\tilde x\cdot\hat u$, as
+  claimed.
+  \end{proof}
+  \begin{leanitems}
+  \leanitem[1]{Part161Lat}. Lean proves the lemma as part of
+  \texttt{nuStand\_latitude}, which assumes $\chat\ne0$ and $\tau_0>0$.
+  \end{leanitems}
+  Flooring $\tilde\omega_{g_k}-\tilde f_{g_k}^2$ at $S_0$ does not increase
+  the absolute error of this difference as an estimate of a target value that
+  is at least $S_0$.
+  \begin{lemma}\label{lem:floor}
+    Flooring never increases the distance to a target value $Y\ge S_0$,
+    i.e., $|\max(S_0,v)-Y|\le|v-Y|$ for reals $v$ and $Y\ge S_0$~\leanmark{1}.
+  \end{lemma}
+  \begin{proof}
+  If $v\ge S_0$, then $\max(S_0,v)=v$, and $|\max(S_0,v)-Y|=|v-Y|$. If
+  $v<S_0$, then $\max(S_0,v)=S_0$ and $v<S_0\le Y$, so
+  $|\max(S_0,v)-Y|=Y-S_0<Y-v=|v-Y|$. Hence $|\max(S_0,v)-Y|\le|v-Y|$ for
+  every real $v$, as claimed.
+  \end{proof}
+  Let $\tilde q$ be the probability that one proxy output fails, i.e.,
+  $\tilde q(\Dd)\coloneqq \PP_r[F(y_1)>t\mid\Dd]$. For probability
+  densities $p_1$ and $p_2$, let the \emph{Hellinger distance} be
+  $H(p_1,p_2)\coloneqq\bigl(\int(\sqrt{p_1}-\sqrt{p_2})^2\bigr)^{1/2}$, with
+  no factor $1/2$ inside the root. Two Gaussians
+  $\Nn(\lambda c_A,SI)$ with nearby $(\lambda,S)$ are close in Hellinger
+  distance. Among proxy inputs of equal height, $\lambda$ and $\sqrt S$ deviate
+  little from their conditional means; Lean bounds moments of these
+  deviations, averaged over the height, and the mixture comparison also
+  accounts for exceptional directions~\leanmark{2}. A Hellinger bound on
+  the distribution of the output bounds the difference of the square roots of
+  the failure probabilities. This gives the following lemma.
+  \begin{lemma}\label{lem:da}
+    For every $t\in\RR$ and on the good set $\Gg$ of ``Bounds over the residual
+    parts'', the average of $\tilde p$ over $\Omega_A$ is close to
+    $\tilde q(\Dd)$ on the square-root scale, i.e.,
+    \[\bigl|\sqrt{\EE_{\Omega_A}\tilde p}-\sqrt{\tilde q(\Dd)}\bigr|\le\Delta_A~\leanmark{2},\]
+    where $\Delta_A>0$ is an explicit real depending only on $n$, given in the
+    Numerical certificates.
+  \end{lemma}
+  \begin{proof}[Proof sketch]
+  The full proof is in Lean. Fix $t$ and $\Dd\in\Gg$, and let
+  $B\coloneqq\{y\in\RR^n:F(y)>t\}$. The proof combines three standard
+  inequalities. The first inequality is that
+  \begin{equation}\label{eq:hellevent}
+  \bigl(\sqrt{P_1(B)}-\sqrt{P_2(B)}\bigr)^2\le H(p_1,p_2)^2
+  \end{equation}
+  for distributions $P_1$ and $P_2$ with densities $p_1$ and $p_2$, by the
+  Cauchy--Schwarz inequality on $B$ and on $\RR^n\setminus B$. The second
+  inequality is a bound on the Hellinger distance between two isotropic
+  Gaussians. By the closed form of \citet[Section~2]{dmr-2022}, multiplied
+  by $2$ because $H$ has no factor $1/2$ inside the root, with $\varrho\coloneqq S_1/S_2$,
+  \begin{equation}\label{eq:hellgauss}
+  \begin{aligned}
+  H\bigl(\Nn(m_1,S_1I),\Nn(m_2,S_2I)\bigr)^2
+  &=2-2\Bigl(\frac{2\sqrt{S_1S_2}}{S_1+S_2}\Bigr)^{n/2}
+  e^{-|m_1-m_2|^2/(4(S_1+S_2))}\\
+  &\le\frac{n(\varrho-1)^2}{8\varrho}+\frac{|m_1-m_2|^2}{2(S_1+S_2)}
+  \end{aligned}
+  \end{equation}
+  for $S_1,S_2>0$, where the inequality follows from $1-y\le-\ln y$ and
+  $\ln y\le y-1$ for $y>0$. The third inequality is that
+  \begin{equation}\label{eq:hellmix}
+  \bigl(\sqrt{\EE X}-\sqrt{\EE Y}\bigr)^2\le\EE\bigl(\sqrt X-\sqrt Y\bigr)^2
+  \end{equation}
+  for random variables $X,Y$ with values in $[0,1]$, by the Cauchy--Schwarz
+  inequality.
+
+  By Lemma~\ref{lem:agentout}, $\EE_{\Omega_A}\tilde p$ is the average over
+  $\tilde x$ of $\Nn(\lambda(\tilde x)c_A,S(\tilde x)I)(B)$. By
+  Lemma~\ref{lem:seedheight}, $\tilde q(\Dd)$ is the average over the height
+  $s$ of $\tilde x$ of the same Gaussian probability, with the tabulated
+  coefficient and noise variance at the node nearest $s$ in place of
+  $\lambda(\tilde x)$ and $S(\tilde x)$. The Lean proof bounds the difference
+  of the square roots of these two averages by a sum of four terms. The first
+  term is the fluctuation of $(\lambda,S)$ among proxy inputs of equal height,
+  bounded through the $\chi^2$ divergence of a Gaussian mixture. The second
+  term is the bias of the tables against the averages of $(\lambda,S)$ at
+  each height, bounded by \eqref{eq:hellevent}--\eqref{eq:hellmix} and by
+  Lemma~\ref{lem:floor}. The third term comes from the heights outside the
+  range of the nodes. The fourth term is the error of the rule of step~5 for
+  odd $n$, at most $10^{-20}$. The Numerical certificates will bound the sum of
+  the four terms by $\Delta_A$, as claimed.
+  \end{proof}
+  \begin{leanitems}
+  \leanitem[1]{Part289Floor}.
+  \leanitem[2]{Part157Repl,Part161Root,Part161Gauss,Part161Red,Part161Fl,Part281Odd,Part289Root,Part293Root,Part293Arithmetic};
+  \href{\leanrepo}{\leanstepE}; \href{\leanrepo}{\leanstepJ}.
+  \end{leanitems}
+
+  \emph{Cost:} at most $K(5n+10\lceil\log_2(512n)\rceil+27)$ operations, i.e., about
+  $4\cdot10^{16}$ at $n=8{,}000$. The cost model in Lean charges nothing
+  for the seed. Generating the seed's $2nK$ Gaussians from random bits would
+  take about $200Kn$ operations at an estimated $100$ operations per Gaussian
+  (e.g., by the Box--Muller method with series for $\ln$, $\cos$ and $\sin$),
+  i.e., about $1.6\cdot10^{18}$ at $n=8{,}000$. This
+  generation cost is about $40$ times the charged cost
+  of this step, but less than $4\cdot10^{-10}$ times $2n^7$, and less than
+  $2\cdot10^{-6}$ times the cost of step~7.
+
+\item \textbf{The failure fraction and the output.} This step evaluates $F$ on
+  the proxy outputs. This step then scales and clips the fraction of proxy
+  outputs that fail, which gives the output $U$.
+
+  \emph{Computation:} Let $R$ be the fraction of proxy outputs that fail,
+  i.e.,
+  \[R\coloneqq K^{-1}\sum_{k=1}^K\mathbf 1[F(y_k)>t].\]
+  Let $\Gamma\coloneqq 2.2524763228$. Output the scaled and clipped
+  fraction, i.e.,
+  \[U\coloneqq \min(1,\max(1/100,\Gamma R)).\]
+
+  \emph{Analysis:} $\Est$ succeeds whenever $R$ lies in the \emph{window}
+  $[p/\Gamma,\ \max(10p,1/100)/\Gamma]$. The lower end matters only when
+  $p>1/100$, since otherwise $U\ge1/100\ge p$ by the definition of $U$. Since $1/\sqrt\Gamma<0.6664$
+  and $\sqrt{10/\Gamma}>2.1070$, the window gives the following lemma on the
+  square-root scale.
+  \begin{lemma}\label{lem:window}
+    If $p<1/1000$, $\Est$ succeeds whenever $R\le1/(100\Gamma)$. If
+    $p\ge1/1000$, $\Est$ succeeds whenever
+    $0.667\sqrt p\le\sqrt R\le2.107\sqrt p$~\leanmark{1}.
+  \end{lemma}
+  \begin{proof}
+  Recall that $0\le p\le1$ and $R\ge0$. First let $p<1/1000$ and
+  $R\le1/(100\Gamma)$. Then $\Gamma R\le1/100$, so $U=1/100$, and
+  $p<U\le\max(10p,1/100)$. Now let $p\ge1/1000$ and
+  $0.667\sqrt p\le\sqrt R\le2.107\sqrt p$. Since $0.667^2\Gamma>1.0021$ and
+  $2.107^2\Gamma<9.9998$, squaring and multiplying by $\Gamma$ give $p\le\Gamma R\le10p$. So
+  $U\ge\min(1,\Gamma R)\ge\min(1,p)=p$, and
+  $U\le\max(1/100,\Gamma R)\le\max(1/100,10p)$. Hence $\Est$ succeeds in both
+  cases, as claimed.
+  \end{proof}
+  \begin{leanitems}
+  \leanitem[1]{Part156Out}. Lean proves, as \texttt{not\_success}, the
+  contrapositive of a slightly stronger form of the statement that $\Est$ succeeds whenever $R$ lies in
+  the window, for a factor $a>0$ in place
+  of $\Gamma$, and with the window stated for a value $Q$ near $R$ on the
+  square-root scale, i.e., $|\sqrt R-\sqrt Q|$ at most a given error. The
+  lemma follows with $a=\Gamma$, $Q=R$ and error $0$, by the inequalities for $0.667^2\Gamma$ and
+  $2.107^2\Gamma$ in its proof.
+  \end{leanitems}
+  Given $\Dd$, the $K$ proxy outputs fail independently, each with
+  probability $\tilde q(\Dd)$. A Chernoff bound then keeps $\sqrt R$ near
+  $\sqrt{\tilde q}$.
+  \begin{lemma}\label{lem:chernoff}
+    If, given $\Dd$, $KR\sim\mathrm{Bin}(K,\tilde q(\Dd))$, then, for
+    every real $\Delta_s>0$, $\sqrt R$ is close to $\sqrt{\tilde q(\Dd)}$,
+    i.e.,
+    $\PP_r(|\sqrt R-\sqrt{\tilde q(\Dd)}|>\Delta_s\mid\Dd)\le2e^{-K\Delta_s^2}$~\leanmark{1}.
+  \end{lemma}
+  \begin{proof}
+  Lemma~\ref{lem:chernoff} is standard; see \citet[Theorems~3--4]{okamoto-1958},
+  which give $e^{-2K\Delta_s^2}+e^{-K\Delta_s^2}$ in place of
+  $2e^{-K\Delta_s^2}$. Condition on $\Dd$, and let $q\coloneqq\tilde q(\Dd)$.
+  If $q\in\{0,1\}$, then $R=q$ almost surely, and the probability is $0$. Let
+  $0<q<1$, and let $D(z\Vert q)\coloneqq z\ln(z/q)+(1-z)\ln((1-z)/(1-q))$ for
+  $0<z<1$. By the Chernoff bound \citep[Lemma~1]{okamoto-1958},
+  $\PP_r(R\ge z\mid\Dd)\le e^{-KD(z\Vert q)}$ for $z\ge q$, and
+  $\PP_r(R\le z\mid\Dd)\le e^{-KD(z\Vert q)}$ for $z\le q$. By
+  $\ln y\le y-1$ at $y=\sqrt{q/z}$ and at $y=\sqrt{(1-q)/(1-z)}$,
+  \[-D(z\Vert q)\le2\bigl(\sqrt{zq}-z\bigr)+2\bigl(\sqrt{(1-z)(1-q)}-(1-z)\bigr)
+  =-(\sqrt z-\sqrt q)^2-(\sqrt{1-z}-\sqrt{1-q})^2,\]
+  so $D(z\Vert q)\ge(\sqrt z-\sqrt q)^2$. The event
+  $\sqrt R>\sqrt q+\Delta_s$ is empty if $(\sqrt q+\Delta_s)^2\ge1$, and
+  otherwise lies in $\{R\ge z_+\}$ with $z_+\coloneqq(\sqrt q+\Delta_s)^2\in(q,1)$.
+  The event $\sqrt R<\sqrt q-\Delta_s$ is empty if $\sqrt q\le\Delta_s$, and
+  otherwise lies in $\{R\le z_-\}$ with $z_-\coloneqq(\sqrt q-\Delta_s)^2\in(0,q)$.
+  For $z=z_+$ and for $z=z_-$, $(\sqrt z-\sqrt q)^2=\Delta_s^2$, so each event has
+  probability at most $e^{-K\Delta_s^2}$. Hence the union of the two events
+  has probability at most $2e^{-K\Delta_s^2}$, as claimed.
+  \end{proof}
+  \begin{leanitems}
+  \leanitem[1]{Part156Samp,Part232World}.
+  \end{leanitems}
+  With $K=10^{12}$, the bound of Lemma~\ref{lem:chernoff} is $2e^{-100}$ at
+  $\Delta_s=10^{-5}$, the value Lean uses for $n\ge11{,}883$, and
+  $2e^{-25}<10^{-9}$ at $\Delta_s=5\cdot10^{-6}$, the value Lean uses for
+  $8{,}000\le n\le11{,}882$. Errors on the square-root scale
+  suit the window, as follows. For $0\le\Delta\le\sqrt p$, if
+  $|\sqrt R-\sqrt p|\le\Delta$, then
+  $(1-\Delta/\sqrt p)^2\le R/p\le(1+\Delta/\sqrt p)^2$. Also,
+  $\sqrt p\ge0.0316$ wherever $\max(10p,1/100)=10p$, i.e.,
+  $p\ge1/1000$. Hence, if $p\ge1/1000$ and $|\sqrt R-\sqrt p|\le0.01$, then
+  $0.467\le R/p\le1.733$, inside $[1/\Gamma,10/\Gamma]$, the window's range for
+  $R/p$, as claimed.
+
+  \emph{Cost:} $K(2m_F^2+2nm_F+O(m_F))$ operations, i.e., one evaluation of $F$
+  on each of the $K$ proxy outputs, where $m_F\coloneqq \lceil n^{1.5}\rceil$ is the hidden
+  width of $F$.
+\end{enumerate}
+
+\subsection{Completion of the proof}
+
+\paragraph{Bounds over the residual parts.}
+This paragraph proves three bounds: the $\Delta_W$ link of the chain~\eqref{eq:chain}, and
+the concentration bounds for the two links marked ``conc.''. Given $\Dd$, the
+matrices $\Omega_W$ and $\Omega_A$ and the seed $r$ are independent and
+Gaussian, so $p$ is a function of
+$(\Dd,\Omega_W,\Omega_A)$ and $\tilde p$ is a function of $(\Dd,\Omega_A)$.
+All three bounds hold on a good set $\Gg$ of values of $\Dd$. To define $\Gg$,
+let $\delta_{\mathrm{hid}},\mu_W,\delta_{\mathrm{ext}},\Delta_W>0$ be explicit
+reals that depend only on $n$; for an example, the Numerical certificates will
+give $\Delta_W$ and a bound on $\delta_{\mathrm{hid}}+\mu_W/\Delta_W^2+\delta_{\mathrm{ext}}$. For each $u$, let $H_u$ be the Hellinger distance of step~6 between
+the noisy copy of $\chat$ in Lemma~\ref{lem:noisy} and the noisy copy of
+$\chat$ that defines the proxy input, i.e.,
+$H_u\coloneqq H\bigl(\Nn(\chat,\tau_W(u)^2I),\Nn(\chat,\tau_0^2I)\bigr)$ if
+$\lambda_W(u)>0$, $\tau_W(u)>0$ and $\tau_0>0$, and $H_u\coloneqq\sqrt2$
+otherwise. Let $\bar\Delta$ be the root mean square of $H_u$, i.e.,
+$\bar\Delta(\Dd)\coloneqq(\EE_uH_u^2)^{1/2}$, a function of $\Dd$. Let $\Hh$
+be a set of values of $\Dd$ and $\Ee$ a further set of values of $\Dd$, such
+that
+\[\PP(\Dd\notin\Hh)\le\delta_{\mathrm{hid}},\qquad
+\EE[\mathbf 1_{\Hh}\bar\Delta^2]\le\mu_W,\qquad
+\PP(\Dd\in\Hh\setminus\Ee)\le\delta_{\mathrm{ext}}.\]
+On $\Hh$, the world's hidden layers satisfy explicit bounds, which only the Lean proof states.
+Let the good set be $\Gg\coloneqq \Hh\cap\Ee\cap\{\bar\Delta\le\Delta_W\}$.
+
+The concentration bounds depend on the directions of the vectors
+$h^\perp(\tilde x)$. Let $\zeta$ be the direction of $h^\perp$, i.e.,
+$\zeta\coloneqq h^\perp/|h^\perp|$ if $h^\perp\ne0$ and $\zeta\coloneqq0$ otherwise, and let the frame constant of $\zeta$ be
+$L_A\coloneqq \|\EE_{\tilde x}\zeta(\tilde x)\zeta(\tilde x)^\top\|_{\mathrm{op}}$.
+Let $L_W$ be the same for the world, i.e., with $h_W^\perp$ and $u$ in place
+of $h^\perp$ and $\tilde x$. For real $L>0$ and $\sigma\in\RR$, let
+$\chi_L(\sigma)\coloneqq (e^{\sigma L}-1)/L$. Lemma~\ref{lem:conc} below will bound the moment
+generating functions of $p$ and $\tilde p$, by Lemma~\ref{lem:gbl}, a Gaussian
+form of the geometric Brascamp--Lieb inequality
+\citep[Proposition~2.8]{bcct-2008}. Lemma~\ref{lem:frame}
+will bound $L_A$, by the Gaussian Poincar\'e inequality and a Schur test on
+pairs of proxy inputs.
+\begin{lemma}\label{lem:dw}
+  On $\Gg$, $\tilde p$ is close to the average of $p$ over $\Omega_W$, i.e.,
+  \[\bigl|\sqrt{\EE_{\Omega_W}p}-\sqrt{\tilde p}\bigr|\le\Delta_W\ \text{for every }\Omega_A,
+  \quad\text{and}\quad\PP(\Dd\notin\Gg)\le\delta_{\mathrm{hid}}+\mu_W/\Delta_W^2+\delta_{\mathrm{ext}}.~\leanmark{1}\]
+\end{lemma}
+\begin{proof}
+The first claim needs only $\bar\Delta\le\Delta_W$. Fix $t$, $\Omega_A$, and $\Dd$ with
+$\bar\Delta(\Dd)\le\Delta_W$, and let
+$T\coloneqq\{z\in\SSS^{n-1}:F(A(z))>t\}$. For each $u$, let $P_u$ be the
+probability over $\Omega_W$ that $x\in T$. By Fubini's theorem,
+$\EE_{\Omega_W}p=\EE_uP_u$. Fix $u$, and let $f$ and $g$ be the densities of
+$\Nn(\chat,\tau_W(u)^2I)$ and $\Nn(\chat,\tau_0^2I)$, respectively. If $H_u=\sqrt2$, then
+$(\sqrt{P_u}-\sqrt{\tilde p})^2\le1\le H_u^2$, since
+$P_u,\tilde p\in[0,1]$. Otherwise, by Lemma~\ref{lem:noisy} and the
+definition of $\tilde x$, $P_u=\int_Sf$ and $\tilde p=\int_Sg$ for the set
+$S$ of vectors whose direction lies in $T$, up to a null set. By the
+Cauchy--Schwarz inequality, $\int_S\sqrt{fg}\le\sqrt{P_u\tilde p}$, so
+$(\sqrt{P_u}-\sqrt{\tilde p})^2\le\int_S(\sqrt f-\sqrt g)^2\le H_u^2$. By the
+Cauchy--Schwarz inequality again,
+$\bigl(\sqrt{\EE_uP_u}-\sqrt{\tilde p}\bigr)^2\le\EE_u\bigl(\sqrt{P_u}-\sqrt{\tilde p}\bigr)^2
+\le\EE_uH_u^2=\bar\Delta^2$. Hence
+$|\sqrt{\EE_{\Omega_W}p}-\sqrt{\tilde p}|\le\bar\Delta\le\Delta_W$, and in
+particular on $\Gg$. For the second claim, $\Dd\notin\Gg$ only if
+$\Dd\notin\Hh$, or $\Dd\in\Hh\setminus\Ee$, or $\Dd\in\Hh$ and
+$\bar\Delta>\Delta_W$. By Markov's inequality, the last event has probability
+at most $\EE[\mathbf 1_\Hh\bar\Delta^2]/\Delta_W^2\le\mu_W/\Delta_W^2$. Hence,
+by a union bound,
+$\PP(\Dd\notin\Gg)\le\delta_{\mathrm{hid}}+\mu_W/\Delta_W^2+\delta_{\mathrm{ext}}$,
+as claimed.
+\end{proof}
+\begin{lemma}[Gaussian geometric Brascamp--Lieb inequality]\label{lem:gbl}
+  Let $\mu$ be a Borel probability measure on a Euclidean space
+  $\mathcal Z$, let
+  $\zeta:\mathcal Z\to\RR^m$ be measurable with $|\zeta(z)|\in\{0,1\}$ for every $z$,
+  and let $L>0$ with $\int\zeta\zeta^\top d\mu\preceq L\,I$. Let $G$ be an
+  $n\times m$ matrix of independent $\Nn(0,1)$ entries, and let
+  $Z\sim\Nn(0,I)$ in $\RR^n$. Let $0<a\le b$, and let $(f_z)_{z\in\mathcal Z}$ be
+  a family of functions $f_z:\RR^n\to[a,b]$, jointly measurable in $z$ and in the argument of $f_z$, such
+  that $f_z$ is constant for every $z$ with $\zeta(z)=0$. Then
+  \[\EE_G\exp\Bigl(L^{-1}\!\int\ln f_z(G\zeta(z))\,d\mu(z)\Bigr)
+  \le\exp\Bigl(L^{-1}\!\int\ln\EE_Zf_z(Z)\,d\mu(z)\Bigr)~\leanmark{2}.\]
+\end{lemma}
+\begin{proof}
+Lemma~\ref{lem:gbl} follows from the Bou\'e--Dupuis formula
+\citep[Proposition~1.1]{lehec-2014}, by the argument with which
+\citet[Section~2]{lehec-2014} proves the Brascamp--Lieb inequality.
+\end{proof}
+\begin{lemma}\label{lem:conc}
+  Given $\Dd$, let $L'_W\ge L_W$ and $L'_A\ge L_A$ be positive reals. Then
+  $p$ and $\tilde p$ concentrate around their averages over $\Omega_W$ and
+  $\Omega_A$, respectively, i.e.,
+  \[\EE_{\Omega_W}e^{\sigma p}\le e^{\chi_{L'_W}(\sigma)\,\EE_{\Omega_W}p},\qquad
+  \EE_{\Omega_A}e^{\sigma\tilde p}\le e^{\chi_{L'_A}(\sigma)\,\EE_{\Omega_A}\tilde p}\]
+  for every $\sigma\in\RR$ and, in the first bound, every
+  $\Omega_A$~\leanmark{2}.
+\end{lemma}
+\begin{proof}
+Consider $\tilde p$. The bound for $p$ is the same, for each fixed
+$\Omega_A$, with $u$, $h_W^\perp$, $\nu_W$, $L'_W$ and $W_3$ in place of
+$\tilde x$, $h^\perp$, $\nu_A$, $L'_A$ and $A_3$. Let $L\coloneqq L'_A$, and
+let $\mu$ be the distribution of $\tilde x$, so that
+$\int\zeta\zeta^\top d\mu\preceq L\,I$. As in the proof of
+Lemma~\ref{lem:agentout}, given $\Dd$, the matrix $\Omega_A$ has the
+distribution of $\sqrt{\nu_A}\,G\Pi_{b_A}$, with $G$ an $n\times n^2$ matrix of
+independent $\Nn(0,1)$ entries. So
+$\Omega_Ah^\perp(z)=\sqrt{\nu_A}\,|h^\perp(z)|\,G\zeta(z)$ for every $z$,
+jointly in distribution, and $\tilde p=\int\phi_z(G\zeta(z))\,d\mu(z)$, with
+$\phi_z(y)\coloneqq\mathbf 1[F(\lambda(z)c_A+\sqrt{\nu_A}\,|h^\perp(z)|\,y)>t]$.
+The function $\phi_z$ is constant where $\zeta(z)=0$. Apply
+Lemma~\ref{lem:gbl} with $m=n^2$ and $f_z\coloneqq e^{\sigma L\phi_z}$. The
+left side of Lemma~\ref{lem:gbl} is
+$\EE_{\Omega_A}e^{\sigma\tilde p}$. Since $\phi_z\in\{0,1\}$,
+$\EE_Zf_z(Z)=1+(e^{\sigma L}-1)\EE_Z\phi_z(Z)$, and $\ln(1+y)\le y$ for
+$y>-1$. So the right side of Lemma~\ref{lem:gbl} is at most
+$\exp\bigl(\chi_L(\sigma)\int\EE_Z\phi_z(Z)\,d\mu(z)\bigr)$. Where
+$\zeta(z)\ne0$, $G\zeta(z)\sim\Nn(0,I)$; so, by Fubini's theorem,
+$\int\EE_Z\phi_z(Z)\,d\mu(z)=\EE_{\Omega_A}\tilde p$. Hence
+$\EE_{\Omega_A}e^{\sigma\tilde p}\le e^{\chi_{L'_A}(\sigma)\,\EE_{\Omega_A}\tilde p}$,
+as claimed.
+\end{proof}
+\begin{lemma}\label{lem:frame}
+  On $\Gg$, the frame constants are of order $1/n$, i.e., $L_W\le \vartheta_W/n$
+  and $L_A\le \vartheta_A/n$ for explicit reals $\vartheta_W,\vartheta_A>0$
+  that depend only on $n$; the Numerical certificates give examples of
+  their values~\leanmark{3}.
+\end{lemma}
+\begin{proof}[Proof sketch for $L_A$]
+The full proof is in Lean. Fix $\Dd\in\Gg$, with $\tau_0>0$. Let
+$y\coloneqq\chat+\tau_0\xi$, so that $\tilde x=y/|y|$, let
+$w\coloneqq\tau_0^2/|y|^2$, let $J(z)$ be the Jacobian of $h$ at $z$, and let
+$\Pi_z\coloneqq I-zz^\top$. The sketch has three parts.
+
+The first part of the sketch bounds $L_A$ by a cutoff on $S$. Since $\zeta\zeta^\top=\nu_Ah^\perp h^{\perp\top}/S$
+and $\zeta\zeta^\top\preceq I$, for every real $d_0>0$,
+\begin{equation}\label{eq:framecut}
+L_A\le\frac{\nu_A}{\gamma_Ad_0}\bigl(\|\Pi_{b_A}\operatorname{Cov}_{\tilde x}(h)\,\Pi_{b_A}\|_{\mathrm{op}}
++|\Pi_{b_A}\EE_{\tilde x}h|^2\bigr)+\PP_{\tilde x}(S<\gamma_Ad_0),
+\end{equation}
+with $\Pi_{b_A}$ as in Lemma~\ref{lem:gauss}.
+
+The second part bounds the covariance by the Gaussian Poincar\'e inequality
+\citep[Theorem~3.20]{blm-2013}, which states that
+$\operatorname{Var}f(\xi)\le\EE|\nabla f(\xi)|^2$ for continuously
+differentiable $f$. Lean proves the inequality for Lipschitz $f$, since $h$ is
+Lipschitz but not continuously differentiable. As $y/|y|$ is not Lipschitz
+near $y=0$, Lean applies it with $y/\max\{|y|,\upsilon\}$ in place of $y/|y|$,
+for $\upsilon>0$, and lets $\upsilon\to0$, using $\EE|y|^{-4}<\infty$. For each $v\in\RR^{n^2}$, the chain rule gives
+$\nabla_\xi\langle h(\tilde x),v\rangle=(\tau_0/|y|)\,\Pi_{\tilde x}J(\tilde x)^\top v$
+almost everywhere. Hence
+\begin{equation}\label{eq:framepoinc}
+\nu_A\operatorname{Cov}_{\tilde x}(h)\preceq D,\qquad D\coloneqq\EE_\xi BB^\top,\qquad
+B\coloneqq\sqrt{\nu_Aw}\,J(\tilde x)\Pi_{\tilde x}.
+\end{equation}
+
+The third part bounds $D$ by pairs of proxy inputs. Let $T$ map $f$ in
+$L^2(\xi;\RR^n)$ to $\EE_\xi Bf(\xi)$. Then
+$\|D\|_{\mathrm{op}}=\|TT^*\|_{\mathrm{op}}=\sup_{\|f\|_2=1}|Tf|^2$, and $|Tf|^2$
+is the average of $f(\xi)^\top B^\top B'f(\xi')$ over two independent proxy
+inputs, with $B'$ the value of $B$ at the second input. The Lean proof
+bounds this average by the Schur test \citep[Theorem~5.2]{halmos-sunder-1978},
+with explicit charges for exceptional pairs of inputs. With this bound
+on $\|D\|_{\mathrm{op}}$, \eqref{eq:framepoinc} bounds the covariance term
+of~\eqref{eq:framecut}. The Lean proof bounds
+the other two terms of~\eqref{eq:framecut} on $\Gg$, and then give
+$L_A\le\vartheta_A/n$, as claimed. On the range $8{,}000\le n\le11{,}882$,
+they use a variant of~\eqref{eq:framecut}.
+\end{proof}
+\begin{leanitems}
+\leanitem[1]{Part157Hell,Part157Repl,Part156Master}; \href{\leanrepo}{\leanstepC};
+\href{\leanrepo}{\leanstepF}.
+In Lean, $\bar\Delta$ is \texttt{HbarW}.
+\leanitem[2]{Part157Gp,Part157Mgf,Part158Final,Part156Comp}. Lean proves
+Lemma~\ref{lem:gbl} as \texttt{gaussGP}, by Ornstein--Uhlenbeck
+interpolation.
+\leanitem[3]{Part159Hid,Part159Uncond,Part227Frame,Part236Frame,Part290Frame,Part293World}
+for $L_W$;
+\leanlist{Part160Split,Part188Poincare,Part151Poinc,Part182Schur,Part291WeightedFrame,Part293FrameAdapter}
+for $L_A$; \href{\leanrepo}{\leanstepC}, \href{\leanrepo}{\leanstepD},
+\href{\leanrepo}{\leanstepJ}.
+\end{leanitems}
+
+\paragraph{Assembly.}
+Say that $\Est$ \emph{errs} if it does not succeed. Following the chain~\eqref{eq:chain} of the
+High-level overview, split the event that $\Est$ errs into three events:
+$\Dd\notin\Gg$; $\Dd\in\Gg$ and $|\sqrt R-\sqrt{\tilde q(\Dd)}|>\Delta_s$; or neither
+occurs and $\Est$ still errs. By Lemma~\ref{lem:dw}, the first
+event has probability at most
+$\delta_{\mathrm{hid}}+\mu_W/\Delta_W^2+\delta_{\mathrm{ext}}$ over $\Dd$.
+By Lemma~\ref{lem:chernoff}, the second event has probability at most
+$2e^{-K\Delta_s^2}$ over $r$. In the third event, let
+$Q\coloneqq\EE_{\Omega_A}\tilde p$. Lemmas~\ref{lem:da}
+and~\ref{lem:chernoff} give $|\sqrt R-\sqrt Q|\le\Delta_A+\Delta_s$, and Lemma~\ref{lem:dw}
+gives $|\sqrt{\EE_{\Omega_W}p}-\sqrt{\tilde p}|\le\Delta_W$. Let
+$\hat z_+\coloneqq\max(1/100,\Gamma\max(0,\sqrt Q-\Delta_A-\Delta_s)^2)$ and
+$\hat z_-\coloneqq\Gamma(\sqrt Q+\Delta_A+\Delta_s)^2/10$. By the definition of $U$, as in the proof of
+Lemma~\ref{lem:window}, $\Est$ then errs only if $p>\hat z_+$, or if $p<\hat z_-$ and
+$\hat z_->1/1000$. These are tail events of the two links marked ``conc.'' in~\eqref{eq:chain}. Fix reals
+$\sigma_+>0>\sigma_-$. Let $E_\pm$ be explicit functions of
+$(\Delta_A+\Delta_s,\Delta_W,\vartheta_W,\vartheta_A,\sigma_\pm)$ and of $\Gamma$, with no further dependence on $n$,
+and let $\Bb_\pm\coloneqq e^{nE_\pm}$. Only the Lean proof states $E_\pm$. Assume that
+$E_+\le0$, $E_-\le0$, $\Delta_A+\Delta_s+\Delta_W<1/\sqrt{100\Gamma}$ and
+$2(\Delta_A+\Delta_s)\le1/\sqrt{100\Gamma}$. For each $\Dd\in\Gg$, over $(\Omega_W,\Omega_A)$, Lemmas~\ref{lem:conc}
+and~\ref{lem:frame}, with the bound of Lemma~\ref{lem:dw}, give
+probability at most $\Bb_+$ that $p>\hat z_+$, and at most
+$\Bb_-$ that $p<\hat z_-$ with $\hat z_->1/1000$. Hence the probability that $\Est$ errs is at most
+\[\delta(n)\coloneqq \delta_{\mathrm{hid}}+\mu_W/\Delta_W^2+\delta_{\mathrm{ext}}
++\Bb_++\Bb_-+2e^{-K\Delta_s^2}~\leanmark{1}.\]
+Lemma~\ref{lem:numcert} below will show that, for every integer
+$n\ge8{,}000$, $\Est$ errs with probability at most $0.01$: by
+$\delta(n)\le0.01$ if $n\ge11{,}883$, and by a finer form of $\delta(n)$ if
+$n\le11{,}882$. Hence
+$\PP\bigl(p\le U\le\max(10p,1/100)\bigr)\ge0.99$ for every
+such $n$ and every $t\in\RR$, which is the success bound of the \bst{}.
+\begin{leanitems}
+\leanitem*[1]{\leanstepF}. In Lean, the bound is \texttt{network\_master}
+in \texttt{Part196Master}.
+\end{leanitems}
+
+\paragraph{Numerical certificates.}
+\begin{lemma}\label{lem:numcert}
+  For every integer $n\ge8{,}000$ and every $t\in\RR$, $\Est$ errs with
+  probability at most $0.01$. If $n\ge11{,}883$, Lean gives explicit
+  constants, which depend on $n$, that satisfy the assumptions of the
+  Assembly and give $\delta(n)\le0.01$. If $n\le11{,}882$, the
+  probability is at most $\delta_{\mathrm{low}}<0.00874$, for
+  $\delta_{\mathrm{low}}$ defined below.
+\end{lemma}
+Lean proves Lemma~\ref{lem:numcert} on four ranges of $n$:
+$n\ge 16{,}200$~\leanmark{1}; $12{,}225\le n\le16{,}199$~\leanmark{2};
+$11{,}883\le n\le 12{,}224$~\leanmark{3}; and $8{,}000\le n\le 11{,}882$~\leanmark{4}.
+Lean checks the numerical certificates by exact rational enclosures,
+including Taylor bounds for $\exp$. It splits the ranges into sub-ranges,
+some of a single $n$, with their own constants. When a tail certificate
+covers several values of $n$ with fixed exponent bounds, Lean checks it at
+the least of them and transfers it to larger $n$, since
+$E_\pm\le0$ makes $\Bb_\pm$ nonincreasing in $n$. On the first three ranges, $\Delta_s=10^{-5}$, so
+$2e^{-K\Delta_s^2}=2e^{-100}$.
+
+For example, for $16{,}384\le n\le16{,}500$, Lean uses the constants
+\[\begin{aligned}
+&\Delta_W=0.0024160420,&&\Delta_A=0.006583+10^{-20},&&\Delta_s=10^{-5},\\
+&\vartheta_W=1.377,&&\vartheta_A=2.036,&&\sigma_+=0.1528,\quad\sigma_-=-0.4038,
+\end{aligned}\]
+and checks
+\[\begin{aligned}
+&E_+\le-0.000364553074,&&E_-\le-0.0003551354576,\\
+&\Bb_++\Bb_-\le0.005519,&&\delta_{\mathrm{hid}}+\mu_W/\Delta_W^2+\delta_{\mathrm{ext}}\le0.00448,
+\end{aligned}\]
+so that $\delta(n)\le0.00448+0.005519+2e^{-100}<0.01$~\leanmark{5}.
+
+On the last range, Lean uses a finer failure bound. Let $\Gg_{\mathrm{low}}$
+be the intersection of the six events on $\Dd$ that the proof
+for this range uses; it differs from $\Gg$. On $\Gg_{\mathrm{low}}$, Lean uses the single values
+$\vartheta_A=1.56$, $\Delta_A=0.0064$ and $\Delta_s=5\cdot10^{-6}$. In place
+of the one threshold $\Delta_W$ on $\bar\Delta$ and the one constant
+$\vartheta_W$, it uses two nonnegative scalars $\varpi_1,\varpi_2$, which only the Lean
+proof defines, with $\varpi\coloneqq \varpi_1+\varpi_2\le0.324425$ and $L_W\le(0.419+\varpi)/n$. Lean
+covers the values of $\bar\Delta$ and $\varpi$ by finite intervals. On each pair
+of intervals, it checks at $n=8{,}000$ a bound on $\min(1,\Bb_++\Bb_-)$, with
+finer exponents in place of $E_\pm$; the same bound holds for every
+$n\ge8{,}000$. Beyond the last interval for $\bar\Delta$, it uses the bound $1$.
+It averages these bounds over $\Gg_{\mathrm{low}}$ through moments of
+$\bar\Delta^2$, $\varpi_1^2$ and $\varpi_2$. The probability that $\Est$ errs is then at
+most
+\[\delta_{\mathrm{low}}\coloneqq0.0026872+0.0057+0.0003431447924852+10^{-9}
+=0.0087303457924852.\]
+The first term bounds $\PP(\Dd\notin\Gg_{\mathrm{low}})$. The second and
+third terms together bound the averaged interval bounds, including the bound
+$1$ beyond the last interval. The last term bounds $2e^{-K\Delta_s^2}=2e^{-25}$~\leanmark{6}. On $\Gg_{\mathrm{low}}$, the frame bounds of
+Lemma~\ref{lem:frame} hold with $\vartheta_W=0.743425$ and $\vartheta_A=1.56$.
+
+For odd $n\ge8{,}001$, the values $\bar h_{g,i}$ and $\bar h^{(2)}_{g,i}$ of the
+finite rule of step~5 are within $10^{-90}n^{-10}a$ of $\EE_VX_{g,i}$ and within
+$3\cdot10^{-90}n^{-10}a^2$ of $\EE_VX_{g,i}^2$, for every real $a$ with
+$|s_g\alpha_i|\le a$ and $0\le\sqrt{1-s_g^2}\,\alpha^\perp_i\le a$. For every odd $n\ge8{,}001$, on the good event of the proof for the range of
+$n$, Lean turns these errors into a change of at most $10^{-20}$ in
+$\sqrt{\tilde q}$, the fourth term in the proof of Lemma~\ref{lem:da}; for the
+example above, it is the term $10^{-20}$ in $\Delta_A$~\leanmark{7}.
+\begin{leanitems}
+\leanitem*[1]{\leanstepG}.
+\leanitem*[2]{\leanstepH}.
+\leanitem*[3]{\leanstepI}.
+\leanitem*[4]{\leanstepJ}.
+\leanitem[5]{Part186GLedC,Part186GCombC,Part160Ledger2Gen,Part156Num}.
+\leanitem[6]{Part293Ledger,Part293Assembly,Part293EndpointInterface,Part236Master}.
+\leanitem[7]{Part278Err,Part278StBase3,Part281Odd,Part293Arithmetic}.
+\end{leanitems}
+
+\paragraph{Total cost.}
+The step costs sum to $2m_W^2+1024n^5+4m_WJ_W+O(n^{4.5})+2Km_F^2+O(Knm_F)$,
+where $1024n^5$ is the cost of step~5 and $4m_WJ_W$ that of the rule
+$B_{J_W}$ of step~2; for $8{,}000\le n\le16{,}384$ the first is $22$ to $27$
+times the second. The leading term
+$2m_W^2$ is the cost of the product $W_2\psi$ of step~2; one exact sample
+computes the product $W_2\relu(W_1u)$, which has the same leading cost. The $K$ evaluations of $F$ cost about
+$2Km_F^2\approx10^{24}$ at $n=8{,}000$, far below $2n^7>4\cdot10^{27}$. For
+every $n\ge8{,}000$, the total is below $1.0003\cdot2n^7$~\leanmark{1}.
+\begin{leanitems}
+\leanitem[1]{Part282Total,Part282JoinCost,Part279ScheduleOut,Part289Cost}; \href{\leanrepo}{\leanstepK}.
+\end{leanitems}
+
+The cost model in Lean charges nothing for rational constants or for reading
+the seed. The Cost items of steps~1, 2, 3, 5 and~6 estimated this uncharged
+work. The sum of these estimates is below $2\cdot10^{18}$ at $n=8{,}000$,
+less than $10^{-9}$ times $2n^7$. Almost all of the sum comes from the
+Gaussian draws of step~6. These estimates are not checked in Lean.
+
+\section{LLM usage}\label{sec:llm-usage}
+LLMs from multiple providers was used to discover, prove, and explain this result, via the following methodology.
+
+\paragraph{Discovery via informal proof.}
+LLMs produced the proofs under human direction. Claude Opus~5.5
+(medium effort) coordinated the work, wrote and challenged paper proofs, and
+checked each result before the result was recorded. GPT-6.1-Sol (Codex, medium
+effort) challenged paper proofs. GPT-6-Astra (Codex, medium effort) wrote the
+proof for $8{,}000\le n\le11{,}882$. By volume of written reports the paper
+work was split roughly $57\%$ Codex and $42\%$ Opus. Each claim was challenged
+by a second model before the claim was relied on.
+
+\paragraph{Formal proof.}
+LLMs formalized the proofs in Lean. GPT-6.1-Sol formalized most of the
+Lean development, including the shared library and the certificates for
+$n\ge12{,}225$. GPT-6-Astra (high effort) formalized the proof for
+$8{,}000\le n\le11{,}882$, the band-wise root certificates and the final
+assembly. Claude Opus~5.5 formalized the treatment of odd dimensions, the
+operation count, the sharp root bounds and several assemblies. Claude
+Sonnet~5.5 (medium effort) formalized some numerical tables. Of the $202$ Lean
+parts in the import closure of the two final theorems, roughly $77\%$ are Sol's, $16\%$ Opus's, $6\%$
+Astra's and $1\%$ Sonnet's. The Lean kernel checks the proof of the final
+statement. A Lean theorem can compile even when its statement is not the
+intended claim \citep[cf.][Sections~1 and~4]{ilin-nugent-2026}; for that reason GPT-6-Astra (high
+effort) and Claude Opus~5.5 separately compared this note's text with the Lean
+statements of the setting, of $\Est$ and of the conclusion.
+
+\paragraph{Explanation.}
+The human author iteratively refined a rule-set for Claude Opus~5.5 improving 
+the exposition, and made occasional direct changes, until the logic flow of 
+the argument became sufficiently organized and clear to the author.
+ 
+
+\section{Related work}
+
+\paragraph{ARC's program.}
+The Alignment Research Center (ARC) proposes to estimate the probability that
+a catastrophe detector fires on a model's outputs, by analyzing the model,
+because sampling is slow when failures are rare
+\citep{arc-2025-competing,arc-2026-mikes-eye}: $\Kk$ samples are unlikely to
+show a failure much rarer than $1/\Kk$, and so cannot estimate its rate to
+within a constant factor. The network $A$, the detector $C$ and the distribution of $x$ play the
+roles of ARC's model, detector and input distribution, and the failure rate
+$p$ of the \bst{} is the quantity ARC's scheme needs. ARC's
+\emph{Matching Sampling Principle} is Conjecture~\ref{conj:msp} below. Let
+$M_\theta(c,x)$ be a model with weights $\theta$, a random context $c$ and a
+random input $x$; in this paragraph and the next, $c$ and $x$ are ARC's.
+\begin{conjecture}[Matching Sampling Principle, ARC]\label{conj:msp}
+For every architecture $M$ there is an estimator with the following
+property. For every $\theta$ there is an explanation $\pi$ of size
+$O(|\theta|)$, obtained in some unspecified way, such that for every
+tolerance $\varepsilon>0$ the estimator uses $\theta$, $\pi$, $c$ and
+$\varepsilon$ to estimate the mean output $\EE_x[M_\theta(c,x)]$, and:
+averaged over the context $c$, its mean squared error is at most
+$\varepsilon^2$ times the average variance $\EE_c\operatorname{Var}_x
+M_\theta(c,x)$; it runs in time $O(\varepsilon^{-2})$ forward passes of
+$M_\theta$; and it is \emph{mechanistic}, a requirement that ARC leaves
+informal, i.e., it estimates deductively from the structure of $M_\theta$
+instead of from sampled behavior.
+\end{conjecture}
+Averaging $\varepsilon^{-2}$ independent samples of
+$M_\theta(c,x)$ achieves exactly this accuracy at exactly this cost, but is
+not mechanistic; this is why the principle speaks of \emph{matching} sampling. Random weights can be
+placed in the context; ARC's results for random networks take this form and
+need no explanation, as the paragraph ``Mechanistic estimation for random
+networks'' will discuss.
+
+Now let $M_\theta(c,x)$ be a failure indicator, equal to $1$ when the
+detector fires and $0$ otherwise, so that its mean is the failure rate $p$.
+A $0/1$ variable with mean $p$ has variance $p(1-p)$, which is about $p$ when
+failures are rare. As a benchmark, consider a single context with failure
+rate $p$ and an error of about $\varepsilon\sqrt p$. This error is smaller
+than $p$ itself only when $\varepsilon^2\lesssim p$, so that the estimate is
+right to within a constant factor, and then the time allowed is about $1/p$
+forward passes. That is also what sampling costs to estimate a probability
+$p$ to within a constant factor. So Conjecture~\ref{conj:msp}, as stated, does not
+promise that a mechanistic estimator beats sampling on rare failures; ARC
+hopes to do better on structured models. The program $\Est$ of the \bst{} beats
+naive-99\% samplers on the target of $\Est$, $p\le U\le\max(10p,1/100)$: for every
+$p\le1/1000$, the cost of $\Est$ is more than $447$ times smaller than the expected cost
+of any naive-99\% sampler (Section~\ref{sec:comparison}). We prove no such lower bound for samplers that
+need to succeed only for most networks, nor for importance sampling or
+splitting.
+
+\paragraph{Mechanistic estimation for random networks.}
+\citet{arc-2026-wide-mlps}
+estimate the expected output of a wide random MLP under Gaussian input by
+propagating cumulants, without running the network. Their theorems
+assume fixed depth and polynomial activations as the width $n\to\infty$. For
+tolerances $\varepsilon$ at least inverse-polynomial in $n$, they give mean
+squared error $O(\varepsilon^2)$ averaged over the weights. When
+$\varepsilon^2=O(1/n^2)$, their running time is $O(n/\varepsilon^2)$, against
+$\Theta(n^2/\varepsilon^2)$ for Monte Carlo. Their experiments use ReLU at
+width $256$ and beat sampling in error per FLOP, including on rare thresholded events. Whether such methods can match sampling
+at large depth is open there, and ARC's White-Box Estimation
+Challenge \citep{arc-2026-challenge,aicrowd-2026-phase2} asks contestants to estimate the same mean output, at width $256$ and depth
+$32$ in Phase~1 and width $1{,}024$ and depth $16$ in Phase~2, without
+requiring mechanistic methods. For one layer, \citet{hilton-2025-halfspaces} deductively
+estimates the probability that all output neurons are active (an orthant
+probability), matching the mean squared error of sampling averaged over the
+weights, up to logarithmic factors in the running time. Compared with this
+work, the \bst{} covers only depth two and prescribed width scalings,
+but it concerns a probability over a non-Gaussian input distribution produced
+by a larger network, holds with explicit constants at every $n\ge8{,}000$,
+and is checked in Lean.
+
+\paragraph{Other approaches.}
+Rare-event methods estimate failure probabilities of networks with fewer
+samples, by importance sampling or multilevel
+splitting \citep{webb-2019,wu-hilton-2025-rare}, but still evaluate the network many
+times and give no guarantee of the kind proved here. Moment propagation
+through ReLU layers under a Gaussian approximation is standard in Bayesian
+deep learning \citep{wu-2019-dvi}, with empirical checks but no error bounds. Sound probabilistic
+verifiers bound output probabilities rigorously by branch and bound over the
+input space \citep{boetius-2025}, for a given network, trained ones included;
+the experiments of \citet{boetius-2025} use input dimensions far smaller than
+$2n\ge16{,}000$, and that paper gives no cost guarantee comparable to
+the \bst{}. Infinite-width theory \citep{matthews-2018,lee-2018-nngp,hanin-2023}
+describes random networks over the random weights, whereas $\Est$
+estimates a probability over inputs for one draw of the weights. \citet{gross-2024-compact} prove compact accuracy bounds for small trained one-layer attention-only
+transformers, with proofs shorter than brute-force enumeration; our result
+instead bounds the cost of an estimator, for random networks at frontier
+input widths.
+
+\begin{thebibliography}{99}\small
+\bibitem[AIcrowd(2026)]{aicrowd-2026-phase2} AIcrowd. \emph{Phase 2 of the ARC White-Box Estimation Challenge is live.} AIcrowd forum, August 23, 2026.
+\bibitem[Bayati and Montanari(2011)]{bayati-montanari-2011} M. Bayati, A. Montanari. \emph{The dynamics of message passing on dense graphs, with applications to compressed sensing.} IEEE Trans.\ Inform.\ Theory 57(2):764--785, 2011. arXiv:1001.3448.
+\bibitem[Bennett et~al.(2008)]{bcct-2008} J. Bennett, A. Carbery, M. Christ, T. Tao. \emph{The Brascamp--Lieb inequalities: finiteness, structure and extremals.} Geom.\ Funct.\ Anal.\ 17(5):1343--1415, 2008.
+\bibitem[Boetius et~al.(2025)]{boetius-2025} D. Boetius, S. Leue, T. Sutter. \emph{Solving probabilistic verification problems of neural networks using branch and bound.} ICML 2025.
+\bibitem[Bolthausen(2014)]{bolthausen-2014} E. Bolthausen. \emph{An iterative construction of solutions of the TAP equations for the Sherrington--Kirkpatrick model.} Comm.\ Math.\ Phys.\ 325:333--366, 2014.
+\bibitem[Boucheron et~al.(2013)]{blm-2013} S. Boucheron, G. Lugosi, P. Massart. \emph{Concentration Inequalities: A Nonasymptotic Theory of Independence.} Oxford University Press, 2013.
+\bibitem[Cho and Saul(2009)]{cho-saul-2009} Y. Cho, L. K. Saul. \emph{Kernel methods for deep learning.} Advances in Neural Information Processing Systems 22 (NeurIPS 2009).
+\bibitem[DeepSeek-AI(2026)]{deepseek-2026-v4} DeepSeek-AI. \emph{DeepSeek-V4-Pro}, model card and configuration. Hugging Face, 2026. \url{https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro}
+\bibitem[DLMF(2026)]{dlmf} F. W. J. Olver et~al.\ (eds.). \emph{NIST Digital Library of Mathematical Functions}, Section~5.12, Release~1.2.8 of 2026-09-15. \url{https://dlmf.nist.gov/5.12}
+\bibitem[Devroye et~al.(2022)]{dmr-2022} L. Devroye, A. Mehrabian, T. Reddad. \emph{The total variation distance between high-dimensional Gaussians with the same mean.} arXiv:1810.08693v6, 2022.
+\bibitem[Gross et~al.(2024)]{gross-2024-compact} J. Gross, R. Agrawal, T. Kwa, E. Ong, C. H. Yip, A. Gibson, S. Noubir, L. Chan. \emph{Compact proofs of model performance via mechanistic interpretability.} NeurIPS 2024.
+\bibitem[Halmos and Sunder(1978)]{halmos-sunder-1978} P. R. Halmos, V. S. Sunder. \emph{Bounded Integral Operators on $L^2$ Spaces.} Ergebnisse der Mathematik und ihrer Grenzgebiete 96, Springer, 1978.
+\bibitem[Hanin(2023)]{hanin-2023} B. Hanin. \emph{Random neural networks in the infinite width limit as Gaussian processes.} Ann.\ Appl.\ Probab.\ 33(6A):4798--4819, 2023.
+\bibitem[Hilton(2025)]{hilton-2025-halfspaces} J. Hilton. \emph{Deductive estimation for random halfspace intersections.} Note dated May 2, 2025, published by the Alignment Research Center in May 2026.
+\bibitem[Hilton et~al.(2026)]{arc-2026-challenge} J. Hilton, P. Christiano, W. Wu. \emph{Announcing the ARC White-Box Estimation Challenge.} Alignment Research Center blog, June 2, 2026.
+\bibitem[Ilin and Nugent(2026)]{ilin-nugent-2026} V. Ilin, B. Nugent. \emph{Sorries are not the hard part: an expert-review case study of a semi-autonomous formalization.} arXiv:2606.13925, 2026.
+\bibitem[Lee et~al.(2018)]{lee-2018-nngp} J. Lee, Y. Bahri, R. Novak, S. S. Schoenholz, J. Pennington, J. Sohl-Dickstein. \emph{Deep neural networks as Gaussian processes.} ICLR 2018.
+\bibitem[Lehec(2014)]{lehec-2014} J. Lehec. \emph{Short probabilistic proof of the Brascamp--Lieb and Barthe theorems.} Canad.\ Math.\ Bull.\ 57(3):585--597, 2014.
+\bibitem[Matthews et~al.(2018)]{matthews-2018} A. G. de G. Matthews, J. Hron, M. Rowland, R. E. Turner, Z. Ghahramani. \emph{Gaussian process behaviour in wide deep neural networks.} ICLR 2018.
+\bibitem[Meta(2026)]{meta-2026-muse} Meta. \emph{Introducing Muse Spark Open.} Meta AI blog, October 15, 2026, \url{https://research.meta.ai/blog/muse-spark-open}; architecture from Hugging Face, \emph{Welcome Muse Spark Open}, Hugging Face blog, 2026, \url{https://huggingface.co/blog/meta-muse-spark-open}; configuration from the public copy \url{https://huggingface.co/unsloth/Muse-Spark-Open-816B-A42B} and the class \texttt{MuseSparkMoE} in Hugging Face Transformers.
+\bibitem[Moonshot AI(2026)]{kimi-2026-k3} Moonshot AI. \emph{Kimi K3}, model card and configuration. Hugging Face, 2026. \url{https://huggingface.co/moonshotai/Kimi-K3}
+\bibitem[Neyman et~al.(2025)]{arc-2025-competing} E. Neyman, V. Lecomte, W. Wu, M. Winer, J. Hilton, G. Robinson. \emph{Competing with sampling.} Alignment Research Center blog, November 18, 2025.
+\bibitem[Okamoto(1958)]{okamoto-1958} M. Okamoto. \emph{Some inequalities relating to the partial sum of binomial probabilities.} Ann.\ Inst.\ Statist.\ Math.\ 10(1):29--35, 1958.
+\bibitem[Qwen Team(2026)]{qwen-2026-38} Qwen Team, Alibaba. \emph{Qwen3.8-2.4T-A95B}, model card and configuration. Hugging Face, 2026. \url{https://huggingface.co/Qwen/Qwen3.8-2.4T-A95B}
+\bibitem[Vershynin(2018)]{vershynin-2018-hdp} R. Vershynin. \emph{High-Dimensional Probability: An Introduction with Applications in Data Science.} Cambridge University Press, 2018.
+\bibitem[Wald(1945)]{wald-1945} A. Wald. \emph{Sequential tests of statistical hypotheses.} Ann.\ Math.\ Statist.\ 16(2):117--186, 1945.
+\bibitem[Webb et~al.(2019)]{webb-2019} S. Webb, T. Rainforth, Y. W. Teh, M. P. Kumar. \emph{A statistical approach to assessing neural network robustness.} ICLR 2019.
+\bibitem[Winer(2026)]{arc-2026-mikes-eye} M. Winer. \emph{A Mike's-eye view of ARC's research.} Alignment Research Center blog, June 9, 2026.
+\bibitem[Wu and Hilton(2025)]{wu-hilton-2025-rare} G. Wu, J. Hilton. \emph{Estimating the probabilities of rare outputs in language models.} ICLR 2025.
+\bibitem[Wu et~al.(2019)]{wu-2019-dvi} A. Wu, S. Nowozin, E. Meeds, R. E. Turner, J. M. Hern\'andez-Lobato, A. L. Gaunt. \emph{Deterministic variational inference for robust Bayesian neural networks.} ICLR 2019.
+\bibitem[Wu et~al.(2026)]{arc-2026-wide-mlps} W. Wu, V. Lecomte, M. Winer, G. Robinson, J. Hilton, P. Christiano. \emph{Estimating the expected output of wide random MLPs more efficiently than sampling.} arXiv:2605.05179, 2026.
+\bibitem[Yang(2019)]{yang-2019-tp1} G. Yang. \emph{Tensor Programs I: Wide feedforward or recurrent neural networks of any architecture are Gaussian processes.} NeurIPS 2019. Full version: arXiv:1910.12478v3, 2021.
+\bibitem[Z.ai(2026)]{zai-2026-glm53} Z.ai. \emph{GLM-5.3}, model card and configuration. Hugging Face, 2026. \url{https://huggingface.co/zai-org/GLM-5.3}
+\end{thebibliography}
+
+\appendix
+\section{Network sizes}\label{app:sizes}
+
+Table~\ref{tab:sizes-app} repeats Table~\ref{tab:sizes}, with fuller notes in
+its caption. The input dimension of $A$ is comparable to the
+embedding widths of the models in Table~\ref{tab:sizes-app}, but its hidden width and weight count are
+far larger: $A$ has about $n^4$ weights, $4.1\cdot10^{15}$ at $n=8{,}000$,
+while all of Kimi K3 has a reported $2.8\cdot10^{12}$
+parameters~\citep{kimi-2026-k3}. The failure metric $F$ has hidden width
+$\lceil n^{1.5}\rceil=715{,}542$ at $n=8{,}000$, which is closer in size to one
+mixture-of-experts layer, i.e., to the values $524{,}288\le h\le2{,}752{,}512$
+of Table~\ref{tab:sizes-app}. The transformer MLPs also differ in kind: they are
+trained, use gated activations rather than ReLU, have one
+hidden layer, and sit between attention layers, while $A$ is a random dense
+ReLU network with two hidden layers.
+
+\begin{table}[h]
+\centering\small
+\sizestable
+\caption{The agent and world networks of the \bst{} at $n=8{,}000$, and the MLP blocks of large open-weight transformers, read
+from their published configurations (October 2026). The last column counts
+the parameters of the whole model: the weights of $A$ and of $W$, and the totals stated
+in each model card or release announcement; GLM-5.3's model card states no
+total, so its entry is the parameter count that Hugging Face reports for its checkpoint. Kimi K3's routed experts act on a $3{,}584$-dimensional
+projection of its $7{,}168$-dimensional embedding, and Muse Spark Open's on a $4{,}096$-dimensional projection of its $8{,}192$-dimensional embedding. The mixture-of-experts
+layers have $896$ routed experts of width $3{,}072$ with $16$ used per token
+(Kimi K3), $512$ of width $2{,}048$ with $10$ per token (Qwen3.8), $384$ of
+width $3{,}072$ with $6$ per token (DeepSeek V4 Pro), $256$ of width $4{,}096$
+with $8$ per token (Muse Spark Open) and $256$ of width $2{,}048$ with $8$ per
+token (GLM-5.3). All but Muse Spark Open also have one or two shared experts.
+The configuration of Muse Spark Open sets no shared experts. The official Muse Spark Open checkpoint is gated, so its figures are from the configuration of a public copy of the checkpoint and from the Transformers implementation.}
+\label{tab:sizes-app}
+\end{table}
+
+\section{Lean files}\label{app:files}
+The extracted project has $5{,}833$ modules: the import closure of the modules of the two Lean theorems that state the bounds of the \bst{}, \texttt{Part293.classifier\_stated2\_8000} and \texttt{Part289.progOut\_run2}, together with two modules, \texttt{Part288Audit} and \texttt{Part289All}, that contain only imports and axiom-audit commands. Of these modules, $4{,}290$ define a declaration that the proofs of these two theorems use. The table assigns every module to one group (groups S0--S10 follow Section~\ref{sec:program}: S0 is the setting, S1 the definition of $\Est$, S2 and S3 what is known after step~4, S4 what is known after step~6, S5 the assembly, S6--S9 the numerical certificates on the four ranges of $n$, and S10 the total cost; S11 holds modules that are compiled because they are imported, but contribute no declaration to these proofs). A script checks that the groups cover every module. Parts are module-name prefixes \texttt{BstLean.Part<k>}.
+{\footnotesize
+\input{appendix.tex}
+}
+
+\end{document}

@@ -1,0 +1,7001 @@
+import BstLean.Part268World18Step1
+namespace BstLean.Part268.WorldRow12800
+open Real MeasureTheory Set BstLean.Part130 BstLean.Part140 BstLean.Part137 BstLean.Part159
+open BstLean.Part227 BstLean.Part228 BstLean.Part218 BstLean.Part205 BstLean.Part214
+open BstLean.Part157 BstLean.Part192
+open BstLean.Part250 (bounds_div pi_bounds rowEps meanMajorantValue endpointPolynomial mean_majorant)
+theorem covmean : Bounds (covarianceMeanBound 25600 (mW 12800)) (13279915572243411343468363/2000000000000000) (49802845683524586076675609/5000000000000000) := by
+  let v1 : ℝ := 237265664060629
+  have h1 : Bounds v1 237265664060629 237265664060629 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v203 : ℝ := v1*v41
+  have h203 : Bounds v203 949062656242516 949062656242516 := Bounds.mul h1 h41 (by norm_num)
+  let v204 : ℝ := -v22
+  have h204 : Bounds v204 (-1) (-1) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h22
+  let v205 : ℝ := v1+v204
+  have h205 : Bounds v205 237265664060628 237265664060628 := Bounds.add h1 h204 (by norm_num)
+  let v206 : ℝ := v203*v205
+  have h206 : Bounds v206 225179981368524074493295260000 225179981368524074493295261000 := Bounds.mul h203 h205 (by norm_num)
+  let v207 : ℝ := v206*(angularJ2 25600 (angularOffset 25600))
+  have h207 : Bounds v207 (13279915572243411343468363/2000000000000000) (49802845683524586076675609/5000000000000000) := Bounds.mul h206 jsecond (by norm_num)
+  convert h207 using 1 <;>
+    simp only [v1, v22, v41, v203, v204, v205, v206, v207, covarianceMeanBound, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem frob : Bounds (e1FrobBound 25600 (mW 12800) rowEps) (29044765316348682607390053/1000000000000000000) (9082215991808303529343919/312500000000000000) := by
+  let v0 : ℝ := 25600
+  have h0 : Bounds v0 25600 25600 := Bounds.point _
+  let v1 : ℝ := 237265664060629
+  have h1 : Bounds v1 237265664060629 237265664060629 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v208 : ℝ := (1/100000)
+  have h208 : Bounds v208 (1/100000) (1/100000) := Bounds.point _
+  let v209 : ℝ := v208+v22
+  have h209 : Bounds v209 (100001/100000) (100001/100000) := Bounds.add h208 h22 (by norm_num)
+  let v210 : ℝ := v1*v0
+  have h210 : Bounds v210 6074000999952102400 6074000999952102400 := Bounds.mul h1 h0 (by norm_num)
+  let v211 : ℝ := v1+v0
+  have h211 : Bounds v211 237265664086229 237265664086229 := Bounds.add h1 h0 (by norm_num)
+  let v212 : ℝ := v211+v22
+  have h212 : Bounds v212 237265664086230 237265664086230 := Bounds.add h211 h22 (by norm_num)
+  let v213 : ℝ := v210*v212
+  have h213 : Bounds v213 1441151880914060650357863380000000 1441151880914060650357863390000000 := Bounds.mul h210 h212 (by norm_num)
+  let v214 : ℝ := v209*v213
+  have h214 : Bounds v214 1441166292432869790964366950000000 1441166292432869790964366970000000 := Bounds.mul h209 h213 (by norm_num)
+  let v215 : ℝ := v0^4
+  have h215 : Bounds v215 429496729600000000 429496729600000000 := Bounds.pow h0 4 (by norm_num)
+  let v216 : ℝ := v215*v41
+  have h216 : Bounds v216 1717986918400000000 1717986918400000000 := Bounds.mul h215 h41 (by norm_num)
+  let v217 : ℝ := 1/v216
+  have h217 : Bounds v217 (1/1717986918400000000) (1/1717986918400000000) := Bounds.inv h216 (by norm_num)
+  let v218 : ℝ := v214/v216
+  have h218 : Bounds v218 (83886918869851494147696471/100000000000) (83886918869851494147696473/100000000000) := bounds_div h214 h217 (by norm_num)
+  let v219 : ℝ := Real.sqrt v218
+  have h219 : Bounds v219 (144816192870351599838408299/5000000000000000000) (144816192870351599838408301/5000000000000000000) := Bounds.sqrt h218 (by norm_num)
+  let v220 : ℝ := v0*v41
+  have h220 : Bounds v220 102400 102400 := Bounds.mul h0 h41 (by norm_num)
+  let v221 : ℝ := 1/v220
+  have h221 : Bounds v221 (1/102400) (1/102400) := Bounds.inv h220 (by norm_num)
+  let v222 : ℝ := v22/v220
+  have h222 : Bounds v222 (1/102400) (1/102400) := bounds_div h22 h221 (by norm_num)
+  let v223 : ℝ := -(BstLean.Part137.cN 25600 ^ 2)
+  have h223 : Bounds v223 (-25000000000000000000/4021081516962255855566877) (-1953125000000000/314159265358979323847) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg cnsq_bounds
+  let v224 : ℝ := v222+v223
+  have h224 : Bounds v224 (138609069328734557854711/39062500000000000000000000000) (35486350354728384465425363/10000000000000000000000000000000) := Bounds.add h222 h223 (by norm_num)
+  let v225 : ℝ := v224^2
+  have h225 : Bounds v225 (125910870262926168115135561/10000000000000000000000000000000000000) (125928106149853133798152141/10000000000000000000000000000000000000) := Bounds.pow h224 2 (by norm_num)
+  let v226 : ℝ := v0^2
+  have h226 : Bounds v226 655360000 655360000 := Bounds.pow h0 2 (by norm_num)
+  let v227 : ℝ := 1/v226
+  have h227 : Bounds v227 (1/655360000) (1/655360000) := Bounds.inv h226 (by norm_num)
+  let v228 : ℝ := v41/v226
+  have h228 : Bounds v228 (1/163840000) (1/163840000) := bounds_div h41 h227 (by norm_num)
+  let v229 : ℝ := v225*v228
+  have h229 : Bounds v229 (76849896400711772531210669/1000000000000000000000000000000000000000000000) (76860416351228719359223719/1000000000000000000000000000000000000000000000) := Bounds.mul h225 h228 (by norm_num)
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v231 : ℝ := v230+v22
+  have h231 : Bounds v231 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v232 : ℝ := v1*v0
+  have h232 : Bounds v232 6074000999952102400 6074000999952102400 := Bounds.mul h1 h0 (by norm_num)
+  let v233 : ℝ := v0+v2
+  have h233 : Bounds v233 25602 25602 := Bounds.add h0 h2 (by norm_num)
+  let v234 : ℝ := v232*v233
+  have h234 : Bounds v234 155506573600773725644800 155506573600773725644800 := Bounds.mul h232 h233 (by norm_num)
+  let v235 : ℝ := v231*v234
+  have h235 : Bounds v235 (778310400871872496852224/5) (778310400871872496852224/5) := Bounds.mul h231 h234 (by norm_num)
+  let v236 : ℝ := v229*v235
+  have h236 : Bounds v236 (119626147349199702042397807/10000000000000000000000) (119642522923007696338424889/10000000000000000000000) := Bounds.mul h229 h235 (by norm_num)
+  let v237 : ℝ := v230+v22
+  have h237 : Bounds v237 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v238 : ℝ := v237*(covarianceMeanBound 25600 (mW 12800))
+  have h238 : Bounds v238 (16616494359769568443514789/2500000000000000) (9970529705841622132550457/1000000000000000) := Bounds.mul h237 covmean (by norm_num)
+  let v239 : ℝ := v236+v238
+  have h239 : Bounds v239 (664660970652256229737611983/100000000000000000) (199410833401878288666401817/20000000000000000) := Bounds.add h236 h238 (by norm_num)
+  let v240 : ℝ := Real.sqrt v239
+  have h240 : Bounds v240 (40763371139181319854196923/500000000000000000000) (19970519943250265243776107/200000000000000000000) := Bounds.sqrt h239 (by norm_num)
+  let v241 : ℝ := v219+v240
+  have h241 : Bounds v241 (29044765316348682607390053/1000000000000000000) (9082215991808303529343919/312500000000000000) := Bounds.add h219 h240 (by norm_num)
+  convert h241 using 1 <;>
+    simp only [v0, v1, v2, v22, v41, v208, v209, v210, v211, v212, v213, v214, v215, v216, v218, v219, v220, v222, v223, v224, v225, v226, v228, v229, v230, v231, v232, v233, v234, v235, v236, v237, v238, v239, v240, v241, e1FrobBound, rowEps, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem energy : Bounds (e1EnergyLower 25600 (mW 12800) (1/10^6)) (237265426794964939371/25600000000) (237265426794964939371/25600000000) := by
+  let v0 : ℝ := 25600
+  have h0 : Bounds v0 25600 25600 := Bounds.point _
+  let v1 : ℝ := 237265664060629
+  have h1 : Bounds v1 237265664060629 237265664060629 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v242 : ℝ := (1/1000000)
+  have h242 : Bounds v242 (1/1000000) (1/1000000) := Bounds.point _
+  let v243 : ℝ := -v242
+  have h243 : Bounds v243 (-1/1000000) (-1/1000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h242
+  let v244 : ℝ := v22+v243
+  have h244 : Bounds v244 (999999/1000000) (999999/1000000) := Bounds.add h22 h243 (by norm_num)
+  let v245 : ℝ := v244*v1
+  have h245 : Bounds v245 (237265426794964939371/1000000) (237265426794964939371/1000000) := Bounds.mul h244 h1 (by norm_num)
+  let v246 : ℝ := 1/v0
+  have h246 : Bounds v246 (1/25600) (1/25600) := Bounds.inv h0 (by norm_num)
+  let v247 : ℝ := v245/v0
+  have h247 : Bounds v247 (237265426794964939371/25600000000) (237265426794964939371/25600000000) := bounds_div h245 h246 (by norm_num)
+  convert h247 using 1 <;>
+    simp only [v0, v1, v22, v242, v243, v244, v245, v247, e1EnergyLower, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem direction : Bounds (directionMean 25600 (mW 12800)) (78563006001536620850525181/1000000000000000000000) (392837540553335526459462917/5000000000000000000000) := by
+  let v0 : ℝ := 25600
+  have h0 : Bounds v0 25600 25600 := Bounds.point _
+  let v1 : ℝ := 237265664060629
+  have h1 : Bounds v1 237265664060629 237265664060629 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v248 : ℝ := v1*v2
+  have h248 : Bounds v248 474531328121258 474531328121258 := Bounds.mul h1 h2 (by norm_num)
+  let v249 : ℝ := v248*(BstLean.Part137.cN 25600 ^ 2)
+  have h249 : Bounds v249 (295015650478360663315134783/100000000000000000) (29502717497738321734800151/10000000000000000) := Bounds.mul h248 cnsq_bounds (by norm_num)
+  let v250 : ℝ := v0+v2
+  have h250 : Bounds v250 25602 25602 := Bounds.add h0 h2 (by norm_num)
+  let v251 : ℝ := v249*v250
+  have h251 : Bounds v251 (75529906835469897021940807/1000000000000) (75532857337709651305435347/1000000000000) := Bounds.mul h249 h250 (by norm_num)
+  let v252 : ℝ := v0^2
+  have h252 : Bounds v252 655360000 655360000 := Bounds.pow h0 2 (by norm_num)
+  let v253 : ℝ := 1/v252
+  have h253 : Bounds v253 (1/655360000) (1/655360000) := Bounds.inv h252 (by norm_num)
+  let v254 : ℝ := v251/v252
+  have h254 : Bounds v254 (11524949163127120517263917/100000000000000000000) (28813498435100422403501643/250000000000000000000) := bounds_div h251 h253 (by norm_num)
+  let v255 : ℝ := v0*v2
+  have h255 : Bounds v255 51200 51200 := Bounds.mul h0 h2 (by norm_num)
+  let v256 : ℝ := v255*(BstLean.Part137.cN 25600 ^ 2)
+  have h256 : Bounds v256 (15915494309189533576851107/50000000000000000000000000) (795805801623602600821683/2500000000000000000000000) := Bounds.mul h255 cnsq_bounds (by norm_num)
+  let v257 : ℝ := -v256
+  have h257 : Bounds v257 (-795805801623602600821683/2500000000000000000000000) (-15915494309189533576851107/50000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h256
+  let v258 : ℝ := v22+v257
+  have h258 : Bounds v258 (1704194198376397399178317/2500000000000000000000000) (34084505690810466423148893/50000000000000000000000000) := Bounds.add h22 h257 (by norm_num)
+  let v259 : ℝ := v254*v258
+  have h259 : Bounds v259 (78563006001536620850525181/1000000000000000000000) (392837540553335526459462917/5000000000000000000000) := Bounds.mul h254 h258 (by norm_num)
+  convert h259 using 1 <;>
+    simp only [v0, v1, v2, v22, v248, v249, v250, v251, v252, v254, v255, v256, v257, v258, v259, directionMean, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring <;> simp
+
+theorem inputvar : Bounds (e1InputVarianceBound 25600 (mW 12800) rowEps) (362123523367041335578984021/50000000000000000000) (724247046734082671157968047/100000000000000000000) := by
+  let v0 : ℝ := 25600
+  have h0 : Bounds v0 25600 25600 := Bounds.point _
+  let v1 : ℝ := 237265664060629
+  have h1 : Bounds v1 237265664060629 237265664060629 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v13 : ℝ := 3
+  have h13 : Bounds v13 3 3 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v260 : ℝ := v230+v22
+  have h260 : Bounds v260 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v261 : ℝ := v260+v13
+  have h261 : Bounds v261 (4001/1000) (4001/1000) := Bounds.add h260 h13 (by norm_num)
+  let v262 : ℝ := 5
+  have h262 : Bounds v262 5 5 := Bounds.point _
+  let v263 : ℝ := v1*v262
+  have h263 : Bounds v263 1186328320303145 1186328320303145 := Bounds.mul h1 h262 (by norm_num)
+  let v264 : ℝ := v0^2
+  have h264 : Bounds v264 655360000 655360000 := Bounds.pow h0 2 (by norm_num)
+  let v265 : ℝ := 1/v264
+  have h265 : Bounds v265 (1/655360000) (1/655360000) := Bounds.inv h264 (by norm_num)
+  let v266 : ℝ := v263/v264
+  have h266 : Bounds v266 (237265664060629/131072000) (237265664060629/131072000) := bounds_div h263 h265 (by norm_num)
+  let v267 : ℝ := v1*v2
+  have h267 : Bounds v267 474531328121258 474531328121258 := Bounds.mul h1 h2 (by norm_num)
+  let v268 : ℝ := v0^3
+  have h268 : Bounds v268 16777216000000 16777216000000 := Bounds.pow h0 3 (by norm_num)
+  let v269 : ℝ := 1/v268
+  have h269 : Bounds v269 (1/16777216000000) (1/16777216000000) := Bounds.inv h268 (by norm_num)
+  let v270 : ℝ := v267/v268
+  have h270 : Bounds v270 (7071067811865478754043579/250000000000000000000000) (28284271247461915016174317/1000000000000000000000000) := bounds_div h267 h269 (by norm_num)
+  let v271 : ℝ := -v270
+  have h271 : Bounds v271 (-28284271247461915016174317/1000000000000000000000000) (-7071067811865478754043579/250000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h270
+  let v272 : ℝ := v266+v271
+  have h272 : Bounds v272 (181016507556631509912014007/100000000000000000000) (22627063444578938739001751/12500000000000000000) := Bounds.add h266 h271 (by norm_num)
+  let v273 : ℝ := v261*v272
+  have h273 : Bounds v273 (362123523367041335578984021/50000000000000000000) (724247046734082671157968047/100000000000000000000) := Bounds.mul h261 h272 (by norm_num)
+  convert h273 using 1 <;>
+    simp only [v0, v1, v2, v13, v22, v230, v260, v261, v262, v263, v264, v266, v267, v268, v270, v271, v272, v273, e1InputVarianceBound, inputVarianceMean, rowEps, Matrix.cons_val_one, Matrix.cons_val_three, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem meanvalue : Bounds (meanMajorantValue 25600 (mW 12800) (1/10^6) (1/10^7) rowEps) (100904641595610298397339119/50000000000000000000000000000000) (20206334615092176259857603/10000000000000000000000000000000) := by
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v8 : ℝ := 6
+  have h8 : Bounds v8 6 6 := Bounds.point _
+  let v274 : ℝ := Real.sqrt (e1InputVarianceBound 25600 (mW 12800) rowEps)
+  have h274 : Bounds v274 (67279596030951439525434343/25000000000000000000000) (134559192061902879050868687/50000000000000000000000) := Bounds.sqrt inputvar (by norm_num)
+  let v275 : ℝ := 1/(e1EnergyLower 25600 (mW 12800) (1/10^6))
+  have h275 : Bounds v275 (13487005010491093968063321/125000000000000000000000000000000000) (107896040083928751744506569/1000000000000000000000000000000000000) := Bounds.inv energy (by norm_num)
+  let v276 : ℝ := v274/(e1EnergyLower 25600 (mW 12800) (1/10^6))
+  have h276 : Bounds v276 (290368079607442810793850307/1000000000000000000000000000000000) (3629600995093035134923129/12500000000000000000000000000000) := bounds_div h274 h275 (by norm_num)
+  let v277 : ℝ := (e1FrobBound 25600 (mW 12800) rowEps)^2
+  have h277 : Bounds v277 (210899598070442847214737923/250000000000) (84466326857583090238701069/100000000000) := Bounds.pow frob 2 (by norm_num)
+  let v278 : ℝ := (1/10000000)
+  have h278 : Bounds v278 (1/10000000) (1/10000000) := Bounds.point _
+  let v279 : ℝ := 1/v278
+  have h279 : Bounds v279 10000000 10000000 := Bounds.inv h278 (by norm_num)
+  let v280 : ℝ := (directionMean 25600 (mW 12800))/v278
+  have h280 : Bounds v280 (78563006001536620850525181/100000000000000) (9820938513833388161486573/12500000000000) := bounds_div direction h279 (by norm_num)
+  let v281 : ℝ := v280*v2
+  have h281 : Bounds v281 (78563006001536620850525181/50000000000000) (9820938513833388161486573/6250000000000) := Bounds.mul h280 h2 (by norm_num)
+  let v282 : ℝ := v277+v281
+  have h282 : Bounds v282 (84516965240180212127596219/100000000000) (16924692374760884889856971/20000000000) := Bounds.add h277 h281 (by norm_num)
+  let v283 : ℝ := (e1EnergyLower 25600 (mW 12800) (1/10^6))^2
+  have h283 : Bounds v283 (85899174121394144625577131/1000000) (21474793530348536156394283/250000) := Bounds.pow energy 2 (by norm_num)
+  let v284 : ℝ := 1/v283
+  have h284 : Bounds v284 (58207777328963799588973681/5000000000000000000000000000000000000000000000) (11641555465792759917794737/1000000000000000000000000000000000000000000000) := Bounds.inv h283 (by norm_num)
+  let v285 : ℝ := v282/v283
+  have h285 : Bounds v285 (6149430866525229053093393/625000000000000000000000000000) (49257436255564656323366749/5000000000000000000000000000000) := bounds_div h282 h284 (by norm_num)
+  let v286 : ℝ := (10237/50000)
+  have h286 : Bounds v286 (10237/50000) (10237/50000) := Bounds.point _
+  let v287 : ℝ := Real.sqrt v285
+  have h287 : Bounds v287 (313673227841337560412265273/100000000000000000000000000000) (313870789515573291181483091/100000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v288 : ℝ := Real.sqrt v2
+  have h288 : Bounds v288 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v289 : ℝ := v288*v276
+  have h289 : Bounds v289 (410642476261076151995654601/1000000000000000000000000000000000) (410642476261076151995654623/1000000000000000000000000000000000) := Bounds.mul h288 h276 (by norm_num)
+  let v290 : ℝ := v287+v289
+  have h290 : Bounds v290 (156857146044481834013732419/50000000000000000000000000000) (313911853763199398796682657/100000000000000000000000000000) := Bounds.add h287 h289 (by norm_num)
+  let v291 : ℝ := v290^2
+  have h291 : Bounds v291 (9841665706087961226583287/1000000000000000000000000000000) (492703259665241422759892843/50000000000000000000000000000000) := Bounds.pow h290 2 (by norm_num)
+  let v292 : ℝ := v286*v291
+  have h292 : Bounds v292 (20149826366644491815306621/10000000000000000000000000000000) (100876065383861528895860461/50000000000000000000000000000000) := Bounds.mul h286 h291 (by norm_num)
+  let v293 : ℝ := v276^2
+  have h293 : Bounds v293 (105392027068642806892660407/1250000000000000000000000000000000000000) (42156810827457122757064167/500000000000000000000000000000000000000) := Bounds.pow h276 2 (by norm_num)
+  let v294 : ℝ := v293*v8
+  have h294 : Bounds v294 (10117634598589709461695399/20000000000000000000000000000000000000) (50588172992948547308477001/100000000000000000000000000000000000000) := Bounds.mul h293 h8 (by norm_num)
+  let v295 : ℝ := v292+v294
+  have h295 : Bounds v295 (100749157127308955550806759/50000000000000000000000000000000) (201752181355896050740268231/100000000000000000000000000000000) := Bounds.add h292 h294 (by norm_num)
+  let v296 : ℝ := Real.sqrt v2
+  have h296 : Bounds v296 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v297 : ℝ := v296+v2
+  have h297 : Bounds v297 (42677669529663688110021109/12500000000000000000000000) (341421356237309504880168873/100000000000000000000000000) := Bounds.add h296 h2 (by norm_num)
+  let v298 : ℝ := v297*v276
+  have h298 : Bounds v298 (99137863547596177358335521/100000000000000000000000000000000) (99137863547596177358335527/100000000000000000000000000000000) := Bounds.mul h297 h276 (by norm_num)
+  let v299 : ℝ := Real.sqrt v285
+  have h299 : Bounds v299 (313673227841337560412265273/100000000000000000000000000000) (313870789515573291181483091/100000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v300 : ℝ := v298*v299
+  have h300 : Bounds v300 (310968936602685693064720483/100000000000000000000000000000000000) (155582397512855929153898249/50000000000000000000000000000000000) := Bounds.mul h298 h299 (by norm_num)
+  let v301 : ℝ := v295+v300
+  have h301 : Bounds v301 (100904641595610298397339119/50000000000000000000000000000000) (20206334615092176259857603/10000000000000000000000000000000) := Bounds.add h295 h300 (by norm_num)
+  convert h301 using 1 <;>
+    simp only [v2, v8, v274, v276, v277, v278, v280, v281, v282, v283, v285, v286, v287, v288, v289, v290, v291, v292, v293, v294, v295, v296, v297, v298, v299, v300, v301, meanMajorantValue, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+end BstLean.Part268.WorldRow12800
+namespace BstLean.Part268.WorldRow12801
+open Real MeasureTheory Set BstLean.Part130 BstLean.Part140 BstLean.Part137 BstLean.Part159
+open BstLean.Part227 BstLean.Part228 BstLean.Part218 BstLean.Part205 BstLean.Part214
+open BstLean.Part157 BstLean.Part192
+open BstLean.Part250 (bounds_div pi_bounds rowEps meanMajorantValue endpointPolynomial mean_majorant)
+theorem covmean : Bounds (covarianceMeanBound 25602 (mW 12801)) (33207570827888738936499517/5000000000000000) (49814519023544550662924817/5000000000000000) := by
+  let v1 : ℝ := 237330547726570
+  have h1 : Bounds v1 237330547726570 237330547726570 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v203 : ℝ := v1*v41
+  have h203 : Bounds v203 949322190906280 949322190906280 := Bounds.mul h1 h41 (by norm_num)
+  let v204 : ℝ := -v22
+  have h204 : Bounds v204 (-1) (-1) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h22
+  let v205 : ℝ := v1+v204
+  have h205 : Bounds v205 237330547726569 237330547726569 := Bounds.add h1 h204 (by norm_num)
+  let v206 : ℝ := v203*v205
+  have h206 : Bounds v206 225303155536773933059744953000 225303155536773933059744954000 := Bounds.mul h203 h205 (by norm_num)
+  let v207 : ℝ := v206*(angularJ2 25602 (angularOffset 25602))
+  have h207 : Bounds v207 (33207570827888738936499517/5000000000000000) (49814519023544550662924817/5000000000000000) := Bounds.mul h206 jsecond (by norm_num)
+  convert h207 using 1 <;>
+    simp only [v1, v22, v41, v203, v204, v205, v206, v207, covarianceMeanBound, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem frob : Bounds (e1FrobBound 25602 (mW 12801) rowEps) (14524650276677669061356179/500000000000000000) (72669071395437418587184061/2500000000000000000) := by
+  let v0 : ℝ := 25602
+  have h0 : Bounds v0 25602 25602 := Bounds.point _
+  let v1 : ℝ := 237330547726570
+  have h1 : Bounds v1 237330547726570 237330547726570 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v208 : ℝ := (1/100000)
+  have h208 : Bounds v208 (1/100000) (1/100000) := Bounds.point _
+  let v209 : ℝ := v208+v22
+  have h209 : Bounds v209 (100001/100000) (100001/100000) := Bounds.add h208 h22 (by norm_num)
+  let v210 : ℝ := v1*v0
+  have h210 : Bounds v210 6076136682895645140 6076136682895645140 := Bounds.mul h1 h0 (by norm_num)
+  let v211 : ℝ := v1+v0
+  have h211 : Bounds v211 237330547752172 237330547752172 := Bounds.add h1 h0 (by norm_num)
+  let v212 : ℝ := v211+v22
+  have h212 : Bounds v212 237330547752173 237330547752173 := Bounds.add h211 h22 (by norm_num)
+  let v213 : ℝ := v210*v212
+  have h213 : Bounds v213 1442052847168694962177757670000000 1442052847168694962177757680000000 := Bounds.mul h210 h212 (by norm_num)
+  let v214 : ℝ := v209*v213
+  have h214 : Bounds v214 1442067267697166649127379440000000 1442067267697166649127379460000000 := Bounds.mul h209 h213 (by norm_num)
+  let v215 : ℝ := v0^4
+  have h215 : Bounds v215 429630963057459216 429630963057459216 := Bounds.pow h0 4 (by norm_num)
+  let v216 : ℝ := v215*v41
+  have h216 : Bounds v216 1718523852229836864 1718523852229836864 := Bounds.mul h215 h41 (by norm_num)
+  let v217 : ℝ := 1/v216
+  have h217 : Bounds v217 (29094737285795295917329483/50000000000000000000000000000000000000000000) (58189474571590591834658967/100000000000000000000000000000000000000000000) := Bounds.inv h216 (by norm_num)
+  let v218 : ℝ := v214/v216
+  have h218 : Bounds v218 (83913136604187401611477837/100000000000) (1048914207552342520143473/1250000000) := bounds_div h214 h217 (by norm_num)
+  let v219 : ℝ := Real.sqrt v218
+  have h219 : Bounds v219 (36209705321093516877288763/1250000000000000000) (28967764256874813501831011/1000000000000000000) := Bounds.sqrt h218 (by norm_num)
+  let v220 : ℝ := v0*v41
+  have h220 : Bounds v220 102408 102408 := Bounds.mul h0 h41 (by norm_num)
+  let v221 : ℝ := 1/v220
+  have h221 : Bounds v221 (12206077650183579407858761/1250000000000000000000000000000) (97648621201468635262870089/10000000000000000000000000000000) := Bounds.inv h220 (by norm_num)
+  let v222 : ℝ := v22/v220
+  have h222 : Bounds v222 (12206077650183579407858761/1250000000000000000000000000000) (97648621201468635262870089/10000000000000000000000000000000) := bounds_div h22 h221 (by norm_num)
+  let v223 : ℝ := -(BstLean.Part137.cN 25602 ^ 2)
+  have h223 : Bounds v223 (-25000000000000000000/4021395676227614834890723) (-25000000000000000000/4021552755860294324565447) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg cnsq_bounds
+  let v224 : ℝ := v222+v223
+  have h224 : Bounds v224 (35481149973041880148219223/10000000000000000000000000000000) (4435447275022686910763267/1250000000000000000000000000000) := Bounds.add h222 h223 (by norm_num)
+  let v225 : ℝ := v224^2
+  have h225 : Bounds v225 (125891200340948981236871719/10000000000000000000000000000000000000) (25181686437767908887099797/2000000000000000000000000000000000000) := Bounds.pow h224 2 (by norm_num)
+  let v226 : ℝ := v0^2
+  have h226 : Bounds v226 655462404 655462404 := Bounds.pow h0 2 (by norm_num)
+  let v227 : ℝ := 1/v226
+  have h227 : Bounds v227 (7628202578038327885545667/5000000000000000000000000000000000) (3051281031215331154218267/2000000000000000000000000000000000) := Bounds.inv h226 (by norm_num)
+  let v228 : ℝ := v41/v226
+  have h228 : Bounds v228 (7628202578038327885545667/1250000000000000000000000000000000) (3051281031215331154218267/500000000000000000000000000000000) := bounds_div h41 h227 (by norm_num)
+  let v229 : ℝ := v225*v228
+  have h229 : Bounds v229 (768258863194533312924362401/10000000000000000000000000000000000000000000000) (384182010807867919867754877/5000000000000000000000000000000000000000000000) := Bounds.mul h225 h228 (by norm_num)
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v231 : ℝ := v230+v22
+  have h231 : Bounds v231 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v232 : ℝ := v1*v0
+  have h232 : Bounds v232 6076136682895645140 6076136682895645140 := Bounds.mul h1 h0 (by norm_num)
+  let v233 : ℝ := v0+v2
+  have h233 : Bounds v233 25604 25604 := Bounds.add h0 h2 (by norm_num)
+  let v234 : ℝ := v232*v233
+  have h234 : Bounds v234 155573403628860098164560 155573403628860098164560 := Bounds.mul h232 h233 (by norm_num)
+  let v235 : ℝ := v231*v234
+  have h235 : Bounds v235 (3893224425812223956568114/25) (3893224425812223956568114/25) := Bounds.mul h231 h234 (by norm_num)
+  let v236 : ℝ := v229*v235
+  have h236 : Bounds v236 (23928033372285510991085449/2000000000000000000000) (59828271537393888026549859/5000000000000000000000) := Bounds.mul h229 h235 (by norm_num)
+  let v237 : ℝ := v230+v22
+  have h237 : Bounds v237 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v238 : ℝ := v237*(covarianceMeanBound 25602 (mW 12801))
+  have h238 : Bounds v238 (66481556797433255350872033/10000000000000000) (24932166771284047606793871/2500000000000000) := Bounds.mul h237 covmean (by norm_num)
+  let v239 : ℝ := v236+v238
+  have h239 : Bounds v239 (16620419109400029194606747/2500000000000000) (49864393370839632607475769/5000000000000000) := Bounds.add h236 h238 (by norm_num)
+  let v240 : ℝ := Real.sqrt v239
+  have h240 : Bounds v240 (40768148240262310440674137/500000000000000000000) (24966075325038483260653337/250000000000000000000) := Bounds.sqrt h239 (by norm_num)
+  let v241 : ℝ := v219+v240
+  have h241 : Bounds v241 (14524650276677669061356179/500000000000000000) (72669071395437418587184061/2500000000000000000) := Bounds.add h219 h240 (by norm_num)
+  convert h241 using 1 <;>
+    simp only [v0, v1, v2, v22, v41, v208, v209, v210, v211, v212, v213, v214, v215, v216, v218, v219, v220, v222, v223, v224, v225, v226, v228, v229, v230, v231, v232, v233, v234, v235, v236, v237, v238, v239, v240, v241, e1FrobBound, rowEps, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem energy : Bounds (e1EnergyLower 25602 (mW 12801) (1/10^6)) (18539982063590522102179517/2000000000000000) (23174977579488152627724397/2500000000000000) := by
+  let v0 : ℝ := 25602
+  have h0 : Bounds v0 25602 25602 := Bounds.point _
+  let v1 : ℝ := 237330547726570
+  have h1 : Bounds v1 237330547726570 237330547726570 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v242 : ℝ := (1/1000000)
+  have h242 : Bounds v242 (1/1000000) (1/1000000) := Bounds.point _
+  let v243 : ℝ := -v242
+  have h243 : Bounds v243 (-1/1000000) (-1/1000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h242
+  let v244 : ℝ := v22+v243
+  have h244 : Bounds v244 (999999/1000000) (999999/1000000) := Bounds.add h22 h243 (by norm_num)
+  let v245 : ℝ := v244*v1
+  have h245 : Bounds v245 (23733031039602227343/100000) (23733031039602227343/100000) := Bounds.mul h244 h1 (by norm_num)
+  let v246 : ℝ := 1/v0
+  have h246 : Bounds v246 (7811889696117490821029607/200000000000000000000000000000) (9764862120146863526287009/250000000000000000000000000000) := Bounds.inv h0 (by norm_num)
+  let v247 : ℝ := v245/v0
+  have h247 : Bounds v247 (18539982063590522102179517/2000000000000000) (23174977579488152627724397/2500000000000000) := bounds_div h245 h246 (by norm_num)
+  convert h247 using 1 <;>
+    simp only [v0, v1, v22, v242, v243, v244, v245, v247, e1EnergyLower, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem direction : Bounds (directionMean 25602 (mW 12801)) (3142888496643672098681261/40000000000000000000) (785767147010412752985136097/10000000000000000000000) := by
+  let v0 : ℝ := 25602
+  have h0 : Bounds v0 25602 25602 := Bounds.point _
+  let v1 : ℝ := 237330547726570
+  have h1 : Bounds v1 237330547726570 237330547726570 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v248 : ℝ := v1*v2
+  have h248 : Bounds v248 474661095453140 474661095453140 := Bounds.mul h1 h2 (by norm_num)
+  let v249 : ℝ := v248*(BstLean.Part137.cN 25602 ^ 2)
+  have h249 : Bounds v249 (29507327409882507856392307/10000000000000000) (2950847999483660662246633/1000000000000000) := Bounds.mul h248 cnsq_bounds (by norm_num)
+  let v250 : ℝ := v0+v2
+  have h250 : Bounds v250 25604 25604 := Bounds.add h0 h2 (by norm_num)
+  let v251 : ℝ := v249*v250
+  have h251 : Bounds v251 (37775280550131586557753431/500000000000) (9444189022347455949520349/125000000000) := Bounds.mul h249 h250 (by norm_num)
+  let v252 : ℝ := v0^2
+  have h252 : Bounds v252 655462404 655462404 := Bounds.pow h0 2 (by norm_num)
+  let v253 : ℝ := 1/v252
+  have h253 : Bounds v253 (7628202578038327885545667/5000000000000000000000000000000000) (3051281031215331154218267/2000000000000000000000000000000000) := Bounds.inv h252 (by norm_num)
+  let v254 : ℝ := v251/v252
+  have h254 : Bounds v254 (28815749247863487344846577/250000000000000000000) (23053499855280684442173679/200000000000000000000) := bounds_div h251 h253 (by norm_num)
+  let v255 : ℝ := v0*v2
+  have h255 : Bounds v255 51204 51204 := Bounds.mul h0 h2 (by norm_num)
+  let v256 : ℝ := v255*(BstLean.Part137.cN 25602 ^ 2)
+  have h256 : Bounds v256 (15915494309189533576851107/50000000000000000000000000) (31832231967803635688905829/100000000000000000000000000) := Bounds.mul h255 cnsq_bounds (by norm_num)
+  let v257 : ℝ := -v256
+  have h257 : Bounds v257 (-31832231967803635688905829/100000000000000000000000000) (-15915494309189533576851107/50000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h256
+  let v258 : ℝ := v22+v257
+  have h258 : Bounds v258 (68167768032196364311094171/100000000000000000000000000) (34084505690810466423148893/50000000000000000000000000) := Bounds.add h22 h257 (by norm_num)
+  let v259 : ℝ := v254*v258
+  have h259 : Bounds v259 (3142888496643672098681261/40000000000000000000) (785767147010412752985136097/10000000000000000000000) := Bounds.mul h254 h258 (by norm_num)
+  convert h259 using 1 <;>
+    simp only [v0, v1, v2, v22, v248, v249, v250, v251, v252, v254, v255, v256, v257, v258, v259, directionMean, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring <;> simp
+
+theorem inputvar : Bounds (e1InputVarianceBound 25602 (mW 12801) rowEps) (72433192197665968373467547/10000000000000000000) (72433192197665968373467553/10000000000000000000) := by
+  let v0 : ℝ := 25602
+  have h0 : Bounds v0 25602 25602 := Bounds.point _
+  let v1 : ℝ := 237330547726570
+  have h1 : Bounds v1 237330547726570 237330547726570 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v13 : ℝ := 3
+  have h13 : Bounds v13 3 3 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v260 : ℝ := v230+v22
+  have h260 : Bounds v260 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v261 : ℝ := v260+v13
+  have h261 : Bounds v261 (4001/1000) (4001/1000) := Bounds.add h260 h13 (by norm_num)
+  let v262 : ℝ := 5
+  have h262 : Bounds v262 5 5 := Bounds.point _
+  let v263 : ℝ := v1*v262
+  have h263 : Bounds v263 1186652738632850 1186652738632850 := Bounds.mul h1 h262 (by norm_num)
+  let v264 : ℝ := v0^2
+  have h264 : Bounds v264 655462404 655462404 := Bounds.pow h0 2 (by norm_num)
+  let v265 : ℝ := 1/v264
+  have h265 : Bounds v265 (7628202578038327885545667/5000000000000000000000000000000000) (3051281031215331154218267/2000000000000000000000000000000000) := Bounds.inv h264 (by norm_num)
+  let v266 : ℝ := v263/v264
+  have h266 : Bounds v266 (181040549601506969116721443/100000000000000000000) (11315034350094185569795091/6250000000000000000) := bounds_div h263 h265 (by norm_num)
+  let v267 : ℝ := v1*v2
+  have h267 : Bounds v267 474661095453140 474661095453140 := Bounds.mul h1 h2 (by norm_num)
+  let v268 : ℝ := v0^3
+  have h268 : Bounds v268 16781148467208 16781148467208 := Bounds.pow h0 3 (by norm_num)
+  let v269 : ℝ := 1/v268
+  have h269 : Bounds v269 (29795338559637246643018777/500000000000000000000000000000000000000) (11918135423854898657207511/200000000000000000000000000000000000000) := Bounds.inv h268 (by norm_num)
+  let v270 : ℝ := v267/v268
+  have h270 : Bounds v270 (141426880401145980092743887/5000000000000000000000000) (14142688040114598009274389/500000000000000000000000) := bounds_div h267 h269 (by norm_num)
+  let v271 : ℝ := -v270
+  have h271 : Bounds v271 (-14142688040114598009274389/500000000000000000000000) (-141426880401145980092743887/5000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h270
+  let v272 : ℝ := v266+v271
+  have h272 : Bounds v272 (45259430265974736549279897/25000000000000000000) (90518860531949473098559801/50000000000000000000) := Bounds.add h266 h271 (by norm_num)
+  let v273 : ℝ := v261*v272
+  have h273 : Bounds v273 (72433192197665968373467547/10000000000000000000) (72433192197665968373467553/10000000000000000000) := Bounds.mul h261 h272 (by norm_num)
+  convert h273 using 1 <;>
+    simp only [v0, v1, v2, v13, v22, v230, v260, v261, v262, v263, v264, v266, v267, v268, v270, v271, v272, v273, e1InputVarianceBound, inputVarianceMean, rowEps, Matrix.cons_val_one, Matrix.cons_val_three, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem meanvalue : Bounds (meanMajorantValue 25602 (mW 12801) (1/10^6) (1/10^7) rowEps) (10089668261274119387603553/5000000000000000000000000000000) (50511849588428984226928199/25000000000000000000000000000000) := by
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v8 : ℝ := 6
+  have h8 : Bounds v8 6 6 := Bounds.point _
+  let v274 : ℝ := Real.sqrt (e1InputVarianceBound 25602 (mW 12801) rowEps)
+  have h274 : Bounds v274 (269134152789396032782791257/100000000000000000000000) (269134152789396032782791269/100000000000000000000000) := Bounds.sqrt inputvar (by norm_num)
+  let v275 : ℝ := 1/(e1EnergyLower 25602 (mW 12801) (1/10^6))
+  have h275 : Bounds v275 (107874969519397287791586043/1000000000000000000000000000000000000) (107874969519397287791586047/1000000000000000000000000000000000000) := Bounds.inv energy (by norm_num)
+  let v276 : ℝ := v274/(e1EnergyLower 25602 (mW 12801) (1/10^6))
+  have h276 : Bounds v276 (145164192643924547880326057/500000000000000000000000000000000) (145164192643924547880326069/500000000000000000000000000000000) := bounds_div h274 h275 (by norm_num)
+  let v277 : ℝ := (e1FrobBound 25602 (mW 12801) rowEps)^2
+  have h277 : Bounds v277 (84386186263917075365834643/100000000000) (10561587874950361702216697/12500000000) := Bounds.pow frob 2 (by norm_num)
+  let v278 : ℝ := (1/10000000)
+  have h278 : Bounds v278 (1/10000000) (1/10000000) := Bounds.point _
+  let v279 : ℝ := 1/v278
+  have h279 : Bounds v279 10000000 10000000 := Bounds.inv h278 (by norm_num)
+  let v280 : ℝ := (directionMean 25602 (mW 12801))/v278
+  have h280 : Bounds v280 (3142888496643672098681261/4000000000000) (785767147010412752985136097/1000000000000000) := bounds_div direction h279 (by norm_num)
+  let v281 : ℝ := v280*v2
+  have h281 : Bounds v281 (3142888496643672098681261/2000000000000) (7857671470104127529851361/5000000000000) := Bounds.mul h280 h2 (by norm_num)
+  let v282 : ℝ := v277+v281
+  have h282 : Bounds v282 (42271665344374629485384353/50000000000) (21162464107251244042082651/25000000000) := Bounds.add h277 h281 (by norm_num)
+  let v283 : ℝ := (e1EnergyLower 25602 (mW 12801) (1/10^6))^2
+  have h283 : Bounds v283 (21483183432391142145860957/250000) (42966366864782284291721917/500000) := Bounds.pow energy 2 (by norm_num)
+  let v284 : ℝ := 1/v283
+  have h284 : Bounds v284 (116370090488108939081763883/10000000000000000000000000000000000000000000000) (29092522622027234770440973/2500000000000000000000000000000000000000000000) := Bounds.inv h283 (by norm_num)
+  let v285 : ℝ := v282/v283
+  have h285 : Bounds v285 (98383150424158687027857927/10000000000000000000000000000000) (9850711452448739302141737/1000000000000000000000000000000) := bounds_div h282 h284 (by norm_num)
+  let v286 : ℝ := (10237/50000)
+  have h286 : Bounds v286 (10237/50000) (10237/50000) := Bounds.point _
+  let v287 : ℝ := Real.sqrt v285
+  have h287 : Bounds v287 (39207610554297739361877659/12500000000000000000000000000) (31385843070481218638074681/10000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v288 : ℝ := Real.sqrt v2
+  have h288 : Bounds v288 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v289 : ℝ := v288*v276
+  have h289 : Bounds v289 (20529317000797877405581823/50000000000000000000000000000000) (41058634001595754811163651/100000000000000000000000000000000) := Bounds.mul h288 h276 (by norm_num)
+  let v290 : ℝ := v287+v289
+  have h290 : Bounds v290 (31370194306838351064983243/10000000000000000000000000000) (156949744669406891067778987/50000000000000000000000000000) := Bounds.add h287 h289 (by norm_num)
+  let v291 : ℝ := v290^2
+  have h291 : Bounds v291 (984089090848793293247035563/100000000000000000000000000000000) (98532889407168067271812733/10000000000000000000000000000000) := Bounds.pow h290 2 (by norm_num)
+  let v292 : ℝ := v286*v291
+  have h292 : Bounds v292 (10074120023019096942969903/5000000000000000000000000000000) (20173623777223590093230939/10000000000000000000000000000000) := Bounds.mul h286 h291 (by norm_num)
+  let v293 : ℝ := v276^2
+  have h293 : Bounds v293 (84290571303849751274658051/1000000000000000000000000000000000000000) (42145285651924875637329033/500000000000000000000000000000000000000) := Bounds.pow h276 2 (by norm_num)
+  let v294 : ℝ := v293*v8
+  have h294 : Bounds v294 (5057434278230985076479483/10000000000000000000000000000000000000) (1264358569557746269119871/2500000000000000000000000000000000000) := Bounds.mul h293 h8 (by norm_num)
+  let v295 : ℝ := v292+v294
+  have h295 : Bounds v295 (25185306379340590146156103/12500000000000000000000000000000) (40347257669315736648432031/20000000000000000000000000000000) := Bounds.add h292 h294 (by norm_num)
+  let v296 : ℝ := Real.sqrt v2
+  have h296 : Bounds v296 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v297 : ℝ := v296+v2
+  have h297 : Bounds v297 (42677669529663688110021109/12500000000000000000000000) (341421356237309504880168873/100000000000000000000000000) := Bounds.add h296 h2 (by norm_num)
+  let v298 : ℝ := v297*v276
+  have h298 : Bounds v298 (99124311059165573963294069/100000000000000000000000000000000) (99124311059165573963294079/100000000000000000000000000000000) := Bounds.mul h297 h276 (by norm_num)
+  let v299 : ℝ := Real.sqrt v285
+  have h299 : Bounds v299 (39207610554297739361877659/12500000000000000000000000000) (31385843070481218638074681/10000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v300 : ℝ := v298*v299
+  have h300 : Bounds v300 (155457095378833291411121387/50000000000000000000000000000000000) (311110007137253665552640861/100000000000000000000000000000000000) := Bounds.mul h298 h299 (by norm_num)
+  let v301 : ℝ := v295+v300
+  have h301 : Bounds v301 (10089668261274119387603553/5000000000000000000000000000000) (50511849588428984226928199/25000000000000000000000000000000) := Bounds.add h295 h300 (by norm_num)
+  convert h301 using 1 <;>
+    simp only [v2, v8, v274, v276, v277, v278, v280, v281, v282, v283, v285, v286, v287, v288, v289, v290, v291, v292, v293, v294, v295, v296, v297, v298, v299, v300, v301, meanMajorantValue, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+end BstLean.Part268.WorldRow12801
+namespace BstLean.Part268.WorldRow12802
+open Real MeasureTheory Set BstLean.Part130 BstLean.Part140 BstLean.Part137 BstLean.Part159
+open BstLean.Part227 BstLean.Part228 BstLean.Part218 BstLean.Part205 BstLean.Part214
+open BstLean.Part157 BstLean.Part192
+open BstLean.Part250 (bounds_div pi_bounds rowEps meanMajorantValue endpointPolynomial mean_majorant)
+theorem covmean : Bounds (covarianceMeanBound 25604 (mW 12802)) (66430707882208836231207327/10000000000000000) (24913097093753158037866637/2500000000000000) := by
+  let v1 : ℝ := 237395444065350
+  have h1 : Bounds v1 237395444065350 237395444065350 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v203 : ℝ := v1*v41
+  have h203 : Bounds v203 949581776261400 949581776261400 := Bounds.mul h1 h41 (by norm_num)
+  let v204 : ℝ := -v22
+  have h204 : Bounds v204 (-1) (-1) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h22
+  let v205 : ℝ := v1+v204
+  have h205 : Bounds v205 237395444065349 237395444065349 := Bounds.add h1 h204 (by norm_num)
+  let v206 : ℝ := v203*v205
+  have h206 : Bounds v206 225426387451937932558506228000 225426387451937932558506229000 := Bounds.mul h203 h205 (by norm_num)
+  let v207 : ℝ := v206*(angularJ2 25604 (angularOffset 25604))
+  have h207 : Bounds v207 (66430707882208836231207327/10000000000000000) (24913097093753158037866637/2500000000000000) := Bounds.mul h206 jsecond (by norm_num)
+  convert h207 using 1 <;>
+    simp only [v1, v22, v41, v203, v204, v205, v206, v207, covarianceMeanBound, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem frob : Bounds (e1FrobBound 25604 (mW 12802) rowEps) (145269180721452047108216933/5000000000000000000) (29072166296575647870354999/1000000000000000000) := by
+  let v0 : ℝ := 25604
+  have h0 : Bounds v0 25604 25604 := Bounds.point _
+  let v1 : ℝ := 237395444065350
+  have h1 : Bounds v1 237395444065350 237395444065350 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v208 : ℝ := (1/100000)
+  have h208 : Bounds v208 (1/100000) (1/100000) := Bounds.point _
+  let v209 : ℝ := v208+v22
+  have h209 : Bounds v209 (100001/100000) (100001/100000) := Bounds.add h208 h22 (by norm_num)
+  let v210 : ℝ := v1*v0
+  have h210 : Bounds v210 6078272949849221400 6078272949849221400 := Bounds.mul h1 h0 (by norm_num)
+  let v211 : ℝ := v1+v0
+  have h211 : Bounds v211 237395444090954 237395444090954 := Bounds.add h1 h0 (by norm_num)
+  let v212 : ℝ := v211+v22
+  have h212 : Bounds v212 237395444090955 237395444090955 := Bounds.add h211 h22 (by norm_num)
+  let v213 : ℝ := v210*v212
+  have h213 : Bounds v213 1442954306235494963460837530000000 1442954306235494963460837540000000 := Bounds.mul h210 h212 (by norm_num)
+  let v214 : ℝ := v209*v213
+  have h214 : Bounds v214 1442968735778557318410472130000000 1442968735778557318410472150000000 := Bounds.mul h209 h213 (by norm_num)
+  let v215 : ℝ := v0^4
+  have h215 : Bounds v215 429765227977113856 429765227977113856 := Bounds.pow h0 4 (by norm_num)
+  let v216 : ℝ := v215*v41
+  have h216 : Bounds v216 1719060911908455424 1719060911908455424 := Bounds.mul h215 h41 (by norm_num)
+  let v217 : ℝ := 1/v216
+  have h217 : Bounds v217 (581712953318115272034767/1000000000000000000000000000000000000000000) (58171295331811527203476701/100000000000000000000000000000000000000000000) := Bounds.inv h216 (by norm_num)
+  let v218 : ℝ := v214/v216
+  have h218 : Bounds v218 (209848401208862930923044149/250000000000) (83939360483545172369217663/100000000000) := bounds_div h214 h217 (by norm_num)
+  let v219 : ℝ := Real.sqrt v218
+  have h219 : Bounds v219 (144861451466172646147895753/5000000000000000000) (289722902932345292295791513/10000000000000000000) := Bounds.sqrt h218 (by norm_num)
+  let v220 : ℝ := v0*v41
+  have h220 : Bounds v220 102416 102416 := Bounds.mul h0 h41 (by norm_num)
+  let v221 : ℝ := 1/v220
+  have h221 : Bounds v221 (19528198718950164036869239/2000000000000000000000000000000) (24410248398687705046086549/2500000000000000000000000000000) := Bounds.inv h220 (by norm_num)
+  let v222 : ℝ := v22/v220
+  have h222 : Bounds v222 (19528198718950164036869239/2000000000000000000000000000000) (24410248398687705046086549/2500000000000000000000000000000) := bounds_div h22 h221 (by norm_num)
+  let v223 : ℝ := -(BstLean.Part137.cN 25604 ^ 2)
+  have h223 : Bounds v223 (-25000000000000000000/4021709835492973814214569) (-12500000000000000000/2010933457562826651944647) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg cnsq_bounds
+  let v224 : ℝ := v222+v223
+  have h224 : Bounds v224 (35478378630920278541172473/10000000000000000000000000000000) (35480806478716085077132061/10000000000000000000000000000000) := Bounds.add h222 h223 (by norm_num)
+  let v225 : ℝ := v224^2
+  have h225 : Bounds v225 (125871535027894065795840899/10000000000000000000000000000000000000) (2517775256760202633143051/200000000000000000000000000000000000) := Bounds.pow h224 2 (by norm_num)
+  let v226 : ℝ := v0^2
+  have h226 : Bounds v226 655564816 655564816 := Bounds.pow h0 2 (by norm_num)
+  let v227 : ℝ := 1/v226
+  have h227 : Bounds v227 (7627010904136136555565239/5000000000000000000000000000000000) (15254021808272273111130479/10000000000000000000000000000000000) := Bounds.inv h226 (by norm_num)
+  let v228 : ℝ := v41/v226
+  have h228 : Bounds v228 (7627010904136136555565239/1250000000000000000000000000000000) (15254021808272273111130479/2500000000000000000000000000000000) := bounds_div h41 h227 (by norm_num)
+  let v229 : ℝ := v225*v228
+  have h229 : Bounds v229 (768018856142481360963343041/10000000000000000000000000000000000000000000000) (76812397349896905789497129/1000000000000000000000000000000000000000000000) := Bounds.mul h225 h228 (by norm_num)
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v231 : ℝ := v230+v22
+  have h231 : Bounds v231 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v232 : ℝ := v1*v0
+  have h232 : Bounds v232 6078272949849221400 6078272949849221400 := Bounds.mul h1 h0 (by norm_num)
+  let v233 : ℝ := v0+v2
+  have h233 : Bounds v233 25606 25606 := Bounds.add h0 h2 (by norm_num)
+  let v234 : ℝ := v232*v233
+  have h234 : Bounds v234 155640257153839163168400 155640257153839163168400 := Bounds.mul h232 h233 (by norm_num)
+  let v235 : ℝ := v231*v234
+  have h235 : Bounds v235 (778979487054965011657842/5) (778979487054965011657842/5) := Bounds.mul h231 h234 (by norm_num)
+  let v236 : ℝ := v229*v235
+  have h236 : Bounds v236 (2393083738425644379406403/200000000000000000000) (59835281887084845490593679/5000000000000000000000) := Bounds.mul h229 h235 (by norm_num)
+  let v237 : ℝ := v230+v22
+  have h237 : Bounds v237 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v238 : ℝ := v237*(covarianceMeanBound 25604 (mW 12802))
+  have h238 : Bounds v238 (664971385900910450674385343/100000000000000000) (19950408152677528956723603/2000000000000000) := Bounds.mul h237 covmean (by norm_num)
+  let v239 : ℝ := v236+v238
+  have h239 : Bounds v239 (2078039320133686448426797/312500000000000) (99752160433951418953308997/10000000000000000) := Bounds.add h236 h238 (by norm_num)
+  let v240 : ℝ := Real.sqrt v239
+  have h240 : Bounds v240 (81545851055880192064236073/1000000000000000000000) (99876003341118640775847691/1000000000000000000000) := Bounds.sqrt h239 (by norm_num)
+  let v241 : ℝ := v219+v240
+  have h241 : Bounds v241 (145269180721452047108216933/5000000000000000000) (29072166296575647870354999/1000000000000000000) := Bounds.add h219 h240 (by norm_num)
+  convert h241 using 1 <;>
+    simp only [v0, v1, v2, v22, v41, v208, v209, v210, v211, v212, v213, v214, v215, v216, v218, v219, v220, v222, v223, v224, v225, v226, v228, v229, v230, v231, v232, v233, v234, v235, v236, v237, v238, v239, v240, v241, e1FrobBound, rowEps, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem energy : Bounds (e1EnergyLower 25604 (mW 12802) (1/10^6)) (463590077077616651011560689/50000000000000000) (92718015415523330202312141/10000000000000000) := by
+  let v0 : ℝ := 25604
+  have h0 : Bounds v0 25604 25604 := Bounds.point _
+  let v1 : ℝ := 237395444065350
+  have h1 : Bounds v1 237395444065350 237395444065350 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v242 : ℝ := (1/1000000)
+  have h242 : Bounds v242 (1/1000000) (1/1000000) := Bounds.point _
+  let v243 : ℝ := -v242
+  have h243 : Bounds v243 (-1/1000000) (-1/1000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h242
+  let v244 : ℝ := v22+v243
+  have h244 : Bounds v244 (999999/1000000) (999999/1000000) := Bounds.add h22 h243 (by norm_num)
+  let v245 : ℝ := v244*v1
+  have h245 : Bounds v245 (4747904133398118693/20000) (4747904133398118693/20000) := Bounds.mul h244 h1 (by norm_num)
+  let v246 : ℝ := 1/v0
+  have h246 : Bounds v246 (19528198718950164036869239/500000000000000000000000000000) (39056397437900328073738479/1000000000000000000000000000000) := Bounds.inv h0 (by norm_num)
+  let v247 : ℝ := v245/v0
+  have h247 : Bounds v247 (463590077077616651011560689/50000000000000000) (92718015415523330202312141/10000000000000000) := bounds_div h245 h246 (by norm_num)
+  convert h247 using 1 <;>
+    simp only [v0, v1, v22, v242, v243, v244, v245, v247, e1EnergyLower, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem direction : Bounds (directionMean 25604 (mW 12802)) (15716283838047459778901961/200000000000000000000) (7858592165099889447733691/100000000000000000000) := by
+  let v0 : ℝ := 25604
+  have h0 : Bounds v0 25604 25604 := Bounds.point _
+  let v1 : ℝ := 237395444065350
+  have h1 : Bounds v1 237395444065350 237395444065350 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v248 : ℝ := v1*v2
+  have h248 : Bounds v248 474790888130700 474790888130700 := Bounds.mul h1 h2 (by norm_num)
+  let v249 : ℝ := v248*(BstLean.Part137.cN 25604 ^ 2)
+  have h249 : Bounds v249 (59026180894385254752929429/20000000000000000) (29514243167203844524056083/10000000000000000) := Bounds.mul h248 cnsq_bounds (by norm_num)
+  let v250 : ℝ := v0+v2
+  have h250 : Bounds v250 25606 25606 := Bounds.add h0 h2 (by norm_num)
+  let v251 : ℝ := v249*v250
+  have h251 : Bounds v251 (755712193990814416601755479/10000000000000) (75574171053942164288298007/1000000000000) := Bounds.mul h249 h250 (by norm_num)
+  let v252 : ℝ := v0^2
+  have h252 : Bounds v252 655564816 655564816 := Bounds.pow h0 2 (by norm_num)
+  let v253 : ℝ := 1/v252
+  have h253 : Bounds v253 (7627010904136136555565239/5000000000000000000000000000000000) (15254021808272273111130479/10000000000000000000000000000000000) := Bounds.inv h252 (by norm_num)
+  let v254 : ℝ := v251/v252
+  have h254 : Bounds v254 (14409562859891462215876367/125000000000000000000) (115281005339893293309838043/1000000000000000000000) := bounds_div h251 h253 (by norm_num)
+  let v255 : ℝ := v0*v2
+  have h255 : Bounds v255 51208 51208 := Bounds.mul h0 h2 (by norm_num)
+  let v256 : ℝ := v255*(BstLean.Part137.cN 25604 ^ 2)
+  have h256 : Bounds v256 (15915494309189533576851107/50000000000000000000000000) (79580579676695859411591/250000000000000000000000) := Bounds.mul h255 cnsq_bounds (by norm_num)
+  let v257 : ℝ := -v256
+  have h257 : Bounds v257 (-79580579676695859411591/250000000000000000000000) (-15915494309189533576851107/50000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h256
+  let v258 : ℝ := v22+v257
+  have h258 : Bounds v258 (170419420323304140588409/250000000000000000000000) (34084505690810466423148893/50000000000000000000000000) := Bounds.add h22 h257 (by norm_num)
+  let v259 : ℝ := v254*v258
+  have h259 : Bounds v259 (15716283838047459778901961/200000000000000000000) (7858592165099889447733691/100000000000000000000) := Bounds.mul h254 h258 (by norm_num)
+  convert h259 using 1 <;>
+    simp only [v0, v1, v2, v22, v248, v249, v250, v251, v252, v254, v255, v256, v257, v258, v259, directionMean, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring <;> simp
+
+theorem inputvar : Bounds (e1InputVarianceBound 25604 (mW 12802) rowEps) (724416800534517736855273799/100000000000000000000) (5659506254175919819181827/781250000000000000) := by
+  let v0 : ℝ := 25604
+  have h0 : Bounds v0 25604 25604 := Bounds.point _
+  let v1 : ℝ := 237395444065350
+  have h1 : Bounds v1 237395444065350 237395444065350 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v13 : ℝ := 3
+  have h13 : Bounds v13 3 3 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v260 : ℝ := v230+v22
+  have h260 : Bounds v260 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v261 : ℝ := v260+v13
+  have h261 : Bounds v261 (4001/1000) (4001/1000) := Bounds.add h260 h13 (by norm_num)
+  let v262 : ℝ := 5
+  have h262 : Bounds v262 5 5 := Bounds.point _
+  let v263 : ℝ := v1*v262
+  have h263 : Bounds v263 1186977220326750 1186977220326750 := Bounds.mul h1 h262 (by norm_num)
+  let v264 : ℝ := v0^2
+  have h264 : Bounds v264 655564816 655564816 := Bounds.pow h0 2 (by norm_num)
+  let v265 : ℝ := 1/v264
+  have h265 : Bounds v265 (7627010904136136555565239/5000000000000000000000000000000000) (15254021808272273111130479/10000000000000000000000000000000000) := Bounds.inv h264 (by norm_num)
+  let v266 : ℝ := v263/v264
+  have h266 : Bounds v266 (18106176404786647366383371/10000000000000000000) (181061764047866473663833723/100000000000000000000) := bounds_div h263 h265 (by norm_num)
+  let v267 : ℝ := v1*v2
+  have h267 : Bounds v267 474790888130700 474790888130700 := Bounds.mul h1 h2 (by norm_num)
+  let v268 : ℝ := v0^3
+  have h268 : Bounds v268 16785081548864 16785081548864 := Bounds.pow h0 3 (by norm_num)
+  let v269 : ℝ := 1/v268
+  have h269 : Bounds v269 (59576713827028093700712697/1000000000000000000000000000000000000000) (29788356913514046850356349/500000000000000000000000000000000000000) := Bounds.inv h268 (by norm_num)
+  let v270 : ℝ := v267/v268
+  have h270 : Bounds v270 (141432404349216117531505797/5000000000000000000000000) (707162021746080587657529/25000000000000000000000) := bounds_div h267 h269 (by norm_num)
+  let v271 : ℝ := -v270
+  have h271 : Bounds v271 (-707162021746080587657529/25000000000000000000000) (-141432404349216117531505797/5000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h270
+  let v272 : ℝ := v266+v271
+  have h272 : Bounds v272 (181058935399779489341483079/100000000000000000000) (181058935399779489341483093/100000000000000000000) := Bounds.add h266 h271 (by norm_num)
+  let v273 : ℝ := v261*v272
+  have h273 : Bounds v273 (724416800534517736855273799/100000000000000000000) (5659506254175919819181827/781250000000000000) := Bounds.mul h261 h272 (by norm_num)
+  convert h273 using 1 <;>
+    simp only [v0, v1, v2, v13, v22, v230, v260, v261, v262, v263, v264, v266, v267, v268, v270, v271, v272, v273, e1InputVarianceBound, inputVarianceMean, rowEps, Matrix.cons_val_one, Matrix.cons_val_three, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem meanvalue : Bounds (meanMajorantValue 25604 (mW 12802) (1/10^6) (1/10^7) rowEps) (20177744977798648746620681/10000000000000000000000000000000) (1578370727192108133896437/781250000000000000000000000000) := by
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v8 : ℝ := 6
+  have h8 : Bounds v8 6 6 := Bounds.point _
+  let v274 : ℝ := Real.sqrt (e1InputVarianceBound 25604 (mW 12802) rowEps)
+  have h274 : Bounds v274 (269149921147028712417697379/100000000000000000000000) (269149921147028712417697391/100000000000000000000000) := Bounds.sqrt inputvar (by norm_num)
+  let v275 : ℝ := 1/(e1EnergyLower 25604 (mW 12802) (1/10^6))
+  have h275 : Bounds v275 (10785390471511050293143601/100000000000000000000000000000000000) (6740869044694406433214751/62500000000000000000000000000000000) := Bounds.inv energy (by norm_num)
+  let v276 : ℝ := v274/(e1EnergyLower 25604 (mW 12802) (1/10^6))
+  have h276 : Bounds v276 (7257217487367785027437497/25000000000000000000000000000000) (29028869949471140109749991/100000000000000000000000000000000) := bounds_div h274 h275 (by norm_num)
+  let v277 : ℝ := (e1FrobBound 25604 (mW 12802) rowEps)^2
+  have h277 : Bounds v277 (42206269734963790211914293/50000000000) (84519085317574902084612893/100000000000) := Bounds.pow frob 2 (by norm_num)
+  let v278 : ℝ := (1/10000000)
+  have h278 : Bounds v278 (1/10000000) (1/10000000) := Bounds.point _
+  let v279 : ℝ := 1/v278
+  have h279 : Bounds v279 10000000 10000000 := Bounds.inv h278 (by norm_num)
+  let v280 : ℝ := (directionMean 25604 (mW 12802))/v278
+  have h280 : Bounds v280 (15716283838047459778901961/20000000000000) (7858592165099889447733691/10000000000000) := bounds_div direction h279 (by norm_num)
+  let v281 : ℝ := v280*v2
+  have h281 : Bounds v281 (15716283838047459778901961/10000000000000) (7858592165099889447733691/5000000000000) := Bounds.mul h280 h2 (by norm_num)
+  let v282 : ℝ := v277+v281
+  have h282 : Bounds v282 (105712127885385068777022007/125000000000) (84676257160876899873567567/100000000000) := Bounds.add h277 h281 (by norm_num)
+  let v283 : ℝ := (e1EnergyLower 25604 (mW 12802) (1/10^6))^2
+  have h283 : Bounds v283 (3438652153037288759102199/40000) (42983151912966109488777491/500000) := Bounds.pow energy 2 (by norm_num)
+  let v284 : ℝ := 1/v283
+  have h284 : Bounds v284 (58162323811480677882503339/5000000000000000000000000000000000000000000000) (3635145238217542367656459/312500000000000000000000000000000000000000000) := Bounds.inv h283 (by norm_num)
+  let v285 : ℝ := v282/v283
+  have h285 : Bounds v285 (4918770410296338037136423/500000000000000000000000000000) (19699871552540527100586643/2000000000000000000000000000000) := bounds_div h282 h284 (by norm_num)
+  let v286 : ℝ := (10237/50000)
+  have h286 : Bounds v286 (10237/50000) (10237/50000) := Bounds.point _
+  let v287 : ℝ := Real.sqrt v285
+  have h287 : Bounds v287 (156824271244860851690888071/50000000000000000000000000000) (78461518339686205176062283/25000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v288 : ℝ := Real.sqrt v2
+  have h288 : Bounds v288 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v289 : ℝ := v288*v276
+  have h289 : Bounds v289 (41053021582906868721266411/100000000000000000000000000000000) (205265107914534343606332081/500000000000000000000000000000000) := Bounds.mul h288 h276 (by norm_num)
+  let v290 : ℝ := v287+v289
+  have h290 : Bounds v290 (2450699964932067267582011/781250000000000000000000000) (392358907975409659466213/125000000000000000000000000) := Bounds.add h287 h289 (by norm_num)
+  let v291 : ℝ := v290^2
+  have h291 : Bounds v291 (19680232466409179496731033/2000000000000000000000000000000) (98525128107299830836630449/10000000000000000000000000000000) := Bounds.pow h290 2 (by norm_num)
+  let v292 : ℝ := v286*v291
+  have h292 : Bounds v292 (393489335466075723648507/195312500000000000000000000000) (20172034728688567365491719/10000000000000000000000000000000) := Bounds.mul h286 h291 (by norm_num)
+  let v293 : ℝ := v276^2
+  have h293 : Bounds v293 (16853505810866171850972039/200000000000000000000000000000000000000) (6741402324346468740388817/80000000000000000000000000000000000000) := Bounds.pow h276 2 (by norm_num)
+  let v294 : ℝ := v293*v8
+  have h294 : Bounds v294 (50560517432598515552916117/100000000000000000000000000000000000000) (1580016169768703611028629/3125000000000000000000000000000000000) := Bounds.mul h293 h8 (by norm_num)
+  let v295 : ℝ := v292+v294
+  have h295 : Bounds v295 (6295830947473381347079723/3125000000000000000000000000000) (201720397847403106253432743/100000000000000000000000000000000) := Bounds.add h292 h294 (by norm_num)
+  let v296 : ℝ := Real.sqrt v2
+  have h296 : Bounds v296 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v297 : ℝ := v296+v2
+  have h297 : Bounds v297 (42677669529663688110021109/12500000000000000000000000) (341421356237309504880168873/100000000000000000000000000) := Bounds.add h296 h2 (by norm_num)
+  let v298 : ℝ := v297*v276
+  have h298 : Bounds v298 (99110761481849148940766387/100000000000000000000000000000000) (495553807409245744703831991/500000000000000000000000000000000) := Bounds.mul h297 h276 (by norm_num)
+  let v299 : ℝ := Real.sqrt v285
+  have h299 : Bounds v299 (156824271244860851690888071/50000000000000000000000000000) (78461518339686205176062283/25000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v300 : ℝ := v298*v299
+  have h300 : Bounds v300 (15542972941914217982784157/5000000000000000000000000000000000) (311055233186734885311192177/100000000000000000000000000000000000) := Bounds.mul h298 h299 (by norm_num)
+  let v301 : ℝ := v295+v300
+  have h301 : Bounds v301 (20177744977798648746620681/10000000000000000000000000000000) (1578370727192108133896437/781250000000000000000000000000) := Bounds.add h295 h300 (by norm_num)
+  convert h301 using 1 <;>
+    simp only [v2, v8, v274, v276, v277, v278, v280, v281, v282, v283, v285, v286, v287, v288, v289, v290, v291, v292, v293, v294, v295, v296, v297, v298, v299, v300, v301, meanMajorantValue, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+end BstLean.Part268.WorldRow12802
+namespace BstLean.Part268.WorldRow12803
+open Real MeasureTheory Set BstLean.Part130 BstLean.Part140 BstLean.Part137 BstLean.Part159
+open BstLean.Part227 BstLean.Part228 BstLean.Part218 BstLean.Part205 BstLean.Part214
+open BstLean.Part157 BstLean.Part192
+open BstLean.Part250 (bounds_div pi_bounds rowEps meanMajorantValue endpointPolynomial mean_majorant)
+theorem covmean : Bounds (covarianceMeanBound 25606 (mW 12803)) (66446276540699983401842077/10000000000000000) (24918935587775760484428721/2500000000000000) := by
+  let v1 : ℝ := 237460353078452
+  have h1 : Bounds v1 237460353078452 237460353078452 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v203 : ℝ := v1*v41
+  have h203 : Bounds v203 949841412313808 949841412313808 := Bounds.mul h1 h41 (by norm_num)
+  let v204 : ℝ := -v22
+  have h204 : Bounds v204 (-1) (-1) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h22
+  let v205 : ℝ := v1+v204
+  have h205 : Bounds v205 237460353078451 237460353078451 := Bounds.add h1 h204 (by norm_num)
+  let v206 : ℝ := v203*v205
+  have h206 : Bounds v206 225549677136571403091654551000 225549677136571403091654552000 := Bounds.mul h203 h205 (by norm_num)
+  let v207 : ℝ := v206*(angularJ2 25606 (angularOffset 25606))
+  have h207 : Bounds v207 (66446276540699983401842077/10000000000000000) (24918935587775760484428721/2500000000000000) := Bounds.mul h206 jsecond (by norm_num)
+  convert h207 using 1 <;>
+    simp only [v1, v22, v41, v203, v204, v205, v206, v207, covarianceMeanBound, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem frob : Bounds (e1FrobBound 25606 (mW 12803) rowEps) (29058372089153635786625809/1000000000000000000) (290767043889883484521729699/10000000000000000000) := by
+  let v0 : ℝ := 25606
+  have h0 : Bounds v0 25606 25606 := Bounds.point _
+  let v1 : ℝ := 237460353078452
+  have h1 : Bounds v1 237460353078452 237460353078452 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v208 : ℝ := (1/100000)
+  have h208 : Bounds v208 (1/100000) (1/100000) := Bounds.point _
+  let v209 : ℝ := v208+v22
+  have h209 : Bounds v209 (100001/100000) (100001/100000) := Bounds.add h208 h22 (by norm_num)
+  let v210 : ℝ := v1*v0
+  have h210 : Bounds v210 6080409800926841912 6080409800926841912 := Bounds.mul h1 h0 (by norm_num)
+  let v211 : ℝ := v1+v0
+  have h211 : Bounds v211 237460353104058 237460353104058 := Bounds.add h1 h0 (by norm_num)
+  let v212 : ℝ := v211+v22
+  have h212 : Bounds v212 237460353104059 237460353104059 := Bounds.add h211 h22 (by norm_num)
+  let v213 : ℝ := v210*v212
+  have h213 : Bounds v213 1443856258345468971073361170000000 1443856258345468971073361180000000 := Bounds.mul h210 h212 (by norm_num)
+  let v214 : ℝ := v209*v213
+  have h214 : Bounds v214 1443870696908052425763071900000000 1443870696908052425763071920000000 := Bounds.mul h209 h213 (by norm_num)
+  let v215 : ℝ := v0^4
+  have h215 : Bounds v215 429899524363879696 429899524363879696 := Bounds.pow h0 4 (by norm_num)
+  let v216 : ℝ := v215*v41
+  have h216 : Bounds v216 1719598097455518784 1719598097455518784 := Bounds.mul h215 h41 (by norm_num)
+  let v217 : ℝ := 1/v216
+  have h217 : Bounds v217 (14538280797700568756549913/25000000000000000000000000000000000000000000) (58153123190802275026199653/100000000000000000000000000000000000000000000) := Bounds.inv h216 (by norm_num)
+  let v218 : ℝ := v214/v216
+  have h218 : Bounds v218 (83965590508883506219569067/100000000000) (83965590508883506219569071/100000000000) := bounds_div h214 h217 (by norm_num)
+  let v219 : ℝ := Real.sqrt v218
+  have h219 : Bounds v219 (36221020853936527125315277/1250000000000000000) (18110510426968263562657639/625000000000000000) := Bounds.sqrt h218 (by norm_num)
+  let v220 : ℝ := v0*v41
+  have h220 : Bounds v220 102424 102424 := Bounds.mul h0 h41 (by norm_num)
+  let v221 : ℝ := 1/v220
+  have h221 : Bounds v221 (97633367179567288916660157/10000000000000000000000000000000) (48816683589783644458330079/5000000000000000000000000000000) := Bounds.inv h220 (by norm_num)
+  let v222 : ℝ := v22/v220
+  have h222 : Bounds v222 (97633367179567288916660157/10000000000000000000000000000000) (48816683589783644458330079/5000000000000000000000000000000) := bounds_div h22 h221 (by norm_num)
+  let v223 : ℝ := -(BstLean.Part137.cN 25606 ^ 2)
+  have h223 : Bounds v223 (-5000000000000000000/804404798951666558707683) (-25000000000000000000/4022181074391012283213141) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg cnsq_bounds
+  let v224 : ℝ := v222+v223
+  have h224 : Bounds v224 (35475607721689790080878989/10000000000000000000000000000000) (354780351902306741511711817/100000000000000000000000000000000) := Bounds.add h222 h223 (by norm_num)
+  let v225 : ℝ := v224^2
+  have h225 : Bounds v225 (31462968580580406461991889/2500000000000000000000000000000000000) (62934549047962303370270117/5000000000000000000000000000000000000) := Bounds.pow h224 2 (by norm_num)
+  let v226 : ℝ := v0^2
+  have h226 : Bounds v226 655667236 655667236 := Bounds.pow h0 2 (by norm_num)
+  let v227 : ℝ := 1/v226
+  have h227 : Bounds v227 (15251639018912331315576061/10000000000000000000000000000000000) (7625819509456165657788031/5000000000000000000000000000000000) := Bounds.inv h226 (by norm_num)
+  let v228 : ℝ := v41/v226
+  have h228 : Bounds v228 (15251639018912331315576061/2500000000000000000000000000000000) (7625819509456165657788031/1250000000000000000000000000000000) := bounds_div h41 h227 (by norm_num)
+  let v229 : ℝ := v225*v228
+  have h229 : Bounds v229 (76777894280702856927850243/1000000000000000000000000000000000000000000000) (38394200955902151176131131/500000000000000000000000000000000000000000000) := Bounds.mul h225 h228 (by norm_num)
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v231 : ℝ := v230+v22
+  have h231 : Bounds v231 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v232 : ℝ := v1*v0
+  have h232 : Bounds v232 6080409800926841912 6080409800926841912 := Bounds.mul h1 h0 (by norm_num)
+  let v233 : ℝ := v0+v2
+  have h233 : Bounds v233 25608 25608 := Bounds.add h0 h2 (by norm_num)
+  let v234 : ℝ := v232*v233
+  have h234 : Bounds v234 155707134182134567682496 155707134182134567682496 := Bounds.mul h232 h233 (by norm_num)
+  let v235 : ℝ := v231*v234
+  have h235 : Bounds v235 (19482855164539587781272312/125) (19482855164539587781272312/125) := Bounds.mul h231 h234 (by norm_num)
+  let v236 : ℝ := v229*v235
+  have h236 : Bounds v236 (119668207528741290821760389/10000000000000000000000) (119684585021131040644498177/10000000000000000000000) := Bounds.mul h229 h235 (by norm_num)
+  let v237 : ℝ := v230+v22
+  have h237 : Bounds v237 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v238 : ℝ := v237*(covarianceMeanBound 25606 (mW 12803))
+  have h238 : Bounds v238 (66512722817240683385243919/10000000000000000) (99775418093454144979652599/10000000000000000) := Bounds.mul h237 covmean (by norm_num)
+  let v239 : ℝ := v236+v238
+  have h239 : Bounds v239 (665128424854482121265347407/100000000000000000) (199551075556078332221386487/20000000000000000) := Bounds.add h236 h238 (by norm_num)
+  let v240 : ℝ := Real.sqrt v239
+  have h240 : Bounds v240 (407777030022070431867937421/5000000000000000000000) (99887705839126751920747497/1000000000000000000000) := Bounds.sqrt h239 (by norm_num)
+  let v241 : ℝ := v219+v240
+  have h241 : Bounds v241 (29058372089153635786625809/1000000000000000000) (290767043889883484521729699/10000000000000000000) := Bounds.add h219 h240 (by norm_num)
+  convert h241 using 1 <;>
+    simp only [v0, v1, v2, v22, v41, v208, v209, v210, v211, v212, v213, v214, v215, v216, v218, v219, v220, v222, v223, v224, v225, v226, v228, v229, v230, v231, v232, v233, v234, v235, v236, v237, v238, v239, v240, v241, e1FrobBound, rowEps, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem energy : Bounds (e1EnergyLower 25606 (mW 12803) (1/10^6)) (11592015329322176518589393/1250000000000000) (23184030658644353037178787/2500000000000000) := by
+  let v0 : ℝ := 25606
+  have h0 : Bounds v0 25606 25606 := Bounds.point _
+  let v1 : ℝ := 237460353078452
+  have h1 : Bounds v1 237460353078452 237460353078452 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v242 : ℝ := (1/1000000)
+  have h242 : Bounds v242 (1/1000000) (1/1000000) := Bounds.point _
+  let v243 : ℝ := -v242
+  have h243 : Bounds v243 (-1/1000000) (-1/1000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h242
+  let v244 : ℝ := v22+v243
+  have h244 : Bounds v244 (999999/1000000) (999999/1000000) := Bounds.add h22 h243 (by norm_num)
+  let v245 : ℝ := v244*v1
+  have h245 : Bounds v245 (59365028904524730387/250000) (59365028904524730387/250000) := Bounds.mul h244 h1 (by norm_num)
+  let v246 : ℝ := 1/v0
+  have h246 : Bounds v246 (39053346871826915566664063/1000000000000000000000000000000) (305104272436147777864563/7812500000000000000000000000) := Bounds.inv h0 (by norm_num)
+  let v247 : ℝ := v245/v0
+  have h247 : Bounds v247 (11592015329322176518589393/1250000000000000) (23184030658644353037178787/2500000000000000) := bounds_div h245 h246 (by norm_num)
+  convert h247 using 1 <;>
+    simp only [v0, v1, v22, v242, v243, v244, v245, v247, e1EnergyLower, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem direction : Bounds (directionMean 25606 (mW 12803)) (49119141452474000246779787/625000000000000000000) (78595128960525253856344817/1000000000000000000000) := by
+  let v0 : ℝ := 25606
+  have h0 : Bounds v0 25606 25606 := Bounds.point _
+  let v1 : ℝ := 237460353078452
+  have h1 : Bounds v1 237460353078452 237460353078452 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v248 : ℝ := v1*v2
+  have h248 : Bounds v248 474920706156904 474920706156904 := Bounds.mul h1 h2 (by norm_num)
+  let v249 : ℝ := v248*(BstLean.Part137.cN 25606 ^ 2)
+  have h249 : Bounds v249 (29518854159792549766530921/10000000000000000) (14760003507433080049291091/5000000000000000) := Bounds.mul h248 cnsq_bounds (by norm_num)
+  let v250 : ℝ := v0+v2
+  have h250 : Bounds v250 25608 25608 := Bounds.add h0 h2 (by norm_num)
+  let v251 : ℝ := v249*v250
+  have h251 : Bounds v251 (47244926082747975901332739/625000000000) (18898708490917315695112313/250000000000) := Bounds.mul h249 h250 (by norm_num)
+  let v252 : ℝ := v0^2
+  have h252 : Bounds v252 655667236 655667236 := Bounds.pow h0 2 (by norm_num)
+  let v253 : ℝ := 1/v252
+  have h253 : Bounds v253 (15251639018912331315576061/10000000000000000000000000000000000) (7625819509456165657788031/5000000000000000000000000000000000) := Bounds.inv h252 (by norm_num)
+  let v254 : ℝ := v251/v252
+  have h254 : Bounds v254 (57645004647141436118772587/500000000000000000000) (57647255965424862849521167/500000000000000000000) := bounds_div h251 h253 (by norm_num)
+  let v255 : ℝ := v0*v2
+  have h255 : Bounds v255 51212 51212 := Bounds.mul h0 h2 (by norm_num)
+  let v256 : ℝ := v255*(BstLean.Part137.cN 25606 ^ 2)
+  have h256 : Bounds v256 (15915494309189533576851107/50000000000000000000000000) (7958057943392056175945063/25000000000000000000000000) := Bounds.mul h255 cnsq_bounds (by norm_num)
+  let v257 : ℝ := -v256
+  have h257 : Bounds v257 (-7958057943392056175945063/25000000000000000000000000) (-15915494309189533576851107/50000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h256
+  let v258 : ℝ := v22+v257
+  have h258 : Bounds v258 (17041942056607943824054937/25000000000000000000000000) (34084505690810466423148893/50000000000000000000000000) := Bounds.add h22 h257 (by norm_num)
+  let v259 : ℝ := v254*v258
+  have h259 : Bounds v259 (49119141452474000246779787/625000000000000000000) (78595128960525253856344817/1000000000000000000000) := Bounds.mul h254 h258 (by norm_num)
+  convert h259 using 1 <;>
+    simp only [v0, v1, v2, v22, v248, v249, v250, v251, v252, v254, v255, v256, v257, v258, v259, directionMean, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring <;> simp
+
+theorem inputvar : Bounds (e1InputVarianceBound 25606 (mW 12803) rowEps) (724501682407521206628523681/100000000000000000000) (362250841203760603314261869/50000000000000000000) := by
+  let v0 : ℝ := 25606
+  have h0 : Bounds v0 25606 25606 := Bounds.point _
+  let v1 : ℝ := 237460353078452
+  have h1 : Bounds v1 237460353078452 237460353078452 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v13 : ℝ := 3
+  have h13 : Bounds v13 3 3 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v260 : ℝ := v230+v22
+  have h260 : Bounds v260 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v261 : ℝ := v260+v13
+  have h261 : Bounds v261 (4001/1000) (4001/1000) := Bounds.add h260 h13 (by norm_num)
+  let v262 : ℝ := 5
+  have h262 : Bounds v262 5 5 := Bounds.point _
+  let v263 : ℝ := v1*v262
+  have h263 : Bounds v263 1187301765392260 1187301765392260 := Bounds.mul h1 h262 (by norm_num)
+  let v264 : ℝ := v0^2
+  have h264 : Bounds v264 655667236 655667236 := Bounds.pow h0 2 (by norm_num)
+  let v265 : ℝ := 1/v264
+  have h265 : Bounds v265 (15251639018912331315576061/10000000000000000000000000000000000) (7625819509456165657788031/5000000000000000000000000000000000) := Bounds.inv h264 (by norm_num)
+  let v266 : ℝ := v263/v264
+  have h266 : Bounds v266 (90541489661400436364033901/50000000000000000000) (36216595864560174545613563/20000000000000000000) := bounds_div h263 h265 (by norm_num)
+  let v267 : ℝ := v1*v2
+  have h267 : Bounds v267 474920706156904 474920706156904 := Bounds.mul h1 h2 (by norm_num)
+  let v268 : ℝ := v0^3
+  have h268 : Bounds v268 16789015245016 16789015245016 := Bounds.pow h0 3 (by norm_num)
+  let v269 : ℝ := 1/v268
+  have h269 : Bounds v269 (14890688724236830543208683/250000000000000000000000000000000000000) (59562754896947322172834733/1000000000000000000000000000000000000000) := Bounds.inv h268 (by norm_num)
+  let v270 : ℝ := v267/v268
+  have h270 : Bounds v270 (11315034246523525594193099/400000000000000000000000) (282875856163088139854827481/10000000000000000000000000) := bounds_div h267 h269 (by norm_num)
+  let v271 : ℝ := -v270
+  have h271 : Bounds v271 (-282875856163088139854827481/10000000000000000000000000) (-11315034246523525594193099/400000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h270
+  let v272 : ℝ := v266+v271
+  have h272 : Bounds v272 (181080150564239241846669253/100000000000000000000) (181080150564239241846669267/100000000000000000000) := Bounds.add h266 h271 (by norm_num)
+  let v273 : ℝ := v261*v272
+  have h273 : Bounds v273 (724501682407521206628523681/100000000000000000000) (362250841203760603314261869/50000000000000000000) := Bounds.mul h261 h272 (by norm_num)
+  convert h273 using 1 <;>
+    simp only [v0, v1, v2, v13, v22, v230, v260, v261, v262, v263, v264, v266, v267, v268, v270, v271, v272, v273, e1InputVarianceBound, inputVarianceMean, rowEps, Matrix.cons_val_one, Matrix.cons_val_three, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem meanvalue : Bounds (meanMajorantValue 25606 (mW 12803) (1/10^6) (1/10^7) rowEps) (25220192106016648177378581/12500000000000000000000000000000) (25251938791367770694623987/12500000000000000000000000000000) := by
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v8 : ℝ := 6
+  have h8 : Bounds v8 6 6 := Bounds.point _
+  let v274 : ℝ := Real.sqrt (e1InputVarianceBound 25606 (mW 12803) rowEps)
+  have h274 : Bounds v274 (16822855574795795391122989/6250000000000000000000) (67291422299183181564491959/25000000000000000000000) := Bounds.sqrt inputvar (by norm_num)
+  let v275 : ℝ := 1/(e1EnergyLower 25606 (mW 12803) (1/10^6))
+  have h275 : Bounds v275 (53916422834522408920149547/500000000000000000000000000000000000) (1078328456690448178402991/10000000000000000000000000000000000) := Bounds.inv energy (by norm_num)
+  let v276 : ℝ := v274/(e1EnergyLower 25606 (mW 12803) (1/10^6))
+  have h276 : Bounds v276 (290249022225533640744894829/1000000000000000000000000000000000) (290249022225533640744894859/1000000000000000000000000000000000) := bounds_div h274 h275 (by norm_num)
+  let v277 : ℝ := (e1FrobBound 25606 (mW 12803) rowEps)^2
+  have h277 : Bounds v277 (844388988471703035628941539/1000000000000) (845454738124614286097318437/1000000000000) := Bounds.pow frob 2 (by norm_num)
+  let v278 : ℝ := (1/10000000)
+  have h278 : Bounds v278 (1/10000000) (1/10000000) := Bounds.point _
+  let v279 : ℝ := 1/v278
+  have h279 : Bounds v279 10000000 10000000 := Bounds.inv h278 (by norm_num)
+  let v280 : ℝ := (directionMean 25606 (mW 12803))/v278
+  have h280 : Bounds v280 (78590626323958400394847659/100000000000000) (78595128960525253856344817/100000000000000) := bounds_div direction h279 (by norm_num)
+  let v281 : ℝ := v280*v2
+  have h281 : Bounds v281 (78590626323958400394847659/50000000000000) (78595128960525253856344817/50000000000000) := Bounds.mul h280 h2 (by norm_num)
+  let v282 : ℝ := v277+v281
+  have h282 : Bounds v282 (84596080099818220363683849/100000000000) (42351332035191239558722267/50000000000) := Bounds.add h277 h281 (by norm_num)
+  let v283 : ℝ := (e1EnergyLower 25606 (mW 12803) (1/10^6))^2
+  have h283 : Bounds v283 (42999942206476905128117757/500000) (85999884412953810256235523/1000000) := Bounds.pow energy 2 (by norm_num)
+  let v284 : ℝ := 1/v283
+  have h284 : Bounds v284 (5813961302542018864036691/500000000000000000000000000000000000000000000) (29069806512710094320183459/2500000000000000000000000000000000000000000000) := Bounds.inv h283 (by norm_num)
+  let v285 : ℝ := v282/v283
+  have h285 : Bounds v285 (98367667209417620333325331/10000000000000000000000000000000) (98491602225483995937591171/10000000000000000000000000000000) := bounds_div h282 h284 (by norm_num)
+  let v286 : ℝ := (10237/50000)
+  have h286 : Bounds v286 (10237/50000) (10237/50000) := Bounds.point _
+  let v287 : ℝ := Real.sqrt v285
+  have h287 : Bounds v287 (313636202007066812289219391/100000000000000000000000000000) (9807303671158766295316577/3125000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v288 : ℝ := Real.sqrt v2
+  have h288 : Bounds v288 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v289 : ℝ := v288*v276
+  have h289 : Bounds v289 (410474103696879570540543957/1000000000000000000000000000000000) (410474103696879570540544003/1000000000000000000000000000000000) := Bounds.mul h288 h276 (by norm_num)
+  let v290 : ℝ := v287+v289
+  have h290 : Bounds v290 (62735449883487300049254689/20000000000000000000000000000) (313874764887450209407184519/100000000000000000000000000000) := Bounds.add h287 h289 (by norm_num)
+  let v291 : ℝ := v290^2
+  have h291 : Bounds v291 (19678683360417733446626197/2000000000000000000000000000000) (492586840165760734332145579/50000000000000000000000000000000) := Bounds.pow h290 2 (by norm_num)
+  let v292 : ℝ := v286*v291
+  have h292 : Bounds v292 (100725340780298168646556189/50000000000000000000000000000000) (50426114827768926373581743/25000000000000000000000000000000) := Bounds.mul h286 h291 (by norm_num)
+  let v293 : ℝ := v276^2
+  have h293 : Bounds v293 (842444949028783213594755743/10000000000000000000000000000000000000000) (421222474514391606797377959/5000000000000000000000000000000000000000) := Bounds.pow h276 2 (by norm_num)
+  let v294 : ℝ := v293*v8
+  have h294 : Bounds v294 (1579584279428968525490167/3125000000000000000000000000000000000) (12636674235431748203921339/25000000000000000000000000000000000000) := Bounds.mul h293 h8 (by norm_num)
+  let v295 : ℝ := v292+v294
+  have h295 : Bounds v295 (201450732107293279020105193/100000000000000000000000000000000) (50426127464443161805329947/25000000000000000000000000000000) := Bounds.add h292 h294 (by norm_num)
+  let v296 : ℝ := Real.sqrt v2
+  have h296 : Bounds v296 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v297 : ℝ := v296+v2
+  have h297 : Bounds v297 (42677669529663688110021109/12500000000000000000000000) (341421356237309504880168873/100000000000000000000000000) := Bounds.add h296 h2 (by norm_num)
+  let v298 : ℝ := v297*v276
+  have h298 : Bounds v298 (99097214814794685203033361/100000000000000000000000000000000) (990972148147946852030333721/1000000000000000000000000000000000) := Bounds.mul h297 h276 (by norm_num)
+  let v299 : ℝ := Real.sqrt v285
+  have h299 : Bounds v299 (313636202007066812289219391/100000000000000000000000000000) (9807303671158766295316577/3125000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v300 : ℝ := v298*v299
+  have h300 : Bounds v300 (2428162037811768741589499/781250000000000000000000000000000) (311000473169518335672107051/100000000000000000000000000000000000) := Bounds.mul h298 h299 (by norm_num)
+  let v301 : ℝ := v295+v300
+  have h301 : Bounds v301 (25220192106016648177378581/12500000000000000000000000000000) (25251938791367770694623987/12500000000000000000000000000000) := Bounds.add h295 h300 (by norm_num)
+  convert h301 using 1 <;>
+    simp only [v2, v8, v274, v276, v277, v278, v280, v281, v282, v283, v285, v286, v287, v288, v289, v290, v291, v292, v293, v294, v295, v296, v297, v298, v299, v300, v301, meanMajorantValue, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+end BstLean.Part268.WorldRow12803
+namespace BstLean.Part268.WorldRow12804
+open Real MeasureTheory Set BstLean.Part130 BstLean.Part140 BstLean.Part137 BstLean.Part159
+open BstLean.Part227 BstLean.Part228 BstLean.Part218 BstLean.Part205 BstLean.Part214
+open BstLean.Part157 BstLean.Part192
+open BstLean.Part250 (bounds_div pi_bounds rowEps meanMajorantValue endpointPolynomial mean_majorant)
+theorem covmean : Bounds (covarianceMeanBound 25608 (mW 12804)) (66461847631442536808313557/10000000000000000) (99699099975647756975947331/10000000000000000) := by
+  let v1 : ℝ := 237525274767364
+  have h1 : Bounds v1 237525274767364 237525274767364 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v203 : ℝ := v1*v41
+  have h203 : Bounds v203 950101099069456 950101099069456 := Bounds.mul h1 h41 (by norm_num)
+  let v204 : ℝ := -v22
+  have h204 : Bounds v204 (-1) (-1) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h22
+  let v205 : ℝ := v1+v204
+  have h205 : Bounds v205 237525274767363 237525274767363 := Bounds.add h1 h204 (by norm_num)
+  let v206 : ℝ := v203*v205
+  have h206 : Bounds v206 225673024613246111116178964000 225673024613246111116178965000 := Bounds.mul h203 h205 (by norm_num)
+  let v207 : ℝ := v206*(angularJ2 25608 (angularOffset 25608))
+  have h207 : Bounds v207 (66461847631442536808313557/10000000000000000) (99699099975647756975947331/10000000000000000) := Bounds.mul h206 jsecond (by norm_num)
+  convert h207 using 1 <;>
+    simp only [v1, v22, v41, v203, v204, v205, v206, v207, covarianceMeanBound, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem frob : Bounds (e1FrobBound 25608 (mW 12804) rowEps) (29062908387945361306099497/1000000000000000000) (290812428354134102201044061/10000000000000000000) := by
+  let v0 : ℝ := 25608
+  have h0 : Bounds v0 25608 25608 := Bounds.point _
+  let v1 : ℝ := 237525274767364
+  have h1 : Bounds v1 237525274767364 237525274767364 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v208 : ℝ := (1/100000)
+  have h208 : Bounds v208 (1/100000) (1/100000) := Bounds.point _
+  let v209 : ℝ := v208+v22
+  have h209 : Bounds v209 (100001/100000) (100001/100000) := Bounds.add h208 h22 (by norm_num)
+  let v210 : ℝ := v1*v0
+  have h210 : Bounds v210 6082547236242657312 6082547236242657312 := Bounds.mul h1 h0 (by norm_num)
+  let v211 : ℝ := v1+v0
+  have h211 : Bounds v211 237525274792972 237525274792972 := Bounds.add h1 h0 (by norm_num)
+  let v212 : ℝ := v211+v22
+  have h212 : Bounds v212 237525274792973 237525274792973 := Bounds.add h211 h22 (by norm_num)
+  let v213 : ℝ := v210*v212
+  have h213 : Bounds v213 1444758703729775638085952180000000 1444758703729775638085952190000000 := Bounds.mul h210 h212 (by norm_num)
+  let v214 : ℝ := v209*v213
+  have h214 : Bounds v214 1444773151316812935842333030000000 1444773151316812935842333050000000 := Bounds.mul h209 h213 (by norm_num)
+  let v215 : ℝ := v0^4
+  have h215 : Bounds v215 430033852222672896 430033852222672896 := Bounds.pow h0 4 (by norm_num)
+  let v216 : ℝ := v215*v41
+  have h216 : Bounds v216 1720135408890691584 1720135408890691584 := Bounds.mul h215 h41 (by norm_num)
+  let v217 : ℝ := 1/v216
+  have h217 : Bounds v217 (58134958145236716180570249/100000000000000000000000000000000000000000000) (232539832580946864722281/400000000000000000000000000000000000000000) := Bounds.inv h216 (by norm_num)
+  let v218 : ℝ := v214/v216
+  have h218 : Bounds v218 (839918266811646728421587593/1000000000000) (41995913340582336421079381/50000000000) := bounds_div h214 h217 (by norm_num)
+  let v219 : ℝ := Real.sqrt v218
+  have h219 : Bounds v219 (289813434266192485699783537/10000000000000000000) (144906717133096242849891771/5000000000000000000) := Bounds.sqrt h218 (by norm_num)
+  let v220 : ℝ := v0*v41
+  have h220 : Bounds v220 102432 102432 := Bounds.mul h0 h41 (by norm_num)
+  let v221 : ℝ := 1/v220
+  have h221 : Bounds v221 (976257419556388628553577/100000000000000000000000000000) (97625741955638862855357701/10000000000000000000000000000000) := Bounds.inv h220 (by norm_num)
+  let v222 : ℝ := v22/v220
+  have h222 : Bounds v222 (976257419556388628553577/100000000000000000000000000000) (97625741955638862855357701/10000000000000000000000000000000) := bounds_div h22 h221 (by norm_num)
+  let v223 : ℝ := -(BstLean.Part137.cN 25608 ^ 2)
+  have h223 : Bounds v223 (-25000000000000000000/4022338154023691772862261) (-6250000000000000000/1005623808414092815634247) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg cnsq_bounds
+  let v224 : ℝ := v222+v223
+  have h224 : Bounds v224 (1773641862262449727509993/500000000000000000000000000000) (354752643346238145233868041/100000000000000000000000000000000) := Bounds.add h222 h223 (by norm_num)
+  let v225 : ℝ := v224^2
+  have h225 : Bounds v225 (125832218222792427633332523/10000000000000000000000000000000000000) (25169887592228648675629187/2000000000000000000000000000000000000) := Bounds.pow h224 2 (by norm_num)
+  let v226 : ℝ := v0^2
+  have h226 : Bounds v226 655769664 655769664 := Bounds.pow h0 2 (by norm_num)
+  let v227 : ℝ := 1/v226
+  have h227 : Bounds v227 (7624628393911188914039183/5000000000000000000000000000000000) (15249256787822377828078367/10000000000000000000000000000000000) := Bounds.inv h226 (by norm_num)
+  let v228 : ℝ := v41/v226
+  have h228 : Bounds v228 (7624628393911188914039183/1250000000000000000000000000000000) (15249256787822377828078367/2500000000000000000000000000000000) := bounds_div h41 h227 (by norm_num)
+  let v229 : ℝ := v225*v228
+  have h229 : Bounds v229 (767539123144265652601658139/10000000000000000000000000000000000000000000000) (19191103960725948338187529/250000000000000000000000000000000000000000000) := Bounds.mul h225 h228 (by norm_num)
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v231 : ℝ := v230+v22
+  have h231 : Bounds v231 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v232 : ℝ := v1*v0
+  have h232 : Bounds v232 6082547236242657312 6082547236242657312 := Bounds.mul h1 h0 (by norm_num)
+  let v233 : ℝ := v0+v2
+  have h233 : Bounds v233 25610 25610 := Bounds.add h0 h2 (by norm_num)
+  let v234 : ℝ := v232*v233
+  have h234 : Bounds v234 155774034720174453760320 155774034720174453760320 := Bounds.mul h232 h233 (by norm_num)
+  let v235 : ℝ := v231*v234
+  have h235 : Bounds v235 (3898245218872365705352008/25) (3898245218872365705352008/25) := Bounds.mul h231 h234 (by norm_num)
+  let v236 : ℝ := v229*v235
+  have h236 : Bounds v236 (23936445736756972103384577/2000000000000000000000) (119698606815651918177659181/10000000000000000000000) := Bounds.mul h229 h235 (by norm_num)
+  let v237 : ℝ := v230+v22
+  have h237 : Bounds v237 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v238 : ℝ := v237*(covarianceMeanBound 25608 (mW 12804))
+  have h238 : Bounds v238 (133056618958147958690243741/20000000000000000) (62374249422264627958077049/6250000000000000) := Bounds.mul h237 covmean (by norm_num)
+  let v239 : ℝ := v236+v238
+  have h239 : Bounds v239 (66528429161302663129982387/10000000000000000) (997989187742302203848414561/100000000000000000) := Bounds.add h236 h238 (by norm_num)
+  let v240 : ℝ := Real.sqrt v239
+  have h240 : Bounds v240 (40782480663056368060571751/500000000000000000000) (124874260992702062657564867/1250000000000000000000) := Bounds.sqrt h239 (by norm_num)
+  let v241 : ℝ := v219+v240
+  have h241 : Bounds v241 (29062908387945361306099497/1000000000000000000) (290812428354134102201044061/10000000000000000000) := Bounds.add h219 h240 (by norm_num)
+  convert h241 using 1 <;>
+    simp only [v0, v1, v2, v22, v41, v208, v209, v210, v211, v212, v213, v214, v215, v216, v218, v219, v220, v222, v223, v224, v225, v226, v228, v229, v230, v231, v232, v233, v234, v235, v236, v237, v238, v239, v240, v241, e1FrobBound, rowEps, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem energy : Bounds (e1EnergyLower 25608 (mW 12804) (1/10^6)) (46377115987599428427835051/5000000000000000) (18550846395039771371134021/2000000000000000) := by
+  let v0 : ℝ := 25608
+  have h0 : Bounds v0 25608 25608 := Bounds.point _
+  let v1 : ℝ := 237525274767364
+  have h1 : Bounds v1 237525274767364 237525274767364 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v242 : ℝ := (1/1000000)
+  have h242 : Bounds v242 (1/1000000) (1/1000000) := Bounds.point _
+  let v243 : ℝ := -v242
+  have h243 : Bounds v243 (-1/1000000) (-1/1000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h242
+  let v244 : ℝ := v22+v243
+  have h244 : Bounds v244 (999999/1000000) (999999/1000000) := Bounds.add h22 h243 (by norm_num)
+  let v245 : ℝ := v244*v1
+  have h245 : Bounds v245 (59381259310522308159/250000) (59381259310522308159/250000) := Bounds.mul h244 h1 (by norm_num)
+  let v246 : ℝ := 1/v0
+  have h246 : Bounds v246 (976257419556388628553577/25000000000000000000000000000) (39050296782255545142143081/1000000000000000000000000000000) := Bounds.inv h0 (by norm_num)
+  let v247 : ℝ := v245/v0
+  have h247 : Bounds v247 (46377115987599428427835051/5000000000000000) (18550846395039771371134021/2000000000000000) := bounds_div h245 h246 (by norm_num)
+  convert h247 using 1 <;>
+    simp only [v0, v1, v22, v242, v243, v244, v245, v247, e1EnergyLower, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem direction : Bounds (directionMean 25608 (mW 12804)) (78599833817242034655524607/1000000000000000000000) (9825542078700910247834591/125000000000000000000) := by
+  let v0 : ℝ := 25608
+  have h0 : Bounds v0 25608 25608 := Bounds.point _
+  let v1 : ℝ := 237525274767364
+  have h1 : Bounds v1 237525274767364 237525274767364 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v248 : ℝ := v1*v2
+  have h248 : Bounds v248 475050549534728 475050549534728 := Bounds.mul h1 h2 (by norm_num)
+  let v249 : ℝ := v248*(BstLean.Part137.cN 25608 ^ 2)
+  have h249 : Bounds v249 (59049237095418026489388887/20000000000000000) (147628857689251456861901423/50000000000000000) := Bounds.mul h248 cnsq_bounds (by norm_num)
+  let v250 : ℝ := v0+v2
+  have h250 : Bounds v250 25610 25610 := Bounds.add h0 h2 (by norm_num)
+  let v251 : ℝ := v249*v250
+  have h251 : Bounds v251 (75612548100682782919662469/1000000000000) (75615500908434596204665909/1000000000000) := Bounds.mul h249 h250 (by norm_num)
+  let v252 : ℝ := v0^2
+  have h252 : Bounds v252 655769664 655769664 := Bounds.pow h0 2 (by norm_num)
+  let v253 : ℝ := 1/v252
+  have h253 : Bounds v253 (7624628393911188914039183/5000000000000000000000000000000000) (15249256787822377828078367/10000000000000000000000000000000000) := Bounds.inv h252 (by norm_num)
+  let v254 : ℝ := v251/v252
+  have h254 : Bounds v254 (57651758118444148492711053/500000000000000000000) (115308019049253544312574229/1000000000000000000000) := bounds_div h251 h253 (by norm_num)
+  let v255 : ℝ := v0*v2
+  have h255 : Bounds v255 51216 51216 := Bounds.mul h0 h2 (by norm_num)
+  let v256 : ℝ := v255*(BstLean.Part137.cN 25608 ^ 2)
+  have h256 : Bounds v256 (15915494309189533576851107/50000000000000000000000000) (31832231676473274951169639/100000000000000000000000000) := Bounds.mul h255 cnsq_bounds (by norm_num)
+  let v257 : ℝ := -v256
+  have h257 : Bounds v257 (-31832231676473274951169639/100000000000000000000000000) (-15915494309189533576851107/50000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h256
+  let v258 : ℝ := v22+v257
+  have h258 : Bounds v258 (68167768323526725048830361/100000000000000000000000000) (34084505690810466423148893/50000000000000000000000000) := Bounds.add h22 h257 (by norm_num)
+  let v259 : ℝ := v254*v258
+  have h259 : Bounds v259 (78599833817242034655524607/1000000000000000000000) (9825542078700910247834591/125000000000000000000) := Bounds.mul h254 h258 (by norm_num)
+  convert h259 using 1 <;>
+    simp only [v0, v1, v2, v22, v248, v249, v250, v251, v252, v254, v255, v256, v257, v258, v259, directionMean, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring <;> simp
+
+theorem inputvar : Bounds (e1InputVarianceBound 25608 (mW 12804) rowEps) (2264333023736092387704871/312500000000000000) (144917313519109912813111757/20000000000000000000) := by
+  let v0 : ℝ := 25608
+  have h0 : Bounds v0 25608 25608 := Bounds.point _
+  let v1 : ℝ := 237525274767364
+  have h1 : Bounds v1 237525274767364 237525274767364 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v13 : ℝ := 3
+  have h13 : Bounds v13 3 3 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v260 : ℝ := v230+v22
+  have h260 : Bounds v260 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v261 : ℝ := v260+v13
+  have h261 : Bounds v261 (4001/1000) (4001/1000) := Bounds.add h260 h13 (by norm_num)
+  let v262 : ℝ := 5
+  have h262 : Bounds v262 5 5 := Bounds.point _
+  let v263 : ℝ := v1*v262
+  have h263 : Bounds v263 1187626373836820 1187626373836820 := Bounds.mul h1 h262 (by norm_num)
+  let v264 : ℝ := v0^2
+  have h264 : Bounds v264 655769664 655769664 := Bounds.pow h0 2 (by norm_num)
+  let v265 : ℝ := 1/v264
+  have h265 : Bounds v265 (7624628393911188914039183/5000000000000000000000000000000000) (15249256787822377828078367/10000000000000000000000000000000000) := Bounds.inv h264 (by norm_num)
+  let v266 : ℝ := v263/v264
+  have h266 : Bounds v266 (36220839085256008426763699/20000000000000000000) (45276048856570010533454627/25000000000000000000) := bounds_div h263 h265 (by norm_num)
+  let v267 : ℝ := v1*v2
+  have h267 : Bounds v267 475050549534728 475050549534728 := Bounds.mul h1 h2 (by norm_num)
+  let v268 : ℝ := v0^3
+  have h268 : Bounds v268 16792949555712 16792949555712 := Bounds.pow h0 3 (by norm_num)
+  let v269 : ℝ := 1/v268
+  have h269 : Bounds v269 (59548800327328873118081717/1000000000000000000000000000000000000000) (29774400163664436559040859/500000000000000000000000000000000000000) := Bounds.inv h268 (by norm_num)
+  let v270 : ℝ := v267/v268
+  have h270 : Bounds v270 (282886903196313717797279751/10000000000000000000000000) (3536086289953921472465997/125000000000000000000000) := bounds_div h267 h269 (by norm_num)
+  let v271 : ℝ := -v270
+  have h271 : Bounds v271 (-3536086289953921472465997/125000000000000000000000) (-282886903196313717797279751/10000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h270
+  let v272 : ℝ := v266+v271
+  have h272 : Bounds v272 (90550683278624039498320261/50000000000000000000) (22637670819656009874580067/12500000000000000000) := Bounds.add h266 h271 (by norm_num)
+  let v273 : ℝ := v261*v272
+  have h273 : Bounds v273 (2264333023736092387704871/312500000000000000) (144917313519109912813111757/20000000000000000000) := Bounds.mul h261 h272 (by norm_num)
+  convert h273 using 1 <;>
+    simp only [v0, v1, v2, v13, v22, v230, v260, v261, v262, v263, v264, v266, v267, v268, v270, v271, v272, v273, e1InputVarianceBound, inputVarianceMean, rowEps, Matrix.cons_val_one, Matrix.cons_val_three, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem meanvalue : Bounds (meanMajorantValue 25608 (mW 12804) (1/10^6) (1/10^7) rowEps) (20174562643532295069249107/10000000000000000000000000000000) (6312486565755368143385047/3125000000000000000000000000000) := by
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v8 : ℝ := 6
+  have h8 : Bounds v8 6 6 := Bounds.point _
+  let v274 : ℝ := Real.sqrt (e1InputVarianceBound 25608 (mW 12804) rowEps)
+  have h274 : Bounds v274 (3364768211731747494655123/1250000000000000000000) (269181456938539799572409853/100000000000000000000000) := Bounds.sqrt inputvar (by norm_num)
+  let v275 : ℝ := 1/(e1EnergyLower 25608 (mW 12804) (1/10^6))
+  have h275 : Bounds v275 (13476474047396909738095159/125000000000000000000000000000000000) (26952948094793819476190319/250000000000000000000000000000000000) := Bounds.inv energy (by norm_num)
+  let v276 : ℝ := v274/(e1EnergyLower 25608 (mW 12804) (1/10^6))
+  have h276 : Bounds v276 (72552338369454408491754241/250000000000000000000000000000000) (29020935347781763396701699/100000000000000000000000000000000) := bounds_div h274 h275 (by norm_num)
+  let v277 : ℝ := (e1FrobBound 25608 (mW 12804) rowEps)^2
+  have h277 : Bounds v277 (844652643966104839833462399/1000000000000) (422859342426141901613912487/500000000000) := Bounds.pow frob 2 (by norm_num)
+  let v278 : ℝ := (1/10000000)
+  have h278 : Bounds v278 (1/10000000) (1/10000000) := Bounds.point _
+  let v279 : ℝ := 1/v278
+  have h279 : Bounds v279 10000000 10000000 := Bounds.inv h278 (by norm_num)
+  let v280 : ℝ := (directionMean 25608 (mW 12804))/v278
+  have h280 : Bounds v280 (78599833817242034655524607/100000000000000) (9825542078700910247834591/12500000000000) := bounds_div direction h279 (by norm_num)
+  let v281 : ℝ := v280*v2
+  have h281 : Bounds v281 (78599833817242034655524607/50000000000000) (9825542078700910247834591/6250000000000) := Bounds.mul h280 h2 (by norm_num)
+  let v282 : ℝ := v277+v281
+  have h282 : Bounds v282 (84622464064244968052657289/100000000000) (84729077158487594886747851/100000000000) := Bounds.add h277 h281 (by norm_num)
+  let v283 : ℝ := (e1EnergyLower 25608 (mW 12804) (1/10^6))^2
+  have h283 : Bounds v283 (8603347549309002030466327/100000) (21508368873272505076165819/250000) := Bounds.pow energy 2 (by norm_num)
+  let v284 : ℝ := 1/v283
+  have h284 : Bounds v284 (4649353030404158611917811/400000000000000000000000000000000000000000000) (11623382576010396529794529/1000000000000000000000000000000000000000000000) := Bounds.inv h283 (by norm_num)
+  let v285 : ℝ := v282/v283
+  have h285 : Bounds v285 (98359927434341088622786363/10000000000000000000000000000000) (246209619781351297323478207/25000000000000000000000000000000) := bounds_div h282 h284 (by norm_num)
+  let v286 : ℝ := (10237/50000)
+  have h286 : Bounds v286 (10237/50000) (10237/50000) := Bounds.point _
+  let v287 : ℝ := Real.sqrt v285
+  have h287 : Bounds v287 (9800745718316475093456233/3125000000000000000000000000) (78455340764882172762505503/25000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v288 : ℝ := Real.sqrt v2
+  have h288 : Bounds v288 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v289 : ℝ := v288*v276
+  have h289 : Bounds v289 (8208360072317144740348403/20000000000000000000000000000000) (205209001807928618508710097/500000000000000000000000000000000) := Bounds.mul h288 h276 (by norm_num)
+  let v290 : ℝ := v287+v289
+  have h290 : Bounds v290 (156832452393244394357150599/50000000000000000000000000000) (3923280060748628459671547/1250000000000000000000000000) := Bounds.add h287 h289 (by norm_num)
+  let v291 : ℝ := v290^2
+  have h291 : Bounds v291 (12298209061839634679607469/1250000000000000000000000000000) (19701921836886735125652779/2000000000000000000000000000000) := Bounds.pow h290 2 (by norm_num)
+  let v292 : ℝ := v286*v291
+  have h292 : Bounds v292 (4028696517313674886884533/2000000000000000000000000000000) (201688573844209507481307499/100000000000000000000000000000000) := Bounds.mul h286 h291 (by norm_num)
+  let v293 : ℝ := v276^2
+  have h293 : Bounds v293 (21055367211503225509856831/250000000000000000000000000000000000000) (421107344230064510197136697/5000000000000000000000000000000000000000) := Bounds.pow h276 2 (by norm_num)
+  let v294 : ℝ := v293*v8
+  have h294 : Bounds v294 (63166101634509676529570493/125000000000000000000000000000000000000) (12633220326901935305914101/25000000000000000000000000000000000000) := Bounds.mul h293 h8 (by norm_num)
+  let v295 : ℝ := v292+v294
+  have h295 : Bounds v295 (201434876398565051951967873/100000000000000000000000000000000) (201688624377090815089048723/100000000000000000000000000000000) := Bounds.add h292 h294 (by norm_num)
+  let v296 : ℝ := Real.sqrt v2
+  have h296 : Bounds v296 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v297 : ℝ := v296+v2
+  have h297 : Bounds v297 (42677669529663688110021109/12500000000000000000000000) (341421356237309504880168873/100000000000000000000000000) := Bounds.add h296 h2 (by norm_num)
+  let v298 : ℝ := v297*v276
+  have h298 : Bounds v298 (1548182360267957038986647/1562500000000000000000000000000) (495418355285746252475727087/500000000000000000000000000000000) := Bounds.mul h297 h276 (by norm_num)
+  let v299 : ℝ := Real.sqrt v285
+  have h299 : Bounds v299 (9800745718316475093456233/3125000000000000000000000000) (78455340764882172762505503/25000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v300 : ℝ := v298*v299
+  have h300 : Bounds v300 (15537501837894937026160059/5000000000000000000000000000000000) (62189145416193099854556011/20000000000000000000000000000000000) := Bounds.mul h298 h299 (by norm_num)
+  let v301 : ℝ := v295+v300
+  have h301 : Bounds v301 (20174562643532295069249107/10000000000000000000000000000000) (6312486565755368143385047/3125000000000000000000000000000) := Bounds.add h295 h300 (by norm_num)
+  convert h301 using 1 <;>
+    simp only [v2, v8, v274, v276, v277, v278, v280, v281, v282, v283, v285, v286, v287, v288, v289, v290, v291, v292, v293, v294, v295, v296, v297, v298, v299, v300, v301, meanMajorantValue, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+end BstLean.Part268.WorldRow12804
+namespace BstLean.Part268.WorldRow12805
+open Real MeasureTheory Set BstLean.Part130 BstLean.Part140 BstLean.Part137 BstLean.Part159
+open BstLean.Part227 BstLean.Part228 BstLean.Part218 BstLean.Part205 BstLean.Part214
+open BstLean.Part157 BstLean.Part192
+open BstLean.Part250 (bounds_div pi_bounds rowEps meanMajorantValue endpointPolynomial mean_majorant)
+theorem covmean : Bounds (covarianceMeanBound 25610 (mW 12805)) (1661935528865632079393501/250000000000000) (49861230624464978620265181/5000000000000000) := by
+  let v1 : ℝ := 237590209133569
+  have h1 : Bounds v1 237590209133569 237590209133569 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v203 : ℝ := v1*v41
+  have h203 : Bounds v203 950360836534276 950360836534276 := Bounds.mul h1 h41 (by norm_num)
+  let v204 : ℝ := -v22
+  have h204 : Bounds v204 (-1) (-1) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h22
+  let v205 : ℝ := v1+v204
+  have h205 : Bounds v205 237590209133568 237590209133568 := Bounds.add h1 h204 (by norm_num)
+  let v206 : ℝ := v203*v205
+  have h206 : Bounds v206 225796429904531266717894176000 225796429904531266717894177000 := Bounds.mul h203 h205 (by norm_num)
+  let v207 : ℝ := v206*(angularJ2 25610 (angularOffset 25610))
+  have h207 : Bounds v207 (1661935528865632079393501/250000000000000) (49861230624464978620265181/5000000000000000) := Bounds.mul h206 jsecond (by norm_num)
+  convert h207 using 1 <;>
+    simp only [v1, v22, v41, v203, v204, v205, v206, v207, covarianceMeanBound, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem frob : Bounds (e1FrobBound 25610 (mW 12805) rowEps) (290674450406653110924984447/10000000000000000000) (29085781635850554847799137/1000000000000000000) := by
+  let v0 : ℝ := 25610
+  have h0 : Bounds v0 25610 25610 := Bounds.point _
+  let v1 : ℝ := 237590209133569
+  have h1 : Bounds v1 237590209133569 237590209133569 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v208 : ℝ := (1/100000)
+  have h208 : Bounds v208 (1/100000) (1/100000) := Bounds.point _
+  let v209 : ℝ := v208+v22
+  have h209 : Bounds v209 (100001/100000) (100001/100000) := Bounds.add h208 h22 (by norm_num)
+  let v210 : ℝ := v1*v0
+  have h210 : Bounds v210 6084685255910702090 6084685255910702090 := Bounds.mul h1 h0 (by norm_num)
+  let v211 : ℝ := v1+v0
+  have h211 : Bounds v211 237590209159179 237590209159179 := Bounds.add h1 h0 (by norm_num)
+  let v212 : ℝ := v211+v22
+  have h212 : Bounds v212 237590209159180 237590209159180 := Bounds.add h211 h22 (by norm_num)
+  let v213 : ℝ := v210*v212
+  have h213 : Bounds v213 1445661642619602393935702360000000 1445661642619602393935702370000000 := Bounds.mul h210 h212 (by norm_num)
+  let v214 : ℝ := v209*v213
+  have h214 : Bounds v214 1445676099236028589959641710000000 1445676099236028589959641730000000 := Bounds.mul h209 h213 (by norm_num)
+  let v215 : ℝ := v0^4
+  have h215 : Bounds v215 430168211558410000 430168211558410000 := Bounds.pow h0 4 (by norm_num)
+  let v216 : ℝ := v215*v41
+  have h216 : Bounds v216 1720672846233640000 1720672846233640000 := Bounds.mul h215 h41 (by norm_num)
+  let v217 : ℝ := 1/v216
+  have h217 : Bounds v217 (58116800191790549592476137/100000000000000000000000000000000000000000000) (29058400095895274796238069/50000000000000000000000000000000000000000000) := Bounds.inv h216 (by norm_num)
+  let v218 : ℝ := v214/v216
+  have h218 : Bounds v218 (420090345006737199810757499/500000000000) (84018069001347439962151503/100000000000) := bounds_div h214 h217 (by norm_num)
+  let v219 : ℝ := Real.sqrt v218
+  have h219 : Bounds v219 (144929352618221751272094769/5000000000000000000) (57971741047288700508837909/2000000000000000000) := Bounds.sqrt h218 (by norm_num)
+  let v220 : ℝ := v0*v41
+  have h220 : Bounds v220 102440 102440 := Bounds.mul h0 h41 (by norm_num)
+  let v221 : ℝ := 1/v220
+  have h221 : Bounds v221 (97618117922686450605232331/10000000000000000000000000000000) (24404529480671612651308083/2500000000000000000000000000000) := Bounds.inv h220 (by norm_num)
+  let v222 : ℝ := v22/v220
+  have h222 : Bounds v222 (97618117922686450605232331/10000000000000000000000000000000) (24404529480671612651308083/2500000000000000000000000000000) := bounds_div h22 h221 (by norm_num)
+  let v223 : ℝ := -(BstLean.Part137.cN 25610 ^ 2)
+  have h223 : Bounds v223 (-25000000000000000000/4022652313289050752186107) (-5000000000000000000/804561878584346048372167) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg cnsq_bounds
+  let v224 : ℝ := v222+v223
+  have h224 : Bounds v224 (35470067201496503411270177/10000000000000000000000000000000) (177362469558970449495292717/50000000000000000000000000000000) := Bounds.add h222 h223 (by norm_num)
+  let v225 : ℝ := v224^2
+  have h225 : Bounds v225 (25162513345573559862556087/2000000000000000000000000000000000000) (25165956486445375482798243/2000000000000000000000000000000000000) := Bounds.pow h224 2 (by norm_num)
+  let v226 : ℝ := v0^2
+  have h226 : Bounds v226 655872100 655872100 := Bounds.pow h0 2 (by norm_num)
+  let v227 : ℝ := 1/v226
+  have h227 : Bounds v227 (15246875114828028208548587/10000000000000000000000000000000000) (3811718778707007052137147/2500000000000000000000000000000000) := Bounds.inv h226 (by norm_num)
+  let v228 : ℝ := v41/v226
+  have h228 : Bounds v228 (15246875114828028208548587/2500000000000000000000000000000000) (3811718778707007052137147/625000000000000000000000000000000) := bounds_div h41 h227 (by norm_num)
+  let v229 : ℝ := v225*v228
+  have h229 : Bounds v229 (7672993971103073255458217/100000000000000000000000000000000000000000000) (383702195694028995634945349/5000000000000000000000000000000000000000000000) := Bounds.mul h225 h228 (by norm_num)
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v231 : ℝ := v230+v22
+  have h231 : Bounds v231 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v232 : ℝ := v1*v0
+  have h232 : Bounds v232 6084685255910702090 6084685255910702090 := Bounds.mul h1 h0 (by norm_num)
+  let v233 : ℝ := v0+v2
+  have h233 : Bounds v233 25612 25612 := Bounds.add h0 h2 (by norm_num)
+  let v234 : ℝ := v232*v233
+  have h234 : Bounds v234 155840958774384901929080 155840958774384901929080 := Bounds.mul h232 h233 (by norm_num)
+  let v235 : ℝ := v231*v234
+  have h235 : Bounds v235 (3899919993328982170775227/25) (3899919993328982170775227/25) := Bounds.mul h231 h234 (by norm_num)
+  let v236 : ℝ := v229*v235
+  have h236 : Bounds v236 (119696250386390471462655261/10000000000000000000000) (59856314578854934882763029/5000000000000000000000) := Bounds.mul h229 h235 (by norm_num)
+  let v237 : ℝ := v230+v22
+  have h237 : Bounds v237 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v238 : ℝ := v237*(covarianceMeanBound 25610 (mW 12805))
+  have h238 : Bounds v238 (3327194928788995422945789/500000000000000) (99822183710178887197770893/10000000000000000) := Bounds.mul h237 covmean (by norm_num)
+  let v239 : ℝ := v236+v238
+  have h239 : Bounds v239 (332720091360151474246936213/50000000000000000) (99822303422808044907640659/10000000000000000) := Bounds.add h236 h238 (by norm_num)
+  let v240 : ℝ := Real.sqrt v239
+  have h240 : Bounds v240 (81574517020960838079490973/1000000000000000000000) (199822224412409186760364869/2000000000000000000000) := Bounds.sqrt h239 (by norm_num)
+  let v241 : ℝ := v219+v240
+  have h241 : Bounds v241 (290674450406653110924984447/10000000000000000000) (29085781635850554847799137/1000000000000000000) := Bounds.add h219 h240 (by norm_num)
+  convert h241 using 1 <;>
+    simp only [v0, v1, v2, v22, v41, v208, v209, v210, v211, v212, v213, v214, v215, v216, v218, v219, v220, v222, v223, v224, v225, v226, v228, v229, v230, v231, v232, v233, v234, v235, v236, v237, v238, v239, v240, v241, e1FrobBound, rowEps, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem energy : Bounds (e1EnergyLower 25610 (mW 12805) (1/10^6)) (46386171718734843114213197/5000000000000000) (927723434374696862284263973/100000000000000000) := by
+  let v0 : ℝ := 25610
+  have h0 : Bounds v0 25610 25610 := Bounds.point _
+  let v1 : ℝ := 237590209133569
+  have h1 : Bounds v1 237590209133569 237590209133569 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v242 : ℝ := (1/1000000)
+  have h242 : Bounds v242 (1/1000000) (1/1000000) := Bounds.point _
+  let v243 : ℝ := -v242
+  have h243 : Bounds v243 (-1/1000000) (-1/1000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h242
+  let v244 : ℝ := v22+v243
+  have h244 : Bounds v244 (999999/1000000) (999999/1000000) := Bounds.add h22 h243 (by norm_num)
+  let v245 : ℝ := v244*v1
+  have h245 : Bounds v245 (237589971543359866431/1000000) (237589971543359866431/1000000) := Bounds.mul h244 h1 (by norm_num)
+  let v246 : ℝ := 1/v0
+  have h246 : Bounds v246 (9761811792268645060523233/250000000000000000000000000000) (39047247169074580242092933/1000000000000000000000000000000) := Bounds.inv h0 (by norm_num)
+  let v247 : ℝ := v245/v0
+  have h247 : Bounds v247 (46386171718734843114213197/5000000000000000) (927723434374696862284263973/100000000000000000) := bounds_div h245 h246 (by norm_num)
+  convert h247 using 1 <;>
+    simp only [v0, v1, v22, v242, v243, v244, v245, v247, e1EnergyLower, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem direction : Bounds (directionMean 25610 (mW 12805)) (15721808334014691382998103/200000000000000000000) (78613544658230234858370381/1000000000000000000000) := by
+  let v0 : ℝ := 25610
+  have h0 : Bounds v0 25610 25610 := Bounds.point _
+  let v1 : ℝ := 237590209133569
+  have h1 : Bounds v1 237590209133569 237590209133569 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v248 : ℝ := v1*v2
+  have h248 : Bounds v248 475180418267138 475180418267138 := Bounds.mul h1 h2 (by norm_num)
+  let v249 : ℝ := v248*(BstLean.Part137.cN 25610 ^ 2)
+  have h249 : Bounds v249 (29530383610968126220388199/10000000000000000) (3691442092022793317322763/1250000000000000) := Bounds.mul h248 cnsq_bounds (by norm_num)
+  let v250 : ℝ := v0+v2
+  have h250 : Bounds v250 25612 25612 := Bounds.add h0 h2 (by norm_num)
+  let v251 : ℝ := v249*v250
+  have h251 : Bounds v251 (15126643700882312975131651/200000000000) (15127234377742045190923297/200000000000) := Bounds.mul h249 h250 (by norm_num)
+  let v252 : ℝ := v0^2
+  have h252 : Bounds v252 655872100 655872100 := Bounds.pow h0 2 (by norm_num)
+  let v253 : ℝ := 1/v252
+  have h253 : Bounds v253 (15246875114828028208548587/10000000000000000000000000000000000) (3811718778707007052137147/2500000000000000000000000000000000) := Bounds.inv h252 (by norm_num)
+  let v254 : ℝ := v251/v252
+  have h254 : Bounds v254 (11531702370692634261414421/100000000000000000000) (57660763347541560278762039/500000000000000000000) := bounds_div h251 h253 (by norm_num)
+  let v255 : ℝ := v0*v2
+  have h255 : Bounds v255 51220 51220 := Bounds.mul h0 h2 (by norm_num)
+  let v256 : ℝ := v255*(BstLean.Part137.cN 25610 ^ 2)
+  have h256 : Bounds v256 (15915494309189533576851107/50000000000000000000000000) (6366446315878698190549483/20000000000000000000000000) := Bounds.mul h255 cnsq_bounds (by norm_num)
+  let v257 : ℝ := -v256
+  have h257 : Bounds v257 (-6366446315878698190549483/20000000000000000000000000) (-15915494309189533576851107/50000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h256
+  let v258 : ℝ := v22+v257
+  have h258 : Bounds v258 (13633553684121301809450517/20000000000000000000000000) (34084505690810466423148893/50000000000000000000000000) := Bounds.add h22 h257 (by norm_num)
+  let v259 : ℝ := v254*v258
+  have h259 : Bounds v259 (15721808334014691382998103/200000000000000000000) (78613544658230234858370381/1000000000000000000000) := Bounds.mul h254 h258 (by norm_num)
+  convert h259 using 1 <;>
+    simp only [v0, v1, v2, v22, v248, v249, v250, v251, v252, v254, v255, v256, v257, v258, v259, directionMean, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring <;> simp
+
+theorem inputvar : Bounds (e1InputVarianceBound 25610 (mW 12805) rowEps) (362335728049233431205711689/50000000000000000000) (144934291219693372482284687/20000000000000000000) := by
+  let v0 : ℝ := 25610
+  have h0 : Bounds v0 25610 25610 := Bounds.point _
+  let v1 : ℝ := 237590209133569
+  have h1 : Bounds v1 237590209133569 237590209133569 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v13 : ℝ := 3
+  have h13 : Bounds v13 3 3 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v260 : ℝ := v230+v22
+  have h260 : Bounds v260 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v261 : ℝ := v260+v13
+  have h261 : Bounds v261 (4001/1000) (4001/1000) := Bounds.add h260 h13 (by norm_num)
+  let v262 : ℝ := 5
+  have h262 : Bounds v262 5 5 := Bounds.point _
+  let v263 : ℝ := v1*v262
+  have h263 : Bounds v263 1187951045667845 1187951045667845 := Bounds.mul h1 h262 (by norm_num)
+  let v264 : ℝ := v0^2
+  have h264 : Bounds v264 655872100 655872100 := Bounds.pow h0 2 (by norm_num)
+  let v265 : ℝ := 1/v264
+  have h265 : Bounds v265 (15246875114828028208548587/10000000000000000000000000000000000) (3811718778707007052137147/2500000000000000000000000000000000) := Bounds.inv h264 (by norm_num)
+  let v266 : ℝ := v263/v264
+  have h266 : Bounds v266 (181125412358270004166970963/100000000000000000000) (5660169136195937630217843/3125000000000000000) := bounds_div h263 h265 (by norm_num)
+  let v267 : ℝ := v1*v2
+  have h267 : Bounds v267 475180418267138 475180418267138 := Bounds.mul h1 h2 (by norm_num)
+  let v268 : ℝ := v0^3
+  have h268 : Bounds v268 16796884481000 16796884481000 := Bounds.pow h0 3 (by norm_num)
+  let v269 : ℝ := 1/v268
+  have h269 : Bounds v269 (11906970023294047800506511/200000000000000000000000000000000000000) (14883712529117559750633139/250000000000000000000000000000000000000) := Bounds.inv h268 (by norm_num)
+  let v270 : ℝ := v267/v268
+  have h270 : Bounds v270 (70724487449539244110492373/2500000000000000000000000) (141448974899078488220984749/5000000000000000000000000) := bounds_div h267 h269 (by norm_num)
+  let v271 : ℝ := -v270
+  have h271 : Bounds v271 (-141448974899078488220984749/5000000000000000000000000) (-70724487449539244110492373/2500000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h270
+  let v272 : ℝ := v266+v271
+  have h272 : Bounds v272 (181122583378772022597206543/100000000000000000000) (181122583378772022597206557/100000000000000000000) := Bounds.add h266 h271 (by norm_num)
+  let v273 : ℝ := v261*v272
+  have h273 : Bounds v273 (362335728049233431205711689/50000000000000000000) (144934291219693372482284687/20000000000000000000) := Bounds.mul h261 h272 (by norm_num)
+  convert h273 using 1 <;>
+    simp only [v0, v1, v2, v13, v22, v230, v260, v261, v262, v263, v264, v266, v267, v268, v270, v271, v272, v273, e1InputVarianceBound, inputVarianceMean, rowEps, Matrix.cons_val_one, Matrix.cons_val_three, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem meanvalue : Bounds (meanMajorantValue 25610 (mW 12805) (1/10^6) (1/10^7) rowEps) (201729718538956455327114327/100000000000000000000000000000000) (20198363239967776018315953/10000000000000000000000000000000) := by
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v8 : ℝ := 6
+  have h8 : Bounds v8 6 6 := Bounds.point _
+  let v274 : ℝ := Real.sqrt (e1InputVarianceBound 25610 (mW 12805) rowEps)
+  have h274 : Bounds v274 (269197224372478785484061849/100000000000000000000000) (13459861218623939274203093/5000000000000000000000) := Bounds.sqrt inputvar (by norm_num)
+  let v275 : ℝ := 1/(e1EnergyLower 25610 (mW 12805) (1/10^6))
+  have h275 : Bounds v275 (21558148968696018974091/200000000000000000000000000000000) (107790744843480094870455009/1000000000000000000000000000000000000) := Bounds.inv energy (by norm_num)
+  let v276 : ℝ := v274/(e1EnergyLower 25610 (mW 12805) (1/10^6))
+  have h276 : Bounds v276 (290169693249069217641049937/1000000000000000000000000000000000) (14508484662453460882052499/50000000000000000000000000000000) := bounds_div h274 h275 (by norm_num)
+  let v277 : ℝ := (e1FrobBound 25610 (mW 12805) rowEps)^2
+  have h277 : Bounds v277 (422458180596049194415922217/500000000000) (422991346684190689184538081/500000000000) := Bounds.pow frob 2 (by norm_num)
+  let v278 : ℝ := (1/10000000)
+  have h278 : Bounds v278 (1/10000000) (1/10000000) := Bounds.point _
+  let v279 : ℝ := 1/v278
+  have h279 : Bounds v279 10000000 10000000 := Bounds.inv h278 (by norm_num)
+  let v280 : ℝ := (directionMean 25610 (mW 12805))/v278
+  have h280 : Bounds v280 (15721808334014691382998103/20000000000000) (78613544658230234858370381/100000000000000) := bounds_div direction h279 (by norm_num)
+  let v281 : ℝ := v280*v2
+  have h281 : Bounds v281 (15721808334014691382998103/10000000000000) (78613544658230234858370381/50000000000000) := Bounds.mul h280 h2 (by norm_num)
+  let v282 : ℝ := v277+v281
+  have h282 : Bounds v282 (211622135506374964492536061/250000000000) (84755496426154598306624357/100000000000) := Bounds.add h277 h281 (by norm_num)
+  let v283 : ℝ := (e1EnergyLower 25610 (mW 12805) (1/10^6))^2
+  have h283 : Bounds v283 (86067077068798247571516259/1000000) (860670770687982475715162653/10000000) := Bounds.pow energy 2 (by norm_num)
+  let v284 : ℝ := 1/v283
+  have h284 : Bounds v284 (11618844673912230662012527/1000000000000000000000000000000000000000000000) (11618844673912230662012529/1000000000000000000000000000000000000000000000) := Bounds.inv h283 (by norm_num)
+  let v285 : ℝ := v282/v283
+  have h285 : Bounds v285 (3934087555216283383206643/400000000000000000000000000000) (123095118529476681877926097/12500000000000000000000000000000) := bounds_div h282 h284 (by norm_num)
+  let v286 : ℝ := (10237/50000)
+  have h286 : Bounds v286 (10237/50000) (10237/50000) := Bounds.point _
+  let v287 : ℝ := Real.sqrt v285
+  have h287 : Bounds v287 (156805762713306462029869189/50000000000000000000000000000) (313809010105798819305964937/100000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v288 : ℝ := Real.sqrt v2
+  have h288 : Bounds v288 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v289 : ℝ := v288*v276
+  have h289 : Bounds v289 (205180957791237203664117497/500000000000000000000000000000000) (20518095779123720366411753/50000000000000000000000000000000) := Bounds.mul h288 h276 (by norm_num)
+  let v290 : ℝ := v287+v289
+  have h290 : Bounds v290 (392065702022713964375589/125000000000000000000000000) (31385004629735706674669777/10000000000000000000000000000) := Bounds.add h287 h289 (by norm_num)
+  let v291 : ℝ := v290^2
+  have h291 : Bounds v291 (49188964704820331768560803/5000000000000000000000000000000) (985018515608531742421735561/100000000000000000000000000000000) := Bounds.pow h290 2 (by norm_num)
+  let v292 : ℝ := v286*v291
+  have h292 : Bounds v292 (25177371584162286815737847/12500000000000000000000000000000) (10083634544284539447171307/5000000000000000000000000000000) := Bounds.mul h286 h291 (by norm_num)
+  let v293 : ℝ := v276^2
+  have h293 : Bounds v293 (21049612720064731474835691/250000000000000000000000000000000000000) (84198450880258925899342789/1000000000000000000000000000000000000000) := Bounds.pow h276 2 (by norm_num)
+  let v294 : ℝ := v293*v8
+  have h294 : Bounds v294 (63148838160194194424507073/125000000000000000000000000000000000000) (25259535264077677769802837/50000000000000000000000000000000000000) := Bounds.mul h293 h8 (by norm_num)
+  let v295 : ℝ := v292+v294
+  have h295 : Bounds v295 (40283804638473764536251663/20000000000000000000000000000000) (2520909267559516463734771/1250000000000000000000000000000) := Bounds.add h292 h294 (by norm_num)
+  let v296 : ℝ := Real.sqrt v2
+  have h296 : Bounds v296 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v297 : ℝ := v296+v2
+  have h297 : Bounds v297 (42677669529663688110021109/12500000000000000000000000) (341421356237309504880168873/100000000000000000000000000) := Bounds.add h296 h2 (by norm_num)
+  let v298 : ℝ := v297*v276
+  have h298 : Bounds v298 (49535065104030642130516743/50000000000000000000000000000000) (49535065104030642130516751/50000000000000000000000000000000) := Bounds.mul h297 h276 (by norm_num)
+  let v299 : ℝ := Real.sqrt v285
+  have h299 : Bounds v299 (156805762713306462029869189/50000000000000000000000000000) (313809010105798819305964937/100000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v300 : ℝ := v298*v299
+  have h300 : Bounds v300 (310695346587632645856012513/100000000000000000000000000000000000) (155445497458221542188923/50000000000000000000000000000000) := Bounds.mul h298 h299 (by norm_num)
+  let v301 : ℝ := v295+v300
+  have h301 : Bounds v301 (201729718538956455327114327/100000000000000000000000000000000) (20198363239967776018315953/10000000000000000000000000000000) := Bounds.add h295 h300 (by norm_num)
+  convert h301 using 1 <;>
+    simp only [v2, v8, v274, v276, v277, v278, v280, v281, v282, v283, v285, v286, v287, v288, v289, v290, v291, v292, v293, v294, v295, v296, v297, v298, v299, v300, v301, meanMajorantValue, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+end BstLean.Part268.WorldRow12805
+namespace BstLean.Part268.WorldRow12806
+open Real MeasureTheory Set BstLean.Part130 BstLean.Part140 BstLean.Part137 BstLean.Part159
+open BstLean.Part227 BstLean.Part228 BstLean.Part218 BstLean.Part205 BstLean.Part214
+open BstLean.Part157 BstLean.Part192
+open BstLean.Part250 (bounds_div pi_bounds rowEps meanMajorantValue endpointPolynomial mean_majorant)
+theorem covmean : Bounds (covarianceMeanBound 25612 (mW 12806)) (66492997110438655688534567/10000000000000000) (49872913085617646275690381/5000000000000000) := by
+  let v1 : ℝ := 237655156178553
+  have h1 : Bounds v1 237655156178553 237655156178553 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v203 : ℝ := v1*v41
+  have h203 : Bounds v203 950620624714212 950620624714212 := Bounds.mul h1 h41 (by norm_num)
+  let v204 : ℝ := -v22
+  have h204 : Bounds v204 (-1) (-1) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h22
+  let v205 : ℝ := v1+v204
+  have h205 : Bounds v205 237655156178552 237655156178552 := Bounds.add h1 h204 (by norm_num)
+  let v206 : ℝ := v203*v205
+  have h206 : Bounds v206 225919893033008722061043981000 225919893033008722061043982000 := Bounds.mul h203 h205 (by norm_num)
+  let v207 : ℝ := v206*(angularJ2 25612 (angularOffset 25612))
+  have h207 : Bounds v207 (66492997110438655688534567/10000000000000000) (49872913085617646275690381/5000000000000000) := Bounds.mul h206 jsecond (by norm_num)
+  convert h207 using 1 <;>
+    simp only [v1, v22, v41, v203, v204, v205, v206, v207, covarianceMeanBound, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem frob : Bounds (e1FrobBound 25612 (mW 12806) rowEps) (290719820473135702727898363/10000000000000000000) (1818145049393741515684199/62500000000000000) := by
+  let v0 : ℝ := 25612
+  have h0 : Bounds v0 25612 25612 := Bounds.point _
+  let v1 : ℝ := 237655156178553
+  have h1 : Bounds v1 237655156178553 237655156178553 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v208 : ℝ := (1/100000)
+  have h208 : Bounds v208 (1/100000) (1/100000) := Bounds.point _
+  let v209 : ℝ := v208+v22
+  have h209 : Bounds v209 (100001/100000) (100001/100000) := Bounds.add h208 h22 (by norm_num)
+  let v210 : ℝ := v1*v0
+  have h210 : Bounds v210 6086823860045099436 6086823860045099436 := Bounds.mul h1 h0 (by norm_num)
+  let v211 : ℝ := v1+v0
+  have h211 : Bounds v211 237655156204165 237655156204165 := Bounds.add h1 h0 (by norm_num)
+  let v212 : ℝ := v211+v22
+  have h212 : Bounds v212 237655156204166 237655156204166 := Bounds.add h211 h22 (by norm_num)
+  let v213 : ℝ := v210*v212
+  have h213 : Bounds v213 1446565075246262753708059780000000 1446565075246262753708059790000000 := Bounds.mul h210 h212 (by norm_num)
+  let v214 : ℝ := v209*v213
+  have h214 : Bounds v214 1446579540897015216335596860000000 1446579540897015216335596880000000 := Bounds.mul h209 h213 (by norm_num)
+  let v215 : ℝ := v0^4
+  have h215 : Bounds v215 430302602376007936 430302602376007936 := Bounds.pow h0 4 (by norm_num)
+  let v216 : ℝ := v215*v41
+  have h216 : Bounds v216 1721210409504031744 1721210409504031744 := Bounds.mul h215 h41 (by norm_num)
+  let v217 : ℝ := 1/v216
+  have h217 : Bounds v217 (58098649327141291100335513/100000000000000000000000000000000000000000000) (29049324663570645550167757/50000000000000000000000000000000000000000000) := Bounds.inv h216 (by norm_num)
+  let v218 : ℝ := v214/v216
+  have h218 : Bounds v218 (10505539683799091361240133/12500000000) (21011079367598182722480267/25000000000) := bounds_div h214 h217 (by norm_num)
+  let v219 : ℝ := Real.sqrt v218
+  have h219 : Bounds v219 (289903979742246261716524337/10000000000000000000) (57980795948449252343304869/2000000000000000000) := Bounds.sqrt h218 (by norm_num)
+  let v220 : ℝ := v0*v41
+  have h220 : Bounds v220 102448 102448 := Bounds.mul h0 h41 (by norm_num)
+  let v221 : ℝ := 1/v220
+  have h221 : Bounds v221 (97610495080431047946275183/10000000000000000000000000000000) (6100655942526940496642199/625000000000000000000000000000) := Bounds.inv h220 (by norm_num)
+  let v222 : ℝ := v22/v220
+  have h222 : Bounds v222 (97610495080431047946275183/10000000000000000000000000000000) (6100655942526940496642199/625000000000000000000000000000) := bounds_div h22 h221 (by norm_num)
+  let v223 : ℝ := -(BstLean.Part137.cN 25612 ^ 2)
+  have h223 : Bounds v223 (-25000000000000000000/4022966472554409731509953) (-12500000000000000000/2011561776093544610592341) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg cnsq_bounds
+  let v224 : ℝ := v222+v223
+  have h224 : Bounds v224 (8866824397582739948282739/2500000000000000000000000000000) (354697239216401156612091709/100000000000000000000000000000000) := Bounds.add h222 h223 (by norm_num)
+  let v225 : ℝ := v224^2
+  have h225 : Bounds v225 (31448229959027407676167761/2500000000000000000000000000000000000) (125810131507736906580260507/10000000000000000000000000000000000000) := Bounds.pow h224 2 (by norm_num)
+  let v226 : ℝ := v0^2
+  have h226 : Bounds v226 655974544 655974544 := Bounds.pow h0 2 (by norm_num)
+  let v227 : ℝ := 1/v226
+  have h227 : Bounds v227 (7622246999877483050622769/5000000000000000000000000000000000) (15244493999754966101245539/10000000000000000000000000000000000) := Bounds.inv h226 (by norm_num)
+  let v228 : ℝ := v41/v226
+  have h228 : Bounds v228 (7622246999877483050622769/1250000000000000000000000000000000) (15244493999754966101245539/2500000000000000000000000000000000) := bounds_div h41 h227 (by norm_num)
+  let v229 : ℝ := v225*v228
+  have h229 : Bounds v229 (38352988233064614380728481/500000000000000000000000000000000000000000000) (2397389743597598098643987/31250000000000000000000000000000000000000000) := Bounds.mul h225 h228 (by norm_num)
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v231 : ℝ := v230+v22
+  have h231 : Bounds v231 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v232 : ℝ := v1*v0
+  have h232 : Bounds v232 6086823860045099436 6086823860045099436 := Bounds.mul h1 h0 (by norm_num)
+  let v233 : ℝ := v0+v2
+  have h233 : Bounds v233 25614 25614 := Bounds.add h0 h2 (by norm_num)
+  let v234 : ℝ := v232*v233
+  have h234 : Bounds v234 155907906351195176953704 155907906351195176953704 := Bounds.mul h232 h233 (by norm_num)
+  let v235 : ℝ := v231*v234
+  have h235 : Bounds v235 (19507976782193296516332213/125) (19507976782193296516332213/125) := Bounds.mul h231 h234 (by norm_num)
+  let v236 : ℝ := v229*v235
+  have h236 : Bounds v236 (59855136318268576084913301/5000000000000000000000) (3741457876477622715603379/312500000000000000000) := Bounds.mul h229 h235 (by norm_num)
+  let v237 : ℝ := v230+v22
+  have h237 : Bounds v237 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v238 : ℝ := v237*(covarianceMeanBound 25612 (mW 12806))
+  have h238 : Bounds v238 (133118980215098188688446203/20000000000000000) (99845571997406527843932143/10000000000000000) := Bounds.mul h237 covmean (by norm_num)
+  let v239 : ℝ := v236+v238
+  have h239 : Bounds v239 (66559609817821730881375271/10000000000000000) (99845691724058575127859043/10000000000000000) := Bounds.add h236 h238 (by norm_num)
+  let v240 : ℝ := Real.sqrt v239
+  have h240 : Bounds v240 (815840730889441011374026029/10000000000000000000000) (499614080376190396473742687/5000000000000000000000) := Bounds.sqrt h239 (by norm_num)
+  let v241 : ℝ := v219+v240
+  have h241 : Bounds v241 (290719820473135702727898363/10000000000000000000) (1818145049393741515684199/62500000000000000) := Bounds.add h219 h240 (by norm_num)
+  convert h241 using 1 <;>
+    simp only [v0, v1, v2, v22, v41, v208, v209, v210, v211, v212, v213, v214, v215, v216, v218, v219, v220, v222, v223, v224, v225, v226, v228, v229, v230, v231, v232, v233, v234, v235, v236, v237, v238, v239, v240, v241, e1FrobBound, rowEps, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem energy : Bounds (e1EnergyLower 25612 (mW 12806) (1/10^6)) (11598807127684133484645869/1250000000000000) (18558091404294613575433391/2000000000000000) := by
+  let v0 : ℝ := 25612
+  have h0 : Bounds v0 25612 25612 := Bounds.point _
+  let v1 : ℝ := 237655156178553
+  have h1 : Bounds v1 237655156178553 237655156178553 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v242 : ℝ := (1/1000000)
+  have h242 : Bounds v242 (1/1000000) (1/1000000) := Bounds.point _
+  let v243 : ℝ := -v242
+  have h243 : Bounds v243 (-1/1000000) (-1/1000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h242
+  let v244 : ℝ := v22+v243
+  have h244 : Bounds v244 (999999/1000000) (999999/1000000) := Bounds.add h22 h243 (by norm_num)
+  let v245 : ℝ := v244*v1
+  have h245 : Bounds v245 (237654918523396821447/1000000) (237654918523396821447/1000000) := Bounds.mul h244 h1 (by norm_num)
+  let v246 : ℝ := 1/v0
+  have h246 : Bounds v246 (39044198032172419178510073/1000000000000000000000000000000) (19522099016086209589255037/500000000000000000000000000000) := Bounds.inv h0 (by norm_num)
+  let v247 : ℝ := v245/v0
+  have h247 : Bounds v247 (11598807127684133484645869/1250000000000000) (18558091404294613575433391/2000000000000000) := bounds_div h245 h246 (by norm_num)
+  convert h247 using 1 <;>
+    simp only [v0, v1, v22, v242, v243, v244, v245, v247, e1EnergyLower, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem direction : Bounds (directionMean 25612 (mW 12806)) (39309124941219448867505059/500000000000000000000) (19655688261595085966101313/250000000000000000000) := by
+  let v0 : ℝ := 25612
+  have h0 : Bounds v0 25612 25612 := Bounds.point _
+  let v1 : ℝ := 237655156178553
+  have h1 : Bounds v1 237655156178553 237655156178553 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v248 : ℝ := v1*v2
+  have h248 : Bounds v248 475310312357106 475310312357106 := Bounds.mul h1 h2 (by norm_num)
+  let v249 : ℝ := v248*(BstLean.Part137.cN 25612 ^ 2)
+  have h249 : Bounds v249 (295361493495963617926167943/100000000000000000) (295373026098887984941981683/100000000000000000) := Bounds.mul h248 cnsq_bounds (by norm_num)
+  let v250 : ℝ := v0+v2
+  have h250 : Bounds v250 25614 25614 := Bounds.add h0 h2 (by norm_num)
+  let v251 : ℝ := v249*v250
+  have h251 : Bounds v251 (4728368309003507568475541/62500000000) (75656846904969168463039189/1000000000000) := Bounds.mul h249 h250 (by norm_num)
+  let v252 : ℝ := v0^2
+  have h252 : Bounds v252 655974544 655974544 := Bounds.pow h0 2 (by norm_num)
+  let v253 : ℝ := 1/v252
+  have h253 : Bounds v253 (7622246999877483050622769/5000000000000000000000000000000000) (15244493999754966101245539/10000000000000000000000000000000000) := Bounds.inv h252 (by norm_num)
+  let v254 : ℝ := v251/v252
+  have h254 : Bounds v254 (57665265852188405268062241/500000000000000000000) (115335034868318256665519617/1000000000000000000000) := bounds_div h251 h253 (by norm_num)
+  let v255 : ℝ := v0*v2
+  have h255 : Bounds v255 51224 51224 := Bounds.mul h0 h2 (by norm_num)
+  let v256 : ℝ := v255*(BstLean.Part137.cN 25612 ^ 2)
+  have h256 : Bounds v256 (15915494309189533576851107/50000000000000000000000000) (31832231482328869155566599/100000000000000000000000000) := Bounds.mul h255 cnsq_bounds (by norm_num)
+  let v257 : ℝ := -v256
+  have h257 : Bounds v257 (-31832231482328869155566599/100000000000000000000000000) (-15915494309189533576851107/50000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h256
+  let v258 : ℝ := v22+v257
+  have h258 : Bounds v258 (68167768517671130844433401/100000000000000000000000000) (34084505690810466423148893/50000000000000000000000000) := Bounds.add h22 h257 (by norm_num)
+  let v259 : ℝ := v254*v258
+  have h259 : Bounds v259 (39309124941219448867505059/500000000000000000000) (19655688261595085966101313/250000000000000000000) := Bounds.mul h254 h258 (by norm_num)
+  convert h259 using 1 <;>
+    simp only [v0, v1, v2, v22, v248, v249, v250, v251, v252, v254, v255, v256, v257, v258, v259, directionMean, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring <;> simp
+
+theorem inputvar : Bounds (e1InputVarianceBound 25612 (mW 12806) rowEps) (72475634791614614610586227/10000000000000000000) (724756347916146146105862327/100000000000000000000) := by
+  let v0 : ℝ := 25612
+  have h0 : Bounds v0 25612 25612 := Bounds.point _
+  let v1 : ℝ := 237655156178553
+  have h1 : Bounds v1 237655156178553 237655156178553 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v13 : ℝ := 3
+  have h13 : Bounds v13 3 3 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v260 : ℝ := v230+v22
+  have h260 : Bounds v260 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v261 : ℝ := v260+v13
+  have h261 : Bounds v261 (4001/1000) (4001/1000) := Bounds.add h260 h13 (by norm_num)
+  let v262 : ℝ := 5
+  have h262 : Bounds v262 5 5 := Bounds.point _
+  let v263 : ℝ := v1*v262
+  have h263 : Bounds v263 1188275780892765 1188275780892765 := Bounds.mul h1 h262 (by norm_num)
+  let v264 : ℝ := v0^2
+  have h264 : Bounds v264 655974544 655974544 := Bounds.pow h0 2 (by norm_num)
+  let v265 : ℝ := 1/v264
+  have h265 : Bounds v265 (7622246999877483050622769/5000000000000000000000000000000000) (15244493999754966101245539/10000000000000000000000000000000000) := Bounds.inv h264 (by norm_num)
+  let v266 : ℝ := v263/v264
+  have h266 : Bounds v266 (181146630118739028385223429/100000000000000000000) (90573315059369514192611721/50000000000000000000) := bounds_div h263 h265 (by norm_num)
+  let v267 : ℝ := v1*v2
+  have h267 : Bounds v267 475310312357106 475310312357106 := Bounds.mul h1 h2 (by norm_num)
+  let v268 : ℝ := v0^3
+  have h268 : Bounds v268 16800820020928 16800820020928 := Bounds.pow h0 3 (by norm_num)
+  let v269 : ℝ := 1/v268
+  have h269 : Bounds v269 (29760452131334854953235863/500000000000000000000000000000000000000) (59520904262669709906471727/1000000000000000000000000000000000000000) := Bounds.inv h268 (by norm_num)
+  let v270 : ℝ := v267/v268
+  have h270 : Bounds v270 (282908995968669418062194963/10000000000000000000000000) (28290899596866941806219497/1000000000000000000000000) := bounds_div h267 h269 (by norm_num)
+  let v271 : ℝ := -v270
+  have h271 : Bounds v271 (-28290899596866941806219497/1000000000000000000000000) (-282908995968669418062194963/10000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h270
+  let v272 : ℝ := v266+v271
+  have h272 : Bounds v272 (181143801028779341691042807/100000000000000000000) (181143801028779341691042821/100000000000000000000) := Bounds.add h266 h271 (by norm_num)
+  let v273 : ℝ := v261*v272
+  have h273 : Bounds v273 (72475634791614614610586227/10000000000000000000) (724756347916146146105862327/100000000000000000000) := Bounds.mul h261 h272 (by norm_num)
+  convert h273 using 1 <;>
+    simp only [v0, v1, v2, v13, v22, v230, v260, v261, v262, v263, v264, v266, v267, v268, v270, v271, v272, v273, e1InputVarianceBound, inputVarianceMean, rowEps, Matrix.cons_val_one, Matrix.cons_val_three, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem meanvalue : Bounds (meanMajorantValue 25612 (mW 12806) (1/10^6) (1/10^7) rowEps) (201713813158434555500454993/100000000000000000000000000000000) (807870788867437451960621/400000000000000000000000000000) := by
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v8 : ℝ := 6
+  have h8 : Bounds v8 6 6 := Bounds.point _
+  let v274 : ℝ := Real.sqrt (e1InputVarianceBound 25612 (mW 12806) rowEps)
+  have h274 : Bounds v274 (134606495749290099601846491/50000000000000000000000) (269212991498580199203692993/100000000000000000000000) := Bounds.sqrt inputvar (by norm_num)
+  let v275 : ℝ := 1/(e1EnergyLower 25612 (mW 12806) (1/10^6))
+  have h275 : Bounds v275 (21553940611987402650882181/200000000000000000000000000000000000) (10776970305993701325441091/100000000000000000000000000000000000) := Bounds.inv energy (by norm_num)
+  let v276 : ℝ := v274/(e1EnergyLower 25612 (mW 12806) (1/10^6))
+  have h276 : Bounds v276 (36266255192099169536966051/125000000000000000000000000000000) (145065020768396678147864217/500000000000000000000000000000000) := bounds_div h274 h275 (by norm_num)
+  let v277 : ℝ := (e1FrobBound 25612 (mW 12806) rowEps)^2
+  have h277 : Bounds v277 (845180140159322528891136353/1000000000000) (84624676368255251860710321/100000000000) := Bounds.pow frob 2 (by norm_num)
+  let v278 : ℝ := (1/10000000)
+  have h278 : Bounds v278 (1/10000000) (1/10000000) := Bounds.point _
+  let v279 : ℝ := 1/v278
+  have h279 : Bounds v279 10000000 10000000 := Bounds.inv h278 (by norm_num)
+  let v280 : ℝ := (directionMean 25612 (mW 12806))/v278
+  have h280 : Bounds v280 (39309124941219448867505059/50000000000000) (19655688261595085966101313/25000000000000) := bounds_div direction h279 (by norm_num)
+  let v281 : ℝ := v280*v2
+  have h281 : Bounds v281 (39309124941219448867505059/25000000000000) (19655688261595085966101313/12500000000000) := Bounds.mul h280 h2 (by norm_num)
+  let v282 : ℝ := v277+v281
+  have h282 : Bounds v282 (16935050103139426136916731/20000000000) (21195480468587003137109783/25000000000) := Bounds.add h277 h281 (by norm_num)
+  let v283 : ℝ := (e1EnergyLower 25612 (mW 12806) (1/10^6))^2
+  have h283 : Bounds v283 (86100689142538405634897753/1000000) (86100689142538405634897759/1000000) := Bounds.pow energy 2 (by norm_num)
+  let v284 : ℝ := 1/v283
+  have h284 : Bounds v284 (11614308897626997237862299/1000000000000000000000000000000000000000000000) (116143088976269972378623/10000000000000000000000000000000000000000000) := Bounds.inv h283 (by norm_num)
+  let v285 : ℝ := v282/v283
+  have h285 : Bounds v285 (19668890309465123425119439/2000000000000000000000000000000) (49234171479157853452573889/5000000000000000000000000000000) := bounds_div h282 h284 (by norm_num)
+  let v286 : ℝ := (10237/50000)
+  have h286 : Bounds v286 (10237/50000) (10237/50000) := Bounds.point _
+  let v287 : ℝ := Real.sqrt v285
+  have h287 : Bounds v287 (313599189328234101424700383/100000000000000000000000000000) (313796658615600473549631997/100000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v288 : ℝ := Real.sqrt v2
+  have h288 : Bounds v288 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v289 : ℝ := v288*v276
+  have h289 : Bounds v289 (410305839593202568470923089/1000000000000000000000000000000000) (41030583959320256847092313/100000000000000000000000000000000) := Bounds.mul h288 h276 (by norm_num)
+  let v290 : ℝ := v287+v289
+  have h290 : Bounds v290 (12545608796487736867261899/4000000000000000000000000000) (31383768919955979380647909/10000000000000000000000000000) := Bounds.add h287 h289 (by norm_num)
+  let v291 : ℝ := v290^2
+  have h291 : Bounds v291 (19674037509313810185043327/2000000000000000000000000000000) (98494095162119490050907933/10000000000000000000000000000000) := Bounds.pow h290 2 (by norm_num)
+  let v292 : ℝ := v286*v291
+  have h292 : Bounds v292 (100701560991422737432144269/50000000000000000000000000000000) (20165681043492344393022891/10000000000000000000000000000000) := Bounds.mul h286 h291 (by norm_num)
+  let v293 : ℝ := v276^2
+  have h293 : Bounds v293 (84175441002141438229361689/1000000000000000000000000000000000000000) (16835088200428287645872341/200000000000000000000000000000000000000) := Bounds.pow h276 2 (by norm_num)
+  let v294 : ℝ := v293*v8
+  have h294 : Bounds v294 (50505264601284862937617013/100000000000000000000000000000000000000) (50505264601284862937617023/100000000000000000000000000000000000000) := Bounds.mul h293 h8 (by norm_num)
+  let v295 : ℝ := v292+v294
+  have h295 : Bounds v295 (8056126899524403045966059/4000000000000000000000000000000) (25207107617523505651886481/12500000000000000000000000000000) := Bounds.add h292 h294 (by norm_num)
+  let v296 : ℝ := Real.sqrt v2
+  have h296 : Bounds v296 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v297 : ℝ := v296+v2
+  have h297 : Bounds v297 (42677669529663688110021109/12500000000000000000000000) (341421356237309504880168873/100000000000000000000000000) := Bounds.add h296 h2 (by norm_num)
+  let v298 : ℝ := v297*v276
+  have h298 : Bounds v298 (9905659226667892810623799/10000000000000000000000000000000) (49528296133339464053119/50000000000000000000000000000) := Bounds.mul h297 h276 (by norm_num)
+  let v299 : ℝ := Real.sqrt v285
+  have h299 : Bounds v299 (313599189328234101424700383/100000000000000000000000000000) (313796658615600473549631997/100000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v300 : ℝ := v298*v299
+  have h300 : Bounds v300 (19415041895279959456469889/6250000000000000000000000000000000) (31083627667131777506340117/10000000000000000000000000000000000) := Bounds.mul h298 h299 (by norm_num)
+  let v301 : ℝ := v295+v300
+  have h301 : Bounds v301 (201713813158434555500454993/100000000000000000000000000000000) (807870788867437451960621/400000000000000000000000000000) := Bounds.add h295 h300 (by norm_num)
+  convert h301 using 1 <;>
+    simp only [v2, v8, v274, v276, v277, v278, v280, v281, v282, v283, v285, v286, v287, v288, v289, v290, v291, v292, v293, v294, v295, v296, v297, v298, v299, v300, v301, meanMajorantValue, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+end BstLean.Part268.WorldRow12806
+namespace BstLean.Part268.WorldRow12807
+open Real MeasureTheory Set BstLean.Part130 BstLean.Part140 BstLean.Part137 BstLean.Part159
+open BstLean.Part227 BstLean.Part228 BstLean.Part218 BstLean.Part205 BstLean.Part214
+open BstLean.Part157 BstLean.Part192
+open BstLean.Part250 (bounds_div pi_bounds rowEps meanMajorantValue endpointPolynomial mean_majorant)
+theorem covmean : Bounds (covarianceMeanBound 25614 (mW 12807)) (13301715099814499091159623/2000000000000000) (19953838948569704911864573/2000000000000000) := by
+  let v1 : ℝ := 237720115903801
+  have h1 : Bounds v1 237720115903801 237720115903801 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v203 : ℝ := v1*v41
+  have h203 : Bounds v203 950880463615204 950880463615204 := Bounds.mul h1 h41 (by norm_num)
+  let v204 : ℝ := -v22
+  have h204 : Bounds v204 (-1) (-1) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h22
+  let v205 : ℝ := v1+v204
+  have h205 : Bounds v205 237720115903800 237720115903800 := Bounds.add h1 h204 (by norm_num)
+  let v206 : ℝ := v203*v205
+  have h206 : Bounds v206 226043414021265373643881375000 226043414021265373643881376000 := Bounds.mul h203 h205 (by norm_num)
+  let v207 : ℝ := v206*(angularJ2 25614 (angularOffset 25614))
+  have h207 : Bounds v207 (13301715099814499091159623/2000000000000000) (19953838948569704911864573/2000000000000000) := Bounds.mul h206 jsecond (by norm_num)
+  convert h207 using 1 <;>
+    simp only [v1, v22, v41, v203, v204, v205, v206, v207, covarianceMeanBound, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem frob : Bounds (e1FrobBound 25614 (mW 12807) rowEps) (29076519407890094521385211/1000000000000000000) (290948602987612908113994917/10000000000000000000) := by
+  let v0 : ℝ := 25614
+  have h0 : Bounds v0 25614 25614 := Bounds.point _
+  let v1 : ℝ := 237720115903801
+  have h1 : Bounds v1 237720115903801 237720115903801 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v208 : ℝ := (1/100000)
+  have h208 : Bounds v208 (1/100000) (1/100000) := Bounds.point _
+  let v209 : ℝ := v208+v22
+  have h209 : Bounds v209 (100001/100000) (100001/100000) := Bounds.add h208 h22 (by norm_num)
+  let v210 : ℝ := v1*v0
+  have h210 : Bounds v210 6088963048759958814 6088963048759958814 := Bounds.mul h1 h0 (by norm_num)
+  let v211 : ℝ := v1+v0
+  have h211 : Bounds v211 237720115929415 237720115929415 := Bounds.add h1 h0 (by norm_num)
+  let v212 : ℝ := v211+v22
+  have h212 : Bounds v212 237720115929416 237720115929416 := Bounds.add h211 h22 (by norm_num)
+  let v213 : ℝ := v210*v212
+  have h213 : Bounds v213 1447469001841147697585629490000000 1447469001841147697585629500000000 := Bounds.mul h210 h212 (by norm_num)
+  let v214 : ℝ := v209*v213
+  have h214 : Bounds v214 1447483476531166109062605340000000 1447483476531166109062605360000000 := Bounds.mul h209 h213 (by norm_num)
+  let v215 : ℝ := v0^4
+  have h215 : Bounds v215 430437024680384016 430437024680384016 := Bounds.pow h0 4 (by norm_num)
+  let v216 : ℝ := v215*v41
+  have h216 : Bounds v216 1721748098721536064 1721748098721536064 := Bounds.mul h215 h41 (by norm_num)
+  let v217 : ℝ := 1/v216
+  have h217 : Bounds v217 (5808050554796827232028039/10000000000000000000000000000000000000000000) (58080505547968272320280391/100000000000000000000000000000000000000000000) := Bounds.inv h216 (by norm_num)
+  let v218 : ℝ := v214/v216
+  have h218 : Bounds v218 (42035286044630397850088707/50000000000) (84070572089260795700177417/100000000000) := bounds_div h214 h217 (by norm_num)
+  let v219 : ℝ := Real.sqrt v218
+  have h219 : Bounds v219 (144974628891800233244042873/5000000000000000000) (36243657222950058311010719/1250000000000000000) := Bounds.sqrt h218 (by norm_num)
+  let v220 : ℝ := v0*v41
+  have h220 : Bounds v220 102456 102456 := Bounds.mul h0 h41 (by norm_num)
+  let v221 : ℝ := 1/v220
+  have h221 : Bounds v221 (97602873428593737799640821/10000000000000000000000000000000) (48801436714296868899820411/5000000000000000000000000000000) := Bounds.inv h220 (by norm_num)
+  let v222 : ℝ := v22/v220
+  have h222 : Bounds v222 (97602873428593737799640821/10000000000000000000000000000000) (48801436714296868899820411/5000000000000000000000000000000) := bounds_div h22 h221 (by norm_num)
+  let v223 : ℝ := -(BstLean.Part137.cN 25614 ^ 2)
+  have h223 : Bounds v223 (-25000000000000000000/4023280631819768710833799) (-25000000000000000000/4023437711452448200508529) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg cnsq_bounds
+  let v224 : ℝ := v222+v223
+  have h224 : Bounds v224 (17732264205825519239683433/5000000000000000000000000000000) (354669543640605388582372643/100000000000000000000000000000000) := Bounds.add h222 h223 (by norm_num)
+  let v225 : ℝ := v224^2
+  have h225 : Bounds v225 (31443319386520093255443619/2500000000000000000000000000000000000) (125790485186235290234070311/10000000000000000000000000000000000000) := Bounds.pow h224 2 (by norm_num)
+  let v226 : ℝ := v0^2
+  have h226 : Bounds v226 656076996 656076996 := Bounds.pow h0 2 (by norm_num)
+  let v227 : ℝ := 1/v226
+  have h227 : Bounds v227 (15242113442428943202879803/10000000000000000000000000000000000) (3810528360607235800719951/2500000000000000000000000000000000) := Bounds.inv h226 (by norm_num)
+  let v228 : ℝ := v41/v226
+  have h228 : Bounds v228 (15242113442428943202879803/2500000000000000000000000000000000) (3810528360607235800719951/625000000000000000000000000000000) := bounds_div h41 h227 (by norm_num)
+  let v229 : ℝ := v225*v228
+  have h229 : Bounds v229 (1917050564383458020554869/25000000000000000000000000000000000000000000) (76692513807471030570363309/1000000000000000000000000000000000000000000000) := Bounds.mul h225 h228 (by norm_num)
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v231 : ℝ := v230+v22
+  have h231 : Bounds v231 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v232 : ℝ := v1*v0
+  have h232 : Bounds v232 6088963048759958814 6088963048759958814 := Bounds.mul h1 h0 (by norm_num)
+  let v233 : ℝ := v0+v2
+  have h233 : Bounds v233 25616 25616 := Bounds.add h0 h2 (by norm_num)
+  let v234 : ℝ := v232*v233
+  have h234 : Bounds v234 155974877457035104979424 155974877457035104979424 := Bounds.mul h232 h233 (by norm_num)
+  let v235 : ℝ := v231*v234
+  have h235 : Bounds v235 (19516356541811517510550428/125) (19516356541811517510550428/125) := Bounds.mul h231 h234 (by norm_num)
+  let v236 : ℝ := v229*v235
+  have h236 : Bounds v236 (59862147717101700277220299/5000000000000000000000) (29935168871088147600456283/2500000000000000000000) := Bounds.mul h229 h235 (by norm_num)
+  let v237 : ℝ := v230+v22
+  have h237 : Bounds v237 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v238 : ℝ := v237*(covarianceMeanBound 25614 (mW 12807))
+  have h238 : Bounds v238 (66575084074571567951253913/10000000000000000) (24967240984397843270970547/2500000000000000) := Bounds.mul h237 covmean (by norm_num)
+  let v239 : ℝ := v236+v238
+  have h239 : Bounds v239 (66575203798867002154654467/10000000000000000) (9986908367826685743647259/1000000000000000) := Bounds.add h236 h238 (by norm_num)
+  let v240 : ℝ := Real.sqrt v239
+  have h240 : Bounds v240 (815936295300478725766364643/10000000000000000000000) (999345204012441625909164371/10000000000000000000000) := Bounds.sqrt h239 (by norm_num)
+  let v241 : ℝ := v219+v240
+  have h241 : Bounds v241 (29076519407890094521385211/1000000000000000000) (290948602987612908113994917/10000000000000000000) := Bounds.add h219 h240 (by norm_num)
+  convert h241 using 1 <;>
+    simp only [v0, v1, v2, v22, v41, v208, v209, v210, v211, v212, v213, v214, v215, v216, v218, v219, v220, v222, v223, v224, v225, v226, v228, v229, v230, v231, v232, v233, v234, v235, v236, v237, v238, v239, v240, v241, e1FrobBound, rowEps, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem energy : Bounds (e1EnergyLower 25614 (mW 12807) (1/10^6)) (92808572727291753025298663/10000000000000000) (928085727272917530252986659/100000000000000000) := by
+  let v0 : ℝ := 25614
+  have h0 : Bounds v0 25614 25614 := Bounds.point _
+  let v1 : ℝ := 237720115903801
+  have h1 : Bounds v1 237720115903801 237720115903801 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v242 : ℝ := (1/1000000)
+  have h242 : Bounds v242 (1/1000000) (1/1000000) := Bounds.point _
+  let v243 : ℝ := -v242
+  have h243 : Bounds v243 (-1/1000000) (-1/1000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h242
+  let v244 : ℝ := v22+v243
+  have h244 : Bounds v244 (999999/1000000) (999999/1000000) := Bounds.add h22 h243 (by norm_num)
+  let v245 : ℝ := v244*v1
+  have h245 : Bounds v245 (237719878183685096199/1000000) (237719878183685096199/1000000) := Bounds.mul h244 h1 (by norm_num)
+  let v246 : ℝ := 1/v0
+  have h246 : Bounds v246 (4880143671429686889982041/125000000000000000000000000000) (39041149371437495119856329/1000000000000000000000000000000) := Bounds.inv h0 (by norm_num)
+  let v247 : ℝ := v245/v0
+  have h247 : Bounds v247 (92808572727291753025298663/10000000000000000) (928085727272917530252986659/100000000000000000) := bounds_div h245 h246 (by norm_num)
+  convert h247 using 1 <;>
+    simp only [v0, v1, v22, v242, v243, v244, v245, v247, e1EnergyLower, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem direction : Bounds (directionMean 25614 (mW 12807)) (39313729227162119607583283/500000000000000000000) (2457248806063859121855169/31250000000000000000) := by
+  let v0 : ℝ := 25614
+  have h0 : Bounds v0 25614 25614 := Bounds.point _
+  let v1 : ℝ := 237720115903801
+  have h1 : Bounds v1 237720115903801 237720115903801 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v248 : ℝ := v1*v2
+  have h248 : Bounds v248 475440231807602 475440231807602 := Bounds.mul h1 h2 (by norm_num)
+  let v249 : ℝ := v248*(BstLean.Part137.cN 25614 ^ 2)
+  have h249 : Bounds v249 (29541915763620060520225003/10000000000000000) (590861383179919751819351/200000000000000) := Bounds.mul h248 cnsq_bounds (by norm_num)
+  let v250 : ℝ := v0+v2
+  have h250 : Bounds v250 25616 25616 := Bounds.add h0 h2 (by norm_num)
+  let v251 : ℝ := v249*v250
+  have h251 : Bounds v251 (75674571420089147028608367/1000000000000) (756775259576841218130224761/10000000000000) := Bounds.mul h249 h250 (by norm_num)
+  let v252 : ℝ := v0^2
+  have h252 : Bounds v252 656076996 656076996 := Bounds.pow h0 2 (by norm_num)
+  let v253 : ℝ := 1/v252
+  have h253 : Bounds v253 (15242113442428943202879803/10000000000000000000000000000000000) (3810528360607235800719951/2500000000000000000000000000000000) := Bounds.inv h252 (by norm_num)
+  let v254 : ℝ := v251/v252
+  have h254 : Bounds v254 (115344040229218990980455539/1000000000000000000000) (115348543568938243664654383/1000000000000000000000) := bounds_div h251 h253 (by norm_num)
+  let v255 : ℝ := v0*v2
+  have h255 : Bounds v255 51228 51228 := Bounds.mul h0 h2 (by norm_num)
+  let v256 : ℝ := v255*(BstLean.Part137.cN 25614 ^ 2)
+  have h256 : Bounds v256 (15915494309189533576851107/50000000000000000000000000) (15916115692639703003894971/50000000000000000000000000) := Bounds.mul h255 cnsq_bounds (by norm_num)
+  let v257 : ℝ := -v256
+  have h257 : Bounds v257 (-15916115692639703003894971/50000000000000000000000000) (-15915494309189533576851107/50000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h256
+  let v258 : ℝ := v22+v257
+  have h258 : Bounds v258 (34083884307360296996105029/50000000000000000000000000) (34084505690810466423148893/50000000000000000000000000) := Bounds.add h22 h257 (by norm_num)
+  let v259 : ℝ := v254*v258
+  have h259 : Bounds v259 (39313729227162119607583283/500000000000000000000) (2457248806063859121855169/31250000000000000000) := Bounds.mul h254 h258 (by norm_num)
+  convert h259 using 1 <;>
+    simp only [v0, v1, v2, v22, v248, v249, v250, v251, v252, v254, v255, v256, v257, v258, v259, directionMean, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring <;> simp
+
+theorem inputvar : Bounds (e1InputVarianceBound 25614 (mW 12807) rowEps) (72484124304845724723098749/10000000000000000000) (18121031076211431180774689/2500000000000000000) := by
+  let v0 : ℝ := 25614
+  have h0 : Bounds v0 25614 25614 := Bounds.point _
+  let v1 : ℝ := 237720115903801
+  have h1 : Bounds v1 237720115903801 237720115903801 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v13 : ℝ := 3
+  have h13 : Bounds v13 3 3 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v260 : ℝ := v230+v22
+  have h260 : Bounds v260 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v261 : ℝ := v260+v13
+  have h261 : Bounds v261 (4001/1000) (4001/1000) := Bounds.add h260 h13 (by norm_num)
+  let v262 : ℝ := 5
+  have h262 : Bounds v262 5 5 := Bounds.point _
+  let v263 : ℝ := v1*v262
+  have h263 : Bounds v263 1188600579519005 1188600579519005 := Bounds.mul h1 h262 (by norm_num)
+  let v264 : ℝ := v0^2
+  have h264 : Bounds v264 656076996 656076996 := Bounds.pow h0 2 (by norm_num)
+  let v265 : ℝ := 1/v264
+  have h265 : Bounds v265 (15242113442428943202879803/10000000000000000000000000000000000) (3810528360607235800719951/2500000000000000000000000000000000) := Bounds.inv h264 (by norm_num)
+  let v266 : ℝ := v263/v264
+  have h266 : Bounds v266 (181167848707654581444888819/100000000000000000000) (707686909014275708769097/390625000000000000) := bounds_div h263 h265 (by norm_num)
+  let v267 : ℝ := v1*v2
+  have h267 : Bounds v267 475440231807602 475440231807602 := Bounds.mul h1 h2 (by norm_num)
+  let v268 : ℝ := v0^3
+  have h268 : Bounds v268 16804756175544 16804756175544 := Bounds.pow h0 3 (by norm_num)
+  let v269 : ℝ := 1/v268
+  have h269 : Bounds v269 (59506962764226373088466477/1000000000000000000000000000000000000000) (29753481382113186544233239/500000000000000000000000000000000000000) := Bounds.inv h268 (by norm_num)
+  let v270 : ℝ := v267/v268
+  have h270 : Bounds v270 (3536500521348765937473429/125000000000000000000000) (282920041707901274997874331/10000000000000000000000000) := bounds_div h267 h269 (by norm_num)
+  let v271 : ℝ := -v270
+  have h271 : Bounds v271 (-282920041707901274997874331/10000000000000000000000000) (-3536500521348765937473429/125000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h270
+  let v272 : ℝ := v266+v271
+  have h272 : Bounds v272 (4529125487680937560803471/2500000000000000000) (90582509753618751216069427/50000000000000000000) := Bounds.add h266 h271 (by norm_num)
+  let v273 : ℝ := v261*v272
+  have h273 : Bounds v273 (72484124304845724723098749/10000000000000000000) (18121031076211431180774689/2500000000000000000) := Bounds.mul h261 h272 (by norm_num)
+  convert h273 using 1 <;>
+    simp only [v0, v1, v2, v13, v22, v230, v260, v261, v262, v263, v264, v266, v267, v268, v270, v271, v272, v273, e1InputVarianceBound, inputVarianceMean, rowEps, Matrix.cons_val_one, Matrix.cons_val_three, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem meanvalue : Bounds (meanMajorantValue 25614 (mW 12807) (1/10^6) (1/10^7) rowEps) (50424477573289575205216931/25000000000000000000000000000000) (25243970569389505206498183/12500000000000000000000000000000) := by
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v8 : ℝ := 6
+  have h8 : Bounds v8 6 6 := Bounds.point _
+  let v274 : ℝ := Real.sqrt (e1InputVarianceBound 25614 (mW 12807) rowEps)
+  have h274 : Bounds v274 (269228758316873951152517013/100000000000000000000000) (269228758316873951152517027/100000000000000000000000) := Bounds.sqrt inputvar (by norm_num)
+  let v275 : ℝ := 1/(e1EnergyLower 25614 (mW 12807) (1/10^6))
+  have h275 : Bounds v275 (5387433351326256303210519/50000000000000000000000000000000000) (10774866702652512606421039/100000000000000000000000000000000000) := Bounds.inv energy (by norm_num)
+  let v276 : ℝ := v274/(e1EnergyLower 25614 (mW 12807) (1/10^6))
+  have h276 : Bounds v276 (7252259958462414649543183/25000000000000000000000000000000) (58018079667699317196345473/200000000000000000000000000000000) := bounds_div h274 h275 (by norm_num)
+  let v277 : ℝ := (e1FrobBound 25614 (mW 12807) rowEps)^2
+  have h277 : Bounds v277 (211360995219352333225008799/250000000000) (423255447902217974206109059/500000000000) := Bounds.pow frob 2 (by norm_num)
+  let v278 : ℝ := (1/10000000)
+  have h278 : Bounds v278 (1/10000000) (1/10000000) := Bounds.point _
+  let v279 : ℝ := 1/v278
+  have h279 : Bounds v279 10000000 10000000 := Bounds.inv h278 (by norm_num)
+  let v280 : ℝ := (directionMean 25614 (mW 12807))/v278
+  have h280 : Bounds v280 (39313729227162119607583283/50000000000000) (2457248806063859121855169/3125000000000) := bounds_div direction h279 (by norm_num)
+  let v281 : ℝ := v280*v2
+  have h281 : Bounds v281 (39313729227162119607583283/25000000000000) (2457248806063859121855169/1562500000000) := Bounds.mul h280 h2 (by norm_num)
+  let v282 : ℝ := v277+v281
+  have h282 : Bounds v282 (21175413251162395442108463/25000000000) (84808353504031681825020543/100000000000) := Bounds.add h277 h281 (by norm_num)
+  let v283 : ℝ := (e1EnergyLower 25614 (mW 12807) (1/10^6))^2
+  have h283 : Bounds v283 (861343117167700258026259159/10000000) (861343117167700258026259213/10000000) := Bounds.pow energy 2 (by norm_num)
+  let v284 : ℝ := 1/v283
+  have h284 : Bounds v284 (725610952874561434472177/62500000000000000000000000000000000000000000) (5804887622996491475777417/500000000000000000000000000000000000000000000) := Bounds.inv h283 (by norm_num)
+  let v285 : ℝ := v282/v283
+  have h285 : Bounds v285 (1229208942935084852146121/125000000000000000000000000000) (19692118463290585530535581/2000000000000000000000000000000) := bounds_div h282 h284 (by norm_num)
+  let v286 : ℝ := (10237/50000)
+  have h286 : Bounds v286 (10237/50000) (10237/50000) := Bounds.point _
+  let v287 : ℝ := Real.sqrt v285
+  have h287 : Bounds v287 (156793427345350471622944601/50000000000000000000000000000) (313784308588643303517550289/100000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v288 : ℝ := Real.sqrt v2
+  have h288 : Bounds v288 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v289 : ℝ := v288*v276
+  have h289 : Bounds v289 (5128122195556442873888257/12500000000000000000000000000000) (410249775644515429911060631/1000000000000000000000000000000000) := Bounds.mul h288 h276 (by norm_num)
+  let v290 : ℝ := v287+v289
+  have h290 : Bounds v290 (78406969917066348697220077/25000000000000000000000000000) (78456333391551938765135349/25000000000000000000000000000) := Bounds.add h287 h289 (by norm_num)
+  let v291 : ℝ := v290^2
+  have h291 : Bounds v291 (19672489381042391640009401/2000000000000000000000000000000) (984863399879415638787049/100000000000000000000000000000) := Bounds.pow h290 2 (by norm_num)
+  let v292 : ℝ := v286*v291
+  have h292 : Bounds v292 (100693636896865481609388119/50000000000000000000000000000000) (10082046624565577894263021/5000000000000000000000000000000) := Bounds.mul h286 h291 (by norm_num)
+  let v293 : ℝ := v276^2
+  have h293 : Bounds v293 (10519054901023452851592617/125000000000000000000000000000000000000) (84152439208187622812740963/1000000000000000000000000000000000000000) := Bounds.pow h276 2 (by norm_num)
+  let v294 : ℝ := v293*v8
+  have h294 : Bounds v294 (50491463524912573687644561/100000000000000000000000000000000000000) (25245731762456286843822289/50000000000000000000000000000000000000) := Bounds.mul h293 h8 (by norm_num)
+  let v295 : ℝ := v292+v294
+  have h295 : Bounds v295 (8055492971407779525253997/4000000000000000000000000000000) (20164098298277508279783411/10000000000000000000000000000000) := Bounds.add h292 h294 (by norm_num)
+  let v296 : ℝ := Real.sqrt v2
+  have h296 : Bounds v296 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v297 : ℝ := v296+v2
+  have h297 : Bounds v297 (42677669529663688110021109/12500000000000000000000000) (341421356237309504880168873/100000000000000000000000000) := Bounds.add h296 h2 (by norm_num)
+  let v298 : ℝ := v297*v276
+  have h298 : Bounds v298 (154754776925235719042893/156250000000000000000000000000) (99043057232150860187451537/100000000000000000000000000000000) := Bounds.mul h297 h276 (by norm_num)
+  let v299 : ℝ := Real.sqrt v285
+  have h299 : Bounds v299 (156793427345350471622944601/50000000000000000000000000000) (313784308588643303517550289/100000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v300 : ℝ := v298*v299
+  have h300 : Bounds v300 (31058600796381268951779959/10000000000000000000000000000000000) (310781572340958854151353139/100000000000000000000000000000000000) := Bounds.mul h298 h299 (by norm_num)
+  let v301 : ℝ := v295+v300
+  have h301 : Bounds v301 (50424477573289575205216931/25000000000000000000000000000000) (25243970569389505206498183/12500000000000000000000000000000) := Bounds.add h295 h300 (by norm_num)
+  convert h301 using 1 <;>
+    simp only [v2, v8, v274, v276, v277, v278, v280, v281, v282, v283, v285, v286, v287, v288, v289, v290, v291, v292, v293, v294, v295, v296, v297, v298, v299, v300, v301, meanMajorantValue, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+end BstLean.Part268.WorldRow12807
+namespace BstLean.Part268.WorldRow12808
+open Real MeasureTheory Set BstLean.Part130 BstLean.Part140 BstLean.Part137 BstLean.Part159
+open BstLean.Part227 BstLean.Part228 BstLean.Part218 BstLean.Part205 BstLean.Part214
+open BstLean.Part157 BstLean.Part192
+open BstLean.Part250 (bounds_div pi_bounds rowEps meanMajorantValue endpointPolynomial mean_majorant)
+theorem covmean : Bounds (covarianceMeanBound 25616 (mW 12808)) (66524156320716611159930849/10000000000000000) (49896283482027183135914511/5000000000000000) := by
+  let v1 : ℝ := 237785088310798
+  have h1 : Bounds v1 237785088310798 237785088310798 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v203 : ℝ := v1*v41
+  have h203 : Bounds v203 951140353243192 951140353243192 := Bounds.mul h1 h41 (by norm_num)
+  let v204 : ℝ := -v22
+  have h204 : Bounds v204 (-1) (-1) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h22
+  let v205 : ℝ := v1+v204
+  have h205 : Bounds v205 237785088310797 237785088310797 := Bounds.add h1 h204 (by norm_num)
+  let v206 : ℝ := v203*v205
+  have h206 : Bounds v206 226166992891895063487820344000 226166992891895063487820345000 := Bounds.mul h203 h205 (by norm_num)
+  let v207 : ℝ := v206*(angularJ2 25616 (angularOffset 25616))
+  have h207 : Bounds v207 (66524156320716611159930849/10000000000000000) (49896283482027183135914511/5000000000000000) := Bounds.mul h206 jsecond (by norm_num)
+  convert h207 using 1 <;>
+    simp only [v1, v22, v41, v203, v204, v205, v206, v207, covarianceMeanBound, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem frob : Bounds (e1FrobBound 25616 (mW 12808) rowEps) (145405285611974162180187253/5000000000000000000) (7274850040308694957567463/250000000000000000) := by
+  let v0 : ℝ := 25616
+  have h0 : Bounds v0 25616 25616 := Bounds.point _
+  let v1 : ℝ := 237785088310798
+  have h1 : Bounds v1 237785088310798 237785088310798 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v208 : ℝ := (1/100000)
+  have h208 : Bounds v208 (1/100000) (1/100000) := Bounds.point _
+  let v209 : ℝ := v208+v22
+  have h209 : Bounds v209 (100001/100000) (100001/100000) := Bounds.add h208 h22 (by norm_num)
+  let v210 : ℝ := v1*v0
+  have h210 : Bounds v210 6091102822169401568 6091102822169401568 := Bounds.mul h1 h0 (by norm_num)
+  let v211 : ℝ := v1+v0
+  have h211 : Bounds v211 237785088336414 237785088336414 := Bounds.add h1 h0 (by norm_num)
+  let v212 : ℝ := v211+v22
+  have h212 : Bounds v212 237785088336415 237785088336415 := Bounds.add h211 h22 (by norm_num)
+  let v213 : ℝ := v210*v212
+  have h213 : Bounds v213 1448373422635737858674337210000000 1448373422635737858674337220000000 := Bounds.mul h210 h212 (by norm_num)
+  let v214 : ℝ := v209*v213
+  have h214 : Bounds v214 1448387906369964216052923950000000 1448387906369964216052923970000000 := Bounds.mul h209 h213 (by norm_num)
+  let v215 : ℝ := v0^4
+  have h215 : Bounds v215 430571478476455936 430571478476455936 := Bounds.pow h0 4 (by norm_num)
+  let v216 : ℝ := v215*v41
+  have h216 : Bounds v216 1722285913905823744 1722285913905823744 := Bounds.mul h215 h41 (by norm_num)
+  let v217 : ℝ := 1/v216
+  have h217 : Bounds v217 (11612473770190527902427441/20000000000000000000000000000000000000000000) (29031184425476319756068603/50000000000000000000000000000000000000000000) := Bounds.inv h216 (by norm_num)
+  let v218 : ℝ := v214/v216
+  have h218 : Bounds v218 (84096832858911918422275671/100000000000) (3363873314356476736891027/4000000000) := bounds_div h214 h217 (by norm_num)
+  let v219 : ℝ := Real.sqrt v218
+  have h219 : Bounds v219 (144997269680252874772506729/5000000000000000000) (144997269680252874772506733/5000000000000000000) := Bounds.sqrt h218 (by norm_num)
+  let v220 : ℝ := v0*v41
+  have h220 : Bounds v220 102464 102464 := Bounds.mul h0 h41 (by norm_num)
+  let v221 : ℝ := 1/v220
+  have h221 : Bounds v221 (97595252966895690193628981/10000000000000000000000000000000) (48797626483447845096814491/5000000000000000000000000000000) := Bounds.inv h220 (by norm_num)
+  let v222 : ℝ := v22/v220
+  have h222 : Bounds v222 (97595252966895690193628981/10000000000000000000000000000000) (48797626483447845096814491/5000000000000000000000000000000) := bounds_div h22 h221 (by norm_num)
+  let v223 : ℝ := -(BstLean.Part137.cN 25616 ^ 2)
+  have h223 : Bounds v223 (-5000000000000000000/804718958217025538031529) (-3125000000000000000/502968983839725897479047) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg cnsq_bounds
+  let v224 : ℝ := v222+v223
+  have h224 : Bounds v224 (17730879832677722947874869/5000000000000000000000000000000) (354641852389540381915556401/100000000000000000000000000000000) := Bounds.add h222 h223 (by norm_num)
+  let v225 : ℝ := v224^2
+  have h225 : Bounds v225 (31438409964085759652077551/2500000000000000000000000000000000000) (125770843466284549094382169/10000000000000000000000000000000000000) := Bounds.pow h224 2 (by norm_num)
+  let v226 : ℝ := v0^2
+  have h226 : Bounds v226 656179456 656179456 := Bounds.pow h0 2 (by norm_num)
+  let v227 : ℝ := 1/v226
+  have h227 : Bounds v227 (7619866721337889615367659/5000000000000000000000000000000000) (15239733442675779230735319/10000000000000000000000000000000000) := Bounds.inv h226 (by norm_num)
+  let v228 : ℝ := v41/v226
+  have h228 : Bounds v228 (7619866721337889615367659/1250000000000000000000000000000000) (15239733442675779230735319/2500000000000000000000000000000000) := bounds_div h41 h227 (by norm_num)
+  let v229 : ℝ := v225*v228
+  have h229 : Bounds v229 (15331615606855334234457983/200000000000000000000000000000000000000000000) (7666856517146708664672499/100000000000000000000000000000000000000000000) := Bounds.mul h225 h228 (by norm_num)
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v231 : ℝ := v230+v22
+  have h231 : Bounds v231 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v232 : ℝ := v1*v0
+  have h232 : Bounds v232 6091102822169401568 6091102822169401568 := Bounds.mul h1 h0 (by norm_num)
+  let v233 : ℝ := v0+v2
+  have h233 : Bounds v233 25618 25618 := Bounds.add h0 h2 (by norm_num)
+  let v234 : ℝ := v232*v233
+  have h234 : Bounds v234 156041872098335729369024 156041872098335729369024 := Bounds.mul h232 h233 (by norm_num)
+  let v235 : ℝ := v231*v234
+  have h235 : Bounds v235 (19524739246304258137299128/125) (19524739246304258137299128/125) := Bounds.mul h231 h234 (by norm_num)
+  let v236 : ℝ := v229*v235
+  have h236 : Bounds v236 (29934579694841921977829719/2500000000000000000000) (119754699468894334470164907/10000000000000000000000) := Bounds.mul h229 h235 (by norm_num)
+  let v237 : ℝ := v230+v22
+  have h237 : Bounds v237 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v238 : ℝ := v237*(covarianceMeanBound 25616 (mW 12808))
+  have h238 : Bounds v238 (332953402385186638855453899/50000000000000000) (24973089882754605159525213/2500000000000000) := Bounds.mul h237 covmean (by norm_num)
+  let v239 : ℝ := v236+v238
+  have h239 : Bounds v239 (66590800215356107138778691/10000000000000000) (499462396428589447662176611/50000000000000000) := Bounds.add h236 h238 (by norm_num)
+  let v240 : ℝ := Real.sqrt v239
+  have h240 : Bounds v240 (3264127453770299261444193/40000000000000000000) (49973112592102437884252497/500000000000000000000) := Bounds.sqrt h239 (by norm_num)
+  let v241 : ℝ := v219+v240
+  have h241 : Bounds v241 (145405285611974162180187253/5000000000000000000) (7274850040308694957567463/250000000000000000) := Bounds.add h219 h240 (by norm_num)
+  convert h241 using 1 <;>
+    simp only [v0, v1, v2, v22, v41, v208, v209, v210, v211, v212, v213, v214, v215, v216, v218, v219, v220, v222, v223, v224, v225, v226, v228, v229, v230, v231, v232, v233, v234, v235, v236, v237, v238, v239, v240, v241, e1FrobBound, rowEps, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem energy : Bounds (e1EnergyLower 25616 (mW 12808) (1/10^6)) (46413345277504233526311679/5000000000000000) (92826690555008467052623361/10000000000000000) := by
+  let v0 : ℝ := 25616
+  have h0 : Bounds v0 25616 25616 := Bounds.point _
+  let v1 : ℝ := 237785088310798
+  have h1 : Bounds v1 237785088310798 237785088310798 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v242 : ℝ := (1/1000000)
+  have h242 : Bounds v242 (1/1000000) (1/1000000) := Bounds.point _
+  let v243 : ℝ := -v242
+  have h243 : Bounds v243 (-1/1000000) (-1/1000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h242
+  let v244 : ℝ := v22+v243
+  have h244 : Bounds v244 (999999/1000000) (999999/1000000) := Bounds.add h22 h243 (by norm_num)
+  let v245 : ℝ := v244*v1
+  have h245 : Bounds v245 (118892425262854844601/500000) (118892425262854844601/500000) := Bounds.mul h244 h1 (by norm_num)
+  let v246 : ℝ := 1/v0
+  have h246 : Bounds v246 (4879762648344784509681449/125000000000000000000000000000) (39038101186758276077451593/1000000000000000000000000000000) := Bounds.inv h0 (by norm_num)
+  let v247 : ℝ := v245/v0
+  have h247 : Bounds v247 (46413345277504233526311679/5000000000000000) (92826690555008467052623361/10000000000000000) := bounds_div h245 h246 (by norm_num)
+  convert h247 using 1 <;>
+    simp only [v0, v1, v22, v242, v243, v244, v245, v247, e1EnergyLower, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem direction : Bounds (directionMean 25616 (mW 12808)) (1965916684642883649284813/25000000000000000000) (7864117090120554437693359/100000000000000000000) := by
+  let v0 : ℝ := 25616
+  have h0 : Bounds v0 25616 25616 := Bounds.point _
+  let v1 : ℝ := 237785088310798
+  have h1 : Bounds v1 237785088310798 237785088310798 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v248 : ℝ := v1*v2
+  have h248 : Bounds v248 475570176621596 475570176621596 := Bounds.mul h1 h2 (by norm_num)
+  let v249 : ℝ := v248*(BstLean.Part137.cN 25616 ^ 2)
+  have h249 : Bounds v249 (2954768285306555473577439/1000000000000000) (14774418191765122977044819/5000000000000000) := Bounds.mul h248 cnsq_bounds (by norm_num)
+  let v250 : ℝ := v0+v2
+  have h250 : Bounds v250 25618 25618 := Bounds.add h0 h2 (by norm_num)
+  let v251 : ℝ := v249*v250
+  have h251 : Bounds v251 (4730953370811458632631677/62500000000) (15139641809465556817037367/200000000000) := Bounds.mul h249 h250 (by norm_num)
+  let v252 : ℝ := v0^2
+  have h252 : Bounds v252 656179456 656179456 := Bounds.pow h0 2 (by norm_num)
+  let v253 : ℝ := 1/v252
+  have h253 : Bounds v253 (7619866721337889615367659/5000000000000000000000000000000000) (15239733442675779230735319/10000000000000000000000000000000000) := Bounds.inv h252 (by norm_num)
+  let v254 : ℝ := v251/v252
+  have h254 : Bounds v254 (1153575492814321485281411/10000000000000000000) (115362052796922346933682173/1000000000000000000000) := bounds_div h251 h253 (by norm_num)
+  let v255 : ℝ := v0*v2
+  have h255 : Bounds v255 51232 51232 := Bounds.mul h0 h2 (by norm_num)
+  let v256 : ℝ := v255*(BstLean.Part137.cN 25616 ^ 2)
+  have h256 : Bounds v256 (15915494309189533576851107/50000000000000000000000000) (15916115644122548979344747/50000000000000000000000000) := Bounds.mul h255 cnsq_bounds (by norm_num)
+  let v257 : ℝ := -v256
+  have h257 : Bounds v257 (-15916115644122548979344747/50000000000000000000000000) (-15915494309189533576851107/50000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h256
+  let v258 : ℝ := v22+v257
+  have h258 : Bounds v258 (34083884355877451020655253/50000000000000000000000000) (34084505690810466423148893/50000000000000000000000000) := Bounds.add h22 h257 (by norm_num)
+  let v259 : ℝ := v254*v258
+  have h259 : Bounds v259 (1965916684642883649284813/25000000000000000000) (7864117090120554437693359/100000000000000000000) := Bounds.mul h254 h258 (by norm_num)
+  convert h259 using 1 <;>
+    simp only [v0, v1, v2, v22, v248, v249, v250, v251, v252, v254, v255, v256, v257, v258, v259, directionMean, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring <;> simp
+
+theorem inputvar : Bounds (e1InputVarianceBound 25616 (mW 12808) rowEps) (724926141495269836695794751/100000000000000000000) (90615767686908729586974351/12500000000000000000) := by
+  let v0 : ℝ := 25616
+  have h0 : Bounds v0 25616 25616 := Bounds.point _
+  let v1 : ℝ := 237785088310798
+  have h1 : Bounds v1 237785088310798 237785088310798 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v13 : ℝ := 3
+  have h13 : Bounds v13 3 3 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v260 : ℝ := v230+v22
+  have h260 : Bounds v260 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v261 : ℝ := v260+v13
+  have h261 : Bounds v261 (4001/1000) (4001/1000) := Bounds.add h260 h13 (by norm_num)
+  let v262 : ℝ := 5
+  have h262 : Bounds v262 5 5 := Bounds.point _
+  let v263 : ℝ := v1*v262
+  have h263 : Bounds v263 1188925441553990 1188925441553990 := Bounds.mul h1 h262 (by norm_num)
+  let v264 : ℝ := v0^2
+  have h264 : Bounds v264 656179456 656179456 := Bounds.pow h0 2 (by norm_num)
+  let v265 : ℝ := 1/v264
+  have h265 : Bounds v265 (7619866721337889615367659/5000000000000000000000000000000000) (15239733442675779230735319/10000000000000000000000000000000000) := Bounds.inv h264 (by norm_num)
+  let v266 : ℝ := v263/v264
+  have h266 : Bounds v266 (45297267031246022429571459/25000000000000000000) (181189068124984089718285849/100000000000000000000) := bounds_div h263 h265 (by norm_num)
+  let v267 : ℝ := v1*v2
+  have h267 : Bounds v267 475570176621596 475570176621596 := Bounds.mul h1 h2 (by norm_num)
+  let v268 : ℝ := v0^3
+  have h268 : Bounds v268 16808692944896 16808692944896 := Bounds.pow h0 3 (by norm_num)
+  let v269 : ℝ := 1/v268
+  have h269 : Bounds v269 (29746512809720056274858133/500000000000000000000000000000000000000) (59493025619440112549716267/1000000000000000000000000000000000000000) := Bounds.inv h268 (by norm_num)
+  let v270 : ℝ := v267/v268
+  have h270 : Bounds v270 (56586217403180540199339739/2000000000000000000000000) (282931087015902700996698701/10000000000000000000000000) := bounds_div h267 h269 (by norm_num)
+  let v271 : ℝ := -v270
+  have h271 : Bounds v271 (-282931087015902700996698701/10000000000000000000000000) (-56586217403180540199339739/2000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h270
+  let v272 : ℝ := v266+v271
+  have h272 : Bounds v272 (181186238814113930691275869/100000000000000000000) (181186238814113930691275883/100000000000000000000) := Bounds.add h266 h271 (by norm_num)
+  let v273 : ℝ := v261*v272
+  have h273 : Bounds v273 (724926141495269836695794751/100000000000000000000) (90615767686908729586974351/12500000000000000000) := Bounds.mul h261 h272 (by norm_num)
+  convert h273 using 1 <;>
+    simp only [v0, v1, v2, v13, v22, v230, v260, v261, v262, v263, v264, v266, v267, v268, v270, v271, v272, v273, e1InputVarianceBound, inputVarianceMean, rowEps, Matrix.cons_val_one, Matrix.cons_val_three, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem meanvalue : Bounds (meanMajorantValue 25616 (mW 12808) (1/10^6) (1/10^7) rowEps) (201682009942528931907823491/100000000000000000000000000000000) (157762370635818312800669/78125000000000000000000000000) := by
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v8 : ℝ := 6
+  have h8 : Bounds v8 6 6 := Bounds.point _
+  let v274 : ℝ := Real.sqrt (e1InputVarianceBound 25616 (mW 12808) rowEps)
+  have h274 : Bounds v274 (6731113120684747843980543/2500000000000000000000) (67311131206847478439805433/25000000000000000000000) := Bounds.sqrt inputvar (by norm_num)
+  let v275 : ℝ := 1/(e1EnergyLower 25616 (mW 12808) (1/10^6))
+  have h275 : Bounds v275 (1077276367412244201861681/10000000000000000000000000000000000) (13465954592653052523271013/125000000000000000000000000000000000) := Bounds.inv energy (by norm_num)
+  let v276 : ℝ := v274/(e1EnergyLower 25616 (mW 12808) (1/10^6))
+  have h276 : Bounds v276 (72512690912921600657518149/250000000000000000000000000000000) (290050763651686402630072621/1000000000000000000000000000000000) := bounds_div h274 h275 (by norm_num)
+  let v277 : ℝ := (e1FrobBound 25616 (mW 12808) rowEps)^2
+  have h277 : Bounds v277 (84570788335599121213620291/100000000000) (84677508974367073038256329/100000000000) := Bounds.pow frob 2 (by norm_num)
+  let v278 : ℝ := (1/10000000)
+  have h278 : Bounds v278 (1/10000000) (1/10000000) := Bounds.point _
+  let v279 : ℝ := 1/v278
+  have h279 : Bounds v279 10000000 10000000 := Bounds.inv h278 (by norm_num)
+  let v280 : ℝ := (directionMean 25616 (mW 12808))/v278
+  have h280 : Bounds v280 (1965916684642883649284813/2500000000000) (7864117090120554437693359/10000000000000) := bounds_div direction h279 (by norm_num)
+  let v281 : ℝ := v280*v2
+  have h281 : Bounds v281 (1965916684642883649284813/1250000000000) (7864117090120554437693359/5000000000000) := Bounds.mul h280 h2 (by norm_num)
+  let v282 : ℝ := v277+v281
+  have h282 : Bounds v282 (21182015417592637976390769/25000000000) (84834791316169484127010197/100000000000) := Bounds.add h277 h281 (by norm_num)
+  let v283 : ℝ := (e1EnergyLower 25616 (mW 12808) (1/10^6))^2
+  have h283 : Bounds v283 (86167944793952981449725627/1000000) (430839723969764907248628167/5000000) := Bounds.pow energy 2 (by norm_num)
+  let v284 : ℝ := 1/v283
+  have h284 : Bounds v284 (116052437178492056136667797/10000000000000000000000000000000000000000000000) (11605243717849205613666781/1000000000000000000000000000000000000000000000) := Bounds.inv h283 (by norm_num)
+  let v285 : ℝ := v282/v283
+  have h285 : Bounds v285 (24582245135640197954236051/2500000000000000000000000000000) (98452842897702424719205733/10000000000000000000000000000000) := bounds_div h282 h284 (by norm_num)
+  let v286 : ℝ := (10237/50000)
+  have h286 : Bounds v286 (10237/50000) (10237/50000) := Bounds.point _
+  let v287 : ℝ := Real.sqrt v285
+  have h287 : Bounds v287 (313574521513723738659608961/100000000000000000000000000000) (156885980012318520047647621/50000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v288 : ℝ := Real.sqrt v2
+  have h288 : Bounds v288 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v289 : ℝ := v288*v276
+  have h289 : Bounds v289 (8203874474657761171800683/20000000000000000000000000000000) (25637107733305503661877137/62500000000000000000000000000000) := Bounds.mul h288 h276 (by norm_num)
+  let v290 : ℝ := v287+v289
+  have h290 : Bounds v290 (78403885221524256866366991/25000000000000000000000000000) (1255251917588041315604617/400000000000000000000000000) := Bounds.add h287 h289 (by norm_num)
+  let v291 : ℝ := v290^2
+  have h291 : Bounds v291 (3934188299411167852284923/400000000000000000000000000000) (3939143441521137166803969/400000000000000000000000000000) := Bounds.pow h290 2 (by norm_num)
+  let v292 : ℝ := v286*v291
+  have h292 : Bounds v292 (201371428105360626519203783/100000000000000000000000000000000) (100812528527129702941430577/50000000000000000000000000000000) := Bounds.mul h286 h291 (by norm_num)
+  let v293 : ℝ := v276^2
+  have h293 : Bounds v293 (84129445494926446063850693/1000000000000000000000000000000000000000) (210323613737316115159626771/2500000000000000000000000000000000000000) := Bounds.pow h276 2 (by norm_num)
+  let v294 : ℝ := v293*v8
+  have h294 : Bounds v294 (10095533459391173527662083/20000000000000000000000000000000000000) (504776672969558676383104251/1000000000000000000000000000000000000000) := Bounds.mul h293 h8 (by norm_num)
+  let v295 : ℝ := v292+v294
+  have h295 : Bounds v295 (201371478583027923475071421/100000000000000000000000000000000) (201625107531926702838728793/100000000000000000000000000000000) := Bounds.add h292 h294 (by norm_num)
+  let v296 : ℝ := Real.sqrt v2
+  have h296 : Bounds v296 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v297 : ℝ := v296+v2
+  have h297 : Bounds v297 (42677669529663688110021109/12500000000000000000000000) (341421356237309504880168873/100000000000000000000000000) := Bounds.add h296 h2 (by norm_num)
+  let v298 : ℝ := v297*v276
+  have h298 : Bounds v298 (49514762551813043192508967/50000000000000000000000000000000) (495147625518130431925089717/500000000000000000000000000000000) := Bounds.mul h297 h276 (by norm_num)
+  let v299 : ℝ := Real.sqrt v285
+  have h299 : Bounds v299 (313574521513723738659608961/100000000000000000000000000000) (156885980012318520047647621/50000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v300 : ℝ := v298*v299
+  have h300 : Bounds v300 (7763283987525210818801753/2500000000000000000000000000000000) (155363440960368773063762387/50000000000000000000000000000000000) := Bounds.mul h298 h299 (by norm_num)
+  let v301 : ℝ := v295+v300
+  have h301 : Bounds v301 (201682009942528931907823491/100000000000000000000000000000000) (157762370635818312800669/78125000000000000000000000000) := Bounds.add h295 h300 (by norm_num)
+  convert h301 using 1 <;>
+    simp only [v2, v8, v274, v276, v277, v278, v280, v281, v282, v283, v285, v286, v287, v288, v289, v290, v291, v292, v293, v294, v295, v296, v297, v298, v299, v300, v301, meanMajorantValue, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+end BstLean.Part268.WorldRow12808
+namespace BstLean.Part268.WorldRow12809
+open Real MeasureTheory Set BstLean.Part130 BstLean.Part140 BstLean.Part137 BstLean.Part159
+open BstLean.Part227 BstLean.Part228 BstLean.Part218 BstLean.Part205 BstLean.Part214
+open BstLean.Part157 BstLean.Part192
+open BstLean.Part250 (bounds_div pi_bounds rowEps meanMajorantValue endpointPolynomial mean_majorant)
+theorem covmean : Bounds (covarianceMeanBound 25618 (mW 12809)) (2661589583022453542966423/400000000000000) (99815942835138321382857121/10000000000000000) := by
+  let v1 : ℝ := 237850073401030
+  have h1 : Bounds v1 237850073401030 237850073401030 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v203 : ℝ := v1*v41
+  have h203 : Bounds v203 951400293604120 951400293604120 := Bounds.mul h1 h41 (by norm_num)
+  let v204 : ℝ := -v22
+  have h204 : Bounds v204 (-1) (-1) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h22
+  let v205 : ℝ := v1+v204
+  have h205 : Bounds v205 237850073401029 237850073401029 := Bounds.add h1 h204 (by norm_num)
+  let v206 : ℝ := v203*v205
+  have h206 : Bounds v206 226290629667500483444526639000 226290629667500483444526640000 := Bounds.mul h203 h205 (by norm_num)
+  let v207 : ℝ := v206*(angularJ2 25618 (angularOffset 25618))
+  have h207 : Bounds v207 (2661589583022453542966423/400000000000000) (99815942835138321382857121/10000000000000000) := Bounds.mul h206 jsecond (by norm_num)
+  convert h207 using 1 <;>
+    simp only [v1, v22, v41, v203, v204, v205, v206, v207, covarianceMeanBound, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem frob : Bounds (e1FrobBound 25618 (mW 12809) rowEps) (145427975954139239138414009/5000000000000000000) (145519701888601959474549521/5000000000000000000) := by
+  let v0 : ℝ := 25618
+  have h0 : Bounds v0 25618 25618 := Bounds.point _
+  let v1 : ℝ := 237850073401030
+  have h1 : Bounds v1 237850073401030 237850073401030 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v208 : ℝ := (1/100000)
+  have h208 : Bounds v208 (1/100000) (1/100000) := Bounds.point _
+  let v209 : ℝ := v208+v22
+  have h209 : Bounds v209 (100001/100000) (100001/100000) := Bounds.add h208 h22 (by norm_num)
+  let v210 : ℝ := v1*v0
+  have h210 : Bounds v210 6093243180387586540 6093243180387586540 := Bounds.mul h1 h0 (by norm_num)
+  let v211 : ℝ := v1+v0
+  have h211 : Bounds v211 237850073426648 237850073426648 := Bounds.add h1 h0 (by norm_num)
+  let v212 : ℝ := v211+v22
+  have h212 : Bounds v212 237850073426649 237850073426649 := Bounds.add h211 h22 (by norm_num)
+  let v213 : ℝ := v210*v212
+  have h213 : Bounds v213 1449278337861615736502000820000000 1449278337861615736502000830000000 := Bounds.mul h210 h212 (by norm_num)
+  let v214 : ℝ := v209*v213
+  have h214 : Bounds v214 1449292830644994352659365840000000 1449292830644994352659365860000000 := Bounds.mul h209 h213 (by norm_num)
+  let v215 : ℝ := v0^4
+  have h215 : Bounds v215 430705963769141776 430705963769141776 := Bounds.pow h0 4 (by norm_num)
+  let v216 : ℝ := v215*v41
+  have h216 : Bounds v216 1722823855076567104 1722823855076567104 := Bounds.mul h215 h41 (by norm_num)
+  let v217 : ℝ := 1/v216
+  have h217 : Bounds v217 (14511059808194338111551029/25000000000000000000000000000000000000000000) (58044239232777352446204117/100000000000000000000000000000000000000000000) := Bounds.inv h216 (by norm_num)
+  let v218 : ℝ := v214/v216
+  have h218 : Bounds v218 (4206154989015356219810859/5000000000) (84123099780307124396217183/100000000000) := bounds_div h214 h217 (by norm_num)
+  let v219 : ℝ := Real.sqrt v218
+  have h219 : Bounds v219 (290039824472962892455284489/10000000000000000000) (58007964894592578491056899/2000000000000000000) := Bounds.sqrt h218 (by norm_num)
+  let v220 : ℝ := v0*v41
+  have h220 : Bounds v220 102472 102472 := Bounds.mul h0 h41 (by norm_num)
+  let v221 : ℝ := 1/v220
+  have h221 : Bounds v221 (48793816847529081114841127/5000000000000000000000000000000) (19517526739011632445936451/2000000000000000000000000000000) := Bounds.inv h220 (by norm_num)
+  let v222 : ℝ := v22/v220
+  have h222 : Bounds v222 (48793816847529081114841127/5000000000000000000000000000000) (19517526739011632445936451/2000000000000000000000000000000) := bounds_div h22 h221 (by norm_num)
+  let v223 : ℝ := -(BstLean.Part137.cN 25618 ^ 2)
+  have h223 : Bounds v223 (-25000000000000000000/4023908950350486669481491) (-25000000000000000000/4024066029983166159156223) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg cnsq_bounds
+  let v224 : ℝ := v222+v223
+  have h224 : Bounds v224 (354589913513429200978878679/100000000000000000000000000000000) (8865354136554831000808897/2500000000000000000000000000000) := Bounds.add h222 h223 (by norm_num)
+  let v225 : ℝ := v224^2
+  have h225 : Bounds v225 (25146801353092240135425951/2000000000000000000000000000000000000) (62875603173223882489529749/5000000000000000000000000000000000000) := Bounds.pow h224 2 (by norm_num)
+  let v226 : ℝ := v0^2
+  have h226 : Bounds v226 656281924 656281924 := Bounds.pow h0 2 (by norm_num)
+  let v227 : ℝ := 1/v226
+  have h227 : Bounds v227 (15237354000321361890808377/10000000000000000000000000000000000) (7618677000160680945404189/5000000000000000000000000000000000) := Bounds.inv h226 (by norm_num)
+  let v228 : ℝ := v41/v226
+  have h228 : Bounds v228 (15237354000321361890808377/2500000000000000000000000000000000) (7618677000160680945404189/1250000000000000000000000000000000) := bounds_div h41 h227 (by norm_num)
+  let v229 : ℝ := v225*v228
+  have h229 : Bounds v229 (38317071419282668122710553/500000000000000000000000000000000000000000000) (15328925176546263063501289/200000000000000000000000000000000000000000000) := Bounds.mul h225 h228 (by norm_num)
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v231 : ℝ := v230+v22
+  have h231 : Bounds v231 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v232 : ℝ := v1*v0
+  have h232 : Bounds v232 6093243180387586540 6093243180387586540 := Bounds.mul h1 h0 (by norm_num)
+  let v233 : ℝ := v0+v2
+  have h233 : Bounds v233 25620 25620 := Bounds.add h0 h2 (by norm_num)
+  let v234 : ℝ := v232*v233
+  have h234 : Bounds v234 156108890281529967154800 156108890281529967154800 := Bounds.mul h232 h233 (by norm_num)
+  let v235 : ℝ := v231*v234
+  have h235 : Bounds v235 (781324995859057485609774/5) (781324995859057485609774/5) := Bounds.mul h231 h234 (by norm_num)
+  let v236 : ℝ := v229*v235
+  have h236 : Bounds v236 (119752342672008962415770341/10000000000000000000000) (119768724000888110246230231/10000000000000000000000) := Bounds.mul h229 h235 (by norm_num)
+  let v237 : ℝ := v230+v22
+  have h237 : Bounds v237 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v238 : ℝ := v237*(covarianceMeanBound 25618 (mW 12809))
+  have h238 : Bounds v238 (13321255863027379982546947/2000000000000000) (499578793889867298521199891/50000000000000000) := Bounds.mul h237 covmean (by norm_num)
+  let v239 : ℝ := v236+v238
+  have h239 : Bounds v239 (666063990674795719216971507/100000000000000000) (199831757093394921184700449/20000000000000000) := Bounds.add h236 h238 (by norm_num)
+  let v240 : ℝ := Real.sqrt v239
+  have h240 : Bounds v240 (816127435315585821543529593/10000000000000000000000) (19991586084820529876290921/200000000000000000000) := Bounds.sqrt h239 (by norm_num)
+  let v241 : ℝ := v219+v240
+  have h241 : Bounds v241 (145427975954139239138414009/5000000000000000000) (145519701888601959474549521/5000000000000000000) := Bounds.add h219 h240 (by norm_num)
+  convert h241 using 1 <;>
+    simp only [v0, v1, v2, v22, v41, v208, v209, v210, v211, v212, v213, v214, v215, v216, v218, v219, v220, v222, v223, v224, v225, v226, v228, v229, v230, v231, v232, v233, v234, v235, v236, v237, v238, v239, v240, v241, e1FrobBound, rowEps, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem energy : Bounds (e1EnergyLower 25618 (mW 12809) (1/10^6)) (928448105047062998555703/100000000000000) (92844810504706299855570303/10000000000000000) := by
+  let v0 : ℝ := 25618
+  have h0 : Bounds v0 25618 25618 := Bounds.point _
+  let v1 : ℝ := 237850073401030
+  have h1 : Bounds v1 237850073401030 237850073401030 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v242 : ℝ := (1/1000000)
+  have h242 : Bounds v242 (1/1000000) (1/1000000) := Bounds.point _
+  let v243 : ℝ := -v242
+  have h243 : Bounds v243 (-1/1000000) (-1/1000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h242
+  let v244 : ℝ := v22+v243
+  have h244 : Bounds v244 (999999/1000000) (999999/1000000) := Bounds.add h22 h243 (by norm_num)
+  let v245 : ℝ := v244*v1
+  have h245 : Bounds v245 (23784983555095659897/100000) (23784983555095659897/100000) := Bounds.mul h244 h1 (by norm_num)
+  let v246 : ℝ := 1/v0
+  have h246 : Bounds v246 (39035053478023264891872901/1000000000000000000000000000000) (19517526739011632445936451/500000000000000000000000000000) := Bounds.inv h0 (by norm_num)
+  let v247 : ℝ := v245/v0
+  have h247 : Bounds v247 (928448105047062998555703/100000000000000) (92844810504706299855570303/10000000000000000) := bounds_div h245 h246 (by norm_num)
+  convert h247 using 1 <;>
+    simp only [v0, v1, v22, v242, v243, v244, v245, v247, e1EnergyLower, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem direction : Bounds (directionMean 25618 (mW 12809)) (39322938338299197902246729/500000000000000000000) (15730076073570535982670177/200000000000000000000) := by
+  let v0 : ℝ := 25618
+  have h0 : Bounds v0 25618 25618 := Bounds.point _
+  let v1 : ℝ := 237850073401030
+  have h1 : Bounds v1 237850073401030 237850073401030 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v248 : ℝ := v1*v2
+  have h248 : Bounds v248 475700146802060 475700146802060 := Bounds.mul h1 h2 (by norm_num)
+  let v249 : ℝ := v248*(BstLean.Part137.cN 25618 ^ 2)
+  have h249 : Bounds v249 (29553450617959292801188739/10000000000000000) (7388651070879505435680047/2500000000000000) := Bounds.mul h248 cnsq_bounds (by norm_num)
+  let v250 : ℝ := v0+v2
+  have h250 : Bounds v250 25620 25620 := Bounds.add h0 h2 (by norm_num)
+  let v251 : ℝ := v249*v250
+  have h251 : Bounds v251 (75715940483211708156645549/1000000000000) (757188961743731717048491217/10000000000000) := Bounds.mul h249 h250 (by norm_num)
+  let v252 : ℝ := v0^2
+  have h252 : Bounds v252 656281924 656281924 := Bounds.pow h0 2 (by norm_num)
+  let v253 : ℝ := 1/v252
+  have h253 : Bounds v253 (15237354000321361890808377/10000000000000000000000000000000000) (7618677000160680945404189/5000000000000000000000000000000000) := Bounds.inv h252 (by norm_num)
+  let v254 : ℝ := v251/v252
+  have h254 : Bounds v254 (115371058860996007192551513/1000000000000000000000) (115375562552250291301408941/1000000000000000000000) := bounds_div h251 h253 (by norm_num)
+  let v255 : ℝ := v0*v2
+  have h255 : Bounds v255 51236 51236 := Bounds.mul h0 h2 (by norm_num)
+  let v256 : ℝ := v255*(BstLean.Part137.cN 25618 ^ 2)
+  have h256 : Bounds v256 (15915494309189533576851107/50000000000000000000000000) (7958057797806485364661543/25000000000000000000000000) := Bounds.mul h255 cnsq_bounds (by norm_num)
+  let v257 : ℝ := -v256
+  have h257 : Bounds v257 (-7958057797806485364661543/25000000000000000000000000) (-15915494309189533576851107/50000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h256
+  let v258 : ℝ := v22+v257
+  have h258 : Bounds v258 (17041942202193514635338457/25000000000000000000000000) (34084505690810466423148893/50000000000000000000000000) := Bounds.add h22 h257 (by norm_num)
+  let v259 : ℝ := v254*v258
+  have h259 : Bounds v259 (39322938338299197902246729/500000000000000000000) (15730076073570535982670177/200000000000000000000) := Bounds.mul h254 h258 (by norm_num)
+  convert h259 using 1 <;>
+    simp only [v0, v1, v2, v22, v248, v249, v250, v251, v252, v254, v255, v256, v257, v258, v259, directionMean, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring <;> simp
+
+theorem inputvar : Bounds (e1InputVarianceBound 25618 (mW 12809) rowEps) (72501104325645647256292521/10000000000000000000) (72501104325645647256292527/10000000000000000000) := by
+  let v0 : ℝ := 25618
+  have h0 : Bounds v0 25618 25618 := Bounds.point _
+  let v1 : ℝ := 237850073401030
+  have h1 : Bounds v1 237850073401030 237850073401030 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v13 : ℝ := 3
+  have h13 : Bounds v13 3 3 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v260 : ℝ := v230+v22
+  have h260 : Bounds v260 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v261 : ℝ := v260+v13
+  have h261 : Bounds v261 (4001/1000) (4001/1000) := Bounds.add h260 h13 (by norm_num)
+  let v262 : ℝ := 5
+  have h262 : Bounds v262 5 5 := Bounds.point _
+  let v263 : ℝ := v1*v262
+  have h263 : Bounds v263 1189250367005150 1189250367005150 := Bounds.mul h1 h262 (by norm_num)
+  let v264 : ℝ := v0^2
+  have h264 : Bounds v264 656281924 656281924 := Bounds.pow h0 2 (by norm_num)
+  let v265 : ℝ := 1/v264
+  have h265 : Bounds v265 (15237354000321361890808377/10000000000000000000000000000000000) (7618677000160680945404189/5000000000000000000000000000000000) := Bounds.inv h264 (by norm_num)
+  let v266 : ℝ := v263/v264
+  have h266 : Bounds v266 (2831410755792120331200833/1562500000000000000) (7248411534827828047874133/4000000000000000000) := bounds_div h263 h265 (by norm_num)
+  let v267 : ℝ := v1*v2
+  have h267 : Bounds v267 475700146802060 475700146802060 := Bounds.mul h1 h2 (by norm_num)
+  let v268 : ℝ := v0^3
+  have h268 : Bounds v268 16812630329032 16812630329032 := Bounds.pow h0 3 (by norm_num)
+  let v269 : ℝ := 1/v268
+  have h269 : Bounds v269 (29739546413305804299337141/500000000000000000000000000000000000000) (59479092826611608598674283/1000000000000000000000000000000000000000) := Bounds.inv h268 (by norm_num)
+  let v270 : ℝ := v267/v268
+  have h270 : Bounds v270 (282942131892724960881963181/10000000000000000000000000) (28294213189272496088196319/1000000000000000000000000) := bounds_div h267 h269 (by norm_num)
+  let v271 : ℝ := -v270
+  have h271 : Bounds v271 (-28294213189272496088196319/1000000000000000000000000) (-282942131892724960881963181/10000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h270
+  let v272 : ℝ := v266+v271
+  have h272 : Bounds v272 (45301864737344193486811123/25000000000000000000) (90603729474688386973622253/50000000000000000000) := Bounds.add h266 h271 (by norm_num)
+  let v273 : ℝ := v261*v272
+  have h273 : Bounds v273 (72501104325645647256292521/10000000000000000000) (72501104325645647256292527/10000000000000000000) := Bounds.mul h261 h272 (by norm_num)
+  convert h273 using 1 <;>
+    simp only [v0, v1, v2, v13, v22, v230, v260, v261, v262, v263, v264, v266, v267, v268, v270, v271, v272, v273, e1InputVarianceBound, inputVarianceMean, rowEps, Matrix.cons_val_one, Matrix.cons_val_three, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem meanvalue : Bounds (meanMajorantValue 25618 (mW 12809) (1/10^6) (1/10^7) rowEps) (8066644484237915119179673/4000000000000000000000000000000) (201919906792453392565276481/100000000000000000000000000000000) := by
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v8 : ℝ := 6
+  have h8 : Bounds v8 6 6 := Bounds.point _
+  let v274 : ℝ := Real.sqrt (e1InputVarianceBound 25618 (mW 12809) rowEps)
+  have h274 : Bounds v274 (269260291030158487527191647/100000000000000000000000) (269260291030158487527191659/100000000000000000000000) := Bounds.sqrt inputvar (by norm_num)
+  let v275 : ℝ := 1/(e1EnergyLower 25618 (mW 12809) (1/10^6))
+  have h275 : Bounds v275 (2692665305050383076216653/25000000000000000000000000000000000) (10770661220201532304866613/100000000000000000000000000000000000) := Bounds.inv energy (by norm_num)
+  let v276 : ℝ := v274/(e1EnergyLower 25618 (mW 12809) (1/10^6))
+  have h276 : Bounds v276 (145005568736935325956166967/500000000000000000000000000000000) (145005568736935325956166987/500000000000000000000000000000000) := bounds_div h274 h275 (by norm_num)
+  let v277 : ℝ := (e1FrobBound 25618 (mW 12809) rowEps)^2
+  have h277 : Bounds v277 (42298592380235401484524551/50000000000) (84703934550990338764458277/100000000000) := Bounds.pow frob 2 (by norm_num)
+  let v278 : ℝ := (1/10000000)
+  have h278 : Bounds v278 (1/10000000) (1/10000000) := Bounds.point _
+  let v279 : ℝ := 1/v278
+  have h279 : Bounds v279 10000000 10000000 := Bounds.inv h278 (by norm_num)
+  let v280 : ℝ := (directionMean 25618 (mW 12809))/v278
+  have h280 : Bounds v280 (39322938338299197902246729/50000000000000) (15730076073570535982670177/20000000000000) := bounds_div direction h279 (by norm_num)
+  let v281 : ℝ := v280*v2
+  have h281 : Bounds v281 (39322938338299197902246729/25000000000000) (15730076073570535982670177/10000000000000) := Bounds.mul h280 h2 (by norm_num)
+  let v282 : ℝ := v277+v281
+  have h282 : Bounds v282 (10594309564227999970082261/12500000000) (212153088279315110310712447/250000000000) := Bounds.add h277 h281 (by norm_num)
+  let v283 : ℝ := (e1EnergyLower 25618 (mW 12809) (1/10^6))^2
+  have h283 : Bounds v283 (8620158837654821286515353/100000) (862015883765482128651535357/10000000) := Bounds.pow energy 2 (by norm_num)
+  let v284 : ℝ := 1/v283
+  have h284 : Bounds v284 (11600714312035316076124869/1000000000000000000000000000000000000000000000) (11600714312035316076124871/1000000000000000000000000000000000000000000000) := Bounds.inv h283 (by norm_num)
+  let v285 : ℝ := v282/v283
+  have h285 : Bounds v285 (3072538964696809798178239/312500000000000000000000000000) (98445094701773706734205577/10000000000000000000000000000000) := bounds_div h282 h284 (by norm_num)
+  let v286 : ℝ := (10237/50000)
+  have h286 : Bounds v286 (10237/50000) (10237/50000) := Bounds.point _
+  let v287 : ℝ := Real.sqrt v285
+  have h287 : Bounds v287 (78390547449253214131341803/25000000000000000000000000000) (156879806461645747032714327/50000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v288 : ℝ := Real.sqrt v2
+  have h288 : Bounds v288 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v289 : ℝ := v288*v276
+  have h289 : Bounds v289 (41013768385479601605705091/100000000000000000000000000000000) (20506884192739800802852549/50000000000000000000000000000000) := Bounds.mul h288 h276 (by norm_num)
+  let v290 : ℝ := v287+v289
+  have h290 : Bounds v290 (313603203565398336126972917/100000000000000000000000000000) (7845015667291924341675859/2500000000000000000000000000) := Bounds.add h287 h289 (by norm_num)
+  let v291 : ℝ := v290^2
+  have h291 : Bounds v291 (491734846432403338401269607/50000000000000000000000000000000) (6154427082005575695713677/625000000000000000000000000000) := Bounds.pow h290 2 (by norm_num)
+  let v292 : ℝ := v286*v291
+  have h292 : Bounds v292 (100677792458570259504275939/50000000000000000000000000000000) (201609184123171450870466917/100000000000000000000000000000000) := Bounds.mul h286 h291 (by norm_num)
+  let v293 : ℝ := v276^2
+  have h293 : Bounds v293 (84106459858888302328607771/1000000000000000000000000000000000000000) (16821291971777660465721559/200000000000000000000000000000000000000) := Bounds.pow h276 2 (by norm_num)
+  let v294 : ℝ := v293*v8
+  have h294 : Bounds v294 (25231937957666490698582331/50000000000000000000000000000000000000) (50463875915332981397164677/100000000000000000000000000000000000000) := Bounds.mul h293 h8 (by norm_num)
+  let v295 : ℝ := v292+v294
+  have h295 : Bounds v295 (20135563538101643434153327/10000000000000000000000000000000) (40321846917409473240689663/20000000000000000000000000000000) := Bounds.add h292 h294 (by norm_num)
+  let v296 : ℝ := Real.sqrt v2
+  have h296 : Bounds v296 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v297 : ℝ := v296+v2
+  have h297 : Bounds v297 (42677669529663688110021109/12500000000000000000000000) (341421356237309504880168873/100000000000000000000000000) := Bounds.add h296 h2 (by norm_num)
+  let v298 : ℝ := v297*v276
+  have h298 : Bounds v298 (99015995880253731988171877/100000000000000000000000000000000) (24753998970063432997042973/25000000000000000000000000000000) := Bounds.mul h297 h276 (by norm_num)
+  let v299 : ℝ := Real.sqrt v285
+  have h299 : Bounds v299 (78390547449253214131341803/25000000000000000000000000000) (156879806461645747032714327/50000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v300 : ℝ := v298*v299
+  have h300 : Bounds v300 (38809590616430454744819393/12500000000000000000000000000000000) (310672205406026361828165981/100000000000000000000000000000000000) := Bounds.mul h298 h299 (by norm_num)
+  let v301 : ℝ := v295+v300
+  have h301 : Bounds v301 (8066644484237915119179673/4000000000000000000000000000000) (201919906792453392565276481/100000000000000000000000000000000) := Bounds.add h295 h300 (by norm_num)
+  convert h301 using 1 <;>
+    simp only [v2, v8, v274, v276, v277, v278, v280, v281, v282, v283, v285, v286, v287, v288, v289, v290, v291, v292, v293, v294, v295, v296, v297, v298, v299, v300, v301, meanMajorantValue, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+end BstLean.Part268.WorldRow12809
+namespace BstLean.Part268.WorldRow12810
+open Real MeasureTheory Set BstLean.Part130 BstLean.Part140 BstLean.Part137 BstLean.Part159
+open BstLean.Part227 BstLean.Part228 BstLean.Part218 BstLean.Part205 BstLean.Part214
+open BstLean.Part157 BstLean.Part192
+open BstLean.Part250 (bounds_div pi_bounds rowEps meanMajorantValue endpointPolynomial mean_majorant)
+theorem covmean : Bounds (covarianceMeanBound 25620 (mW 12810)) (66555325263796980972847253/10000000000000000) (99839322356385844835041359/10000000000000000) := by
+  let v1 : ℝ := 237915071175983
+  have h1 : Bounds v1 237915071175983 237915071175983 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v203 : ℝ := v1*v41
+  have h203 : Bounds v203 951660284703932 951660284703932 := Bounds.mul h1 h41 (by norm_num)
+  let v204 : ℝ := -v22
+  have h204 : Bounds v204 (-1) (-1) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h22
+  let v205 : ℝ := v1+v204
+  have h205 : Bounds v205 237915071175982 237915071175982 := Bounds.add h1 h204 (by norm_num)
+  let v206 : ℝ := v203*v205
+  have h206 : Bounds v206 226414324370691275981939361000 226414324370691275981939362000 := Bounds.mul h203 h205 (by norm_num)
+  let v207 : ℝ := v206*(angularJ2 25620 (angularOffset 25620))
+  have h207 : Bounds v207 (66555325263796980972847253/10000000000000000) (99839322356385844835041359/10000000000000000) := Bounds.mul h206 jsecond (by norm_num)
+  convert h207 using 1 <;>
+    simp only [v1, v22, v41, v203, v204, v205, v206, v207, covarianceMeanBound, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem frob : Bounds (e1FrobBound 25620 (mW 12810) rowEps) (72725334032972993455299297/2500000000000000000) (145542404741090902317070731/5000000000000000000) := by
+  let v0 : ℝ := 25620
+  have h0 : Bounds v0 25620 25620 := Bounds.point _
+  let v1 : ℝ := 237915071175983
+  have h1 : Bounds v1 237915071175983 237915071175983 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v208 : ℝ := (1/100000)
+  have h208 : Bounds v208 (1/100000) (1/100000) := Bounds.point _
+  let v209 : ℝ := v208+v22
+  have h209 : Bounds v209 (100001/100000) (100001/100000) := Bounds.add h208 h22 (by norm_num)
+  let v210 : ℝ := v1*v0
+  have h210 : Bounds v210 6095384123528684460 6095384123528684460 := Bounds.mul h1 h0 (by norm_num)
+  let v211 : ℝ := v1+v0
+  have h211 : Bounds v211 237915071201603 237915071201603 := Bounds.add h1 h0 (by norm_num)
+  let v212 : ℝ := v211+v22
+  have h212 : Bounds v212 237915071201604 237915071201604 := Bounds.add h211 h22 (by norm_num)
+  let v213 : ℝ := v210*v212
+  have h213 : Bounds v213 1450183747750453554677373560000000 1450183747750453554677373570000000 := Bounds.mul h210 h212 (by norm_num)
+  let v214 : ℝ := v209*v213
+  have h214 : Bounds v214 1450198249587931059212920330000000 1450198249587931059212920350000000 := Bounds.mul h209 h213 (by norm_num)
+  let v215 : ℝ := v0^4
+  have h215 : Bounds v215 430840480563360000 430840480563360000 := Bounds.pow h0 4 (by norm_num)
+  let v216 : ℝ := v215*v41
+  have h216 : Bounds v216 1723361922253440000 1723361922253440000 := Bounds.mul h215 h41 (by norm_num)
+  let v217 : ℝ := 1/v216
+  have h217 : Bounds v217 (58026116690127183270824389/100000000000000000000000000000000000000000000) (5802611669012718327082439/10000000000000000000000000000000000000000000) := Bounds.inv h216 (by norm_num)
+  let v218 : ℝ := v214/v216
+  have h218 : Bounds v218 (841493728544074730142906113/1000000000000) (42074686427203736507145307/50000000000) := bounds_div h214 h217 (by norm_num)
+  let v219 : ℝ := Real.sqrt v218
+  have h219 : Bounds v219 (11603404524838904228750011/400000000000000000) (290085113120972605718750281/10000000000000000000) := Bounds.sqrt h218 (by norm_num)
+  let v220 : ℝ := v0*v41
+  have h220 : Bounds v220 102480 102480 := Bounds.mul h0 h41 (by norm_num)
+  let v221 : ℝ := 1/v220
+  have h221 : Bounds v221 (97580015612802498048399687/10000000000000000000000000000000) (12197501951600312256049961/1250000000000000000000000000000) := Bounds.inv h220 (by norm_num)
+  let v222 : ℝ := v22/v220
+  have h222 : Bounds v222 (97580015612802498048399687/10000000000000000000000000000000) (12197501951600312256049961/1250000000000000000000000000000) := bounds_div h22 h221 (by norm_num)
+  let v223 : ℝ := -(BstLean.Part137.cN 25620 ^ 2)
+  have h223 : Bounds v223 (-25000000000000000000/4024223109615845648805337) (-2500000000000000000/402438018924852513848007) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg cnsq_bounds
+  let v224 : ℝ := v222+v223
+  have h224 : Bounds v224 (7091244693902446151776219/2000000000000000000000000000000) (35458648285755138263656881/10000000000000000000000000000000) := Bounds.add h222 h223 (by norm_num)
+  let v225 : ℝ := v224^2
+  have h225 : Bounds v225 (2514287565439979860940859/200000000000000000000000000000000000) (31432893456322145135517003/2500000000000000000000000000000000000) := Bounds.pow h224 2 (by norm_num)
+  let v226 : ℝ := v0^2
+  have h226 : Bounds v226 656384400 656384400 := Bounds.pow h0 2 (by norm_num)
+  let v227 : ℝ := 1/v226
+  have h227 : Bounds v227 (15234975115191646845964041/10000000000000000000000000000000000) (7617487557595823422982021/5000000000000000000000000000000000) := Bounds.inv h226 (by norm_num)
+  let v228 : ℝ := v41/v226
+  have h228 : Bounds v228 (15234975115191646845964041/2500000000000000000000000000000000) (7617487557595823422982021/1250000000000000000000000000000000) := bounds_div h41 h227 (by norm_num)
+  let v229 : ℝ := v225*v228
+  have h229 : Bounds v229 (76610216983827764978596653/1000000000000000000000000000000000000000000000) (38310347968443058836275821/500000000000000000000000000000000000000000000) := Bounds.mul h225 h228 (by norm_num)
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v231 : ℝ := v230+v22
+  have h231 : Bounds v231 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v232 : ℝ := v1*v0
+  have h232 : Bounds v232 6095384123528684460 6095384123528684460 := Bounds.mul h1 h0 (by norm_num)
+  let v233 : ℝ := v0+v2
+  have h233 : Bounds v233 25622 25622 := Bounds.add h0 h2 (by norm_num)
+  let v234 : ℝ := v232*v233
+  have h234 : Bounds v234 156175932013051953234120 156175932013051953234120 := Bounds.mul h232 h233 (by norm_num)
+  let v235 : ℝ := v231*v234
+  have h235 : Bounds v235 (3908302698626625129683853/25) (3908302698626625129683853/25) := Bounds.mul h231 h234 (by norm_num)
+  let v236 : ℝ := v229*v235
+  have h236 : Bounds v236 (187134948612665852116099/15625000000000000000) (119782749080312841978518959/10000000000000000000000) := Bounds.mul h229 h235 (by norm_num)
+  let v237 : ℝ := v230+v22
+  have h237 : Bounds v237 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v238 : ℝ := v237*(covarianceMeanBound 25620 (mW 12810))
+  have h238 : Bounds v238 (333109402945303889769100501/50000000000000000) (249847904196855576699691001/25000000000000000) := Bounds.mul h237 covmean (by norm_num)
+  let v239 : ℝ := v236+v238
+  have h239 : Bounds v239 (33311000177713945029982727/5000000000000000) (99939281461491310992718379/10000000000000000) := Bounds.add h236 h238 (by norm_num)
+  let v240 : ℝ := Real.sqrt v239
+  have h240 : Bounds v240 (20405575272984202561172847/250000000000000000000) (199939272241839783078236053/2000000000000000000000) := Bounds.sqrt h239 (by norm_num)
+  let v241 : ℝ := v219+v240
+  have h241 : Bounds v241 (72725334032972993455299297/2500000000000000000) (145542404741090902317070731/5000000000000000000) := Bounds.add h219 h240 (by norm_num)
+  convert h241 using 1 <;>
+    simp only [v0, v1, v2, v22, v41, v208, v209, v210, v211, v212, v213, v214, v215, v216, v218, v219, v220, v222, v223, v224, v225, v226, v228, v229, v230, v231, v232, v233, v234, v235, v236, v237, v238, v239, v240, v241, e1FrobBound, rowEps, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem energy : Bounds (e1EnergyLower 25620 (mW 12810) (1/10^6)) (92862932576468315385245901/10000000000000000) (5803933286029269711577869/625000000000000) := by
+  let v0 : ℝ := 25620
+  have h0 : Bounds v0 25620 25620 := Bounds.point _
+  let v1 : ℝ := 237915071175983
+  have h1 : Bounds v1 237915071175983 237915071175983 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v242 : ℝ := (1/1000000)
+  have h242 : Bounds v242 (1/1000000) (1/1000000) := Bounds.point _
+  let v243 : ℝ := -v242
+  have h243 : Bounds v243 (-1/1000000) (-1/1000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h242
+  let v244 : ℝ := v22+v243
+  have h244 : Bounds v244 (999999/1000000) (999999/1000000) := Bounds.add h22 h243 (by norm_num)
+  let v245 : ℝ := v244*v1
+  have h245 : Bounds v245 (237914833260911824017/1000000) (237914833260911824017/1000000) := Bounds.mul h244 h1 (by norm_num)
+  let v246 : ℝ := 1/v0
+  have h246 : Bounds v246 (312256049960967993754879/8000000000000000000000000000) (9758001561280249804839969/250000000000000000000000000000) := Bounds.inv h0 (by norm_num)
+  let v247 : ℝ := v245/v0
+  have h247 : Bounds v247 (92862932576468315385245901/10000000000000000) (5803933286029269711577869/625000000000000) := bounds_div h245 h246 (by norm_num)
+  convert h247 using 1 <;>
+    simp only [v0, v1, v22, v242, v243, v244, v245, v247, e1EnergyLower, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem direction : Bounds (directionMean 25620 (mW 12810)) (786550863269595488558590257/10000000000000000000000) (3146383607758842378567069/40000000000000000000) := by
+  let v0 : ℝ := 25620
+  have h0 : Bounds v0 25620 25620 := Bounds.point _
+  let v1 : ℝ := 237915071175983
+  have h1 : Bounds v1 237915071175983 237915071175983 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v248 : ℝ := v1*v2
+  have h248 : Bounds v248 475830142351966 475830142351966 := Bounds.mul h1 h2 (by norm_num)
+  let v249 : ℝ := v248*(BstLean.Part137.cN 25620 ^ 2)
+  have h249 : Bounds v249 (2955921905832771481973081/1000000000000000) (29560372858985754857094889/10000000000000000) := Bounds.mul h248 cnsq_bounds (by norm_num)
+  let v250 : ℝ := v0+v2
+  have h250 : Bounds v250 25622 25622 := Bounds.add h0 h2 (by norm_num)
+  let v251 : ℝ := v249*v250
+  have h251 : Bounds v251 (75736631071247270911114281/1000000000000) (3029583493571732043793941/40000000000) := Bounds.mul h249 h250 (by norm_num)
+  let v252 : ℝ := v0^2
+  have h252 : Bounds v252 656384400 656384400 := Bounds.pow h0 2 (by norm_num)
+  let v253 : ℝ := 1/v252
+  have h253 : Bounds v253 (15234975115191646845964041/10000000000000000000000000000000000) (7617487557595823422982021/5000000000000000000000000000000000) := Bounds.inv h252 (by norm_num)
+  let v254 : ℝ := v251/v252
+  have h254 : Bounds v254 (115384568967890265081123617/1000000000000000000000) (115389072834901775689441319/1000000000000000000000) := bounds_div h251 h253 (by norm_num)
+  let v255 : ℝ := v0*v2
+  have h255 : Bounds v255 51240 51240 := Bounds.mul h0 h2 (by norm_num)
+  let v256 : ℝ := v255*(BstLean.Part137.cN 25620 ^ 2)
+  have h256 : Bounds v256 (15915494309189533576851107/50000000000000000000000000) (31832231094221932959149327/100000000000000000000000000) := Bounds.mul h255 cnsq_bounds (by norm_num)
+  let v257 : ℝ := -v256
+  have h257 : Bounds v257 (-31832231094221932959149327/100000000000000000000000000) (-15915494309189533576851107/50000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h256
+  let v258 : ℝ := v22+v257
+  have h258 : Bounds v258 (68167768905778067040850673/100000000000000000000000000) (34084505690810466423148893/50000000000000000000000000) := Bounds.add h22 h257 (by norm_num)
+  let v259 : ℝ := v254*v258
+  have h259 : Bounds v259 (786550863269595488558590257/10000000000000000000000) (3146383607758842378567069/40000000000000000000) := Bounds.mul h254 h258 (by norm_num)
+  convert h259 using 1 <;>
+    simp only [v0, v1, v2, v22, v248, v249, v250, v251, v252, v254, v255, v256, v257, v258, v259, directionMean, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring <;> simp
+
+theorem inputvar : Bounds (e1InputVarianceBound 25620 (mW 12810) rowEps) (362547974165944775050819729/50000000000000000000) (145019189666377910020327903/20000000000000000000) := by
+  let v0 : ℝ := 25620
+  have h0 : Bounds v0 25620 25620 := Bounds.point _
+  let v1 : ℝ := 237915071175983
+  have h1 : Bounds v1 237915071175983 237915071175983 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v13 : ℝ := 3
+  have h13 : Bounds v13 3 3 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v260 : ℝ := v230+v22
+  have h260 : Bounds v260 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v261 : ℝ := v260+v13
+  have h261 : Bounds v261 (4001/1000) (4001/1000) := Bounds.add h260 h13 (by norm_num)
+  let v262 : ℝ := 5
+  have h262 : Bounds v262 5 5 := Bounds.point _
+  let v263 : ℝ := v1*v262
+  have h263 : Bounds v263 1189575355879915 1189575355879915 := Bounds.mul h1 h262 (by norm_num)
+  let v264 : ℝ := v0^2
+  have h264 : Bounds v264 656384400 656384400 := Bounds.pow h0 2 (by norm_num)
+  let v265 : ℝ := 1/v264
+  have h265 : Bounds v265 (15234975115191646845964041/10000000000000000000000000000000000) (7617487557595823422982021/5000000000000000000000000000000000) := Bounds.inv h264 (by norm_num)
+  let v266 : ℝ := v263/v264
+  have h266 : Bounds v266 (181231509444757523183061623/100000000000000000000) (45307877361189380795765409/25000000000000000000) := bounds_div h263 h265 (by norm_num)
+  let v267 : ℝ := v1*v2
+  have h267 : Bounds v267 475830142351966 475830142351966 := Bounds.mul h1 h2 (by norm_num)
+  let v268 : ℝ := v0^3
+  have h268 : Bounds v268 16816568328000 16816568328000 := Bounds.pow h0 3 (by norm_num)
+  let v269 : ℝ := 1/v268
+  have h269 : Bounds v269 (29732582192021168707970417/500000000000000000000000000000000000000) (11893032876808467483188167/200000000000000000000000000000000000000) := Bounds.inv h268 (by norm_num)
+  let v270 : ℝ := v267/v268
+  have h270 : Bounds v270 (141476588169209619971164427/5000000000000000000000000) (14147658816920961997116443/500000000000000000000000) := bounds_div h267 h269 (by norm_num)
+  let v271 : ℝ := -v270
+  have h271 : Bounds v271 (-14147658816920961997116443/500000000000000000000000) (-141476588169209619971164427/5000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h270
+  let v272 : ℝ := v266+v271
+  have h272 : Bounds v272 (181228679912994138990662199/100000000000000000000) (181228679912994138990662213/100000000000000000000) := Bounds.add h266 h271 (by norm_num)
+  let v273 : ℝ := v261*v272
+  have h273 : Bounds v273 (362547974165944775050819729/50000000000000000000) (145019189666377910020327903/20000000000000000000) := Bounds.mul h261 h272 (by norm_num)
+  convert h273 using 1 <;>
+    simp only [v0, v1, v2, v13, v22, v230, v260, v261, v262, v263, v264, v266, v267, v268, v270, v271, v272, v273, e1InputVarianceBound, inputVarianceMean, rowEps, Matrix.cons_val_one, Matrix.cons_val_three, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem meanvalue : Bounds (meanMajorantValue 25620 (mW 12810) (1/10^6) (1/10^7) rowEps) (2016502167828167591165903/1000000000000000000000000000000) (1261899885564587018713967/625000000000000000000000000000) := by
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v8 : ℝ := 6
+  have h8 : Bounds v8 6 6 := Bounds.point _
+  let v274 : ℝ := Real.sqrt (e1InputVarianceBound 25620 (mW 12810) rowEps)
+  have h274 : Bounds v274 (26927605692521003455678647/10000000000000000000000) (134638028462605017278393241/50000000000000000000000) := Bounds.sqrt inputvar (by norm_num)
+  let v275 : ℝ := 1/(e1EnergyLower 25620 (mW 12810) (1/10^6))
+  have h275 : Bounds v275 (53842796703439577901093139/500000000000000000000000000000000000) (10768559340687915580218629/100000000000000000000000000000000000) := Bounds.inv energy (by norm_num)
+  let v276 : ℝ := v274/(e1EnergyLower 25620 (mW 12810) (1/10^6))
+  have h276 : Bounds v276 (14498575990127906970134479/50000000000000000000000000000000) (28997151980255813940268963/100000000000000000000000000000000) := bounds_div h274 h275 (by norm_num)
+  let v277 : ℝ := (e1FrobBound 25620 (mW 12810) rowEps)^2
+  have h277 : Bounds v277 (42311793681659999400961033/50000000000) (42365183155639039121454029/50000000000) := Bounds.pow frob 2 (by norm_num)
+  let v278 : ℝ := (1/10000000)
+  have h278 : Bounds v278 (1/10000000) (1/10000000) := Bounds.point _
+  let v279 : ℝ := 1/v278
+  have h279 : Bounds v279 10000000 10000000 := Bounds.inv h278 (by norm_num)
+  let v280 : ℝ := (directionMean 25620 (mW 12810))/v278
+  have h280 : Bounds v280 (786550863269595488558590257/1000000000000000) (3146383607758842378567069/4000000000000) := bounds_div direction h279 (by norm_num)
+  let v281 : ℝ := v280*v2
+  have h281 : Bounds v281 (157310172653919097711718051/100000000000000) (3146383607758842378567069/2000000000000) := Bounds.mul h280 h2 (by norm_num)
+  let v282 : ℝ := v277+v281
+  have h282 : Bounds v282 (10597612191996739737454223/12500000000) (21221921372916505090459103/25000000000) := Bounds.add h277 h281 (by norm_num)
+  let v283 : ℝ := (e1EnergyLower 25620 (mW 12810) (1/10^6))^2
+  have h283 : Bounds v283 (172470484934034005517300129/2000000) (86235242467017002758650071/1000000) := Bounds.pow energy 2 (by norm_num)
+  let v284 : ℝ := 1/v283
+  have h284 : Bounds v284 (11596187027391695509346287/1000000000000000000000000000000000000000000000) (23192374054783391018692577/2000000000000000000000000000000000000000000000) := Bounds.inv h283 (by norm_num)
+  let v285 : ℝ := v282/v283
+  have h285 : Bounds v285 (12289189302216066367516063/1250000000000000000000000000000) (24609336932094093678563273/2500000000000000000000000000000) := bounds_div h282 h284 (by norm_num)
+  let v286 : ℝ := (10237/50000)
+  have h286 : Bounds v286 (10237/50000) (10237/50000) := Bounds.point _
+  let v287 : ℝ := Real.sqrt v285
+  have h287 : Bounds v287 (313549859540278746622283411/100000000000000000000000000000) (4902301051317446207861539/1562500000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v288 : ℝ := Real.sqrt v2
+  have h288 : Bounds v288 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v289 : ℝ := v288*v276
+  have h289 : Bounds v289 (8201633120134324427372109/20000000000000000000000000000000) (205040828003358110684302767/500000000000000000000000000000000) := Bounds.mul h288 h276 (by norm_num)
+  let v290 : ℝ := v287+v289
+  have h290 : Bounds v290 (313590867705879418244420271/100000000000000000000000000000) (1961176721561982680782971/625000000000000000000000000) := Bounds.add h287 h289 (by norm_num)
+  let v291 : ℝ := v290^2
+  have h291 : Bounds v291 (61462020192828979392320309/6250000000000000000000000000000) (6153942613114570469806877/625000000000000000000000000000) := Bounds.pow h290 2 (by norm_num)
+  let v292 : ℝ := v286*v291
+  have h292 : Bounds v292 (201339744228476883852538561/100000000000000000000000000000000) (62997910530453857899413/31250000000000000000000000000) := Bounds.mul h286 h291 (by norm_num)
+  let v293 : ℝ := v276^2
+  have h293 : Bounds v293 (84083482296605367180922867/1000000000000000000000000000000000000000) (420417411483026835904614483/5000000000000000000000000000000000000000) := Bounds.pow h276 2 (by norm_num)
+  let v294 : ℝ := v293*v8
+  have h294 : Bounds v294 (1261252234449080507713843/2500000000000000000000000000000000000) (25225044688981610154276869/50000000000000000000000000000000000000) := Bounds.mul h293 h8 (by norm_num)
+  let v295 : ℝ := v292+v294
+  have h295 : Bounds v295 (201339794678566261815758869/100000000000000000000000000000000) (20159336414754172324134191/10000000000000000000000000000000) := Bounds.add h292 h294 (by norm_num)
+  let v296 : ℝ := Real.sqrt v2
+  have h296 : Bounds v296 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v297 : ℝ := v296+v2
+  have h297 : Bounds v297 (42677669529663688110021109/12500000000000000000000000) (341421356237309504880168873/100000000000000000000000000) := Bounds.add h296 h2 (by norm_num)
+  let v298 : ℝ := v297*v276
+  have h298 : Bounds v298 (99002469561183250017398461/100000000000000000000000000000000) (495012347805916250086992397/500000000000000000000000000000000) := Bounds.mul h297 h276 (by norm_num)
+  let v299 : ℝ := Real.sqrt v285
+  have h299 : Bounds v299 (313549859540278746622283411/100000000000000000000000000000) (4902301051317446207861539/1562500000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v300 : ℝ := v298*v299
+  have h300 : Bounds v300 (15521105212524865041571943/5000000000000000000000000000000000) (15530877139609987644640429/5000000000000000000000000000000000) := Bounds.mul h298 h299 (by norm_num)
+  let v301 : ℝ := v295+v300
+  have h301 : Bounds v301 (2016502167828167591165903/1000000000000000000000000000000) (1261899885564587018713967/625000000000000000000000000000) := Bounds.add h295 h300 (by norm_num)
+  convert h301 using 1 <;>
+    simp only [v2, v8, v274, v276, v277, v278, v280, v281, v282, v283, v285, v286, v287, v288, v289, v290, v291, v292, v293, v294, v295, v296, v297, v298, v299, v300, v301, meanMajorantValue, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+end BstLean.Part268.WorldRow12810
+namespace BstLean.Part268.WorldRow12811
+open Real MeasureTheory Set BstLean.Part130 BstLean.Part140 BstLean.Part137 BstLean.Part159
+open BstLean.Part227 BstLean.Part228 BstLean.Part218 BstLean.Part205 BstLean.Part214
+open BstLean.Part157 BstLean.Part192
+open BstLean.Part250 (bounds_div pi_bounds rowEps meanMajorantValue endpointPolynomial mean_majorant)
+theorem covmean : Bounds (covarianceMeanBound 25622 (mW 12811)) (66570913385612690206571999/10000000000000000) (12482838191010083040706697/1250000000000000) := by
+  let v1 : ℝ := 237980081637141
+  have h1 : Bounds v1 237980081637141 237980081637141 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v203 : ℝ := v1*v41
+  have h203 : Bounds v203 951920326548564 951920326548564 := Bounds.mul h1 h41 (by norm_num)
+  let v204 : ℝ := -v22
+  have h204 : Bounds v204 (-1) (-1) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h22
+  let v205 : ℝ := v1+v204
+  have h205 : Bounds v205 237980081637140 237980081637140 := Bounds.add h1 h204 (by norm_num)
+  let v206 : ℝ := v203*v205
+  have h206 : Bounds v206 226538077024080228010836066000 226538077024080228010836067000 := Bounds.mul h203 h205 (by norm_num)
+  let v207 : ℝ := v206*(angularJ2 25622 (angularOffset 25622))
+  have h207 : Bounds v207 (66570913385612690206571999/10000000000000000) (12482838191010083040706697/1250000000000000) := Bounds.mul h206 jsecond (by norm_num)
+  convert h207 using 1 <;>
+    simp only [v1, v22, v41, v203, v204, v205, v206, v207, covarianceMeanBound, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem frob : Bounds (e1FrobBound 25622 (mW 12811) rowEps) (290946723894786861509496527/10000000000000000000) (291130218727279472013538757/10000000000000000000) := by
+  let v0 : ℝ := 25622
+  have h0 : Bounds v0 25622 25622 := Bounds.point _
+  let v1 : ℝ := 237980081637141
+  have h1 : Bounds v1 237980081637141 237980081637141 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v208 : ℝ := (1/100000)
+  have h208 : Bounds v208 (1/100000) (1/100000) := Bounds.point _
+  let v209 : ℝ := v208+v22
+  have h209 : Bounds v209 (100001/100000) (100001/100000) := Bounds.add h208 h22 (by norm_num)
+  let v210 : ℝ := v1*v0
+  have h210 : Bounds v210 6097525651706826702 6097525651706826702 := Bounds.mul h1 h0 (by norm_num)
+  let v211 : ℝ := v1+v0
+  have h211 : Bounds v211 237980081662763 237980081662763 := Bounds.add h1 h0 (by norm_num)
+  let v212 : ℝ := v211+v22
+  have h212 : Bounds v212 237980081662764 237980081662764 := Bounds.add h211 h22 (by norm_num)
+  let v213 : ℝ := v210*v212
+  have h213 : Bounds v213 1451089652533988897822746150000000 1451089652533988897822746160000000 := Bounds.mul h210 h212 (by norm_num)
+  let v214 : ℝ := v209*v213
+  have h214 : Bounds v214 1451104163430514237711724370000000 1451104163430514237711724390000000 := Bounds.mul h209 h213 (by norm_num)
+  let v215 : ℝ := v0^4
+  have h215 : Bounds v215 430975028864029456 430975028864029456 := Bounds.pow h0 4 (by norm_num)
+  let v216 : ℝ := v215*v41
+  have h216 : Bounds v216 1723900115456117824 1723900115456117824 := Bounds.mul h215 h41 (by norm_num)
+  let v217 : ℝ := 1/v216
+  have h217 : Bounds v217 (11601600243937743076151049/20000000000000000000000000000000000000000000) (29004000609844357690377623/50000000000000000000000000000000000000000000) := Bounds.inv h216 (by norm_num)
+  let v218 : ℝ := v214/v216
+  have h218 : Bounds v218 (8417565208217264287941113/10000000000) (42087826041086321439705567/50000000000) := bounds_div h214 h217 (by norm_num)
+  let v219 : ℝ := Real.sqrt v218
+  have h219 : Bounds v219 (145065202652266545268386061/5000000000000000000) (29013040530453309053677213/1000000000000000000) := Bounds.sqrt h218 (by norm_num)
+  let v220 : ℝ := v0*v41
+  have h220 : Bounds v220 102488 102488 := Bounds.mul h0 h41 (by norm_num)
+  let v221 : ℝ := 1/v220
+  have h221 : Bounds v221 (9757239871985012879556631/1000000000000000000000000000000) (97572398719850128795566311/10000000000000000000000000000000) := Bounds.inv h220 (by norm_num)
+  let v222 : ℝ := v22/v220
+  have h222 : Bounds v222 (9757239871985012879556631/1000000000000000000000000000000) (97572398719850128795566311/10000000000000000000000000000000) := bounds_div h22 h221 (by norm_num)
+  let v223 : ℝ := -(BstLean.Part137.cN 25622 ^ 2)
+  have h223 : Bounds v223 (-25000000000000000000/4024537268881204628129183) (-25000000000000000000/4024694348513884117803917) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg cnsq_bounds
+  let v224 : ℝ := v222+v223
+  have h224 : Bounds v224 (443168200247027239462271/125000000000000000000000000000) (17727940228730127279581791/5000000000000000000000000000000) := Bounds.add h222 h223 (by norm_num)
+  let v225 : ℝ := v224^2
+  have h225 : Bounds v225 (125694754374521109880287789/10000000000000000000000000000000000000) (125711945901371199010819823/10000000000000000000000000000000000000) := Bounds.pow h224 2 (by norm_num)
+  let v226 : ℝ := v0^2
+  have h226 : Bounds v226 656486884 656486884 := Bounds.pow h0 2 (by norm_num)
+  let v227 : ℝ := 1/v226
+  have h227 : Bounds v227 (15232596787112657684109953/10000000000000000000000000000000000) (7616298393556328842054977/5000000000000000000000000000000000) := Bounds.inv h226 (by norm_num)
+  let v228 : ℝ := v41/v226
+  have h228 : Bounds v228 (15232596787112657684109953/2500000000000000000000000000000000) (7616298393556328842054977/1250000000000000000000000000000000) := bounds_div h41 h227 (by norm_num)
+  let v229 : ℝ := v225*v228
+  have h229 : Bounds v229 (38293150232844898659174973/500000000000000000000000000000000000000000000) (765967753295562864654702367/10000000000000000000000000000000000000000000000) := Bounds.mul h225 h228 (by norm_num)
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v231 : ℝ := v230+v22
+  have h231 : Bounds v231 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v232 : ℝ := v1*v0
+  have h232 : Bounds v232 6097525651706826702 6097525651706826702 := Bounds.mul h1 h0 (by norm_num)
+  let v233 : ℝ := v0+v2
+  have h233 : Bounds v233 25624 25624 := Bounds.add h0 h2 (by norm_num)
+  let v234 : ℝ := v232*v233
+  have h234 : Bounds v234 156242997299335727412048 156242997299335727412048 := Bounds.mul h232 h233 (by norm_num)
+  let v235 : ℝ := v231*v234
+  have h235 : Bounds v235 (19549905037079382892432506/125) (19549905037079382892432506/125) := Bounds.mul h231 h234 (by norm_num)
+  let v236 : ℝ := v229*v235
+  have h236 : Bounds v236 (119780392099637124506015211/10000000000000000000000) (119796774707146420265837961/10000000000000000000000) := Bounds.mul h229 h235 (by norm_num)
+  let v237 : ℝ := v230+v22
+  have h237 : Bounds v237 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v238 : ℝ := v237*(covarianceMeanBound 25622 (mW 12811))
+  have h238 : Bounds v238 (666374842989983028967785709/100000000000000000) (9996256823360874498997923/1000000000000000) := Bounds.mul h237 covmean (by norm_num)
+  let v239 : ℝ := v236+v238
+  have h239 : Bounds v239 (666376040793904025339030769/100000000000000000) (999626880303834521363994959/100000000000000000) := Bounds.add h236 h238 (by norm_num)
+  let v240 : ℝ := Real.sqrt v239
+  have h240 : Bounds v240 (816318590253770972724405959/10000000000000000000000) (999813422746381476766626989/10000000000000000000000) := Bounds.sqrt h239 (by norm_num)
+  let v241 : ℝ := v219+v240
+  have h241 : Bounds v241 (290946723894786861509496527/10000000000000000000) (291130218727279472013538757/10000000000000000000) := Bounds.add h219 h240 (by norm_num)
+  convert h241 using 1 <;>
+    simp only [v0, v1, v2, v22, v41, v208, v209, v210, v211, v212, v213, v214, v215, v216, v218, v219, v220, v222, v223, v224, v225, v226, v228, v229, v230, v231, v232, v233, v234, v235, v236, v237, v238, v239, v240, v241, e1FrobBound, rowEps, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem energy : Bounds (e1EnergyLower 25622 (mW 12811) (1/10^6)) (92881056770376771079150729/10000000000000000) (92881056770376771079150733/10000000000000000) := by
+  let v0 : ℝ := 25622
+  have h0 : Bounds v0 25622 25622 := Bounds.point _
+  let v1 : ℝ := 237980081637141
+  have h1 : Bounds v1 237980081637141 237980081637141 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v242 : ℝ := (1/1000000)
+  have h242 : Bounds v242 (1/1000000) (1/1000000) := Bounds.point _
+  let v243 : ℝ := -v242
+  have h243 : Bounds v243 (-1/1000000) (-1/1000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h242
+  let v244 : ℝ := v22+v243
+  have h244 : Bounds v244 (999999/1000000) (999999/1000000) := Bounds.add h22 h243 (by norm_num)
+  let v245 : ℝ := v244*v1
+  have h245 : Bounds v245 (237979843657059362859/1000000) (237979843657059362859/1000000) := Bounds.mul h244 h1 (by norm_num)
+  let v246 : ℝ := 1/v0
+  have h246 : Bounds v246 (9757239871985012879556631/250000000000000000000000000000) (1561158379517602060729061/40000000000000000000000000000) := Bounds.inv h0 (by norm_num)
+  let v247 : ℝ := v245/v0
+  have h247 : Bounds v247 (92881056770376771079150729/10000000000000000) (92881056770376771079150733/10000000000000000) := bounds_div h245 h246 (by norm_num)
+  convert h247 using 1 <;>
+    simp only [v0, v1, v22, v242, v243, v244, v245, v247, e1EnergyLower, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem direction : Bounds (directionMean 25622 (mW 12811)) (19666074084196071630774279/250000000000000000000) (9833600047443270650259007/125000000000000000000) := by
+  let v0 : ℝ := 25622
+  have h0 : Bounds v0 25622 25622 := Bounds.point _
+  let v1 : ℝ := 237980081637141
+  have h1 : Bounds v1 237980081637141 237980081637141 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v248 : ℝ := v1*v2
+  have h248 : Bounds v248 475960163274282 475960163274282 := Bounds.mul h1 h2 (by norm_num)
+  let v249 : ℝ := v248*(BstLean.Part137.cN 25622 ^ 2)
+  have h249 : Bounds v249 (29564988174197004173152563/10000000000000000) (5913228421991925693196411/2000000000000000) := Bounds.mul h248 cnsq_bounds (by norm_num)
+  let v250 : ℝ := v0+v2
+  have h250 : Bounds v250 25624 25624 := Bounds.add h0 h2 (by norm_num)
+  let v251 : ℝ := v249*v250
+  have h251 : Bounds v251 (378786628487812017466430637/5000000000000) (37880141271280275990616209/500000000000) := Bounds.mul h249 h250 (by norm_num)
+  let v252 : ℝ := v0^2
+  have h252 : Bounds v252 656486884 656486884 := Bounds.pow h0 2 (by norm_num)
+  let v253 : ℝ := 1/v252
+  have h253 : Bounds v253 (15232596787112657684109953/10000000000000000000000000000000000) (7616298393556328842054977/5000000000000000000000000000000000) := Bounds.inv h252 (by norm_num)
+  let v254 : ℝ := v251/v252
+  have h254 : Bounds v254 (23079615920418724921025573/200000000000000000000) (115402583644855503284102807/1000000000000000000000) := bounds_div h251 h253 (by norm_num)
+  let v255 : ℝ := v0*v2
+  have h255 : Bounds v255 51244 51244 := Bounds.mul h0 h2 (by norm_num)
+  let v256 : ℝ := v255*(BstLean.Part137.cN 25622 ^ 2)
+  have h256 : Bounds v256 (15915494309189533576851107/50000000000000000000000000) (7958057749308267228199077/25000000000000000000000000) := Bounds.mul h255 cnsq_bounds (by norm_num)
+  let v257 : ℝ := -v256
+  have h257 : Bounds v257 (-7958057749308267228199077/25000000000000000000000000) (-15915494309189533576851107/50000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h256
+  let v258 : ℝ := v22+v257
+  have h258 : Bounds v258 (17041942250691732771800923/25000000000000000000000000) (34084505690810466423148893/50000000000000000000000000) := Bounds.add h22 h257 (by norm_num)
+  let v259 : ℝ := v254*v258
+  have h259 : Bounds v259 (19666074084196071630774279/250000000000000000000) (9833600047443270650259007/125000000000000000000) := Bounds.mul h254 h258 (by norm_num)
+  convert h259 using 1 <;>
+    simp only [v0, v1, v2, v22, v248, v249, v250, v251, v252, v254, v255, v256, v257, v258, v259, directionMean, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring <;> simp
+
+theorem inputvar : Bounds (e1InputVarianceBound 25622 (mW 12811) rowEps) (725180856721435207463585927/100000000000000000000) (11330950886272425116618531/1562500000000000000) := by
+  let v0 : ℝ := 25622
+  have h0 : Bounds v0 25622 25622 := Bounds.point _
+  let v1 : ℝ := 237980081637141
+  have h1 : Bounds v1 237980081637141 237980081637141 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v13 : ℝ := 3
+  have h13 : Bounds v13 3 3 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v260 : ℝ := v230+v22
+  have h260 : Bounds v260 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v261 : ℝ := v260+v13
+  have h261 : Bounds v261 (4001/1000) (4001/1000) := Bounds.add h260 h13 (by norm_num)
+  let v262 : ℝ := 5
+  have h262 : Bounds v262 5 5 := Bounds.point _
+  let v263 : ℝ := v1*v262
+  have h263 : Bounds v263 1189900408185705 1189900408185705 := Bounds.mul h1 h262 (by norm_num)
+  let v264 : ℝ := v0^2
+  have h264 : Bounds v264 656486884 656486884 := Bounds.pow h0 2 (by norm_num)
+  let v265 : ℝ := 1/v264
+  have h265 : Bounds v265 (15232596787112657684109953/10000000000000000000000000000000000) (7616298393556328842054977/5000000000000000000000000000000000) := Bounds.inv h264 (by norm_num)
+  let v266 : ℝ := v263/v264
+  have h266 : Bounds v266 (90626365673568049533187621/50000000000000000000) (36250546269427219813275051/20000000000000000000) := bounds_div h263 h265 (by norm_num)
+  let v267 : ℝ := v1*v2
+  have h267 : Bounds v267 475960163274282 475960163274282 := Bounds.mul h1 h2 (by norm_num)
+  let v268 : ℝ := v0^3
+  have h268 : Bounds v268 16820506941848 16820506941848 := Bounds.pow h0 3 (by norm_num)
+  let v269 : ℝ := 1/v268
+  have h269 : Bounds v269 (14862810072508642654857109/250000000000000000000000000000000000000) (59451240290034570619428437/1000000000000000000000000000000000000000) := Bounds.inv h268 (by norm_num)
+  let v270 : ℝ := v267/v268
+  have h270 : Bounds v270 (141482110176517132984447157/5000000000000000000000000) (3537052754412928324611179/125000000000000000000000) := bounds_div h267 h269 (by norm_num)
+  let v271 : ℝ := -v270
+  have h271 : Bounds v271 (-3537052754412928324611179/125000000000000000000000) (-141482110176517132984447157/5000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h270
+  let v272 : ℝ := v266+v271
+  have h272 : Bounds v272 (181249901704932568723715553/100000000000000000000) (181249901704932568723715567/100000000000000000000) := Bounds.add h266 h271 (by norm_num)
+  let v273 : ℝ := v261*v272
+  have h273 : Bounds v273 (725180856721435207463585927/100000000000000000000) (11330950886272425116618531/1562500000000000000) := Bounds.mul h261 h272 (by norm_num)
+  convert h273 using 1 <;>
+    simp only [v0, v1, v2, v13, v22, v230, v260, v261, v262, v263, v264, v266, v267, v268, v270, v271, v272, v273, e1InputVarianceBound, inputVarianceMean, rowEps, Matrix.cons_val_one, Matrix.cons_val_three, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem meanvalue : Bounds (meanMajorantValue 25622 (mW 12811) (1/10^6) (1/10^7) rowEps) (20163432397253739085236059/10000000000000000000000000000000) (40377611821377850497613917/20000000000000000000000000000000) := by
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v8 : ℝ := 6
+  have h8 : Bounds v8 6 6 := Bounds.point _
+  let v274 : ℝ := Real.sqrt (e1InputVarianceBound 25622 (mW 12811) rowEps)
+  have h274 : Bounds v274 (269291822512573747010458317/100000000000000000000000) (33661477814071718376307291/12500000000000000000000) := Bounds.sqrt inputvar (by norm_num)
+  let v275 : ℝ := 1/(e1EnergyLower 25622 (mW 12811) (1/10^6))
+  have h275 : Bounds v275 (10766458035379903763635643/100000000000000000000000000000000000) (2691614508844975940908911/25000000000000000000000000000000000) := Bounds.inv energy (by norm_num)
+  let v276 : ℝ := v274/(e1EnergyLower 25622 (mW 12811) (1/10^6))
+  have h276 : Bounds v276 (289931910635259848391963451/1000000000000000000000000000000000) (289931910635259848391963491/1000000000000000000000000000000000) := bounds_div h274 h275 (by norm_num)
+  let v277 : ℝ := (e1FrobBound 25622 (mW 12811) rowEps)^2
+  have h277 : Bounds v277 (846499961451093400799292233/1000000000000) (16951360851238717399477661/20000000000) := Bounds.pow frob 2 (by norm_num)
+  let v278 : ℝ := (1/10000000)
+  have h278 : Bounds v278 (1/10000000) (1/10000000) := Bounds.point _
+  let v279 : ℝ := 1/v278
+  have h279 : Bounds v279 10000000 10000000 := Bounds.inv h278 (by norm_num)
+  let v280 : ℝ := (directionMean 25622 (mW 12811))/v278
+  have h280 : Bounds v280 (19666074084196071630774279/25000000000000) (9833600047443270650259007/12500000000000) := bounds_div direction h279 (by norm_num)
+  let v281 : ℝ := v280*v2
+  have h281 : Bounds v281 (19666074084196071630774279/12500000000000) (9833600047443270650259007/6250000000000) := Bounds.mul h280 h2 (by norm_num)
+  let v282 : ℝ := v277+v281
+  have h282 : Bounds v282 (84807324737782908652975417/100000000000) (1698282837139053586555849/2000000000) := Bounds.add h277 h281 (by norm_num)
+  let v283 : ℝ := (e1EnergyLower 25622 (mW 12811) (1/10^6))^2
+  have h283 : Bounds v283 (1078361338347744078110491/12500) (6901512565425562099907143/80000) := Bounds.pow energy 2 (by norm_num)
+  let v284 : ℝ := 1/v283
+  have h284 : Bounds v284 (28979154656899124270546937/2500000000000000000000000000000000000000000000) (115916618627596497082187759/10000000000000000000000000000000000000000000000) := Bounds.inv h283 (by norm_num)
+  let v285 : ℝ := v282/v283
+  have h285 : Bounds v285 (4915289159228155760799983/500000000000000000000000000000) (98429601977220123558796939/10000000000000000000000000000000) := bounds_div h282 h284 (by norm_num)
+  let v286 : ℝ := (10237/50000)
+  have h286 : Bounds v286 (10237/50000) (10237/50000) := Bounds.point _
+  let v287 : ℝ := Real.sqrt v285
+  have h287 : Bounds v287 (7838438268580798551596277/2500000000000000000000000000) (156867461553711102594767087/50000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v288 : ℝ := Real.sqrt v2
+  have h288 : Bounds v288 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v289 : ℝ := v288*v276
+  have h289 : Bounds v289 (41002564018512867333760773/100000000000000000000000000000000) (41002564018512867333760779/100000000000000000000000000000000) := Bounds.mul h288 h276 (by norm_num)
+  let v290 : ℝ := v287+v289
+  have h290 : Bounds v290 (7839463332681261373279621/2500000000000000000000000000) (62755185134288143611373587/20000000000000000000000000000) := Bounds.add h287 h289 (by norm_num)
+  let v291 : ℝ := v290^2
+  have h291 : Bounds v291 (49165748275563191468104979/5000000000000000000000000000000) (24613832882742372558187129/2500000000000000000000000000000) := Bounds.pow h290 2 (by norm_num)
+  let v292 : ℝ := v286*v291
+  have h292 : Bounds v292 (50330976509694039105899067/25000000000000000000000000000000) (6299295180515841696954041/3125000000000000000000000000000) := Bounds.mul h286 h291 (by norm_num)
+  let v293 : ℝ := v276^2
+  have h293 : Bounds v293 (840605128046123027847398589/10000000000000000000000000000000000000000) (420302564023061513923699411/5000000000000000000000000000000000000000) := Bounds.pow h276 2 (by norm_num)
+  let v294 : ℝ := v293*v8
+  have h294 : Bounds v294 (10087261536553476334168783/20000000000000000000000000000000000000) (5043630768276738167084393/10000000000000000000000000000000000000) := Bounds.mul h293 h8 (by norm_num)
+  let v295 : ℝ := v292+v294
+  have h295 : Bounds v295 (100661978237541919595488969/50000000000000000000000000000000) (201577496212814617069910983/100000000000000000000000000000000) := Bounds.add h292 h294 (by norm_num)
+  let v296 : ℝ := Real.sqrt v2
+  have h296 : Bounds v296 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v297 : ℝ := v296+v2
+  have h297 : Bounds v297 (42677669529663688110021109/12500000000000000000000000) (341421356237309504880168873/100000000000000000000000000) := Bounds.add h296 h2 (by norm_num)
+  let v298 : ℝ := v297*v276
+  have h298 : Bounds v298 (98988946145564837012153463/100000000000000000000000000000000) (247472365363912092530383693/250000000000000000000000000000000) := Bounds.mul h297 h276 (by norm_num)
+  let v299 : ℝ := Real.sqrt v285
+  have h299 : Bounds v299 (7838438268580798551596277/2500000000000000000000000000) (156867461553711102594767087/50000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v300 : ℝ := v298*v299
+  have h300 : Bounds v300 (310367497453551661382652963/100000000000000000000000000000000000) (38820361759329427269825169/12500000000000000000000000000000000) := Bounds.mul h298 h299 (by norm_num)
+  let v301 : ℝ := v295+v300
+  have h301 : Bounds v301 (20163432397253739085236059/10000000000000000000000000000000) (40377611821377850497613917/20000000000000000000000000000000) := Bounds.add h295 h300 (by norm_num)
+  convert h301 using 1 <;>
+    simp only [v2, v8, v274, v276, v277, v278, v280, v281, v282, v283, v285, v286, v287, v288, v289, v290, v291, v292, v293, v294, v295, v296, v297, v298, v299, v300, v301, meanMajorantValue, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+end BstLean.Part268.WorldRow12811
+namespace BstLean.Part268.WorldRow12812
+open Real MeasureTheory Set BstLean.Part130 BstLean.Part140 BstLean.Part137 BstLean.Part159
+open BstLean.Part227 BstLean.Part228 BstLean.Part218 BstLean.Part205 BstLean.Part214
+open BstLean.Part157 BstLean.Part192
+open BstLean.Part250 (bounds_div pi_bounds rowEps meanMajorantValue endpointPolynomial mean_majorant)
+theorem covmean : Bounds (covarianceMeanBound 25624 (mW 12812)) (33293251970599352352896347/5000000000000000) (249715230876270343813219269/25000000000000000) := by
+  let v1 : ℝ := 238045104785990
+  have h1 : Bounds v1 238045104785990 238045104785990 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v203 : ℝ := v1*v41
+  have h203 : Bounds v203 952180419143960 952180419143960 := Bounds.mul h1 h41 (by norm_num)
+  let v204 : ℝ := -v22
+  have h204 : Bounds v204 (-1) (-1) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h22
+  let v205 : ℝ := v1+v204
+  have h205 : Bounds v205 238045104785989 238045104785989 := Bounds.add h1 h204 (by norm_num)
+  let v206 : ℝ := v203*v205
+  have h206 : Bounds v206 226661887650290884634381976000 226661887650290884634381977000 := Bounds.mul h203 h205 (by norm_num)
+  let v207 : ℝ := v206*(angularJ2 25624 (angularOffset 25624))
+  have h207 : Bounds v207 (33293251970599352352896347/5000000000000000) (249715230876270343813219269/25000000000000000) := Bounds.mul h206 jsecond (by norm_num)
+  convert h207 using 1 <;>
+    simp only [v1, v22, v41, v203, v204, v205, v206, v207, covarianceMeanBound, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem frob : Bounds (e1FrobBound 25624 (mW 12812) rowEps) (3637401439962044583624937/125000000000000000) (11647025260499892563078509/400000000000000000) := by
+  let v0 : ℝ := 25624
+  have h0 : Bounds v0 25624 25624 := Bounds.point _
+  let v1 : ℝ := 238045104785990
+  have h1 : Bounds v1 238045104785990 238045104785990 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v208 : ℝ := (1/100000)
+  have h208 : Bounds v208 (1/100000) (1/100000) := Bounds.point _
+  let v209 : ℝ := v208+v22
+  have h209 : Bounds v209 (100001/100000) (100001/100000) := Bounds.add h208 h22 (by norm_num)
+  let v210 : ℝ := v1*v0
+  have h210 : Bounds v210 6099667765036207760 6099667765036207760 := Bounds.mul h1 h0 (by norm_num)
+  let v211 : ℝ := v1+v0
+  have h211 : Bounds v211 238045104811614 238045104811614 := Bounds.add h1 h0 (by norm_num)
+  let v212 : ℝ := v211+v22
+  have h212 : Bounds v212 238045104811615 238045104811615 := Bounds.add h211 h22 (by norm_num)
+  let v213 : ℝ := v210*v212
+  have h213 : Bounds v213 1451996052444073493114668800000000 1451996052444073493114668810000000 := Bounds.mul h210 h212 (by norm_num)
+  let v214 : ℝ := v209*v213
+  have h214 : Bounds v214 1452010572404597933849599940000000 1452010572404597933849599960000000 := Bounds.mul h209 h213 (by norm_num)
+  let v215 : ℝ := v0^4
+  have h215 : Bounds v215 431109608676069376 431109608676069376 := Bounds.pow h0 4 (by norm_num)
+  let v216 : ℝ := v215*v41
+  have h216 : Bounds v216 1724438434704277504 1724438434704277504 := Bounds.mul h215 h41 (by norm_num)
+  let v217 : ℝ := 1/v216
+  have h217 : Bounds v217 (28994946409075171143165773/50000000000000000000000000000000000000000000) (57989892818150342286331547/100000000000000000000000000000000000000000000) := Bounds.inv h216 (by norm_num)
+  let v218 : ℝ := v214/v216
+  have h218 : Bounds v218 (42100968732281880651777719/50000000000) (42100968732281880651777721/50000000000) := bounds_div h214 h217 (by norm_num)
+  let v219 : ℝ := Real.sqrt v218
+  have h219 : Bounds v219 (290175701023644916262296469/10000000000000000000) (290175701023644916262296477/10000000000000000000) := Bounds.sqrt h218 (by norm_num)
+  let v220 : ℝ := v0*v41
+  have h220 : Bounds v220 102496 102496 := Bounds.mul h0 h41 (by norm_num)
+  let v221 : ℝ := 1/v220
+  have h221 : Bounds v221 (97564783015922572588198563/10000000000000000000000000000000) (24391195753980643147049641/2500000000000000000000000000000) := Bounds.inv h220 (by norm_num)
+  let v222 : ℝ := v22/v220
+  have h222 : Bounds v222 (97564783015922572588198563/10000000000000000000000000000000) (24391195753980643147049641/2500000000000000000000000000000) := bounds_div h22 h221 (by norm_num)
+  let v223 : ℝ := -(BstLean.Part137.cN 25624 ^ 2)
+  have h223 : Bounds v223 (-25000000000000000000/4024851428146563607453029) (-6250000000000000000/1006252126944810774281941) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg cnsq_bounds
+  let v224 : ℝ := v222+v223
+  have h224 : Bounds v224 (35450689001991598163260937/10000000000000000000000000000000) (88632782653083695199314049/25000000000000000000000000000000) := Bounds.add h222 h223 (by norm_num)
+  let v225 : ℝ := v224^2
+  have h225 : Bounds v225 (125675135071592805420143587/10000000000000000000000000000000000000) (31423080643315095980915241/2500000000000000000000000000000000000) := Bounds.pow h224 2 (by norm_num)
+  let v226 : ℝ := v0^2
+  have h226 : Bounds v226 656589376 656589376 := Bounds.pow h0 2 (by norm_num)
+  let v227 : ℝ := 1/v226
+  have h227 : Bounds v227 (15230219015910485886387537/10000000000000000000000000000000000) (7615109507955242943193769/5000000000000000000000000000000000) := Bounds.inv h226 (by norm_num)
+  let v228 : ℝ := v41/v226
+  have h228 : Bounds v228 (15230219015910485886387537/2500000000000000000000000000000000) (7615109507955242943193769/1250000000000000000000000000000000) := bounds_div h41 h227 (by norm_num)
+  let v229 : ℝ := v225*v228
+  have h229 : Bounds v229 (76562393279779662727983941/1000000000000000000000000000000000000000000000) (15314572811273800924084519/200000000000000000000000000000000000000000000) := Bounds.mul h225 h228 (by norm_num)
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v231 : ℝ := v230+v22
+  have h231 : Bounds v231 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v232 : ℝ := v1*v0
+  have h232 : Bounds v232 6099667765036207760 6099667765036207760 := Bounds.mul h1 h0 (by norm_num)
+  let v233 : ℝ := v0+v2
+  have h233 : Bounds v233 25626 25626 := Bounds.add h0 h2 (by norm_num)
+  let v234 : ℝ := v232*v233
+  have h234 : Bounds v234 156310086146817860057760 156310086146817860057760 := Bounds.mul h232 h233 (by norm_num)
+  let v235 : ℝ := v231*v234
+  have h235 : Bounds v235 (3911659905824116947945444/25) (3911659905824116947945444/25) := Bounds.mul h231 h234 (by norm_num)
+  let v236 : ℝ := v229*v235
+  have h236 : Bounds v236 (29948604408645191980460849/2500000000000000000000) (11981080088136771611201721/1000000000000000000000) := Bounds.mul h229 h235 (by norm_num)
+  let v237 : ℝ := v230+v22
+  have h237 : Bounds v237 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v238 : ℝ := v237*(covarianceMeanBound 25624 (mW 12812))
+  have h238 : Bounds v238 (33326545222569951705249243/5000000000000000) (24996494610714661415703249/2500000000000000) := Bounds.mul h237 covmean (by norm_num)
+  let v239 : ℝ := v236+v238
+  have h239 : Bounds v239 (66653210239557537991266407/10000000000000000) (999860982536595270305291081/100000000000000000) := Bounds.add h236 h238 (by norm_num)
+  let v240 : ℝ := Real.sqrt v239
+  have h240 : Bounds v240 (6531313386549203421587959/80000000000000000000) (249982622213099453666561901/2500000000000000000000) := Bounds.sqrt h239 (by norm_num)
+  let v241 : ℝ := v219+v240
+  have h241 : Bounds v241 (3637401439962044583624937/125000000000000000) (11647025260499892563078509/400000000000000000) := Bounds.add h219 h240 (by norm_num)
+  convert h241 using 1 <;>
+    simp only [v0, v1, v2, v22, v41, v208, v209, v210, v211, v212, v213, v214, v215, v216, v218, v219, v220, v222, v223, v224, v225, v226, v228, v229, v230, v231, v232, v233, v234, v235, v236, v237, v238, v239, v240, v241, e1FrobBound, rowEps, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem energy : Bounds (e1EnergyLower 25624 (mW 12812) (1/10^6)) (92899183086514679210896033/10000000000000000) (92899183086514679210896037/10000000000000000) := by
+  let v0 : ℝ := 25624
+  have h0 : Bounds v0 25624 25624 := Bounds.point _
+  let v1 : ℝ := 238045104785990
+  have h1 : Bounds v1 238045104785990 238045104785990 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v242 : ℝ := (1/1000000)
+  have h242 : Bounds v242 (1/1000000) (1/1000000) := Bounds.point _
+  let v243 : ℝ := -v242
+  have h243 : Bounds v243 (-1/1000000) (-1/1000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h242
+  let v244 : ℝ := v22+v243
+  have h244 : Bounds v244 (999999/1000000) (999999/1000000) := Bounds.add h22 h243 (by norm_num)
+  let v245 : ℝ := v244*v1
+  have h245 : Bounds v245 (23804486674088521401/100000) (23804486674088521401/100000) := Bounds.mul h244 h1 (by norm_num)
+  let v246 : ℝ := 1/v0
+  have h246 : Bounds v246 (1561036528254761161411177/40000000000000000000000000000) (19512956603184514517639713/500000000000000000000000000000) := Bounds.inv h0 (by norm_num)
+  let v247 : ℝ := v245/v0
+  have h247 : Bounds v247 (92899183086514679210896033/10000000000000000) (92899183086514679210896037/10000000000000000) := bounds_div h245 h246 (by norm_num)
+  convert h247 using 1 <;>
+    simp only [v0, v1, v22, v242, v243, v244, v245, v247, e1EnergyLower, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem direction : Bounds (directionMean 25624 (mW 12812)) (15734701341211746796951749/200000000000000000000) (393390054622820615586283679/5000000000000000000000) := by
+  let v0 : ℝ := 25624
+  have h0 : Bounds v0 25624 25624 := Bounds.point _
+  let v1 : ℝ := 238045104785990
+  have h1 : Bounds v1 238045104785990 238045104785990 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v248 : ℝ := v1*v2
+  have h248 : Bounds v248 476090209571980 476090209571980 := Bounds.mul h1 h2 (by norm_num)
+  let v249 : ℝ := v248*(BstLean.Part137.cN 25624 ^ 2)
+  have h249 : Bounds v249 (147853789827967922576213523/50000000000000000) (1848244502279129126226903/625000000000000) := Bounds.mul h248 cnsq_bounds (by norm_num)
+  let v250 : ℝ := v0+v2
+  have h250 : Bounds v250 25626 25626 := Bounds.add h0 h2 (by norm_num)
+  let v251 : ℝ := v249*v250
+  have h251 : Bounds v251 (37889012181315059839380477/500000000000) (75780981784647940781904987/1000000000000) := Bounds.mul h249 h250 (by norm_num)
+  let v252 : ℝ := v0^2
+  have h252 : Bounds v252 656589376 656589376 := Bounds.pow h0 2 (by norm_num)
+  let v253 : ℝ := 1/v252
+  have h253 : Bounds v253 (15230219015910485886387537/10000000000000000000000000000000000) (7615109507955242943193769/5000000000000000000000000000000000) := Bounds.inv h252 (by norm_num)
+  let v254 : ℝ := v251/v252
+  have h254 : Bounds v254 (115411590763585732582369643/1000000000000000000000) (28854023745522780428716909/250000000000000000000) := bounds_div h251 h253 (by norm_num)
+  let v255 : ℝ := v0*v2
+  have h255 : Bounds v255 51248 51248 := Bounds.mul h0 h2 (by norm_num)
+  let v256 : ℝ := v255*(BstLean.Part137.cN 25624 ^ 2)
+  have h256 : Bounds v256 (15915494309189533576851107/50000000000000000000000000) (6366446180051869154658407/20000000000000000000000000) := Bounds.mul h255 cnsq_bounds (by norm_num)
+  let v257 : ℝ := -v256
+  have h257 : Bounds v257 (-6366446180051869154658407/20000000000000000000000000) (-15915494309189533576851107/50000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h256
+  let v258 : ℝ := v22+v257
+  have h258 : Bounds v258 (13633553819948130845341593/20000000000000000000000000) (34084505690810466423148893/50000000000000000000000000) := Bounds.add h22 h257 (by norm_num)
+  let v259 : ℝ := v254*v258
+  have h259 : Bounds v259 (15734701341211746796951749/200000000000000000000) (393390054622820615586283679/5000000000000000000000) := Bounds.mul h254 h258 (by norm_num)
+  convert h259 using 1 <;>
+    simp only [v0, v1, v2, v22, v248, v249, v250, v251, v252, v254, v255, v256, v257, v258, v259, directionMean, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring <;> simp
+
+theorem inputvar : Bounds (e1InputVarianceBound 25624 (mW 12812) rowEps) (725265768424965517612923673/100000000000000000000) (72526576842496551761292373/10000000000000000000) := by
+  let v0 : ℝ := 25624
+  have h0 : Bounds v0 25624 25624 := Bounds.point _
+  let v1 : ℝ := 238045104785990
+  have h1 : Bounds v1 238045104785990 238045104785990 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v13 : ℝ := 3
+  have h13 : Bounds v13 3 3 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v260 : ℝ := v230+v22
+  have h260 : Bounds v260 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v261 : ℝ := v260+v13
+  have h261 : Bounds v261 (4001/1000) (4001/1000) := Bounds.add h260 h13 (by norm_num)
+  let v262 : ℝ := 5
+  have h262 : Bounds v262 5 5 := Bounds.point _
+  let v263 : ℝ := v1*v262
+  have h263 : Bounds v263 1190225523929950 1190225523929950 := Bounds.mul h1 h262 (by norm_num)
+  let v264 : ℝ := v0^2
+  have h264 : Bounds v264 656589376 656589376 := Bounds.pow h0 2 (by norm_num)
+  let v265 : ℝ := 1/v264
+  have h265 : Bounds v265 (15230219015910485886387537/10000000000000000000000000000000000) (7615109507955242943193769/5000000000000000000000000000000000) := Bounds.inv h264 (by norm_num)
+  let v266 : ℝ := v263/v264
+  have h266 : Bounds v266 (181273954077799455591556811/100000000000000000000) (22659244259724931948944603/12500000000000000000) := bounds_div h263 h265 (by norm_num)
+  let v267 : ℝ := v1*v2
+  have h267 : Bounds v267 476090209571980 476090209571980 := Bounds.mul h1 h2 (by norm_num)
+  let v268 : ℝ := v0^3
+  have h268 : Bounds v268 16824446170624 16824446170624 := Bounds.pow h0 3 (by norm_num)
+  let v269 : ℝ := 1/v268
+  have h269 : Bounds v269 (59437320542891374829798381/1000000000000000000000000000000000000000) (29718660271445687414899191/500000000000000000000000000000000000000) := Bounds.inv h268 (by norm_num)
+  let v270 : ℝ := v267/v268
+  have h270 : Bounds v270 (28297526393662106711139059/1000000000000000000000000) (282975263936621067111390597/10000000000000000000000000) := bounds_div h267 h269 (by norm_num)
+  let v271 : ℝ := -v270
+  have h271 : Bounds v271 (-282975263936621067111390597/10000000000000000000000000) (-28297526393662106711139059/1000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h270
+  let v272 : ℝ := v266+v271
+  have h272 : Bounds v272 (181271124325160089380885697/100000000000000000000) (181271124325160089380885711/100000000000000000000) := Bounds.add h266 h271 (by norm_num)
+  let v273 : ℝ := v261*v272
+  have h273 : Bounds v273 (725265768424965517612923673/100000000000000000000) (72526576842496551761292373/10000000000000000000) := Bounds.mul h261 h272 (by norm_num)
+  convert h273 using 1 <;>
+    simp only [v0, v1, v2, v13, v22, v230, v260, v261, v262, v263, v264, v266, v267, v268, v270, v271, v272, v273, e1InputVarianceBound, inputVarianceMean, rowEps, Matrix.cons_val_one, Matrix.cons_val_three, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem meanvalue : Bounds (meanMajorantValue 25624 (mW 12812) (1/10^6) (1/10^7) rowEps) (201618433674511774755533179/100000000000000000000000000000000) (2523401738018997355736479/1250000000000000000000000000000) := by
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v8 : ℝ := 6
+  have h8 : Bounds v8 6 6 := Bounds.point _
+  let v274 : ℝ := Real.sqrt (e1InputVarianceBound 25624 (mW 12812) rowEps)
+  have h274 : Bounds v274 (134653793896139955512639261/50000000000000000000000) (134653793896139955512639267/50000000000000000000000) := Bounds.sqrt inputvar (by norm_num)
+  let v275 : ℝ := 1/(e1EnergyLower 25624 (mW 12812) (1/10^6))
+  have h275 : Bounds v275 (5382178652037903718305121/50000000000000000000000000000000000) (2691089326018951859152561/25000000000000000000000000000000000) := Bounds.inv energy (by norm_num)
+  let v276 : ℝ := v274/(e1EnergyLower 25624 (mW 12812) (1/10^6))
+  have h276 : Bounds v276 (144946154984743250647382371/500000000000000000000000000000000) (28989230996948650129476481/100000000000000000000000000000000) := bounds_div h274 h275 (by norm_num)
+  let v277 : ℝ := (e1FrobBound 25624 (mW 12812) rowEps)^2
+  have h277 : Bounds v277 (21169102776700728684231253/25000000000) (16956649677340323777396621/20000000000) := Bounds.pow frob 2 (by norm_num)
+  let v278 : ℝ := (1/10000000)
+  have h278 : Bounds v278 (1/10000000) (1/10000000) := Bounds.point _
+  let v279 : ℝ := 1/v278
+  have h279 : Bounds v279 10000000 10000000 := Bounds.inv h278 (by norm_num)
+  let v280 : ℝ := (directionMean 25624 (mW 12812))/v278
+  have h280 : Bounds v280 (15734701341211746796951749/20000000000000) (2458687841392628847414273/3125000000000) := bounds_div direction h279 (by norm_num)
+  let v281 : ℝ := v280*v2
+  have h281 : Bounds v281 (15734701341211746796951749/10000000000000) (2458687841392628847414273/1562500000000) := Bounds.mul h280 h2 (by norm_num)
+  let v282 : ℝ := v277+v281
+  have h282 : Bounds v282 (424168790601075161024472647/500000000000) (84940604408550747133217619/100000000000) := Bounds.add h277 h281 (by norm_num)
+  let v283 : ℝ := (e1EnergyLower 25624 (mW 12812) (1/10^6))^2
+  have h283 : Bounds v283 (215756455453544375997086051/2500000) (863025821814177503988344279/10000000) := Bounds.pow energy 2 (by norm_num)
+  let v284 : ℝ := 1/v283
+  have h284 : Bounds v284 (11587138816981018508395171/1000000000000000000000000000000000000000000000) (57935694084905092541975861/5000000000000000000000000000000000000000000000) := Bounds.inv h283 (by norm_num)
+  let v285 : ℝ := v282/v283
+  have h285 : Bounds v285 (49149026585256114039033677/5000000000000000000000000000000) (12302732181001842368152093/1250000000000000000000000000000) := bounds_div h282 h284 (by norm_num)
+  let v286 : ℝ := (10237/50000)
+  have h286 : Bounds v286 (10237/50000) (10237/50000) := Bounds.point _
+  let v287 : ℝ := Real.sqrt v285
+  have h287 : Bounds v287 (313525203405583054376604199/100000000000000000000000000000) (313722580392318491693047637/100000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v288 : ℝ := Real.sqrt v2
+  have h288 : Bounds v288 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v289 : ℝ := v288*v276
+  have h289 : Bounds v289 (40996963638651300184228669/100000000000000000000000000000000) (409969636386513001842286797/1000000000000000000000000000000000) := Bounds.mul h288 h276 (by norm_num)
+  let v290 : ℝ := v287+v289
+  have h290 : Bounds v290 (313566200369221705676788427/100000000000000000000000000000) (156881788677978571496615933/50000000000000000000000000000) := Bounds.add h287 h289 (by norm_num)
+  let v291 : ℝ := v290^2
+  have h291 : Bounds v291 (122904702517488618186878273/12500000000000000000000000000000) (49223791237603851007609661/5000000000000000000000000000000) := Bounds.pow h290 2 (by norm_num)
+  let v292 : ℝ := v286*v291
+  have h292 : Bounds v292 (10065403517372247875032583/5000000000000000000000000000000) (5039039508993506227649001/2500000000000000000000000000000) := Bounds.mul h286 h291 (by norm_num)
+  let v293 : ℝ := v276^2
+  have h293 : Bounds v293 (84037551379444842749245757/1000000000000000000000000000000000000000) (84037551379444842749245797/1000000000000000000000000000000000000000) := Bounds.pow h276 2 (by norm_num)
+  let v294 : ℝ := v293*v8
+  have h294 : Bounds v294 (25211265413833452824773727/50000000000000000000000000000000000000) (50422530827666905649547479/100000000000000000000000000000000000000) := Bounds.mul h293 h8 (by norm_num)
+  let v295 : ℝ := v292+v294
+  have h295 : Bounds v295 (2013081207699757851675573/1000000000000000000000000000000) (20156163078227107677286569/10000000000000000000000000000000) := Bounds.add h292 h294 (by norm_num)
+  let v296 : ℝ := Real.sqrt v2
+  have h296 : Bounds v296 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v297 : ℝ := v296+v2
+  have h297 : Bounds v297 (42677669529663688110021109/12500000000000000000000000) (341421356237309504880168873/100000000000000000000000000) := Bounds.add h296 h2 (by norm_num)
+  let v298 : ℝ := v297*v276
+  have h298 : Bounds v298 (49487712816274300221590809/50000000000000000000000000000000) (989754256325486004431816417/1000000000000000000000000000000000) := Bounds.mul h297 h276 (by norm_num)
+  let v299 : ℝ := Real.sqrt v285
+  have h299 : Bounds v299 (313525203405583054376604199/100000000000000000000000000000) (313722580392318491693047637/100000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v300 : ℝ := v298*v299
+  have h300 : Bounds v300 (3103129045359895879758791/1000000000000000000000000000000000) (77627064812177921513157401/25000000000000000000000000000000000) := Bounds.mul h298 h299 (by norm_num)
+  let v301 : ℝ := v295+v300
+  have h301 : Bounds v301 (201618433674511774755533179/100000000000000000000000000000000) (2523401738018997355736479/1250000000000000000000000000000) := Bounds.add h295 h300 (by norm_num)
+  convert h301 using 1 <;>
+    simp only [v2, v8, v274, v276, v277, v278, v280, v281, v282, v283, v285, v286, v287, v288, v289, v290, v291, v292, v293, v294, v295, v296, v297, v298, v299, v300, v301, meanMajorantValue, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+end BstLean.Part268.WorldRow12812
+namespace BstLean.Part268.WorldRow12813
+open Real MeasureTheory Set BstLean.Part130 BstLean.Part140 BstLean.Part137 BstLean.Part159
+open BstLean.Part227 BstLean.Part228 BstLean.Part218 BstLean.Part205 BstLean.Part214
+open BstLean.Part157 BstLean.Part192
+open BstLean.Part250 (bounds_div pi_bounds rowEps meanMajorantValue endpointPolynomial mean_majorant)
+theorem covmean : Bounds (covarianceMeanBound 25626 (mW 12813)) (66602096930745230424901281/10000000000000000) (19981896564790714677448443/2000000000000000) := by
+  let v1 : ℝ := 238110140624016
+  have h1 : Bounds v1 238110140624016 238110140624016 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v203 : ℝ := v1*v41
+  have h203 : Bounds v203 952440562496064 952440562496064 := Bounds.mul h1 h41 (by norm_num)
+  let v204 : ℝ := -v22
+  have h204 : Bounds v204 (-1) (-1) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h22
+  let v205 : ℝ := v1+v204
+  have h205 : Bounds v205 238110140624015 238110140624015 := Bounds.add h1 h204 (by norm_num)
+  let v206 : ℝ := v203*v205
+  have h206 : Bounds v206 226785756271953746094941376000 226785756271953746094941377000 := Bounds.mul h203 h205 (by norm_num)
+  let v207 : ℝ := v206*(angularJ2 25626 (angularOffset 25626))
+  have h207 : Bounds v207 (66602096930745230424901281/10000000000000000) (19981896564790714677448443/2000000000000000) := Bounds.mul h206 jsecond (by norm_num)
+  convert h207 using 1 <;>
+    simp only [v1, v22, v41, v203, v204, v205, v206, v207, covarianceMeanBound, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem frob : Bounds (e1FrobBound 25626 (mW 12813) rowEps) (29103751003842244359263561/1000000000000000000) (291221047837835652654672767/10000000000000000000) := by
+  let v0 : ℝ := 25626
+  have h0 : Bounds v0 25626 25626 := Bounds.point _
+  let v1 : ℝ := 238110140624016
+  have h1 : Bounds v1 238110140624016 238110140624016 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v208 : ℝ := (1/100000)
+  have h208 : Bounds v208 (1/100000) (1/100000) := Bounds.point _
+  let v209 : ℝ := v208+v22
+  have h209 : Bounds v209 (100001/100000) (100001/100000) := Bounds.add h208 h22 (by norm_num)
+  let v210 : ℝ := v1*v0
+  have h210 : Bounds v210 6101810463631034016 6101810463631034016 := Bounds.mul h1 h0 (by norm_num)
+  let v211 : ℝ := v1+v0
+  have h211 : Bounds v211 238110140649642 238110140649642 := Bounds.add h1 h0 (by norm_num)
+  let v212 : ℝ := v211+v22
+  have h212 : Bounds v212 238110140649643 238110140649643 := Bounds.add h211 h22 (by norm_num)
+  let v213 : ℝ := v210*v212
+  have h213 : Bounds v213 1452902947712648872919178070000000 1452902947712648872919178080000000 := Bounds.mul h210 h212 (by norm_num)
+  let v214 : ℝ := v209*v213
+  have h214 : Bounds v214 1452917476742125999407907260000000 1452917476742125999407907280000000 := Bounds.mul h209 h213 (by norm_num)
+  let v215 : ℝ := v0^4
+  have h215 : Bounds v215 431244220004399376 431244220004399376 := Bounds.pow h0 4 (by norm_num)
+  let v216 : ℝ := v215*v41
+  have h216 : Bounds v216 1724976880017597504 1724976880017597504 := Bounds.mul h215 h41 (by norm_num)
+  let v217 : ℝ := 1/v216
+  have h217 : Bounds v217 (3623236967637641655213981/6250000000000000000000000000000000000000000) (57971791482202266483423697/100000000000000000000000000000000000000000000) := Bounds.inv h216 (by norm_num)
+  let v218 : ℝ := v214/v216
+  have h218 : Bounds v218 (42114114501270994815885757/50000000000) (42114114501270994815885759/50000000000) := bounds_div h214 h217 (by norm_num)
+  let v219 : ℝ := Real.sqrt v218
+  have h219 : Bounds v219 (290221000278308581312716597/10000000000000000000) (58044200055661716262543321/2000000000000000000) := Bounds.sqrt h218 (by norm_num)
+  let v220 : ℝ := v0*v41
+  have h220 : Bounds v220 102504 102504 := Bounds.mul h0 h41 (by norm_num)
+  let v221 : ℝ := 1/v220
+  have h221 : Bounds v221 (48778584250370717240302817/5000000000000000000000000000000) (19511433700148286896121127/2000000000000000000000000000000) := Bounds.inv h220 (by norm_num)
+  let v222 : ℝ := v22/v220
+  have h222 : Bounds v222 (48778584250370717240302817/5000000000000000000000000000000) (19511433700148286896121127/2000000000000000000000000000000) := bounds_div h22 h221 (by norm_num)
+  let v223 : ℝ := -(BstLean.Part137.cN 25626 ^ 2)
+  have h223 : Bounds v223 (-40000000000000000/6440264939859076138843) (-25000000000000000000/4025322667044602076451611) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg cnsq_bounds
+  let v224 : ℝ := v222+v223
+  have h224 : Bounds v224 (35447922416099352229281661/10000000000000000000000000000000) (35450346096973645606606153/10000000000000000000000000000000) := Bounds.add h222 h223 (by norm_num)
+  let v225 : ℝ := v224^2
+  have h225 : Bounds v225 (125655520361779893728687579/10000000000000000000000000000000000000) (125672703839521458867502397/10000000000000000000000000000000000000) := Bounds.pow h224 2 (by norm_num)
+  let v226 : ℝ := v0^2
+  have h226 : Bounds v226 656691876 656691876 := Bounds.pow h0 2 (by norm_num)
+  let v227 : ℝ := 1/v226
+  have h227 : Bounds v227 (3806960450352822698845143/2500000000000000000000000000000000) (15227841801411290795380573/10000000000000000000000000000000000) := Bounds.inv h226 (by norm_num)
+  let v228 : ℝ := v41/v226
+  have h228 : Bounds v228 (3806960450352822698845143/625000000000000000000000000000000) (15227841801411290795380573/2500000000000000000000000000000000) := bounds_div h41 h227 (by norm_num)
+  let v229 : ℝ := v225*v228
+  have h229 : Bounds v229 (76538495421727978695864103/1000000000000000000000000000000000000000000000) (19137240528238460934988391/250000000000000000000000000000000000000000000) := Bounds.mul h225 h228 (by norm_num)
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v231 : ℝ := v230+v22
+  have h231 : Bounds v231 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v232 : ℝ := v1*v0
+  have h232 : Bounds v232 6101810463631034016 6101810463631034016 := Bounds.mul h1 h0 (by norm_num)
+  let v233 : ℝ := v0+v2
+  have h233 : Bounds v233 25628 25628 := Bounds.add h0 h2 (by norm_num)
+  let v234 : ℝ := v232*v233
+  have h234 : Bounds v234 156377198561936139762048 156377198561936139762048 := Bounds.mul h232 h233 (by norm_num)
+  let v235 : ℝ := v231*v234
+  have h235 : Bounds v235 (19566696970062259487726256/125) (19566696970062259487726256/125) := Bounds.mul h231 h234 (by norm_num)
+  let v236 : ℝ := v229*v235
+  have h236 : Bounds v236 (119808443716915916834310709/10000000000000000000000) (119824827602955573697882557/10000000000000000000000) := Bounds.mul h229 h235 (by norm_num)
+  let v237 : ℝ := v230+v22
+  have h237 : Bounds v237 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v238 : ℝ := v237*(covarianceMeanBound 25626 (mW 12813))
+  have h238 : Bounds v238 (333343495138379878276630911/50000000000000000) (50004696153388763480314729/5000000000000000) := Bounds.mul h237 covmean (by norm_num)
+  let v239 : ℝ := v236+v238
+  have h239 : Bounds v239 (133337637672239385142486033/20000000000000000) (25002378032901282479050789/2500000000000000) := Bounds.add h236 h238 (by norm_num)
+  let v240 : ℝ := Real.sqrt v239
+  have h240 : Bounds v240 (40825488005693113995951057/500000000000000000000) (100004755952707134195616159/1000000000000000000000) := Bounds.sqrt h239 (by norm_num)
+  let v241 : ℝ := v219+v240
+  have h241 : Bounds v241 (29103751003842244359263561/1000000000000000000) (291221047837835652654672767/10000000000000000000) := Bounds.add h219 h240 (by norm_num)
+  convert h241 using 1 <;>
+    simp only [v0, v1, v2, v22, v41, v208, v209, v210, v211, v212, v213, v214, v215, v216, v218, v219, v220, v222, v223, v224, v225, v226, v228, v229, v230, v231, v232, v233, v234, v235, v236, v237, v238, v239, v240, v241, e1FrobBound, rowEps, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem energy : Bounds (e1EnergyLower 25626 (mW 12813) (1/10^6)) (92917311524965026139077497/10000000000000000) (37166924609986010455631/4000000000000) := by
+  let v0 : ℝ := 25626
+  have h0 : Bounds v0 25626 25626 := Bounds.point _
+  let v1 : ℝ := 238110140624016
+  have h1 : Bounds v1 238110140624016 238110140624016 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v242 : ℝ := (1/1000000)
+  have h242 : Bounds v242 (1/1000000) (1/1000000) := Bounds.point _
+  let v243 : ℝ := -v242
+  have h243 : Bounds v243 (-1/1000000) (-1/1000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h242
+  let v244 : ℝ := v22+v243
+  have h244 : Bounds v244 (999999/1000000) (999999/1000000) := Bounds.add h22 h243 (by norm_num)
+  let v245 : ℝ := v244*v1
+  have h245 : Bounds v245 (14881868907117210999/62500) (14881868907117210999/62500) := Bounds.mul h244 h1 (by norm_num)
+  let v246 : ℝ := 1/v0
+  have h246 : Bounds v246 (39022867400296573792242253/1000000000000000000000000000000) (19511433700148286896121127/500000000000000000000000000000) := Bounds.inv h0 (by norm_num)
+  let v247 : ℝ := v245/v0
+  have h247 : Bounds v247 (92917311524965026139077497/10000000000000000) (37166924609986010455631/4000000000000) := bounds_div h245 h246 (by norm_num)
+  convert h247 using 1 <;>
+    simp only [v0, v1, v22, v242, v243, v244, v245, v247, e1EnergyLower, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem direction : Bounds (directionMean 25626 (mW 12813)) (4917669839673062425387947/62500000000000000000) (19671805457252760396375281/250000000000000000000) := by
+  let v0 : ℝ := 25626
+  have h0 : Bounds v0 25626 25626 := Bounds.point _
+  let v1 : ℝ := 238110140624016
+  have h1 : Bounds v1 238110140624016 238110140624016 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v248 : ℝ := v1*v2
+  have h248 : Bounds v248 476220281248032 476220281248032 := Bounds.mul h1 h2 (by norm_num)
+  let v249 : ℝ := v248*(BstLean.Part137.cN 25626 ^ 2)
+  have h249 : Bounds v249 (295765284325438712507760391/100000000000000000) (369721032981643533987707/125000000000000) := Bounds.mul h248 cnsq_bounds (by norm_num)
+  let v250 : ℝ := v0+v2
+  have h250 : Bounds v250 25628 25628 := Bounds.add h0 h2 (by norm_num)
+  let v251 : ℝ := v249*v250
+  have h251 : Bounds v251 (75798727066923433241488833/1000000000000) (1895042126650712097807391/25000000000) := Bounds.mul h249 h250 (by norm_num)
+  let v252 : ℝ := v0^2
+  have h252 : Bounds v252 656691876 656691876 := Bounds.pow h0 2 (by norm_num)
+  let v253 : ℝ := 1/v252
+  have h253 : Bounds v253 (3806960450352822698845143/2500000000000000000000000000000000) (15227841801411290795380573/10000000000000000000000000000000000) := Bounds.inv h252 (by norm_num)
+  let v254 : ℝ := v251/v252
+  have h254 : Bounds v254 (360703445163581906226677/3125000000000000000) (115429606846588252771830613/1000000000000000000000) := bounds_div h251 h253 (by norm_num)
+  let v255 : ℝ := v0*v2
+  have h255 : Bounds v255 51252 51252 := Bounds.mul h0 h2 (by norm_num)
+  let v256 : ℝ := v255*(BstLean.Part137.cN 25626 ^ 2)
+  have h256 : Bounds v256 (15915494309189533576851107/50000000000000000000000000) (31832230803300759995448563/100000000000000000000000000) := Bounds.mul h255 cnsq_bounds (by norm_num)
+  let v257 : ℝ := -v256
+  have h257 : Bounds v257 (-31832230803300759995448563/100000000000000000000000000) (-15915494309189533576851107/50000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h256
+  let v258 : ℝ := v22+v257
+  have h258 : Bounds v258 (68167769196699240004551437/100000000000000000000000000) (34084505690810466423148893/50000000000000000000000000) := Bounds.add h22 h257 (by norm_num)
+  let v259 : ℝ := v254*v258
+  have h259 : Bounds v259 (4917669839673062425387947/62500000000000000000) (19671805457252760396375281/250000000000000000000) := Bounds.mul h254 h258 (by norm_num)
+  convert h259 using 1 <;>
+    simp only [v0, v1, v2, v22, v248, v249, v250, v251, v252, v254, v255, v256, v257, v258, v259, directionMean, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring <;> simp
+
+theorem inputvar : Bounds (e1InputVarianceBound 25626 (mW 12813) rowEps) (72535068344235239114657471/10000000000000000000) (36267534172117619557328739/5000000000000000000) := by
+  let v0 : ℝ := 25626
+  have h0 : Bounds v0 25626 25626 := Bounds.point _
+  let v1 : ℝ := 238110140624016
+  have h1 : Bounds v1 238110140624016 238110140624016 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v13 : ℝ := 3
+  have h13 : Bounds v13 3 3 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v260 : ℝ := v230+v22
+  have h260 : Bounds v260 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v261 : ℝ := v260+v13
+  have h261 : Bounds v261 (4001/1000) (4001/1000) := Bounds.add h260 h13 (by norm_num)
+  let v262 : ℝ := 5
+  have h262 : Bounds v262 5 5 := Bounds.point _
+  let v263 : ℝ := v1*v262
+  have h263 : Bounds v263 1190550703120080 1190550703120080 := Bounds.mul h1 h262 (by norm_num)
+  let v264 : ℝ := v0^2
+  have h264 : Bounds v264 656691876 656691876 := Bounds.pow h0 2 (by norm_num)
+  let v265 : ℝ := 1/v264
+  have h265 : Bounds v265 (3806960450352822698845143/2500000000000000000000000000000000) (15227841801411290795380573/10000000000000000000000000000000000) := Bounds.inv h264 (by norm_num)
+  let v266 : ℝ := v263/v264
+  have h266 : Bounds v266 (181295177636715578920912369/100000000000000000000) (90647588818357789460456191/50000000000000000000) := bounds_div h263 h265 (by norm_num)
+  let v267 : ℝ := v1*v2
+  have h267 : Bounds v267 476220281248032 476220281248032 := Bounds.mul h1 h2 (by norm_num)
+  let v268 : ℝ := v0^3
+  have h268 : Bounds v268 16828386014376 16828386014376 := Bounds.pow h0 3 (by norm_num)
+  let v269 : ℝ := 1/v268
+  have h269 : Bounds v269 (475387241127332889889349/8000000000000000000000000000000000000) (29711702570458305618084313/500000000000000000000000000000000000000) := Bounds.inv h268 (by norm_num)
+  let v270 : ℝ := v267/v268
+  have h270 : Bounds v270 (35373288386153824030459761/1250000000000000000000000) (141493153544615296121839047/5000000000000000000000000) := bounds_div h267 h269 (by norm_num)
+  let v271 : ℝ := -v270
+  have h271 : Bounds v271 (-141493153544615296121839047/5000000000000000000000000) (-35373288386153824030459761/1250000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h270
+  let v272 : ℝ := v266+v271
+  have h272 : Bounds v272 (45323086943411171653747483/25000000000000000000) (90646173886822343307494973/50000000000000000000) := Bounds.add h266 h271 (by norm_num)
+  let v273 : ℝ := v261*v272
+  have h273 : Bounds v273 (72535068344235239114657471/10000000000000000000) (36267534172117619557328739/5000000000000000000) := Bounds.mul h261 h272 (by norm_num)
+  convert h273 using 1 <;>
+    simp only [v0, v1, v2, v13, v22, v230, v260, v261, v262, v263, v264, v266, v267, v268, v270, v271, v272, v273, e1InputVarianceBound, inputVarianceMean, rowEps, Matrix.cons_val_one, Matrix.cons_val_three, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem meanvalue : Bounds (meanMajorantValue 25626 (mW 12813) (1/10^6) (1/10^7) rowEps) (2520031823601776287844877/1250000000000000000000000000000) (201856221493626129512875091/100000000000000000000000000000000) := by
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v8 : ℝ := 6
+  have h8 : Bounds v8 6 6 := Bounds.point _
+  let v274 : ℝ := Real.sqrt (e1InputVarianceBound 25626 (mW 12813) rowEps)
+  have h274 : Bounds v274 (134661676382179387224481313/50000000000000000000000) (3366541909554484680612033/1250000000000000000000) := Bounds.sqrt inputvar (by norm_num)
+  let v275 : ℝ := 1/(e1EnergyLower 25626 (mW 12813) (1/10^6))
+  have h275 : Bounds v275 (10762257146574026402177013/100000000000000000000000000000000000) (5381128573287013201088507/50000000000000000000000000000000000) := Bounds.inv energy (by norm_num)
+  let v276 : ℝ := v274/(e1EnergyLower 25626 (mW 12813) (1/10^6))
+  have h276 : Bounds v276 (5797054356054995579261451/20000000000000000000000000000000) (28985271780274977896307261/100000000000000000000000000000000) := bounds_div h274 h275 (by norm_num)
+  let v277 : ℝ := (e1FrobBound 25626 (mW 12813) rowEps)^2
+  have h277 : Bounds v277 (847028322493648446241085287/1000000000000) (424048493518834808310064231/500000000000) := Bounds.pow frob 2 (by norm_num)
+  let v278 : ℝ := (1/10000000)
+  have h278 : Bounds v278 (1/10000000) (1/10000000) := Bounds.point _
+  let v279 : ℝ := 1/v278
+  have h279 : Bounds v279 10000000 10000000 := Bounds.inv h278 (by norm_num)
+  let v280 : ℝ := (directionMean 25626 (mW 12813))/v278
+  have h280 : Bounds v280 (4917669839673062425387947/6250000000000) (19671805457252760396375281/25000000000000) := bounds_div direction h279 (by norm_num)
+  let v281 : ℝ := v280*v2
+  have h281 : Bounds v281 (4917669839673062425387947/3125000000000) (19671805457252760396375281/12500000000000) := Bounds.mul h280 h2 (by norm_num)
+  let v282 : ℝ := v277+v281
+  have h282 : Bounds v282 (84860197684234382621720943/100000000000) (84967073147424983745183849/100000000000) := Bounds.add h277 h281 (by norm_num)
+  let v283 : ℝ := (e1EnergyLower 25626 (mW 12813) (1/10^6))^2
+  have h283 : Bounds v283 (34534507124109593885455459/400000) (43168133905136992356819327/500000) := Bounds.pow energy 2 (by norm_num)
+  let v284 : ℝ := 1/v283
+  have h284 : Bounds v284 (57913089444491852406986981/5000000000000000000000000000000000000000000000) (28956544722245926203493493/2500000000000000000000000000000000000000000000) := Bounds.inv h283 (by norm_num)
+  let v285 : ℝ := v282/v283
+  have h285 : Bounds v285 (49145162187643261619202259/5000000000000000000000000000000) (98414114140470098827145573/10000000000000000000000000000000) := bounds_div h282 h284 (by norm_num)
+  let v286 : ℝ := (10237/50000)
+  have h286 : Bounds v286 (10237/50000) (10237/50000) := Bounds.point _
+  let v287 : ℝ := Real.sqrt v285
+  have h287 : Bounds v287 (313512877527042775918627467/100000000000000000000000000000) (12548409565548622071458979/4000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v288 : ℝ := Real.sqrt v2
+  have h288 : Bounds v288 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v289 : ℝ := v288*v276
+  have h289 : Bounds v289 (40991364460735019219599853/100000000000000000000000000000000) (409913644607350192195998623/1000000000000000000000000000000000) := Bounds.mul h288 h276 (by norm_num)
+  let v290 : ℝ := v287+v289
+  have h290 : Bounds v290 (156776934445751755468923533/50000000000000000000000000000) (12550049220127051472227763/4000000000000000000000000000) := Bounds.add h287 h289 (by norm_num)
+  let v291 : ℝ := v290^2
+  have h291 : Bounds v291 (4915801434841508658753151/500000000000000000000000000000) (1968796692845145160748499/200000000000000000000000000000) := Bounds.pow h290 2 (by norm_num)
+  let v292 : ℝ := v286*v291
+  have h292 : Bounds v292 (201292237153890096558624027/100000000000000000000000000000000) (201545717446557510105823843/100000000000000000000000000000000) := Bounds.mul h286 h291 (by norm_num)
+  let v293 : ℝ := v276^2
+  have h293 : Bounds v293 (336058392070561994606397/4000000000000000000000000000000000000) (16802919603528099730319857/200000000000000000000000000000000000000) := Bounds.pow h276 2 (by norm_num)
+  let v294 : ℝ := v293*v8
+  have h294 : Bounds v294 (1008175176211685983819191/2000000000000000000000000000000000000) (50408758810584299190959571/100000000000000000000000000000000000000) := Bounds.mul h293 h8 (by norm_num)
+  let v295 : ℝ := v292+v294
+  have h295 : Bounds v295 (201292287562648907142923217/100000000000000000000000000000000) (100772883927658160345061517/50000000000000000000000000000000) := Bounds.add h292 h294 (by norm_num)
+  let v296 : ℝ := Real.sqrt v2
+  have h296 : Bounds v296 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v297 : ℝ := v296+v2
+  have h297 : Bounds v297 (42677669529663688110021109/12500000000000000000000000) (341421356237309504880168873/100000000000000000000000000) := Bounds.add h296 h2 (by norm_num)
+  let v298 : ℝ := v297*v276
+  have h298 : Bounds v298 (98961908021284975012214363/100000000000000000000000000000000) (989619080212849750122143843/1000000000000000000000000000000000) := Bounds.mul h297 h276 (by norm_num)
+  let v299 : ℝ := Real.sqrt v285
+  have h299 : Bounds v299 (313512877527042775918627467/100000000000000000000000000000) (12548409565548622071458979/4000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v300 : ℝ := v298*v299
+  have h300 : Bounds v300 (155129162746597942333471771/50000000000000000000000000000000000) (31045363830980882275205683/10000000000000000000000000000000000) := Bounds.mul h298 h299 (by norm_num)
+  let v301 : ℝ := v295+v300
+  have h301 : Bounds v301 (2520031823601776287844877/1250000000000000000000000000000) (201856221493626129512875091/100000000000000000000000000000000) := Bounds.add h295 h300 (by norm_num)
+  convert h301 using 1 <;>
+    simp only [v2, v8, v274, v276, v277, v278, v280, v281, v282, v283, v285, v286, v287, v288, v289, v290, v291, v292, v293, v294, v295, v296, v297, v298, v299, v300, v301, meanMajorantValue, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+end BstLean.Part268.WorldRow12813
+namespace BstLean.Part268.WorldRow12814
+open Real MeasureTheory Set BstLean.Part130 BstLean.Part140 BstLean.Part137 BstLean.Part159
+open BstLean.Part227 BstLean.Part228 BstLean.Part218 BstLean.Part205 BstLean.Part214
+open BstLean.Part157 BstLean.Part192
+open BstLean.Part250 (bounds_div pi_bounds rowEps meanMajorantValue endpointPolynomial mean_majorant)
+theorem covmean : Bounds (covarianceMeanBound 25628 (mW 12814)) (66617692354442440849829257/10000000000000000) (49966438474351116079587811/5000000000000000) := by
+  let v1 : ℝ := 238175189152705
+  have h1 : Bounds v1 238175189152705 238175189152705 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v203 : ℝ := v1*v41
+  have h203 : Bounds v203 952700756610820 952700756610820 := Bounds.mul h1 h41 (by norm_num)
+  let v204 : ℝ := -v22
+  have h204 : Bounds v204 (-1) (-1) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h22
+  let v205 : ℝ := v1+v204
+  have h205 : Bounds v205 238175189152704 238175189152704 := Bounds.add h1 h204 (by norm_num)
+  let v206 : ℝ := v203*v205
+  have h206 : Bounds v206 226909682911706269282478657000 226909682911706269282478658000 := Bounds.mul h203 h205 (by norm_num)
+  let v207 : ℝ := v206*(angularJ2 25628 (angularOffset 25628))
+  have h207 : Bounds v207 (66617692354442440849829257/10000000000000000) (49966438474351116079587811/5000000000000000) := Bounds.mul h206 jsecond (by norm_num)
+  convert h207 using 1 <;>
+    simp only [v1, v22, v41, v203, v204, v205, v206, v207, covarianceMeanBound, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem frob : Bounds (e1FrobBound 25628 (mW 12814) rowEps) (11643316336766551014937809/400000000000000000) (291266467703294738461962539/10000000000000000000) := by
+  let v0 : ℝ := 25628
+  have h0 : Bounds v0 25628 25628 := Bounds.point _
+  let v1 : ℝ := 238175189152705
+  have h1 : Bounds v1 238175189152705 238175189152705 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v208 : ℝ := (1/100000)
+  have h208 : Bounds v208 (1/100000) (1/100000) := Bounds.point _
+  let v209 : ℝ := v208+v22
+  have h209 : Bounds v209 (100001/100000) (100001/100000) := Bounds.add h208 h22 (by norm_num)
+  let v210 : ℝ := v1*v0
+  have h210 : Bounds v210 6103953747605523740 6103953747605523740 := Bounds.mul h1 h0 (by norm_num)
+  let v211 : ℝ := v1+v0
+  have h211 : Bounds v211 238175189178333 238175189178333 := Bounds.add h1 h0 (by norm_num)
+  let v212 : ℝ := v211+v22
+  have h212 : Bounds v212 238175189178334 238175189178334 := Bounds.add h211 h22 (by norm_num)
+  let v213 : ℝ := v210*v212
+  have h213 : Bounds v213 1453810338571746401843970330000000 1453810338571746401843970340000000 := Bounds.mul h210 h212 (by norm_num)
+  let v214 : ℝ := v209*v213
+  have h214 : Bounds v214 1453824876675132119307988760000000 1453824876675132119307988780000000 := Bounds.mul h209 h213 (by norm_num)
+  let v215 : ℝ := v0^4
+  have h215 : Bounds v215 431378862853939456 431378862853939456 := Bounds.pow h0 4 (by norm_num)
+  let v216 : ℝ := v215*v41
+  have h216 : Bounds v216 1725515451415757824 1725515451415757824 := Bounds.mul h215 h41 (by norm_num)
+  let v217 : ℝ := 1/v216
+  have h217 : Bounds v217 (57953697208536498324189153/100000000000000000000000000000000000000000000) (28976848604268249162094577/50000000000000000000000000000000000000000000) := Bounds.inv h216 (by norm_num)
+  let v218 : ℝ := v214/v216
+  have h218 : Bounds v218 (84254526697068523235771221/100000000000) (3370181067882740929430849/4000000000) := bounds_div h214 h217 (by norm_num)
+  let v219 : ℝ := Real.sqrt v218
+  have h219 : Bounds v219 (290266303068524513214121881/10000000000000000000) (290266303068524513214121889/10000000000000000000) := Bounds.sqrt h218 (by norm_num)
+  let v220 : ℝ := v0*v41
+  have h220 : Bounds v220 102512 102512 := Bounds.mul h0 h41 (by norm_num)
+  let v221 : ℝ := 1/v220
+  have h221 : Bounds v221 (97549555174028406430466677/10000000000000000000000000000000) (48774777587014203215233339/5000000000000000000000000000000) := Bounds.inv h220 (by norm_num)
+  let v222 : ℝ := v22/v220
+  have h222 : Bounds v222 (97549555174028406430466677/10000000000000000000000000000000) (48774777587014203215233339/5000000000000000000000000000000) := bounds_div h22 h221 (by norm_num)
+  let v223 : ℝ := -(BstLean.Part137.cN 25628 ^ 2)
+  have h223 : Bounds v223 (-25000000000000000000/4025479746677281566100721) (-12500000000000000000/2012818413154980527887729) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg cnsq_bounds
+  let v224 : ℝ := v222+v223
+  have h224 : Bounds v224 (35445156261984337374776319/10000000000000000000000000000000) (177237897822898127500173501/50000000000000000000000000000000) := Bounds.add h222 h223 (by norm_num)
+  let v225 : ℝ := v224^2
+  have h225 : Bounds v225 (125635910243648748424694721/10000000000000000000000000000000000000) (125653089698720307215594261/10000000000000000000000000000000000000) := Bounds.pow h224 2 (by norm_num)
+  let v226 : ℝ := v0^2
+  have h226 : Bounds v226 656794384 656794384 := Bounds.pow h0 2 (by norm_num)
+  let v227 : ℝ := 1/v226
+  have h227 : Bounds v227 (7612732571720649791670569/5000000000000000000000000000000000) (15225465143441299583341139/10000000000000000000000000000000000) := Bounds.inv h226 (by norm_num)
+  let v228 : ℝ := v41/v226
+  have h228 : Bounds v228 (7612732571720649791670569/1250000000000000000000000000000000) (15225465143441299583341139/2500000000000000000000000000000000) := bounds_div h41 h227 (by norm_num)
+  let v229 : ℝ := v225*v228
+  have h229 : Bounds v229 (30605842754867099697903559/400000000000000000000000000000000000000000000) (38262534747471381306937077/500000000000000000000000000000000000000000000) := Bounds.mul h225 h228 (by norm_num)
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v231 : ℝ := v230+v22
+  have h231 : Bounds v231 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v232 : ℝ := v1*v0
+  have h232 : Bounds v232 6103953747605523740 6103953747605523740 := Bounds.mul h1 h0 (by norm_num)
+  let v233 : ℝ := v0+v2
+  have h233 : Bounds v233 25630 25630 := Bounds.add h0 h2 (by norm_num)
+  let v234 : ℝ := v232*v233
+  have h234 : Bounds v234 156444334551129573456200 156444334551129573456200 := Bounds.mul h232 h233 (by norm_num)
+  let v235 : ℝ := v231*v234
+  have h235 : Bounds v235 (783003894428403515148281/5) (783003894428403515148281/5) := Bounds.mul h231 h234 (by norm_num)
+  let v236 : ℝ := v229*v235
+  have h236 : Bounds v236 (5991123517331069284051331/500000000000000000000) (119838854871888810404762099/10000000000000000000000) := Bounds.mul h229 h235 (by norm_num)
+  let v237 : ℝ := v230+v22
+  have h237 : Bounds v237 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v238 : ℝ := v237*(covarianceMeanBound 25628 (mW 12814))
+  have h238 : Bounds v238 (333421550233984416453395431/50000000000000000) (50016404912825467195667399/5000000000000000) := Bounds.mul h237 covmean (by norm_num)
+  let v239 : ℝ := v236+v238
+  have h239 : Bounds v239 (66684429869267229912064767/10000000000000000) (100032929664505806280145203/10000000000000000) := Bounds.add h236 h238 (by norm_num)
+  let v240 : ℝ := Real.sqrt v239
+  have h240 : Bounds v240 (163321070127852431864668969/2000000000000000000000) (25004115869255631196016239/250000000000000000000) := Bounds.sqrt h239 (by norm_num)
+  let v241 : ℝ := v219+v240
+  have h241 : Bounds v241 (11643316336766551014937809/400000000000000000) (291266467703294738461962539/10000000000000000000) := Bounds.add h219 h240 (by norm_num)
+  convert h241 using 1 <;>
+    simp only [v0, v1, v2, v22, v41, v208, v209, v210, v211, v212, v213, v214, v215, v216, v218, v219, v220, v222, v223, v224, v225, v226, v228, v229, v230, v231, v232, v233, v234, v235, v236, v237, v238, v239, v240, v241, e1FrobBound, rowEps, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem energy : Bounds (e1EnergyLower 25628 (mW 12814) (1/10^6)) (9293544208581077231738723/1000000000000000) (46467721042905386158693617/5000000000000000) := by
+  let v0 : ℝ := 25628
+  have h0 : Bounds v0 25628 25628 := Bounds.point _
+  let v1 : ℝ := 238175189152705
+  have h1 : Bounds v1 238175189152705 238175189152705 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v242 : ℝ := (1/1000000)
+  have h242 : Bounds v242 (1/1000000) (1/1000000) := Bounds.point _
+  let v243 : ℝ := -v242
+  have h243 : Bounds v243 (-1/1000000) (-1/1000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h242
+  let v244 : ℝ := v22+v243
+  have h244 : Bounds v244 (999999/1000000) (999999/1000000) := Bounds.add h22 h243 (by norm_num)
+  let v245 : ℝ := v244*v1
+  have h245 : Bounds v245 (47634990195503169459/200000) (47634990195503169459/200000) := Bounds.mul h244 h1 (by norm_num)
+  let v246 : ℝ := 1/v0
+  have h246 : Bounds v246 (3901982206961136257218667/100000000000000000000000000000) (39019822069611362572186671/1000000000000000000000000000000) := Bounds.inv h0 (by norm_num)
+  let v247 : ℝ := v245/v0
+  have h247 : Bounds v247 (9293544208581077231738723/1000000000000000) (46467721042905386158693617/5000000000000000) := bounds_div h245 h246 (by norm_num)
+  convert h247 using 1 <;>
+    simp only [v0, v1, v22, v242, v243, v244, v245, v247, e1EnergyLower, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem direction : Bounds (directionMean 25628 (mW 12814)) (78691928522901170955053047/1000000000000000000000) (9837054136609126422945339/125000000000000000000) := by
+  let v0 : ℝ := 25628
+  have h0 : Bounds v0 25628 25628 := Bounds.point _
+  let v1 : ℝ := 238175189152705
+  have h1 : Bounds v1 238175189152705 238175189152705 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v248 : ℝ := v1*v2
+  have h248 : Bounds v248 476350378305410 476350378305410 := Bounds.mul h1 h2 (by norm_num)
+  let v249 : ℝ := v248*(BstLean.Part137.cN 25628 ^ 2)
+  have h249 : Bounds v249 (59164599150148543077464433/20000000000000000) (924482934880696422470737/312500000000000) := Bounds.mul h248 cnsq_bounds (by norm_num)
+  let v250 : ℝ := v0+v2
+  have h250 : Bounds v250 25630 25630 := Bounds.add h0 h2 (by norm_num)
+  let v251 : ℝ := v249*v250
+  have h251 : Bounds v251 (7581943381091535795377067/100000000000) (37911196193587598892679983/500000000000) := Bounds.mul h249 h250 (by norm_num)
+  let v252 : ℝ := v0^2
+  have h252 : Bounds v252 656794384 656794384 := Bounds.pow h0 2 (by norm_num)
+  let v253 : ℝ := 1/v252
+  have h253 : Bounds v253 (7612732571720649791670569/5000000000000000000000000000000000) (15225465143441299583341139/10000000000000000000000000000000000) := Bounds.inv h252 (by norm_num)
+  let v254 : ℝ := v251/v252
+  have h254 : Bounds v254 (115438614668354651999842107/1000000000000000000000) (115443119238326492428351773/1000000000000000000000) := bounds_div h251 h253 (by norm_num)
+  let v255 : ℝ := v0*v2
+  have h255 : Bounds v255 51256 51256 := Bounds.mul h0 h2 (by norm_num)
+  let v256 : ℝ := v255*(BstLean.Part137.cN 25628 ^ 2)
+  have h256 : Bounds v256 (15915494309189533576851107/50000000000000000000000000) (636644614127146160703693/2000000000000000000000000) := Bounds.mul h255 cnsq_bounds (by norm_num)
+  let v257 : ℝ := -v256
+  have h257 : Bounds v257 (-636644614127146160703693/2000000000000000000000000) (-15915494309189533576851107/50000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h256
+  let v258 : ℝ := v22+v257
+  have h258 : Bounds v258 (1363355385872853839296307/2000000000000000000000000) (34084505690810466423148893/50000000000000000000000000) := Bounds.add h22 h257 (by norm_num)
+  let v259 : ℝ := v254*v258
+  have h259 : Bounds v259 (78691928522901170955053047/1000000000000000000000) (9837054136609126422945339/125000000000000000000) := Bounds.mul h254 h258 (by norm_num)
+  convert h259 using 1 <;>
+    simp only [v0, v1, v2, v22, v248, v249, v250, v251, v252, v254, v255, v256, v257, v258, v259, directionMean, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring <;> simp
+
+theorem inputvar : Bounds (e1InputVarianceBound 25628 (mW 12814) rowEps) (36271780088673378821825541/5000000000000000000) (72543560177346757643651089/10000000000000000000) := by
+  let v0 : ℝ := 25628
+  have h0 : Bounds v0 25628 25628 := Bounds.point _
+  let v1 : ℝ := 238175189152705
+  have h1 : Bounds v1 238175189152705 238175189152705 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v13 : ℝ := 3
+  have h13 : Bounds v13 3 3 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v260 : ℝ := v230+v22
+  have h260 : Bounds v260 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v261 : ℝ := v260+v13
+  have h261 : Bounds v261 (4001/1000) (4001/1000) := Bounds.add h260 h13 (by norm_num)
+  let v262 : ℝ := 5
+  have h262 : Bounds v262 5 5 := Bounds.point _
+  let v263 : ℝ := v1*v262
+  have h263 : Bounds v263 1190875945763525 1190875945763525 := Bounds.mul h1 h262 (by norm_num)
+  let v264 : ℝ := v0^2
+  have h264 : Bounds v264 656794384 656794384 := Bounds.pow h0 2 (by norm_num)
+  let v265 : ℝ := 1/v264
+  have h265 : Bounds v265 (7612732571720649791670569/5000000000000000000000000000000000) (15225465143441299583341139/10000000000000000000000000000000000) := Bounds.inv h264 (by norm_num)
+  let v266 : ℝ := v263/v264
+  have h266 : Bounds v266 (90658201011926207334927511/50000000000000000000) (36263280404770482933971007/20000000000000000000) := bounds_div h263 h265 (by norm_num)
+  let v267 : ℝ := v1*v2
+  have h267 : Bounds v267 476350378305410 476350378305410 := Bounds.mul h1 h2 (by norm_num)
+  let v268 : ℝ := v0^3
+  have h268 : Bounds v268 16832326473152 16832326473152 := Bounds.pow h0 3 (by norm_num)
+  let v269 : ℝ := 1/v268
+  have h269 : Bounds v269 (3713093380150933447630799/62500000000000000000000000000000000000) (11881898816482987032418557/200000000000000000000000000000000000000) := Bounds.inv h268 (by norm_num)
+  let v270 : ℝ := v267/v268
+  have h270 : Bounds v270 (14149867490545685552509367/500000000000000000000000) (70749337452728427762546837/2500000000000000000000000) := bounds_div h267 h269 (by norm_num)
+  let v271 : ℝ := -v270
+  have h271 : Bounds v271 (-70749337452728427762546837/2500000000000000000000000) (-14149867490545685552509367/500000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h270
+  let v272 : ℝ := v266+v271
+  have h272 : Bounds v272 (4532839301258857638318613/2500000000000000000) (90656786025177152766372267/50000000000000000000) := Bounds.add h266 h271 (by norm_num)
+  let v273 : ℝ := v261*v272
+  have h273 : Bounds v273 (36271780088673378821825541/5000000000000000000) (72543560177346757643651089/10000000000000000000) := Bounds.mul h261 h272 (by norm_num)
+  convert h273 using 1 <;>
+    simp only [v0, v1, v2, v13, v22, v230, v260, v261, v262, v263, v264, v266, v267, v268, v270, v271, v272, v273, e1InputVarianceBound, inputVarianceMean, rowEps, Matrix.cons_val_one, Matrix.cons_val_three, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem meanvalue : Bounds (meanMajorantValue 25628 (mW 12814) (1/10^6) (1/10^7) rowEps) (100793330306415379213119111/50000000000000000000000000000000) (12615019153913066585826519/6250000000000000000000000000000) := by
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v8 : ℝ := 6
+  have h8 : Bounds v8 6 6 := Bounds.point _
+  let v274 : ℝ := Real.sqrt (e1InputVarianceBound 25628 (mW 12814) rowEps)
+  have h274 : Bounds v274 (3366738967860506835972949/1250000000000000000000) (134669558714420273438917967/50000000000000000000000) := Bounds.sqrt inputvar (by norm_num)
+  let v275 : ℝ := 1/(e1EnergyLower 25628 (mW 12814) (1/10^6))
+  have h275 : Bounds v275 (10760157562673049634715791/100000000000000000000000000000000000) (672509847667065602169737/6250000000000000000000000000000000) := Bounds.inv energy (by norm_num)
+  let v276 : ℝ := v274/(e1EnergyLower 25628 (mW 12814) (1/10^6))
+  have h276 : Bounds v276 (289813134132562320197991633/1000000000000000000000000000000000) (72453283533140580049497919/250000000000000000000000000000000) := bounds_div h274 h275 (by norm_num)
+  let v277 : ℝ := (e1FrobBound 25628 (mW 12814) rowEps)^2
+  have h277 : Bounds v277 (42364629786879642751810357/50000000000) (26511298502610761549260367/31250000000) := Bounds.pow frob 2 (by norm_num)
+  let v278 : ℝ := (1/10000000)
+  have h278 : Bounds v278 (1/10000000) (1/10000000) := Bounds.point _
+  let v279 : ℝ := 1/v278
+  have h279 : Bounds v279 10000000 10000000 := Bounds.inv h278 (by norm_num)
+  let v280 : ℝ := (directionMean 25628 (mW 12814))/v278
+  have h280 : Bounds v280 (78691928522901170955053047/100000000000000) (9837054136609126422945339/12500000000000) := bounds_div direction h279 (by norm_num)
+  let v281 : ℝ := v280*v2
+  have h281 : Bounds v281 (78691928522901170955053047/50000000000000) (9837054136609126422945339/6250000000000) := Bounds.mul h280 h2 (by norm_num)
+  let v282 : ℝ := v277+v281
+  have h282 : Bounds v282 (4244332171540254392276541/5000000000) (849935480745401829804003/1000000000) := Bounds.add h277 h281 (by norm_num)
+  let v283 : ℝ := (e1EnergyLower 25628 (mW 12814) (1/10^6))^2
+  have h283 : Bounds v283 (172739927913701762294379633/2000000) (1349530686825795017924841/15625) := Bounds.pow energy 2 (by norm_num)
+  let v284 : ℝ := 1/v283
+  have h284 : Bounds v284 (28945247693387506019407477/2500000000000000000000000000000000000000000000) (115780990773550024077629919/10000000000000000000000000000000000000000000000) := Bounds.inv h283 (by norm_num)
+  let v285 : ℝ := v282/v283
+  have h285 : Bounds v285 (98282596798596746375609857/10000000000000000000000000000000) (123007965067870216746945649/12500000000000000000000000000000) := bounds_div h282 h284 (by norm_num)
+  let v286 : ℝ := (10237/50000)
+  have h286 : Bounds v286 (10237/50000) (10237/50000) := Bounds.point _
+  let v287 : ℝ := Real.sqrt v285
+  have h287 : Bounds v287 (156750276553660939925113841/50000000000000000000000000000) (78424474836580900354394979/25000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v288 : ℝ := Real.sqrt v2
+  have h288 : Bounds v288 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v289 : ℝ := v288*v276
+  have h289 : Bounds v289 (40985766484412258445674499/100000000000000000000000000000000) (20492883242206129222837253/50000000000000000000000000000000) := Bounds.mul h288 h276 (by norm_num)
+  let v290 : ℝ := v287+v289
+  have h290 : Bounds v290 (78385384718451573027168339/25000000000000000000000000000) (49021700798876252136879/15625000000000000000000000) := Bounds.add h287 h289 (by norm_num)
+  let v291 : ℝ := v290^2
+  have h291 : Bounds v291 (1966165931987091644943977/200000000000000000000000000000) (49216044015913872936143847/5000000000000000000000000000000) := Bounds.pow h290 2 (by norm_num)
+  let v292 : ℝ := v286*v291
+  have h292 : Bounds v292 (8051056258300742867716597/4000000000000000000000000000000) (8061194281454565075956873/4000000000000000000000000000000) := Bounds.mul h286 h291 (by norm_num)
+  let v293 : ℝ := v276^2
+  have h293 : Bounds v293 (524947829473365993445973/6250000000000000000000000000000000000) (16798330543147711790271141/200000000000000000000000000000000000000) := Bounds.pow h276 2 (by norm_num)
+  let v294 : ℝ := v293*v8
+  have h294 : Bounds v294 (1574843488420097980337919/3125000000000000000000000000000000000) (50394991629443135370813423/100000000000000000000000000000000000000) := Bounds.mul h293 h8 (by norm_num)
+  let v295 : ℝ := v292+v294
+  have h295 : Bounds v295 (40255291370502040227210059/20000000000000000000000000000000) (50382476857838939085514299/25000000000000000000000000000000) := Bounds.add h292 h294 (by norm_num)
+  let v296 : ℝ := Real.sqrt v2
+  have h296 : Bounds v296 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v297 : ℝ := v296+v2
+  have h297 : Bounds v297 (42677669529663688110021109/12500000000000000000000000) (341421356237309504880168873/100000000000000000000000000) := Bounds.add h296 h2 (by norm_num)
+  let v298 : ℝ := v297*v276
+  have h298 : Bounds v298 (3957935732436988899410913/4000000000000000000000000000000) (98948393310924722485272841/100000000000000000000000000000000) := Bounds.mul h297 h276 (by norm_num)
+  let v299 : ℝ := Real.sqrt v285
+  have h299 : Bounds v299 (156750276553660939925113841/50000000000000000000000000000) (78424474836580900354394979/25000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v300 : ℝ := v298*v299
+  have h300 : Bounds v300 (62040752064111458037585401/20000000000000000000000000000000000) (31039903125330903116710773/10000000000000000000000000000000000) := Bounds.mul h298 h299 (by norm_num)
+  let v301 : ℝ := v295+v300
+  have h301 : Bounds v301 (100793330306415379213119111/50000000000000000000000000000000) (12615019153913066585826519/6250000000000000000000000000000) := Bounds.add h295 h300 (by norm_num)
+  convert h301 using 1 <;>
+    simp only [v2, v8, v274, v276, v277, v278, v280, v281, v282, v283, v285, v286, v287, v288, v289, v290, v291, v292, v293, v294, v295, v296, v297, v298, v299, v300, v301, meanMajorantValue, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+end BstLean.Part268.WorldRow12814
+namespace BstLean.Part268.WorldRow12815
+open Real MeasureTheory Set BstLean.Part130 BstLean.Part140 BstLean.Part137 BstLean.Part159
+open BstLean.Part227 BstLean.Part228 BstLean.Part218 BstLean.Part205 BstLean.Part214
+open BstLean.Part157 BstLean.Part192
+open BstLean.Part250 (bounds_div pi_bounds rowEps meanMajorantValue endpointPolynomial mean_majorant)
+theorem covmean : Bounds (covarianceMeanBound 25630 (mW 12815)) (66633290212479358247756189/10000000000000000) (49978137362518823575443893/5000000000000000) := by
+  let v1 : ℝ := 238240250373541
+  have h1 : Bounds v1 238240250373541 238240250373541 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v203 : ℝ := v1*v41
+  have h203 : Bounds v203 952961001494164 952961001494164 := Bounds.mul h1 h41 (by norm_num)
+  let v204 : ℝ := -v22
+  have h204 : Bounds v204 (-1) (-1) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h22
+  let v205 : ℝ := v1+v204
+  have h205 : Bounds v205 238240250373540 238240250373540 := Bounds.add h1 h204 (by norm_num)
+  let v206 : ℝ := v203*v205
+  have h206 : Bounds v206 227033667592189057399130020000 227033667592189057399130021000 := Bounds.mul h203 h205 (by norm_num)
+  let v207 : ℝ := v206*(angularJ2 25630 (angularOffset 25630))
+  have h207 : Bounds v207 (66633290212479358247756189/10000000000000000) (49978137362518823575443893/5000000000000000) := Bounds.mul h206 jsecond (by norm_num)
+  convert h207 using 1 <;>
+    simp only [v1, v22, v41, v203, v204, v205, v206, v207, covarianceMeanBound, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem frob : Bounds (e1FrobBound 25630 (mW 12815) rowEps) (29112831033918533016963181/1000000000000000000) (291311891108872305613150913/10000000000000000000) := by
+  let v0 : ℝ := 25630
+  have h0 : Bounds v0 25630 25630 := Bounds.point _
+  let v1 : ℝ := 238240250373541
+  have h1 : Bounds v1 238240250373541 238240250373541 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v208 : ℝ := (1/100000)
+  have h208 : Bounds v208 (1/100000) (1/100000) := Bounds.point _
+  let v209 : ℝ := v208+v22
+  have h209 : Bounds v209 (100001/100000) (100001/100000) := Bounds.add h208 h22 (by norm_num)
+  let v210 : ℝ := v1*v0
+  have h210 : Bounds v210 6106097617073855830 6106097617073855830 := Bounds.mul h1 h0 (by norm_num)
+  let v211 : ℝ := v1+v0
+  have h211 : Bounds v211 238240250399171 238240250399171 := Bounds.add h1 h0 (by norm_num)
+  let v212 : ℝ := v211+v22
+  have h212 : Bounds v212 238240250399172 238240250399172 := Bounds.add h211 h22 (by norm_num)
+  let v213 : ℝ := v210*v212
+  have h213 : Bounds v213 1454718225253462879405762670000000 1454718225253462879405762680000000 := Bounds.mul h210 h212 (by norm_num)
+  let v214 : ℝ := v209*v213
+  have h214 : Bounds v214 1454732772435715414034556720000000 1454732772435715414034556740000000 := Bounds.mul h209 h213 (by norm_num)
+  let v215 : ℝ := v0^4
+  have h215 : Bounds v215 431513537229610000 431513537229610000 := Bounds.pow h0 4 (by norm_num)
+  let v216 : ℝ := v215*v41
+  have h216 : Bounds v216 1726054148918440000 1726054148918440000 := Bounds.mul h215 h41 (by norm_num)
+  let v217 : ℝ := 1/v216
+  have h217 : Bounds v217 (57935609993846854888616909/100000000000000000000000000000000000000000000) (5793560999384685488861691/10000000000000000000000000000000000000000000) := Bounds.inv h216 (by norm_num)
+  let v218 : ℝ := v214/v216
+  have h218 : Bounds v218 (84280830549103176451413011/100000000000) (16856166109820635290282603/20000000000) := bounds_div h214 h217 (by norm_num)
+  let v219 : ℝ := Real.sqrt v218
+  have h219 : Bounds v219 (145155804697145315756170733/5000000000000000000) (145155804697145315756170737/5000000000000000000) := Bounds.sqrt h218 (by norm_num)
+  let v220 : ℝ := v0*v41
+  have h220 : Bounds v220 102520 102520 := Bounds.mul h0 h41 (by norm_num)
+  let v221 : ℝ := 1/v220
+  have h221 : Bounds v221 (97541943035505267264923917/10000000000000000000000000000000) (48770971517752633632461959/5000000000000000000000000000000) := Bounds.inv h220 (by norm_num)
+  let v222 : ℝ := v22/v220
+  have h222 : Bounds v222 (97541943035505267264923917/10000000000000000000000000000000) (48770971517752633632461959/5000000000000000000000000000000) := bounds_div h22 h221 (by norm_num)
+  let v223 : ℝ := -(BstLean.Part137.cN 25630 ^ 2)
+  have h223 : Bounds v223 (-25000000000000000000/4025793905942640545424567) (-5000000000000000000/805190197115064007019861) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg cnsq_bounds
+  let v224 : ℝ := v222+v223
+  have h224 : Bounds v224 (35442390539545481175331003/10000000000000000000000000000000) (8861203365987579421721511/2500000000000000000000000000000) := Bounds.add h222 h223 (by norm_num)
+  let v225 : ℝ := v224^2
+  have h225 : Bounds v225 (125616304715766302421680583/10000000000000000000000000000000000000) (25126696029884674373088681/2000000000000000000000000000000000000) := Bounds.pow h224 2 (by norm_num)
+  let v226 : ℝ := v0^2
+  have h226 : Bounds v226 656896900 656896900 := Bounds.pow h0 2 (by norm_num)
+  let v227 : ℝ := 1/v226
+  have h227 : Bounds v227 (15223089041826807220432917/10000000000000000000000000000000000) (7611544520913403610216459/5000000000000000000000000000000000) := Bounds.inv h226 (by norm_num)
+  let v228 : ℝ := v41/v226
+  have h228 : Bounds v228 (15223089041826807220432917/2500000000000000000000000000000000) (7611544520913403610216459/1250000000000000000000000000000000) := bounds_div h41 h227 (by norm_num)
+  let v229 : ℝ := v225*v228
+  have h229 : Bounds v229 (3824536383586718172111349/50000000000000000000000000000000000000000000) (38250593098985052864595163/500000000000000000000000000000000000000000000) := Bounds.mul h225 h228 (by norm_num)
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v231 : ℝ := v230+v22
+  have h231 : Bounds v231 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v232 : ℝ := v1*v0
+  have h232 : Bounds v232 6106097617073855830 6106097617073855830 := Bounds.mul h1 h0 (by norm_num)
+  let v233 : ℝ := v0+v2
+  have h233 : Bounds v233 25632 25632 := Bounds.add h0 h2 (by norm_num)
+  let v234 : ℝ := v232*v233
+  have h234 : Bounds v234 156511494120837072634560 156511494120837072634560 := Bounds.mul h232 h233 (by norm_num)
+  let v235 : ℝ := v231*v234
+  have h235 : Bounds v235 (3916700140373947742679864/25) (3916700140373947742679864/25) := Bounds.mul h231 h234 (by norm_num)
+  let v236 : ℝ := v229*v235
+  have h236 : Bounds v236 (119836497523674956114306627/10000000000000000000000) (119852882688145210686558977/10000000000000000000000) := Bounds.mul h229 h235 (by norm_num)
+  let v237 : ℝ := v230+v22
+  have h237 : Bounds v237 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v238 : ℝ := v237*(covarianceMeanBound 25630 (mW 12815))
+  have h238 : Bounds v238 (666999235026918376060039451/100000000000000000) (50028115499881342399019337/5000000000000000) := Bounds.mul h237 covmean (by norm_num)
+  let v239 : ℝ := v236+v238
+  have h239 : Bounds v239 (333500216695946806404800297/50000000000000000) (100056350852645372943249361/10000000000000000) := Bounds.add h236 h238 (by norm_num)
+  let v240 : ℝ := Real.sqrt v239
+  have h240 : Bounds v240 (3266803779578794629161381/40000000000000000000) (1000281714581674100809439/10000000000000000000) := Bounds.sqrt h239 (by norm_num)
+  let v241 : ℝ := v219+v240
+  have h241 : Bounds v241 (29112831033918533016963181/1000000000000000000) (291311891108872305613150913/10000000000000000000) := Bounds.add h219 h240 (by norm_num)
+  convert h241 using 1 <;>
+    simp only [v0, v1, v2, v22, v41, v208, v209, v210, v211, v212, v213, v214, v215, v216, v218, v219, v220, v222, v223, v224, v225, v226, v228, v229, v230, v231, v232, v233, v234, v235, v236, v237, v238, v239, v240, v241, e1FrobBound, rowEps, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem energy : Bounds (e1EnergyLower 25630 (mW 12815) (1/10^6)) (92953574769134071969957079/10000000000000000) (464767873845670359849785409/50000000000000000) := by
+  let v0 : ℝ := 25630
+  have h0 : Bounds v0 25630 25630 := Bounds.point _
+  let v1 : ℝ := 238240250373541
+  have h1 : Bounds v1 238240250373541 238240250373541 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v242 : ℝ := (1/1000000)
+  have h242 : Bounds v242 (1/1000000) (1/1000000) := Bounds.point _
+  let v243 : ℝ := -v242
+  have h243 : Bounds v243 (-1/1000000) (-1/1000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h242
+  let v244 : ℝ := v22+v243
+  have h244 : Bounds v244 (999999/1000000) (999999/1000000) := Bounds.add h22 h243 (by norm_num)
+  let v245 : ℝ := v244*v1
+  have h245 : Bounds v245 (238240012133290626459/1000000) (238240012133290626459/1000000) := Bounds.mul h244 h1 (by norm_num)
+  let v246 : ℝ := 1/v0
+  have h246 : Bounds v246 (19508388607101053452984783/500000000000000000000000000000) (39016777214202106905969567/1000000000000000000000000000000) := Bounds.inv h0 (by norm_num)
+  let v247 : ℝ := v245/v0
+  have h247 : Bounds v247 (92953574769134071969957079/10000000000000000) (464767873845670359849785409/50000000000000000) := bounds_div h245 h246 (by norm_num)
+  convert h247 using 1 <;>
+    simp only [v0, v1, v22, v242, v243, v244, v245, v247, e1EnergyLower, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem direction : Bounds (directionMean 25630 (mW 12815)) (78701139970440662129395463/1000000000000000000000) (787056447161354449796115183/10000000000000000000000) := by
+  let v0 : ℝ := 25630
+  have h0 : Bounds v0 25630 25630 := Bounds.point _
+  let v1 : ℝ := 238240250373541
+  have h1 : Bounds v1 238240250373541 238240250373541 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v248 : ℝ := v1*v2
+  have h248 : Bounds v248 476480500747082 476480500747082 := Bounds.mul h1 h2 (by norm_num)
+  let v249 : ℝ := v248*(BstLean.Part137.cN 25630 ^ 2)
+  have h249 : Bounds v249 (2958807139321093590699469/1000000000000000) (14794612934722312366824453/5000000000000000) := Bounds.mul h248 cnsq_bounds (by norm_num)
+  let v250 : ℝ := v0+v2
+  have h250 : Bounds v250 25632 25632 := Bounds.add h0 h2 (by norm_num)
+  let v251 : ℝ := v249*v250
+  have h251 : Bounds v251 (75840144595078270916808789/1000000000000) (18960775937140115529322219/250000000000) := Bounds.mul h249 h250 (by norm_num)
+  let v252 : ℝ := v0^2
+  have h252 : Bounds v252 656896900 656896900 := Bounds.pow h0 2 (by norm_num)
+  let v253 : ℝ := 1/v252
+  have h253 : Bounds v253 (15223089041826807220432917/10000000000000000000000000000000000) (7611544520913403610216459/5000000000000000000000000000000000) := Bounds.inv h252 (by norm_num)
+  let v254 : ℝ := v251/v252
+  have h254 : Bounds v254 (115452127411589658768078807/1000000000000000000000) (23091326431456888323658973/200000000000000000000) := bounds_div h251 h253 (by norm_num)
+  let v255 : ℝ := v0*v2
+  have h255 : Bounds v255 51260 51260 := Bounds.mul h0 h2 (by norm_num)
+  let v256 : ℝ := v255*(BstLean.Part137.cN 25630 ^ 2)
+  have h256 : Bounds v256 (15915494309189533576851107/50000000000000000000000000) (1989514413089311646845333/6250000000000000000000000) := Bounds.mul h255 cnsq_bounds (by norm_num)
+  let v257 : ℝ := -v256
+  have h257 : Bounds v257 (-1989514413089311646845333/6250000000000000000000000) (-15915494309189533576851107/50000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h256
+  let v258 : ℝ := v22+v257
+  have h258 : Bounds v258 (4260485586910688353154667/6250000000000000000000000) (34084505690810466423148893/50000000000000000000000000) := Bounds.add h22 h257 (by norm_num)
+  let v259 : ℝ := v254*v258
+  have h259 : Bounds v259 (78701139970440662129395463/1000000000000000000000) (787056447161354449796115183/10000000000000000000000) := Bounds.mul h254 h258 (by norm_num)
+  convert h259 using 1 <;>
+    simp only [v0, v1, v2, v22, v248, v249, v250, v251, v252, v254, v255, v256, v257, v258, v259, directionMean, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring <;> simp
+
+theorem inputvar : Bounds (e1InputVarianceBound 25630 (mW 12815) rowEps) (72552052341817656910906773/10000000000000000000) (72552052341817656910906779/10000000000000000000) := by
+  let v0 : ℝ := 25630
+  have h0 : Bounds v0 25630 25630 := Bounds.point _
+  let v1 : ℝ := 238240250373541
+  have h1 : Bounds v1 238240250373541 238240250373541 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v13 : ℝ := 3
+  have h13 : Bounds v13 3 3 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v260 : ℝ := v230+v22
+  have h260 : Bounds v260 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v261 : ℝ := v260+v13
+  have h261 : Bounds v261 (4001/1000) (4001/1000) := Bounds.add h260 h13 (by norm_num)
+  let v262 : ℝ := 5
+  have h262 : Bounds v262 5 5 := Bounds.point _
+  let v263 : ℝ := v1*v262
+  have h263 : Bounds v263 1191201251867705 1191201251867705 := Bounds.mul h1 h262 (by norm_num)
+  let v264 : ℝ := v0^2
+  have h264 : Bounds v264 656896900 656896900 := Bounds.pow h0 2 (by norm_num)
+  let v265 : ℝ := 1/v264
+  have h265 : Bounds v265 (15223089041826807220432917/10000000000000000000000000000000000) (7611544520913403610216459/5000000000000000000000000000000000) := Bounds.inv h264 (by norm_num)
+  let v266 : ℝ := v263/v264
+  have h266 : Bounds v266 (45334406809794086408384633/25000000000000000000) (36267525447835269126707709/20000000000000000000) := bounds_div h263 h265 (by norm_num)
+  let v267 : ℝ := v1*v2
+  have h267 : Bounds v267 476480500747082 476480500747082 := Bounds.mul h1 h2 (by norm_num)
+  let v268 : ℝ := v0^3
+  have h268 : Bounds v268 16836267547000 16836267547000 := Bounds.pow h0 3 (by norm_num)
+  let v269 : ℝ := 1/v268
+  have h269 : Bounds v269 (11879117473138359126362011/200000000000000000000000000000000000000) (7424448420711474453976257/125000000000000000000000000000000000000) := Bounds.inv h268 (by norm_num)
+  let v270 : ℝ := v267/v268
+  have h270 : Bounds v270 (283008392101718838288784289/10000000000000000000000000) (2830083921017188382887843/100000000000000000000000) := bounds_div h267 h269 (by norm_num)
+  let v271 : ℝ := -v270
+  have h271 : Bounds v271 (-2830083921017188382887843/100000000000000000000000) (-283008392101718838288784289/10000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h270
+  let v272 : ℝ := v266+v271
+  have h272 : Bounds v272 (45333699288813832111288911/25000000000000000000) (90667398577627664222577829/50000000000000000000) := Bounds.add h266 h271 (by norm_num)
+  let v273 : ℝ := v261*v272
+  have h273 : Bounds v273 (72552052341817656910906773/10000000000000000000) (72552052341817656910906779/10000000000000000000) := Bounds.mul h261 h272 (by norm_num)
+  convert h273 using 1 <;>
+    simp only [v0, v1, v2, v13, v22, v230, v260, v261, v262, v263, v264, v266, v267, v268, v270, v271, v272, v273, e1InputVarianceBound, inputVarianceMean, rowEps, Matrix.cons_val_one, Matrix.cons_val_three, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem meanvalue : Bounds (meanMajorantValue 25630 (mW 12815) (1/10^6) (1/10^7) rowEps) (50392694461995079711484693/25000000000000000000000000000000) (1261402462174184884136633/625000000000000000000000000000) := by
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v8 : ℝ := 6
+  have h8 : Bounds v8 6 6 := Bounds.point _
+  let v274 : ℝ := Real.sqrt (e1InputVarianceBound 25630 (mW 12815) rowEps)
+  have h274 : Bounds v274 (53870976357150853818571419/20000000000000000000000) (269354881785754269092857107/100000000000000000000000) := Bounds.sqrt inputvar (by norm_num)
+  let v275 : ℝ := 1/(e1EnergyLower 25630 (mW 12815) (1/10^6))
+  have h275 : Bounds v275 (26895146380428863856194443/250000000000000000000000000000000000) (5379029276085772771238889/50000000000000000000000000000000000) := Bounds.inv energy (by norm_num)
+  let v276 : ℝ := v274/(e1EnergyLower 25630 (mW 12815) (1/10^6))
+  have h276 : Bounds v276 (28977355895643893756998953/100000000000000000000000000000000) (28977355895643893756998957/100000000000000000000000000000000) := bounds_div h274 h275 (by norm_num)
+  let v277 : ℝ := (e1FrobBound 25630 (mW 12815) rowEps)^2
+  have h277 : Bounds v277 (33902277232379601605280213/40000000000) (106078272376784344329058741/125000000000) := Bounds.pow frob 2 (by norm_num)
+  let v278 : ℝ := (1/10000000)
+  have h278 : Bounds v278 (1/10000000) (1/10000000) := Bounds.point _
+  let v279 : ℝ := 1/v278
+  have h279 : Bounds v279 10000000 10000000 := Bounds.inv h278 (by norm_num)
+  let v280 : ℝ := (directionMean 25630 (mW 12815))/v278
+  have h280 : Bounds v280 (78701139970440662129395463/100000000000000) (787056447161354449796115183/1000000000000000) := bounds_div direction h279 (by norm_num)
+  let v281 : ℝ := v280*v2
+  have h281 : Bounds v281 (78701139970440662129395463/50000000000000) (157411289432270889959223037/100000000000000) := Bounds.mul h280 h2 (by norm_num)
+  let v282 : ℝ := v277+v281
+  have h282 : Bounds v282 (84913095360889885337459323/100000000000) (850200291908597463532062159/1000000000000) := Bounds.add h277 h281 (by norm_num)
+  let v283 : ℝ := (e1EnergyLower 25630 (mW 12815) (1/10^6))^2
+  have h283 : Bounds v283 (86403670623609983411286829/1000000) (17280734124721996682257367/200000) := Bounds.pow energy 2 (by norm_num)
+  let v284 : ℝ := 1/v283
+  have h284 : Bounds v284 (115735823811951330684650487/10000000000000000000000000000000000000000000000) (231471647623902661369301/20000000000000000000000000000000000000000000) := Bounds.inv h283 (by norm_num)
+  let v285 : ℝ := v282/v283
+  have h285 : Bounds v285 (196549740880307473254673039/20000000000000000000000000000000) (19679726237840605316251941/2000000000000000000000000000000) := bounds_div h282 h284 (by norm_num)
+  let v286 : ℝ := (10237/50000)
+  have h286 : Bounds v286 (10237/50000) (10237/50000) := Bounds.point _
+  let v287 : ℝ := Real.sqrt v285
+  have h287 : Bounds v287 (156744115073065611271898617/50000000000000000000000000000) (156842780507426469958748831/50000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v288 : ℝ := Real.sqrt v2
+  have h288 : Bounds v288 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v289 : ℝ := v288*v276
+  have h289 : Bounds v289 (204900848546657796428321063/500000000000000000000000000000000) (204900848546657796428321093/500000000000000000000000000000000) := Bounds.mul h288 h276 (by norm_num)
+  let v290 : ℝ := v287+v289
+  have h290 : Bounds v290 (31352921031584055410308289/10000000000000000000000000000) (31372654118456227147678333/10000000000000000000000000000) := Bounds.add h287 h289 (by norm_num)
+  let v291 : ℝ := v290^2
+  have h291 : Bounds v291 (983005657212745789275589297/100000000000000000000000000000000) (12303042830453605886636453/1250000000000000000000000000000) := Bounds.pow h290 2 (by norm_num)
+  let v292 : ℝ := v286*v291
+  have h292 : Bounds v292 (4025211565154751457925683/2000000000000000000000000000000) (1007569995642828507691979/500000000000000000000000000000) := Bounds.mul h286 h291 (by norm_num)
+  let v293 : ℝ := v276^2
+  have h293 : Bounds v293 (167937430940561585627133843/2000000000000000000000000000000000000000) (104960894337850991016958681/1250000000000000000000000000000000000000) := Bounds.pow h276 2 (by norm_num)
+  let v294 : ℝ := v293*v8
+  have h294 : Bounds v294 (503812292821684756881401529/1000000000000000000000000000000000000000) (50381229282168475688140167/100000000000000000000000000000000000000) := Bounds.mul h293 h8 (by norm_num)
+  let v295 : ℝ := v292+v294
+  have h295 : Bounds v295 (100630314319483427532379919/50000000000000000000000000000000) (201514049509794983706871489/100000000000000000000000000000000) := Bounds.add h292 h294 (by norm_num)
+  let v296 : ℝ := Real.sqrt v2
+  have h296 : Bounds v296 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v297 : ℝ := v296+v2
+  have h297 : Bounds v297 (42677669529663688110021109/12500000000000000000000000) (341421356237309504880168873/100000000000000000000000000) := Bounds.add h296 h2 (by norm_num)
+  let v298 : ℝ := v297*v276
+  have h298 : Bounds v298 (49467440750309673399831059/50000000000000000000000000000000) (494674407503096733998310663/500000000000000000000000000000000) := Bounds.mul h297 h276 (by norm_num)
+  let v299 : ℝ := Real.sqrt v285
+  have h299 : Bounds v299 (156744115073065611271898617/50000000000000000000000000000) (156842780507426469958748831/50000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v300 : ℝ := v298*v299
+  have h300 : Bounds v300 (310149209013463781178934557/100000000000000000000000000000000000) (303070740307224370107217/97656250000000000000000000000000) := Bounds.mul h298 h299 (by norm_num)
+  let v301 : ℝ := v295+v300
+  have h301 : Bounds v301 (50392694461995079711484693/25000000000000000000000000000000) (1261402462174184884136633/625000000000000000000000000000) := Bounds.add h295 h300 (by norm_num)
+  convert h301 using 1 <;>
+    simp only [v2, v8, v274, v276, v277, v278, v280, v281, v282, v283, v285, v286, v287, v288, v289, v290, v291, v292, v293, v294, v295, v296, v297, v298, v299, v300, v301, meanMajorantValue, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+end BstLean.Part268.WorldRow12815
+namespace BstLean.Part268.WorldRow12816
+open Real MeasureTheory Set BstLean.Part130 BstLean.Part140 BstLean.Part137 BstLean.Part159
+open BstLean.Part227 BstLean.Part228 BstLean.Part218 BstLean.Part205 BstLean.Part214
+open BstLean.Part157 BstLean.Part192
+open BstLean.Part250 (bounds_div pi_bounds rowEps meanMajorantValue endpointPolynomial mean_majorant)
+theorem covmean : Bounds (covarianceMeanBound 25632 (mW 12816)) (66648890505047210035682451/10000000000000000) (499898380766233298034348839/50000000000000000) := by
+  let v1 : ℝ := 238305324288012
+  have h1 : Bounds v1 238305324288012 238305324288012 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v203 : ℝ := v1*v41
+  have h203 : Bounds v203 953221297152048 953221297152048 := Bounds.mul h1 h41 (by norm_num)
+  let v204 : ℝ := -v22
+  have h204 : Bounds v204 (-1) (-1) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h22
+  let v205 : ℝ := v1+v204
+  have h205 : Bounds v205 238305324288011 238305324288011 := Bounds.add h1 h204 (by norm_num)
+  let v206 : ℝ := v203*v205
+  have h206 : Bounds v206 227157710336057294917610496000 227157710336057294917610497000 := Bounds.mul h203 h205 (by norm_num)
+  let v207 : ℝ := v206*(angularJ2 25632 (angularOffset 25632))
+  have h207 : Bounds v207 (66648890505047210035682451/10000000000000000) (499898380766233298034348839/50000000000000000) := Bounds.mul h206 jsecond (by norm_num)
+  convert h207 using 1 <;>
+    simp only [v1, v22, v41, v203, v204, v205, v206, v207, covarianceMeanBound, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem frob : Bounds (e1FrobBound 25632 (mW 12816) rowEps) (145586857899244846842207271/5000000000000000000) (145678659027285454415176729/5000000000000000000) := by
+  let v0 : ℝ := 25632
+  have h0 : Bounds v0 25632 25632 := Bounds.point _
+  let v1 : ℝ := 238305324288012
+  have h1 : Bounds v1 238305324288012 238305324288012 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v208 : ℝ := (1/100000)
+  have h208 : Bounds v208 (1/100000) (1/100000) := Bounds.point _
+  let v209 : ℝ := v208+v22
+  have h209 : Bounds v209 (100001/100000) (100001/100000) := Bounds.add h208 h22 (by norm_num)
+  let v210 : ℝ := v1*v0
+  have h210 : Bounds v210 6108242072150323584 6108242072150323584 := Bounds.mul h1 h0 (by norm_num)
+  let v211 : ℝ := v1+v0
+  have h211 : Bounds v211 238305324313644 238305324313644 := Bounds.add h1 h0 (by norm_num)
+  let v212 : ℝ := v211+v22
+  have h212 : Bounds v212 238305324313645 238305324313645 := Bounds.add h211 h22 (by norm_num)
+  let v213 : ℝ := v210*v212
+  have h213 : Bounds v213 1455626607990033823109549450000000 1455626607990033823109549460000000 := Bounds.mul h210 h212 (by norm_num)
+  let v214 : ℝ := v209*v213
+  have h214 : Bounds v214 1455641164256113723447780540000000 1455641164256113723447780560000000 := Bounds.mul h209 h213 (by norm_num)
+  let v215 : ℝ := v0^4
+  have h215 : Bounds v215 431648243136331776 431648243136331776 := Bounds.pow h0 4 (by norm_num)
+  let v216 : ℝ := v215*v41
+  have h216 : Bounds v216 1726592972545327104 1726592972545327104 := Bounds.mul h215 h41 (by norm_num)
+  let v217 : ℝ := 1/v216
+  have h217 : Bounds v217 (57917529834828958856864341/100000000000000000000000000000000000000000000) (28958764917414479428432171/50000000000000000000000000000000000000000000) := Bounds.inv h216 (by norm_num)
+  let v218 : ℝ := v214/v216
+  have h218 : Bounds v218 (84307140559608627630210081/100000000000) (21076785139902156907552521/25000000000) := bounds_div h214 h217 (by norm_num)
+  let v219 : ℝ := Real.sqrt v218
+  have h219 : Bounds v219 (290356919255609659787156273/10000000000000000000) (290356919255609659787156279/10000000000000000000) := Bounds.sqrt h218 (by norm_num)
+  let v220 : ℝ := v0*v41
+  have h220 : Bounds v220 102528 102528 := Bounds.mul h0 h41 (by norm_num)
+  let v221 : ℝ := 1/v220
+  have h221 : Bounds v221 (19506866416978776529338327/2000000000000000000000000000000) (24383583021223470661672909/2500000000000000000000000000000) := Bounds.inv h220 (by norm_num)
+  let v222 : ℝ := v22/v220
+  have h222 : Bounds v222 (19506866416978776529338327/2000000000000000000000000000000) (24383583021223470661672909/2500000000000000000000000000000) := bounds_div h22 h221 (by norm_num)
+  let v223 : ℝ := -(BstLean.Part137.cN 25632 ^ 2)
+  have h223 : Bounds v223 (-25000000000000000000/4026108065207999524748413) (-1562500000000000000/251641571552542438401447) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg cnsq_bounds
+  let v224 : ℝ := v222+v223
+  have h224 : Bounds v224 (35439625248681742750075163/10000000000000000000000000000000) (35442047794984653648364907/10000000000000000000000000000000) := Bounds.add h222 h223 (by norm_num)
+  let v225 : ℝ := v224^2
+  have h225 : Bounds v225 (125596703776700047666087417/10000000000000000000000000000000000000) (15701734398774706872109257/1250000000000000000000000000000000000) := Bounds.pow h224 2 (by norm_num)
+  let v226 : ℝ := v0^2
+  have h226 : Bounds v226 656999424 656999424 := Bounds.pow h0 2 (by norm_num)
+  let v227 : ℝ := 1/v226
+  have h227 : Bounds v227 (3805178374098544110747957/2500000000000000000000000000000000) (15220713496394176442991829/10000000000000000000000000000000000) := Bounds.inv h226 (by norm_num)
+  let v228 : ℝ := v41/v226
+  have h228 : Bounds v228 (3805178374098544110747957/625000000000000000000000000000000) (15220713496394176442991829/2500000000000000000000000000000000) := bounds_div h41 h227 (by norm_num)
+  let v229 : ℝ := v225*v228
+  have h229 : Bounds v229 (38233428885532796956025159/500000000000000000000000000000000000000000000) (9559664027209075222634751/125000000000000000000000000000000000000000000) := Bounds.mul h225 h228 (by norm_num)
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v231 : ℝ := v230+v22
+  have h231 : Bounds v231 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v232 : ℝ := v1*v0
+  have h232 : Bounds v232 6108242072150323584 6108242072150323584 := Bounds.mul h1 h0 (by norm_num)
+  let v233 : ℝ := v0+v2
+  have h233 : Bounds v233 25634 25634 := Bounds.add h0 h2 (by norm_num)
+  let v234 : ℝ := v232*v233
+  have h234 : Bounds v234 156578677277501394752256 156578677277501394752256 := Bounds.mul h232 h233 (by norm_num)
+  let v235 : ℝ := v231*v234
+  have h235 : Bounds v235 (19591906994347362018376032/125) (19591906994347362018376032/125) := Bounds.mul h231 h234 (by norm_num)
+  let v236 : ℝ := v229*v235
+  have h236 : Bounds v236 (5992526262402819769009971/500000000000000000000) (23973382210340908972300541/2000000000000000000000) := Bounds.mul h229 h235 (by norm_num)
+  let v237 : ℝ := v230+v22
+  have h237 : Bounds v237 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v238 : ℝ := v237*(covarianceMeanBound 25632 (mW 12816))
+  have h238 : Bounds v238 (333577696977761286228590667/50000000000000000) (50039827914699953133238319/5000000000000000) := Bounds.mul h237 covmean (by norm_num)
+  let v239 : ℝ := v236+v238
+  have h239 : Bounds v239 (66715659246077505302113513/10000000000000000) (200159551392621915942043/20000000000000) := Bounds.add h236 h238 (by norm_num)
+  let v240 : ℝ := Real.sqrt v239
+  have h240 : Bounds v240 (816796542880033897258269409/10000000000000000000000) (10003987989612490431971787/100000000000000000000) := Bounds.sqrt h239 (by norm_num)
+  let v241 : ℝ := v219+v240
+  have h241 : Bounds v241 (145586857899244846842207271/5000000000000000000) (145678659027285454415176729/5000000000000000000) := Bounds.add h219 h240 (by norm_num)
+  convert h241 using 1 <;>
+    simp only [v0, v1, v2, v22, v41, v208, v209, v210, v211, v212, v213, v214, v215, v216, v218, v219, v220, v222, v223, v224, v225, v226, v228, v229, v230, v231, v232, v233, v234, v235, v236, v237, v238, v239, v240, v241, e1FrobBound, rowEps, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem energy : Bounds (e1EnergyLower 25632 (mW 12816) (1/10^6)) (92971709575018614227528089/10000000000000000) (23242927393754653556882023/2500000000000000) := by
+  let v0 : ℝ := 25632
+  have h0 : Bounds v0 25632 25632 := Bounds.point _
+  let v1 : ℝ := 238305324288012
+  have h1 : Bounds v1 238305324288012 238305324288012 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v242 : ℝ := (1/1000000)
+  have h242 : Bounds v242 (1/1000000) (1/1000000) := Bounds.point _
+  let v243 : ℝ := -v242
+  have h243 : Bounds v243 (-1/1000000) (-1/1000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h242
+  let v244 : ℝ := v22+v243
+  have h244 : Bounds v244 (999999/1000000) (999999/1000000) := Bounds.add h22 h243 (by norm_num)
+  let v245 : ℝ := v244*v1
+  have h245 : Bounds v245 (59576271495671927997/250000) (59576271495671927997/250000) := Bounds.mul h244 h1 (by norm_num)
+  let v246 : ℝ := 1/v0
+  have h246 : Bounds v246 (19506866416978776529338327/500000000000000000000000000000) (7802746566791510611735331/200000000000000000000000000000) := Bounds.inv h0 (by norm_num)
+  let v247 : ℝ := v245/v0
+  have h247 : Bounds v247 (92971709575018614227528089/10000000000000000) (23242927393754653556882023/2500000000000000) := bounds_div h245 h246 (by norm_num)
+  convert h247 using 1 <;>
+    simp only [v0, v1, v22, v242, v243, v244, v245, v247, e1EnergyLower, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem direction : Bounds (directionMean 25632 (mW 12816)) (78710351777374188040989159/1000000000000000000000) (78714856698785058929867061/1000000000000000000000) := by
+  let v0 : ℝ := 25632
+  have h0 : Bounds v0 25632 25632 := Bounds.point _
+  let v1 : ℝ := 238305324288012
+  have h1 : Bounds v1 238305324288012 238305324288012 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v248 : ℝ := v1*v2
+  have h248 : Bounds v248 476610648576024 476610648576024 := Bounds.mul h1 h2 (by norm_num)
+  let v249 : ℝ := v248*(BstLean.Part137.cN 25632 ^ 2)
+  have h249 : Bounds v249 (29593843886980503459883567/10000000000000000) (7398749624586284818053823/2500000000000000) := Bounds.mul h248 cnsq_bounds (by norm_num)
+  let v250 : ℝ := v0+v2
+  have h250 : Bounds v250 25634 25634 := Bounds.add h0 h2 (by norm_num)
+  let v251 : ℝ := v249*v250
+  have h251 : Bounds v251 (15172171883977164513813107/200000000000) (189659547876644825025991699/2500000000000) := Bounds.mul h249 h250 (by norm_num)
+  let v252 : ℝ := v0^2
+  have h252 : Bounds v252 656999424 656999424 := Bounds.pow h0 2 (by norm_num)
+  let v253 : ℝ := 1/v252
+  have h253 : Bounds v253 (3805178374098544110747957/2500000000000000000000000000000000) (15220713496394176442991829/10000000000000000000000000000000000) := Bounds.inv h252 (by norm_num)
+  let v254 : ℝ := v251/v252
+  have h254 : Bounds v254 (7216602542626983963027943/62500000000000000000) (115470145603442614297324991/1000000000000000000000) := bounds_div h251 h253 (by norm_num)
+  let v255 : ℝ := v0*v2
+  have h255 : Bounds v255 51264 51264 := Bounds.mul h0 h2 (by norm_num)
+  let v256 : ℝ := v255*(BstLean.Part137.cN 25632 ^ 2)
+  have h256 : Bounds v256 (15915494309189533576851107/50000000000000000000000000) (31832230512515791396601469/100000000000000000000000000) := Bounds.mul h255 cnsq_bounds (by norm_num)
+  let v257 : ℝ := -v256
+  have h257 : Bounds v257 (-31832230512515791396601469/100000000000000000000000000) (-15915494309189533576851107/50000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h256
+  let v258 : ℝ := v22+v257
+  have h258 : Bounds v258 (68167769487484208603398531/100000000000000000000000000) (34084505690810466423148893/50000000000000000000000000) := Bounds.add h22 h257 (by norm_num)
+  let v259 : ℝ := v254*v258
+  have h259 : Bounds v259 (78710351777374188040989159/1000000000000000000000) (78714856698785058929867061/1000000000000000000000) := Bounds.mul h254 h258 (by norm_num)
+  convert h259 using 1 <;>
+    simp only [v0, v1, v2, v22, v248, v249, v250, v251, v252, v254, v255, v256, v257, v258, v259, directionMean, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring <;> simp
+
+theorem inputvar : Bounds (e1InputVarianceBound 25632 (mW 12816) rowEps) (7256054483763568860764981/1000000000000000000) (9070068104704461075956227/1250000000000000000) := by
+  let v0 : ℝ := 25632
+  have h0 : Bounds v0 25632 25632 := Bounds.point _
+  let v1 : ℝ := 238305324288012
+  have h1 : Bounds v1 238305324288012 238305324288012 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v13 : ℝ := 3
+  have h13 : Bounds v13 3 3 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v260 : ℝ := v230+v22
+  have h260 : Bounds v260 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v261 : ℝ := v260+v13
+  have h261 : Bounds v261 (4001/1000) (4001/1000) := Bounds.add h260 h13 (by norm_num)
+  let v262 : ℝ := 5
+  have h262 : Bounds v262 5 5 := Bounds.point _
+  let v263 : ℝ := v1*v262
+  have h263 : Bounds v263 1191526621440060 1191526621440060 := Bounds.mul h1 h262 (by norm_num)
+  let v264 : ℝ := v0^2
+  have h264 : Bounds v264 656999424 656999424 := Bounds.pow h0 2 (by norm_num)
+  let v265 : ℝ := 1/v264
+  have h265 : Bounds v265 (3805178374098544110747957/2500000000000000000000000000000000) (15220713496394176442991829/10000000000000000000000000000000000) := Bounds.inv h264 (by norm_num)
+  let v266 : ℝ := v263/v264
+  have h266 : Bounds v266 (45339713320664189806047683/25000000000000000000) (36271770656531351844838149/20000000000000000000) := bounds_div h263 h265 (by norm_num)
+  let v267 : ℝ := v1*v2
+  have h267 : Bounds v267 476610648576024 476610648576024 := Bounds.mul h1 h2 (by norm_num)
+  let v268 : ℝ := v0^3
+  have h268 : Bounds v268 16840209235968 16840209235968 := Bounds.pow h0 3 (by norm_num)
+  let v269 : ℝ := 1/v268
+  have h269 : Bounds v269 (59381684989053434936765871/1000000000000000000000000000000000000000) (3711355311815839683547867/62500000000000000000000000000000000000) := Bounds.inv h268 (by norm_num)
+  let v270 : ℝ := v267/v268
+  have h270 : Bounds v270 (141509716980849531229861683/5000000000000000000000000) (14150971698084953122986169/500000000000000000000000) := bounds_div h267 h269 (by norm_num)
+  let v271 : ℝ := -v270
+  have h271 : Bounds v271 (-14150971698084953122986169/500000000000000000000000) (-141509716980849531229861683/5000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h270
+  let v272 : ℝ := v266+v271
+  have h272 : Bounds v272 (90678011544158571116783067/50000000000000000000) (45339005772079285558391537/25000000000000000000) := Bounds.add h266 h271 (by norm_num)
+  let v273 : ℝ := v261*v272
+  have h273 : Bounds v273 (7256054483763568860764981/1000000000000000000) (9070068104704461075956227/1250000000000000000) := Bounds.mul h261 h272 (by norm_num)
+  convert h273 using 1 <;>
+    simp only [v0, v1, v2, v13, v22, v230, v260, v261, v262, v263, v264, v266, v267, v268, v270, v271, v272, v273, e1InputVarianceBound, inputVarianceMean, rowEps, Matrix.cons_val_one, Matrix.cons_val_three, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem meanvalue : Bounds (meanMajorantValue 25632 (mW 12816) (1/10^6) (1/10^7) rowEps) (201554897592993543265606149/100000000000000000000000000000000) (50452120987202211210836729/25000000000000000000000000000000) := by
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v8 : ℝ := 6
+  have h8 : Bounds v8 6 6 := Bounds.point _
+  let v274 : ℝ := Real.sqrt (e1InputVarianceBound 25632 (mW 12816) rowEps)
+  have h274 : Bounds v274 (269370645835131205388407633/100000000000000000000000) (134685322917565602694203823/50000000000000000000000) := Bounds.sqrt inputvar (by norm_num)
+  let v275 : ℝ := 1/(e1EnergyLower 25632 (mW 12816) (1/10^6))
+  have h275 : Bounds v275 (3361237535896278404642113/31250000000000000000000000000000000) (10755960114868090894854763/100000000000000000000000000000000000) := Bounds.inv energy (by norm_num)
+  let v276 : ℝ := v274/(e1EnergyLower 25632 (mW 12816) (1/10^6))
+  have h276 : Bounds v276 (36216749033986620876313481/125000000000000000000000000000000) (28973399227189296701050791/100000000000000000000000000000000) := bounds_div h274 h275 (by norm_num)
+  let v277 : ℝ := (e1FrobBound 25632 (mW 12816) rowEps)^2
+  have h277 : Bounds v277 (8478213277189964663619183/10000000000) (42444543391976195639123293/50000000000) := Bounds.pow frob 2 (by norm_num)
+  let v278 : ℝ := (1/10000000)
+  have h278 : Bounds v278 (1/10000000) (1/10000000) := Bounds.point _
+  let v279 : ℝ := 1/v278
+  have h279 : Bounds v279 10000000 10000000 := Bounds.inv h278 (by norm_num)
+  let v280 : ℝ := (directionMean 25632 (mW 12816))/v278
+  have h280 : Bounds v280 (78710351777374188040989159/100000000000000) (78714856698785058929867061/100000000000000) := bounds_div direction h279 (by norm_num)
+  let v281 : ℝ := v280*v2
+  have h281 : Bounds v281 (78710351777374188040989159/50000000000000) (78714856698785058929867061/50000000000000) := Bounds.mul h280 h2 (by norm_num)
+  let v282 : ℝ := v277+v281
+  have h282 : Bounds v282 (5308722092215899688267113/6250000000) (85046516497349961396106321/100000000000) := Bounds.add h277 h281 (by norm_num)
+  let v283 : ℝ := (e1EnergyLower 25632 (mW 12816) (1/10^6))^2
+  have h283 : Bounds v283 (432186939065080393686820463/5000000) (86437387813016078737364099/1000000) := Bounds.pow energy 2 (by norm_num)
+  let v284 : ℝ := 1/v283
+  have h284 : Bounds v284 (5784533899631659753876117/500000000000000000000000000000000000000000000) (57845338996316597538761179/5000000000000000000000000000000000000000000000) := Bounds.inv h283 (by norm_num)
+  let v285 : ℝ := v282/v283
+  have h285 : Bounds v285 (12283393162458552745492179/1250000000000000000000000000000) (24597722886225202852042783/2500000000000000000000000000000) := bounds_div h282 h284 (by norm_num)
+  let v286 : ℝ := (10237/50000)
+  have h286 : Bounds v286 (10237/50000) (10237/50000) := Bounds.point _
+  let v287 : ℝ := Real.sqrt v285
+  have h287 : Bounds v287 (62695181728636347246900609/20000000000000000000000000000) (156836612072006971327771921/50000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v288 : ℝ := Real.sqrt v2
+  have h288 : Bounds v288 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v289 : ℝ := v288*v276
+  have h289 : Bounds v289 (102436435337853135836217201/250000000000000000000000000000000) (81949148270282508668973779/200000000000000000000000000000000) := Bounds.mul h288 h276 (by norm_num)
+  let v290 : ℝ := v287+v289
+  have h290 : Bounds v290 (313516883217316877488837531/100000000000000000000000000000) (313714198718149083909878329/100000000000000000000000000000) := Bounds.add h287 h289 (by norm_num)
+  let v291 : ℝ := v290^2
+  have h291 : Bounds v291 (245732090155751772886032613/25000000000000000000000000000000) (984165984773703323221824753/100000000000000000000000000000000) := Bounds.pow h290 2 (by norm_num)
+  let v292 : ℝ := v286*v291
+  have h292 : Bounds v292 (50311188138488617980686317/25000000000000000000000000000000) (503745359306420045991091/250000000000000000000000000000) := Bounds.mul h286 h291 (by norm_num)
+  let v293 : ℝ := v276^2
+  have h293 : Bounds v293 (3357831451112373341251331/40000000000000000000000000000000000000) (83945786277809333531283311/1000000000000000000000000000000000000000) := Bounds.pow h276 2 (by norm_num)
+  let v294 : ℝ := v293*v8
+  have h294 : Bounds v294 (10073494353337120023753993/20000000000000000000000000000000000000) (50367471766685600118769987/100000000000000000000000000000000000000) := Bounds.mul h293 h8 (by norm_num)
+  let v295 : ℝ := v292+v294
+  have h295 : Bounds v295 (100622401460713119304172693/50000000000000000000000000000000) (201498194090039785082036519/100000000000000000000000000000000) := Bounds.add h292 h294 (by norm_num)
+  let v296 : ℝ := Real.sqrt v2
+  have h296 : Bounds v296 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v297 : ℝ := v296+v2
+  have h297 : Bounds v297 (42677669529663688110021109/12500000000000000000000000) (341421356237309504880168873/100000000000000000000000000) := Bounds.add h296 h2 (by norm_num)
+  let v298 : ℝ := v297*v276
+  have h298 : Bounds v298 (1978427451790396954731769/2000000000000000000000000000000) (197842745179039695473176943/200000000000000000000000000000000) := Bounds.mul h297 h276 (by norm_num)
+  let v299 : ℝ := Real.sqrt v285
+  have h299 : Bounds v299 (62695181728636347246900609/20000000000000000000000000000) (156836612072006971327771921/50000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v300 : ℝ := v298*v299
+  have h300 : Bounds v300 (31009467156730465726076363/10000000000000000000000000000000000) (62057971753811952262079213/20000000000000000000000000000000000) := Bounds.mul h298 h299 (by norm_num)
+  let v301 : ℝ := v295+v300
+  have h301 : Bounds v301 (201554897592993543265606149/100000000000000000000000000000000) (50452120987202211210836729/25000000000000000000000000000000) := Bounds.add h295 h300 (by norm_num)
+  convert h301 using 1 <;>
+    simp only [v2, v8, v274, v276, v277, v278, v280, v281, v282, v283, v285, v286, v287, v288, v289, v290, v291, v292, v293, v294, v295, v296, v297, v298, v299, v300, v301, meanMajorantValue, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+end BstLean.Part268.WorldRow12816
+namespace BstLean.Part268.WorldRow12817
+open Real MeasureTheory Set BstLean.Part130 BstLean.Part140 BstLean.Part137 BstLean.Part159
+open BstLean.Part227 BstLean.Part228 BstLean.Part218 BstLean.Part205 BstLean.Part214
+open BstLean.Part157 BstLean.Part192
+open BstLean.Part250 (bounds_div pi_bounds rowEps meanMajorantValue endpointPolynomial mean_majorant)
+theorem covmean : Bounds (covarianceMeanBound 25634 (mW 12817)) (66664493232334953669139393/10000000000000000) (50001540616806352806705339/5000000000000000) := by
+  let v1 : ℝ := 238370410897602
+  have h1 : Bounds v1 238370410897602 238370410897602 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v203 : ℝ := v1*v41
+  have h203 : Bounds v203 953481643590408 953481643590408 := Bounds.mul h1 h41 (by norm_num)
+  let v204 : ℝ := -v22
+  have h204 : Bounds v204 (-1) (-1) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h22
+  let v205 : ℝ := v1+v204
+  have h205 : Bounds v205 238370410897601 238370410897601 := Bounds.add h1 h204 (by norm_num)
+  let v206 : ℝ := v203*v205
+  have h206 : Bounds v206 227281811165965503795673811000 227281811165965503795673812000 := Bounds.mul h203 h205 (by norm_num)
+  let v207 : ℝ := v206*(angularJ2 25634 (angularOffset 25634))
+  have h207 : Bounds v207 (66664493232334953669139393/10000000000000000) (50001540616806352806705339/5000000000000000) := Bounds.mul h206 jsecond (by norm_num)
+  convert h207 using 1 <;>
+    simp only [v1, v22, v41, v203, v204, v205, v206, v207, covarianceMeanBound, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem frob : Bounds (e1FrobBound 25634 (mW 12817) rowEps) (58243824959414898540274173/2000000000000000000) (7285068713509703519820487/250000000000000000) := by
+  let v0 : ℝ := 25634
+  have h0 : Bounds v0 25634 25634 := Bounds.point _
+  let v1 : ℝ := 238370410897602
+  have h1 : Bounds v1 238370410897602 238370410897602 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v208 : ℝ := (1/100000)
+  have h208 : Bounds v208 (1/100000) (1/100000) := Bounds.point _
+  let v209 : ℝ := v208+v22
+  have h209 : Bounds v209 (100001/100000) (100001/100000) := Bounds.add h208 h22 (by norm_num)
+  let v210 : ℝ := v1*v0
+  have h210 : Bounds v210 6110387112949129668 6110387112949129668 := Bounds.mul h1 h0 (by norm_num)
+  let v211 : ℝ := v1+v0
+  have h211 : Bounds v211 238370410923236 238370410923236 := Bounds.add h1 h0 (by norm_num)
+  let v212 : ℝ := v211+v22
+  have h212 : Bounds v212 238370410923237 238370410923237 := Bounds.add h211 h22 (by norm_num)
+  let v213 : ℝ := v210*v212
+  have h213 : Bounds v213 1456535487013735815102139500000000 1456535487013735815102139510000000 := Bounds.mul h210 h212 (by norm_num)
+  let v214 : ℝ := v209*v213
+  have h214 : Bounds v214 1456550052368605952460290520000000 1456550052368605952460290540000000 := Bounds.mul h209 h213 (by norm_num)
+  let v215 : ℝ := v0^4
+  have h215 : Bounds v215 431782980579025936 431782980579025936 := Bounds.pow h0 4 (by norm_num)
+  let v216 : ℝ := v215*v41
+  have h216 : Bounds v216 1727131922316103744 1727131922316103744 := Bounds.mul h215 h41 (by norm_num)
+  let v217 : ℝ := 1/v216
+  have h217 : Bounds v217 (289497283640901186911929/500000000000000000000000000000000000000000) (57899456728180237382385801/100000000000000000000000000000000000000000000) := Bounds.inv h216 (by norm_num)
+  let v218 : ℝ := v214/v216
+  have h218 : Bounds v218 (84333456729544759018910633/100000000000) (84333456729544759018910637/100000000000) := bounds_div h214 h217 (by norm_num)
+  let v219 : ℝ := Real.sqrt v218
+  have h219 : Bounds v219 (145201116326239688296525641/5000000000000000000) (29040223265247937659305129/1000000000000000000) := Bounds.sqrt h218 (by norm_num)
+  let v220 : ℝ := v0*v41
+  have h220 : Bounds v220 102536 102536 := Bounds.mul h0 h41 (by norm_num)
+  let v221 : ℝ := 1/v220
+  have h221 : Bounds v221 (97526722321916205040181009/10000000000000000000000000000000) (9752672232191620504018101/1000000000000000000000000000000) := Bounds.inv h220 (by norm_num)
+  let v222 : ℝ := v22/v220
+  have h222 : Bounds v222 (97526722321916205040181009/10000000000000000000000000000000) (9752672232191620504018101/1000000000000000000000000000000) := bounds_div h22 h221 (by norm_num)
+  let v223 : ℝ := -(BstLean.Part137.cN 25634 ^ 2)
+  have h223 : Bounds v223 (-25000000000000000000/4026422224473358504072259) (-25000000000000000000/4026579304106037993746999) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg cnsq_bounds
+  let v224 : ℝ := v222+v223
+  have h224 : Bounds v224 (8859215097323028187344273/2500000000000000000000000000000) (35439282557581596407696391/10000000000000000000000000000000) := Bounds.add h222 h223 (by norm_num)
+  let v225 : ℝ := v224^2
+  have h225 : Bounds v225 (31394276856254508718903281/2500000000000000000000000000000000000) (6279713740980535885511577/500000000000000000000000000000000000) := Bounds.pow h224 2 (by norm_num)
+  let v226 : ℝ := v0^2
+  have h226 : Bounds v226 657101956 657101956 := Bounds.pow h0 2 (by norm_num)
+  let v227 : ℝ := 1/v226
+  have h227 : Bounds v227 (15218338506969837721804011/10000000000000000000000000000000000) (3804584626742459430451003/2500000000000000000000000000000000) := Bounds.inv h226 (by norm_num)
+  let v228 : ℝ := v41/v226
+  have h228 : Bounds v228 (15218338506969837721804011/2500000000000000000000000000000000) (3804584626742459430451003/625000000000000000000000000000000) := bounds_div h41 h227 (by norm_num)
+  let v229 : ℝ := v225*v228
+  have h229 : Bounds v229 (38221498590400797673356223/500000000000000000000000000000000000000000000) (38226723774844681092451821/500000000000000000000000000000000000000000000) := Bounds.mul h225 h228 (by norm_num)
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v231 : ℝ := v230+v22
+  have h231 : Bounds v231 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v232 : ℝ := v1*v0
+  have h232 : Bounds v232 6110387112949129668 6110387112949129668 := Bounds.mul h1 h0 (by norm_num)
+  let v233 : ℝ := v0+v2
+  have h233 : Bounds v233 25636 25636 := Bounds.add h0 h2 (by norm_num)
+  let v234 : ℝ := v232*v233
+  have h234 : Bounds v234 156645884027563888168848 156645884027563888168848 := Bounds.mul h232 h233 (by norm_num)
+  let v235 : ℝ := v231*v234
+  have h235 : Bounds v235 (19600316238948931507127106/125) (19600316238948931507127106/125) := Bounds.mul h231 h234 (by norm_num)
+  let v236 : ℝ := v229*v235
+  have h236 : Bounds v236 (119864553519743431972365149/10000000000000000000000) (14985117495318068026970199/1250000000000000000000) := Bounds.mul h229 h235 (by norm_num)
+  let v237 : ℝ := v230+v22
+  have h237 : Bounds v237 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v238 : ℝ := v237*(covarianceMeanBound 25634 (mW 12817))
+  have h238 : Bounds v238 (667311577255672886228085323/100000000000000000) (100103084314846318319024089/10000000000000000) := Bounds.mul h237 covmean (by norm_num)
+  let v239 : ℝ := v236+v238
+  have h239 : Bounds v239 (333656387950604041831202523/50000000000000000) (20020640839157256172713661/2000000000000000) := Bounds.add h236 h238 (by norm_num)
+  let v240 : ℝ := Real.sqrt v239
+  have h240 : Bounds v240 (16337842891902322166391673/200000000000000000000) (100051588790876419976818953/1000000000000000000000) := Bounds.sqrt h239 (by norm_num)
+  let v241 : ℝ := v219+v240
+  have h241 : Bounds v241 (58243824959414898540274173/2000000000000000000) (7285068713509703519820487/250000000000000000) := Bounds.add h219 h240 (by norm_num)
+  convert h241 using 1 <;>
+    simp only [v0, v1, v2, v22, v41, v208, v209, v210, v211, v212, v213, v214, v215, v216, v218, v219, v220, v222, v223, v224, v225, v226, v228, v229, v230, v231, v232, v233, v234, v235, v236, v237, v238, v239, v240, v241, e1FrobBound, rowEps, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem energy : Bounds (e1EnergyLower 25634 (mW 12817) (1/10^6)) (5811865406471656354792463/625000000000000) (92989846503546501676679411/10000000000000000) := by
+  let v0 : ℝ := 25634
+  have h0 : Bounds v0 25634 25634 := Bounds.point _
+  let v1 : ℝ := 238370410897602
+  have h1 : Bounds v1 238370410897602 238370410897602 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v242 : ℝ := (1/1000000)
+  have h242 : Bounds v242 (1/1000000) (1/1000000) := Bounds.point _
+  let v243 : ℝ := -v242
+  have h243 : Bounds v243 (-1/1000000) (-1/1000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h242
+  let v244 : ℝ := v22+v243
+  have h244 : Bounds v244 (999999/1000000) (999999/1000000) := Bounds.add h22 h243 (by norm_num)
+  let v245 : ℝ := v244*v1
+  have h245 : Bounds v245 (119185086263595551199/500000) (119185086263595551199/500000) := Bounds.mul h244 h1 (by norm_num)
+  let v246 : ℝ := 1/v0
+  have h246 : Bounds v246 (39010688928766482016072403/1000000000000000000000000000000) (9752672232191620504018101/250000000000000000000000000000) := Bounds.inv h0 (by norm_num)
+  let v247 : ℝ := v245/v0
+  have h247 : Bounds v247 (5811865406471656354792463/625000000000000) (92989846503546501676679411/10000000000000000) := bounds_div h245 h246 (by norm_num)
+  convert h247 using 1 <;>
+    simp only [v0, v1, v22, v242, v243, v244, v245, v247, e1EnergyLower, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem direction : Bounds (directionMean 25634 (mW 12817)) (78719563943687125475611847/1000000000000000000000) (196810172602018076969204789/2500000000000000000000) := by
+  let v0 : ℝ := 25634
+  have h0 : Bounds v0 25634 25634 := Bounds.point _
+  let v1 : ℝ := 238370410897602
+  have h1 : Bounds v1 238370410897602 238370410897602 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v248 : ℝ := v1*v2
+  have h248 : Bounds v248 476740821795204 476740821795204 := Bounds.mul h1 h2 (by norm_num)
+  let v249 : ℝ := v248*(BstLean.Part137.cN 25634 ^ 2)
+  have h249 : Bounds v249 (14799808528204554144261171/5000000000000000) (29600771802909963011368039/10000000000000000) := Bounds.mul h248 cnsq_bounds (by norm_num)
+  let v250 : ℝ := v0+v2
+  have h250 : Bounds v250 25636 25636 := Bounds.add h0 h2 (by norm_num)
+  let v251 : ℝ := v249*v250
+  have h251 : Bounds v251 (758815782858103900084558759/10000000000000) (15176907718787996235188621/200000000000) := Bounds.mul h249 h250 (by norm_num)
+  let v252 : ℝ := v0^2
+  have h252 : Bounds v252 657101956 657101956 := Bounds.pow h0 2 (by norm_num)
+  let v253 : ℝ := 1/v252
+  have h253 : Bounds v253 (15218338506969837721804011/10000000000000000000000000000000000) (3804584626742459430451003/2500000000000000000000000000000000) := Bounds.inv h252 (by norm_num)
+  let v254 : ℝ := v251/v252
+  have h254 : Bounds v254 (57739577239829727434608239/500000000000000000000) (2309673191535591203625731/20000000000000000000) := bounds_div h251 h253 (by norm_num)
+  let v255 : ℝ := v0*v2
+  have h255 : Bounds v255 51268 51268 := Bounds.mul h0 h2 (by norm_num)
+  let v256 : ℝ := v255*(BstLean.Part137.cN 25634 ^ 2)
+  have h256 : Bounds v256 (15915494309189533576851107/50000000000000000000000000) (3979028801952214954456169/12500000000000000000000000) := Bounds.mul h255 cnsq_bounds (by norm_num)
+  let v257 : ℝ := -v256
+  have h257 : Bounds v257 (-3979028801952214954456169/12500000000000000000000000) (-15915494309189533576851107/50000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h256
+  let v258 : ℝ := v22+v257
+  have h258 : Bounds v258 (8520971198047785045543831/12500000000000000000000000) (34084505690810466423148893/50000000000000000000000000) := Bounds.add h22 h257 (by norm_num)
+  let v259 : ℝ := v254*v258
+  have h259 : Bounds v259 (78719563943687125475611847/1000000000000000000000) (196810172602018076969204789/2500000000000000000000) := Bounds.mul h254 h258 (by norm_num)
+  convert h259 using 1 <;>
+    simp only [v0, v1, v2, v22, v248, v249, v250, v251, v252, v254, v255, v256, v257, v258, v259, directionMean, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring <;> simp
+
+theorem inputvar : Bounds (e1InputVarianceBound 25634 (mW 12817) rowEps) (1451380753295747402251431/200000000000000000) (725690376647873701125715553/100000000000000000000) := by
+  let v0 : ℝ := 25634
+  have h0 : Bounds v0 25634 25634 := Bounds.point _
+  let v1 : ℝ := 238370410897602
+  have h1 : Bounds v1 238370410897602 238370410897602 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v13 : ℝ := 3
+  have h13 : Bounds v13 3 3 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v260 : ℝ := v230+v22
+  have h260 : Bounds v260 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v261 : ℝ := v260+v13
+  have h261 : Bounds v261 (4001/1000) (4001/1000) := Bounds.add h260 h13 (by norm_num)
+  let v262 : ℝ := 5
+  have h262 : Bounds v262 5 5 := Bounds.point _
+  let v263 : ℝ := v1*v262
+  have h263 : Bounds v263 1191852054488010 1191852054488010 := Bounds.mul h1 h262 (by norm_num)
+  let v264 : ℝ := v0^2
+  have h264 : Bounds v264 657101956 657101956 := Bounds.pow h0 2 (by norm_num)
+  let v265 : ℝ := 1/v264
+  have h265 : Bounds v265 (15218338506969837721804011/10000000000000000000000000000000000) (3804584626742459430451003/2500000000000000000000000000000000) := Bounds.inv h264 (by norm_num)
+  let v266 : ℝ := v263/v264
+  have h266 : Bounds v266 (22672510019282494724456427/12500000000000000000) (45345020038564989448912857/25000000000000000000) := bounds_div h263 h265 (by norm_num)
+  let v267 : ℝ := v1*v2
+  have h267 : Bounds v267 476740821795204 476740821795204 := Bounds.mul h1 h2 (by norm_num)
+  let v268 : ℝ := v0^3
+  have h268 : Bounds v268 16844151540104 16844151540104 := Bounds.pow h0 3 (by norm_num)
+  let v269 : ℝ := 1/v268
+  have h269 : Bounds v269 (1855243342212715256325097/31250000000000000000000000000000000000) (11873557390161377640480621/200000000000000000000000000000000000000) := Bounds.inv h268 (by norm_num)
+  let v270 : ℝ := v267/v268
+  have h270 : Bounds v270 (2830304753909026414849831/100000000000000000000000) (3537880942386283018562289/125000000000000000000000) := bounds_div h267 h269 (by norm_num)
+  let v271 : ℝ := -v270
+  have h271 : Bounds v271 (-3537880942386283018562289/125000000000000000000000) (-2830304753909026414849831/100000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h270
+  let v272 : ℝ := v266+v271
+  have h272 : Bounds v272 (90688624924753024384618283/50000000000000000000) (181377249849506048769236579/100000000000000000000) := Bounds.add h266 h271 (by norm_num)
+  let v273 : ℝ := v261*v272
+  have h273 : Bounds v273 (1451380753295747402251431/200000000000000000) (725690376647873701125715553/100000000000000000000) := Bounds.mul h261 h272 (by norm_num)
+  convert h273 using 1 <;>
+    simp only [v0, v1, v2, v13, v22, v230, v260, v261, v262, v263, v264, v266, v267, v268, v270, v271, v272, v273, e1InputVarianceBound, inputVarianceMean, rowEps, Matrix.cons_val_one, Matrix.cons_val_three, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem meanvalue : Bounds (meanMajorantValue 25634 (mW 12817) (1/10^6) (1/10^7) rowEps) (25192377480909173788133453/12500000000000000000000000000000) (201792576464828222785664479/100000000000000000000000000000000) := by
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v8 : ℝ := 6
+  have h8 : Bounds v8 6 6 := Bounds.point _
+  let v274 : ℝ := Real.sqrt (e1InputVarianceBound 25634 (mW 12817) rowEps)
+  have h274 : Bounds v274 (269386409577000320717074817/100000000000000000000000) (269386409577000320717074827/100000000000000000000000) := Bounds.sqrt inputvar (by norm_num)
+  let v275 : ℝ := 1/(e1EnergyLower 25634 (mW 12817) (1/10^6))
+  have h275 : Bounds v275 (10753862250561532107675907/100000000000000000000000000000000000) (53769311252807660538379539/500000000000000000000000000000000000) := Bounds.inv energy (by norm_num)
+  let v276 : ℝ := v274/(e1EnergyLower 25634 (mW 12817) (1/10^6))
+  have h276 : Bounds v276 (289694434076441133554626193/1000000000000000000000000000000000) (28969443407644113355462623/100000000000000000000000000000000) := bounds_div h274 h275 (by norm_num)
+  let v277 : ℝ := (e1FrobBound 25634 (mW 12817) rowEps)^2
+  have h277 : Bounds v277 (4240428932378702384490149/5000000000) (84915561856892682719296333/100000000000) := Bounds.pow frob 2 (by norm_num)
+  let v278 : ℝ := (1/10000000)
+  have h278 : Bounds v278 (1/10000000) (1/10000000) := Bounds.point _
+  let v279 : ℝ := 1/v278
+  have h279 : Bounds v279 10000000 10000000 := Bounds.inv h278 (by norm_num)
+  let v280 : ℝ := (directionMean 25634 (mW 12817))/v278
+  have h280 : Bounds v280 (78719563943687125475611847/100000000000000) (19681017260201807696920479/25000000000000) := bounds_div direction h279 (by norm_num)
+  let v281 : ℝ := v280*v2
+  have h281 : Bounds v281 (78719563943687125475611847/50000000000000) (19681017260201807696920479/12500000000000) := Bounds.mul h280 h2 (by norm_num)
+  let v282 : ℝ := v277+v281
+  have h282 : Bounds v282 (84966017775461421940754203/100000000000) (85073009994974297180871697/100000000000) := Bounds.add h277 h281 (by norm_num)
+  let v283 : ℝ := (e1EnergyLower 25634 (mW 12817) (1/10^6))^2
+  have h283 : Bounds v283 (10808889440941424428831749/125000) (43235557763765697715326999/500000) := Bounds.pow energy 2 (by norm_num)
+  let v284 : ℝ := 1/v283
+  have h284 : Bounds v284 (11564555330405234037011307/1000000000000000000000000000000000000000000000) (115645553304052340370113079/10000000000000000000000000000000000000000000000) := Bounds.inv h283 (by norm_num)
+  let v285 : ℝ := v282/v283
+  have h285 : Bounds v285 (122824276721064781588281583/12500000000000000000000000000000) (983831531210997760957020539/100000000000000000000000000000000) := bounds_div h282 h284 (by norm_num)
+  let v286 : ℝ := (10237/50000)
+  have h286 : Bounds v286 (10237/50000) (10237/50000) := Bounds.point _
+  let v287 : ℝ := Real.sqrt v285
+  have h287 : Bounds v287 (19591474287386527421886781/6250000000000000000000000000) (313660888733517070763465353/100000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v288 : ℝ := Real.sqrt v2
+  have h288 : Bounds v288 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v289 : ℝ := v288*v276
+  have h289 : Bounds v289 (40968979761490155478693303/100000000000000000000000000000000) (204844898807450777393466543/500000000000000000000000000000000) := Bounds.mul h288 h276 (by norm_num)
+  let v290 : ℝ := v287+v289
+  have h290 : Bounds v290 (313504557577945928905667189/100000000000000000000000000000) (6274037154265571218378881/2000000000000000000000000000) := Bounds.add h287 h289 (by norm_num)
+  let v291 : ℝ := v290^2
+  have h291 : Bounds v291 (30714096131919879424084647/3125000000000000000000000000000) (6150553470797629234117941/625000000000000000000000000000) := Bounds.pow h290 2 (by norm_num)
+  let v292 : ℝ := v286*v291
+  have h292 : Bounds v292 (2012289293455768356251869/1000000000000000000000000000000) (201482290817777057502929159/100000000000000000000000000000000) := Bounds.mul h286 h291 (by norm_num)
+  let v293 : ℝ := v276^2
+  have h293 : Bounds v293 (83922865134869497844694933/1000000000000000000000000000000000000000) (167845730269738995689389909/2000000000000000000000000000000000000000) := Bounds.pow h276 2 (by norm_num)
+  let v294 : ℝ := v293*v8
+  have h294 : Bounds v294 (50353719080921698706816959/100000000000000000000000000000000000000) (503537190809216987068169727/1000000000000000000000000000000000000000) := Bounds.mul h293 h8 (by norm_num)
+  let v295 : ℝ := v292+v294
+  have h295 : Bounds v295 (100614489849647958273442803/50000000000000000000000000000000) (100741170585748069212313933/50000000000000000000000000000000) := Bounds.add h292 h294 (by norm_num)
+  let v296 : ℝ := Real.sqrt v2
+  have h296 : Bounds v296 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v297 : ℝ := v296+v2
+  have h297 : Bounds v297 (42677669529663688110021109/12500000000000000000000000) (341421356237309504880168873/100000000000000000000000000) := Bounds.add h296 h2 (by norm_num)
+  let v298 : ℝ := v297*v276
+  have h298 : Bounds v298 (98907866576778382189618541/100000000000000000000000000000000) (494539332883891910948092773/500000000000000000000000000000000) := Bounds.mul h297 h276 (by norm_num)
+  let v299 : ℝ := Real.sqrt v285
+  have h299 : Bounds v299 (19591474287386527421886781/6250000000000000000000000000) (313660888733517070763465353/100000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v300 : ℝ := v298*v299
+  have h300 : Bounds v300 (7751003699436843954550457/2500000000000000000000000000000000) (31023529333208436103661279/10000000000000000000000000000000000) := Bounds.mul h298 h299 (by norm_num)
+  let v301 : ℝ := v295+v300
+  have h301 : Bounds v301 (25192377480909173788133453/12500000000000000000000000000000) (201792576464828222785664479/100000000000000000000000000000000) := Bounds.add h295 h300 (by norm_num)
+  convert h301 using 1 <;>
+    simp only [v2, v8, v274, v276, v277, v278, v280, v281, v282, v283, v285, v286, v287, v288, v289, v290, v291, v292, v293, v294, v295, v296, v297, v298, v299, v300, v301, meanMajorantValue, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+end BstLean.Part268.WorldRow12817
+namespace BstLean.Part268.WorldRow12818
+open Real MeasureTheory Set BstLean.Part130 BstLean.Part140 BstLean.Part137 BstLean.Part159
+open BstLean.Part227 BstLean.Part228 BstLean.Part218 BstLean.Part205 BstLean.Part214
+open BstLean.Part157 BstLean.Part192
+open BstLean.Part250 (bounds_div pi_bounds rowEps meanMajorantValue endpointPolynomial mean_majorant)
+theorem covmean : Bounds (covarianceMeanBound 25636 (mW 12818)) (333400491972665961402972487/50000000000000000) (10002648996642168992880163/1000000000000000) := by
+  let v1 : ℝ := 238435510203798
+  have h1 : Bounds v1 238435510203798 238435510203798 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v203 : ℝ := v1*v41
+  have h203 : Bounds v203 953742040815192 953742040815192 := Bounds.mul h1 h41 (by norm_num)
+  let v204 : ℝ := -v22
+  have h204 : Bounds v204 (-1) (-1) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h22
+  let v205 : ℝ := v1+v204
+  have h205 : Bounds v205 238435510203797 238435510203797 := Bounds.add h1 h204 (by norm_num)
+  let v206 : ℝ := v203*v205
+  have h206 : Bounds v206 227405970104580886959933684000 227405970104580886959933685000 := Bounds.mul h203 h205 (by norm_num)
+  let v207 : ℝ := v206*(angularJ2 25636 (angularOffset 25636))
+  have h207 : Bounds v207 (333400491972665961402972487/50000000000000000) (10002648996642168992880163/1000000000000000) := Bounds.mul h206 jsecond (by norm_num)
+  convert h207 using 1 <;>
+    simp only [v1, v22, v41, v203, v204, v205, v206, v207, covarianceMeanBound, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem frob : Bounds (e1FrobBound 25636 (mW 12818) rowEps) (36408067166867618618513807/1250000000000000000) (291448182566325191394515347/10000000000000000000) := by
+  let v0 : ℝ := 25636
+  have h0 : Bounds v0 25636 25636 := Bounds.point _
+  let v1 : ℝ := 238435510203798
+  have h1 : Bounds v1 238435510203798 238435510203798 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v208 : ℝ := (1/100000)
+  have h208 : Bounds v208 (1/100000) (1/100000) := Bounds.point _
+  let v209 : ℝ := v208+v22
+  have h209 : Bounds v209 (100001/100000) (100001/100000) := Bounds.add h208 h22 (by norm_num)
+  let v210 : ℝ := v1*v0
+  have h210 : Bounds v210 6112532739584565528 6112532739584565528 := Bounds.mul h1 h0 (by norm_num)
+  let v211 : ℝ := v1+v0
+  have h211 : Bounds v211 238435510229434 238435510229434 := Bounds.add h1 h0 (by norm_num)
+  let v212 : ℝ := v211+v22
+  have h212 : Bounds v212 238435510229435 238435510229435 := Bounds.add h211 h22 (by norm_num)
+  let v213 : ℝ := v210*v212
+  have h213 : Bounds v213 1457444862556972018903684070000000 1457444862556972018903684080000000 := Bounds.mul h210 h212 (by norm_num)
+  let v214 : ℝ := v209*v213
+  have h214 : Bounds v214 1457459437005597588623873100000000 1457459437005597588623873120000000 := Bounds.mul h209 h213 (by norm_num)
+  let v215 : ℝ := v0^4
+  have h215 : Bounds v215 431917749562614016 431917749562614016 := Bounds.pow h0 4 (by norm_num)
+  let v216 : ℝ := v215*v41
+  have h216 : Bounds v216 1727670998250456064 1727670998250456064 := Bounds.mul h215 h41 (by norm_num)
+  let v217 : ℝ := 1/v216
+  have h217 : Bounds v217 (14470347667649980241463083/25000000000000000000000000000000000000000000) (57881390670599920965852333/100000000000000000000000000000000000000000000) := Bounds.inv h216 (by norm_num)
+  let v218 : ℝ := v214/v216
+  have h218 : Bounds v218 (4217988952993680473854367/5000000000) (5272486191242100592317959/6250000000) := bounds_div h214 h217 (by norm_num)
+  let v219 : ℝ := Real.sqrt v218
+  have h219 : Bounds v219 (290447549584901145326893411/10000000000000000000) (290447549584901145326893419/10000000000000000000) := Bounds.sqrt h218 (by norm_num)
+  let v220 : ℝ := v0*v41
+  have h220 : Bounds v220 102544 102544 := Bounds.mul h0 h41 (by norm_num)
+  let v221 : ℝ := 1/v220
+  have h221 : Bounds v221 (97519113746294273677640817/10000000000000000000000000000000) (48759556873147136838820409/5000000000000000000000000000000) := Bounds.inv h220 (by norm_num)
+  let v222 : ℝ := v22/v220
+  have h222 : Bounds v222 (97519113746294273677640817/10000000000000000000000000000000) (48759556873147136838820409/5000000000000000000000000000000) := bounds_div h22 h221 (by norm_num)
+  let v223 : ℝ := -(BstLean.Part137.cN 25636 ^ 2)
+  have h223 : Bounds v223 (-5000000000000000000/805347276747743496679221) (-12500000000000000000/2013446731685698486535423) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg cnsq_bounds
+  let v224 : ℝ := v222+v223
+  have h224 : Bounds v224 (17717047980637806671272587/5000000000000000000000000000000) (44295647189550175647277719/12500000000000000000000000000000) := Bounds.add h222 h223 (by norm_num)
+  let v225 : ℝ := v224^2
+  have h225 : Bounds v225 (15694689457411109159710391/1250000000000000000000000000000000000) (125574679036230679964728947/10000000000000000000000000000000000000) := Bounds.pow h224 2 (by norm_num)
+  let v226 : ℝ := v0^2
+  have h226 : Bounds v226 657204496 657204496 := Bounds.pow h0 2 (by norm_num)
+  let v227 : ℝ := 1/v226
+  have h227 : Bounds v227 (7607982036690144615200563/5000000000000000000000000000000000) (15215964073380289230401127/10000000000000000000000000000000000) := Bounds.inv h226 (by norm_num)
+  let v228 : ℝ := v41/v226
+  have h228 : Bounds v228 (7607982036690144615200563/1250000000000000000000000000000000) (15215964073380289230401127/2500000000000000000000000000000000) := bounds_div h41 h227 (by norm_num)
+  let v229 : ℝ := v225*v228
+  have h229 : Bounds v229 (3820957294829245151046049/50000000000000000000000000000000000000000000) (76429592189661879589289331/1000000000000000000000000000000000000000000000) := Bounds.mul h225 h228 (by norm_num)
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v231 : ℝ := v230+v22
+  have h231 : Bounds v231 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v232 : ℝ := v1*v0
+  have h232 : Bounds v232 6112532739584565528 6112532739584565528 := Bounds.mul h1 h0 (by norm_num)
+  let v233 : ℝ := v0+v2
+  have h233 : Bounds v233 25638 25638 := Bounds.add h0 h2 (by norm_num)
+  let v234 : ℝ := v232*v233
+  have h234 : Bounds v234 156713114377469091006864 156713114377469091006864 := Bounds.mul h232 h233 (by norm_num)
+  let v235 : ℝ := v231*v234
+  have h235 : Bounds v235 (19608728436480820012233858/125) (19608728436480820012233858/125) := Bounds.mul h231 h234 (by norm_num)
+  let v236 : ℝ := v229*v235
+  have h236 : Bounds v236 (29969645584678819156390649/2500000000000000000000) (119894969420644422478349417/10000000000000000000000) := Bounds.mul h229 h235 (by norm_num)
+  let v237 : ℝ := v230+v22
+  have h237 : Bounds v237 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v238 : ℝ := v237*(covarianceMeanBound 25636 (mW 12818))
+  have h238 : Bounds v238 (66746778492927725472875091/10000000000000000) (1564476819631064244042663/156250000000000) := Bounds.mul h237 covmean (by norm_num)
+  let v239 : ℝ := v236+v238
+  have h239 : Bounds v239 (16686724592877516047037929/2500000000000000) (100126636351357532263152911/10000000000000000) := Bounds.add h236 h238 (by norm_num)
+  let v240 : ℝ := Real.sqrt v239
+  have h240 : Bounds v240 (10212346875497545265213071/125000000000000000000) (100063298142404606762192763/1000000000000000000000) := Bounds.sqrt h239 (by norm_num)
+  let v241 : ℝ := v219+v240
+  have h241 : Bounds v241 (36408067166867618618513807/1250000000000000000) (291448182566325191394515347/10000000000000000000) := Bounds.add h219 h240 (by norm_num)
+  convert h241 using 1 <;>
+    simp only [v0, v1, v2, v22, v41, v208, v209, v210, v211, v212, v213, v214, v215, v216, v218, v219, v220, v222, v223, v224, v225, v226, v228, v229, v230, v231, v232, v233, v234, v235, v236, v237, v238, v239, v240, v241, e1FrobBound, rowEps, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem energy : Bounds (e1EnergyLower 25636 (mW 12818) (1/10^6)) (46503992777400490755578093/5000000000000000) (93007985554800981511156189/10000000000000000) := by
+  let v0 : ℝ := 25636
+  have h0 : Bounds v0 25636 25636 := Bounds.point _
+  let v1 : ℝ := 238435510203798
+  have h1 : Bounds v1 238435510203798 238435510203798 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v242 : ℝ := (1/1000000)
+  have h242 : Bounds v242 (1/1000000) (1/1000000) := Bounds.point _
+  let v243 : ℝ := -v242
+  have h243 : Bounds v243 (-1/1000000) (-1/1000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h242
+  let v244 : ℝ := v22+v243
+  have h244 : Bounds v244 (999999/1000000) (999999/1000000) := Bounds.add h22 h243 (by norm_num)
+  let v245 : ℝ := v244*v1
+  have h245 : Bounds v245 (119217635884143898101/500000) (119217635884143898101/500000) := Bounds.mul h244 h1 (by norm_num)
+  let v246 : ℝ := 1/v0
+  have h246 : Bounds v246 (39007645498517709471056327/1000000000000000000000000000000) (4875955687314713683882041/125000000000000000000000000000) := Bounds.inv h0 (by norm_num)
+  let v247 : ℝ := v245/v0
+  have h247 : Bounds v247 (46503992777400490755578093/5000000000000000) (93007985554800981511156189/10000000000000000) := bounds_div h245 h246 (by norm_num)
+  convert h247 using 1 <;>
+    simp only [v0, v1, v22, v242, v243, v244, v245, v247, e1EnergyLower, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem direction : Bounds (directionMean 25636 (mW 12818)) (196821941173414561655141333/2500000000000000000000) (78733281742188311604889919/1000000000000000000000) := by
+  let v0 : ℝ := 25636
+  have h0 : Bounds v0 25636 25636 := Bounds.point _
+  let v1 : ℝ := 238435510203798
+  have h1 : Bounds v1 238435510203798 238435510203798 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v248 : ℝ := v1*v2
+  have h248 : Bounds v248 476871020407596 476871020407596 := Bounds.mul h1 h2 (by norm_num)
+  let v249 : ℝ := v248*(BstLean.Part137.cN 25636 ^ 2)
+  have h249 : Bounds v249 (74013477253808122060438963/25000000000000000) (148032728915827970910665333/50000000000000000) := Bounds.mul h248 cnsq_bounds (by norm_num)
+  let v250 : ℝ := v0+v2
+  have h250 : Bounds v250 25638 25638 := Bounds.add h0 h2 (by norm_num)
+  let v251 : ℝ := v249*v250
+  have h251 : Bounds v251 (759023011933253053354213653/10000000000000) (75905262078879950364152757/1000000000000) := Bounds.mul h249 h250 (by norm_num)
+  let v252 : ℝ := v0^2
+  have h252 : Bounds v252 657204496 657204496 := Bounds.pow h0 2 (by norm_num)
+  let v253 : ℝ := 1/v252
+  have h253 : Bounds v253 (7607982036690144615200563/5000000000000000000000000000000000) (15215964073380289230401127/10000000000000000000000000000000000) := Bounds.inv h252 (by norm_num)
+  let v254 : ℝ := v251/v252
+  have h254 : Bounds v254 (23098533760890554021840217/200000000000000000000) (115497174077275257052034473/1000000000000000000000) := bounds_div h251 h253 (by norm_num)
+  let v255 : ℝ := v0*v2
+  have h255 : Bounds v255 51272 51272 := Bounds.mul h0 h2 (by norm_num)
+  let v256 : ℝ := v255*(BstLean.Part137.cN 25636 ^ 2)
+  have h256 : Bounds v256 (15915494309189533576851107/50000000000000000000000000) (15916115159367383763505119/50000000000000000000000000) := Bounds.mul h255 cnsq_bounds (by norm_num)
+  let v257 : ℝ := -v256
+  have h257 : Bounds v257 (-15916115159367383763505119/50000000000000000000000000) (-15915494309189533576851107/50000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h256
+  let v258 : ℝ := v22+v257
+  have h258 : Bounds v258 (34083884840632616236494881/50000000000000000000000000) (34084505690810466423148893/50000000000000000000000000) := Bounds.add h22 h257 (by norm_num)
+  let v259 : ℝ := v254*v258
+  have h259 : Bounds v259 (196821941173414561655141333/2500000000000000000000) (78733281742188311604889919/1000000000000000000000) := Bounds.mul h254 h258 (by norm_num)
+  convert h259 using 1 <;>
+    simp only [v0, v1, v2, v22, v248, v249, v250, v251, v252, v254, v255, v256, v257, v258, v259, directionMean, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring <;> simp
+
+theorem inputvar : Bounds (e1InputVarianceBound 25636 (mW 12818) rowEps) (90721913529075145238137919/12500000000000000000) (72577530823260116190510341/10000000000000000000) := by
+  let v0 : ℝ := 25636
+  have h0 : Bounds v0 25636 25636 := Bounds.point _
+  let v1 : ℝ := 238435510203798
+  have h1 : Bounds v1 238435510203798 238435510203798 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v13 : ℝ := 3
+  have h13 : Bounds v13 3 3 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v260 : ℝ := v230+v22
+  have h260 : Bounds v260 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v261 : ℝ := v260+v13
+  have h261 : Bounds v261 (4001/1000) (4001/1000) := Bounds.add h260 h13 (by norm_num)
+  let v262 : ℝ := 5
+  have h262 : Bounds v262 5 5 := Bounds.point _
+  let v263 : ℝ := v1*v262
+  have h263 : Bounds v263 1192177551018990 1192177551018990 := Bounds.mul h1 h262 (by norm_num)
+  let v264 : ℝ := v0^2
+  have h264 : Bounds v264 657204496 657204496 := Bounds.pow h0 2 (by norm_num)
+  let v265 : ℝ := 1/v264
+  have h265 : Bounds v265 (7607982036690144615200563/5000000000000000000000000000000000) (15215964073380289230401127/10000000000000000000000000000000000) := Bounds.inv h264 (by norm_num)
+  let v266 : ℝ := v263/v264
+  have h266 : Bounds v266 (2834395435218038853769497/1562500000000000000) (181401307853954486641247821/100000000000000000000) := bounds_div h263 h265 (by norm_num)
+  let v267 : ℝ := v1*v2
+  have h267 : Bounds v267 476871020407596 476871020407596 := Bounds.mul h1 h2 (by norm_num)
+  let v268 : ℝ := v0^3
+  have h268 : Bounds v268 16848094459456 16848094459456 := Bounds.pow h0 3 (by norm_num)
+  let v269 : ℝ := 1/v268
+  have h269 : Bounds v269 (11870778649851996591044723/200000000000000000000000000000000000000) (927404582019687233675369/15625000000000000000000000000000000000) := Bounds.inv h268 (by norm_num)
+  let v270 : ℝ := v267/v268
+  have h270 : Bounds v270 (28304151638938131789865471/1000000000000000000000000) (28304151638938131789865473/1000000000000000000000000) := bounds_div h267 h269 (by norm_num)
+  let v271 : ℝ := -v270
+  have h271 : Bounds v271 (-28304151638938131789865473/1000000000000000000000000) (-28304151638938131789865471/1000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h270
+  let v272 : ℝ := v266+v271
+  have h272 : Bounds v272 (181398477438790592828068821/100000000000000000000) (36279695487758118565613767/20000000000000000000) := Bounds.add h266 h271 (by norm_num)
+  let v273 : ℝ := v261*v272
+  have h273 : Bounds v273 (90721913529075145238137919/12500000000000000000) (72577530823260116190510341/10000000000000000000) := Bounds.mul h261 h272 (by norm_num)
+  convert h273 using 1 <;>
+    simp only [v0, v1, v2, v13, v22, v230, v260, v261, v262, v263, v264, v266, v267, v268, v270, v271, v272, v273, e1InputVarianceBound, inputVarianceMean, rowEps, Matrix.cons_val_one, Matrix.cons_val_three, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem meanvalue : Bounds (meanMajorantValue 25636 (mW 12818) (1/10^6) (1/10^7) rowEps) (201523144610223001850313797/100000000000000000000000000000000) (315276049211451978720717/156250000000000000000000000000) := by
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v8 : ℝ := 6
+  have h8 : Bounds v8 6 6 := Bounds.point _
+  let v274 : ℝ := Real.sqrt (e1InputVarianceBound 25636 (mW 12818) rowEps)
+  have h274 : Bounds v274 (269402173011392237712909153/100000000000000000000000) (53880434602278447542581833/20000000000000000000000) := Bounds.sqrt inputvar (by norm_num)
+  let v275 : ℝ := 1/(e1EnergyLower 25636 (mW 12818) (1/10^6))
+  have h275 : Bounds v275 (10751764959050669119876457/100000000000000000000000000000000000) (107517649590506691198764577/1000000000000000000000000000000000000) := Bounds.inv energy (by norm_num)
+  let v276 : ℝ := v274/(e1EnergyLower 25636 (mW 12818) (1/10^6))
+  have h276 : Bounds v276 (289654884367599294024554717/1000000000000000000000000000000000) (1158619537470397176098219/4000000000000000000000000000000) := bounds_div h274 h275 (by norm_num)
+  let v277 : ℝ := (e1FrobBound 25636 (mW 12818) rowEps)^2
+  have h277 : Bounds v277 (84835030708937209947609497/100000000000) (424710215606070096130956539/500000000000) := Bounds.pow frob 2 (by norm_num)
+  let v278 : ℝ := (1/10000000)
+  have h278 : Bounds v278 (1/10000000) (1/10000000) := Bounds.point _
+  let v279 : ℝ := 1/v278
+  have h279 : Bounds v279 10000000 10000000 := Bounds.inv h278 (by norm_num)
+  let v280 : ℝ := (directionMean 25636 (mW 12818))/v278
+  have h280 : Bounds v280 (78728776469365824662056533/100000000000000) (78733281742188311604889919/100000000000000) := bounds_div direction h279 (by norm_num)
+  let v281 : ℝ := v280*v2
+  have h281 : Bounds v281 (78728776469365824662056533/50000000000000) (78733281742188311604889919/50000000000000) := Bounds.mul h280 h2 (by norm_num)
+  let v282 : ℝ := v277+v281
+  have h282 : Bounds v282 (8499248826187594159693361/10000000000) (332419959705853108786723/390625000) := Bounds.add h277 h281 (by norm_num)
+  let v283 : ℝ := (e1EnergyLower 25636 (mW 12818) (1/10^6))^2
+  have h283 : Bounds v283 (10813106721202585050692391/125000) (865048537696206804055391341/10000000) := Bounds.pow energy 2 (by norm_num)
+  let v284 : ℝ := 1/v283
+  have h284 : Bounds v284 (11560044973466983661618469/1000000000000000000000000000000000000000000000) (903128513552108098563943/78125000000000000000000000000000000000000000) := Bounds.inv h283 (by norm_num)
+  let v285 : ℝ := v282/v283
+  have h285 : Bounds v285 (982516986714150589585869543/100000000000000000000000000000000) (49187707958755129329726503/5000000000000000000000000000000) := bounds_div h282 h284 (by norm_num)
+  let v286 : ℝ := (10237/50000)
+  have h286 : Bounds v286 (10237/50000) (10237/50000) := Bounds.point _
+  let v287 : ℝ := Real.sqrt v285
+  have h287 : Bounds v287 (156725635005425212472794593/50000000000000000000000000000) (19603034673942053910904717/6250000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v288 : ℝ := Real.sqrt v2
+  have h288 : Bounds v288 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v289 : ℝ := v288*v276
+  have h289 : Bounds v289 (409633865880269518209927803/1000000000000000000000000000000000) (20481693294013475910496393/50000000000000000000000000000000) := Bounds.mul h288 h276 (by norm_num)
+  let v290 : ℝ := v287+v289
+  have h290 : Bounds v290 (156746116698719225948705089/50000000000000000000000000000) (31368951816966088952629647/10000000000000000000000000000) := Bounds.add h287 h289 (by norm_num)
+  let v291 : ℝ := v290^2
+  have h291 : Bounds v291 (9827738040051402468872173/1000000000000000000000000000000) (196802227619028018693390387/20000000000000000000000000000000) := Bounds.pow h290 2 (by norm_num)
+  let v292 : ℝ := v286*v291
+  have h292 : Bounds v292 (20121310863201241414768887/10000000000000000000000000000000) (10073322020679949136821187/5000000000000000000000000000000) := Bounds.mul h286 h291 (by norm_num)
+  let v293 : ℝ := v276^2
+  have h293 : Bounds v293 (838999520380073178734578203/10000000000000000000000000000000000000000) (1048749400475091473418223/12500000000000000000000000000000000000) := Bounds.pow h276 2 (by norm_num)
+  let v294 : ℝ := v293*v8
+  have h294 : Bounds v294 (12584992805701097681018673/25000000000000000000000000000000000000) (3146248201425274420254669/6250000000000000000000000000000000000) := Bounds.mul h293 h8 (by norm_num)
+  let v295 : ℝ := v292+v294
+  have h295 : Bounds v295 (100606579485991818476039797/50000000000000000000000000000000) (20146649075357020554081447/10000000000000000000000000000000) := Bounds.add h292 h294 (by norm_num)
+  let v296 : ℝ := Real.sqrt v2
+  have h296 : Bounds v296 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v297 : ℝ := v296+v2
+  have h297 : Bounds v297 (42677669529663688110021109/12500000000000000000000000) (341421356237309504880168873/100000000000000000000000000) := Bounds.add h296 h2 (by norm_num)
+  let v298 : ℝ := v297*v276
+  have h298 : Bounds v298 (98894363461546810625903723/100000000000000000000000000000000) (12361795432693351328237967/12500000000000000000000000000000) := Bounds.mul h297 h276 (by norm_num)
+  let v299 : ℝ := Real.sqrt v285
+  have h299 : Bounds v299 (156725635005425212472794593/50000000000000000000000000000) (19603034673942053910904717/6250000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v300 : ℝ := v298*v299
+  have h300 : Bounds v300 (7749640955984122455855087/2500000000000000000000000000000000) (3877259271988260505555077/1250000000000000000000000000000000) := Bounds.mul h298 h299 (by norm_num)
+  let v301 : ℝ := v295+v300
+  have h301 : Bounds v301 (201523144610223001850313797/100000000000000000000000000000000) (315276049211451978720717/156250000000000000000000000000) := Bounds.add h295 h300 (by norm_num)
+  convert h301 using 1 <;>
+    simp only [v2, v8, v274, v276, v277, v278, v280, v281, v282, v283, v285, v286, v287, v288, v289, v290, v291, v292, v293, v294, v295, v296, v297, v298, v299, v300, v301, meanMajorantValue, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+end BstLean.Part268.WorldRow12818
+namespace BstLean.Part268.WorldRow12819
+open Real MeasureTheory Set BstLean.Part130 BstLean.Part140 BstLean.Part137 BstLean.Part159
+open BstLean.Part227 BstLean.Part228 BstLean.Part218 BstLean.Part205 BstLean.Part214
+open BstLean.Part157 BstLean.Part192
+open BstLean.Part250 (bounds_div pi_bounds rowEps meanMajorantValue endpointPolynomial mean_majorant)
+theorem covmean : Bounds (covarianceMeanBound 25638 (mW 12819)) (3334785299591568895070347/500000000000000) (20009980470391558110002663/2000000000000000) := by
+  let v1 : ℝ := 238500622208085
+  have h1 : Bounds v1 238500622208085 238500622208085 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v203 : ℝ := v1*v41
+  have h203 : Bounds v203 954002488832340 954002488832340 := Bounds.mul h1 h41 (by norm_num)
+  let v204 : ℝ := -v22
+  have h204 : Bounds v204 (-1) (-1) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h22
+  let v205 : ℝ := v1+v204
+  have h205 : Bounds v205 238500622208084 238500622208084 := Bounds.add h1 h204 (by norm_num)
+  let v206 : ℝ := v203*v205
+  have h206 : Bounds v206 227530187174573797601668636000 227530187174573797601668637000 := Bounds.mul h203 h205 (by norm_num)
+  let v207 : ℝ := v206*(angularJ2 25638 (angularOffset 25638))
+  have h207 : Bounds v207 (3334785299591568895070347/500000000000000) (20009980470391558110002663/2000000000000000) := Bounds.mul h206 jsecond (by norm_num)
+  convert h207 using 1 <;>
+    simp only [v1, v22, v41, v203, v204, v205, v206, v207, covarianceMeanBound, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem frob : Bounds (e1FrobBound 25638 (mW 12819) rowEps) (58261990682417553976594509/2000000000000000000) (29149362013238073467860547/1000000000000000000) := by
+  let v0 : ℝ := 25638
+  have h0 : Bounds v0 25638 25638 := Bounds.point _
+  let v1 : ℝ := 238500622208085
+  have h1 : Bounds v1 238500622208085 238500622208085 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v208 : ℝ := (1/100000)
+  have h208 : Bounds v208 (1/100000) (1/100000) := Bounds.point _
+  let v209 : ℝ := v208+v22
+  have h209 : Bounds v209 (100001/100000) (100001/100000) := Bounds.add h208 h22 (by norm_num)
+  let v210 : ℝ := v1*v0
+  have h210 : Bounds v210 6114678952170883230 6114678952170883230 := Bounds.mul h1 h0 (by norm_num)
+  let v211 : ℝ := v1+v0
+  have h211 : Bounds v211 238500622233723 238500622233723 := Bounds.add h1 h0 (by norm_num)
+  let v212 : ℝ := v211+v22
+  have h212 : Bounds v212 238500622233724 238500622233724 := Bounds.add h211 h22 (by norm_num)
+  let v213 : ℝ := v210*v212
+  have h213 : Bounds v213 1458354734852211124061556570000000 1458354734852211124061556580000000 := Bounds.mul h210 h212 (by norm_num)
+  let v214 : ℝ := v209*v213
+  have h214 : Bounds v214 1458369318399559646172797180000000 1458369318399559646172797200000000 := Bounds.mul h209 h213 (by norm_num)
+  let v215 : ℝ := v0^4
+  have h215 : Bounds v215 432052550092017936 432052550092017936 := Bounds.pow h0 4 (by norm_num)
+  let v216 : ℝ := v215*v41
+  have h216 : Bounds v216 1728210200368071744 1728210200368071744 := Bounds.mul h215 h41 (by norm_num)
+  let v217 : ℝ := 1/v216
+  have h217 : Bounds v217 (28931665829394521164930951/50000000000000000000000000000000000000000000) (57863331658789042329861903/100000000000000000000000000000000000000000000) := Bounds.inv h216 (by norm_num)
+  let v218 : ℝ := v214/v216
+  have h218 : Bounds v218 (21096526887888959173109699/25000000000) (84386107551555836692438799/100000000000) := bounds_div h214 h217 (by norm_num)
+  let v219 : ℝ := Real.sqrt v218
+  have h219 : Bounds v219 (58098574010574764430412063/2000000000000000000) (290492870052873822152060321/10000000000000000000) := Bounds.sqrt h218 (by norm_num)
+  let v220 : ℝ := v0*v41
+  have h220 : Bounds v220 102552 102552 := Bounds.mul h0 h41 (by norm_num)
+  let v221 : ℝ := 1/v220
+  have h221 : Bounds v221 (97511506357750214525313987/10000000000000000000000000000000) (24377876589437553631328497/2500000000000000000000000000000) := Bounds.inv h220 (by norm_num)
+  let v222 : ℝ := v22/v220
+  have h222 : Bounds v222 (97511506357750214525313987/10000000000000000000000000000000) (24377876589437553631328497/2500000000000000000000000000000) := bounds_div h22 h221 (by norm_num)
+  let v223 : ℝ := -(BstLean.Part137.cN 25638 ^ 2)
+  have h223 : Bounds v223 (-25000000000000000000/4027050543004076462719951) (-25000000000000000000/4027207622636755952394693) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg cnsq_bounds
+  let v224 : ℝ := v222+v223
+  have h224 : Bounds v224 (17715665982265649102767443/5000000000000000000000000000000) (354337533770593120491024767/100000000000000000000000000000000) := Bounds.add h222 h223 (by norm_num)
+  let v225 : ℝ := v224^2
+  have h225 : Bounds v225 (125537928478081730348065037/10000000000000000000000000000000000000) (125555087838626220116936687/10000000000000000000000000000000000000) := Bounds.pow h224 2 (by norm_num)
+  let v226 : ℝ := v0^2
+  have h226 : Bounds v226 657307044 657307044 := Bounds.pow h0 2 (by norm_num)
+  let v227 : ℝ := 1/v226
+  have h227 : Bounds v227 (15213590195452096813372959/10000000000000000000000000000000000) (95084938721575605083581/62500000000000000000000000000000) := Bounds.inv h226 (by norm_num)
+  let v228 : ℝ := v41/v226
+  have h228 : Bounds v228 (15213590195452096813372959/2500000000000000000000000000000000) (95084938721575605083581/15625000000000000000000000000000) := bounds_div h41 h227 (by norm_num)
+  let v229 : ℝ := v225*v228
+  have h229 : Bounds v229 (3055812156562417252246943/40000000000000000000000000000000000000000000) (7640574613323402639022179/100000000000000000000000000000000000000000000) := Bounds.mul h225 h228 (by norm_num)
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v231 : ℝ := v230+v22
+  have h231 : Bounds v231 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v232 : ℝ := v1*v0
+  have h232 : Bounds v232 6114678952170883230 6114678952170883230 := Bounds.mul h1 h0 (by norm_num)
+  let v233 : ℝ := v0+v2
+  have h233 : Bounds v233 25640 25640 := Bounds.add h0 h2 (by norm_num)
+  let v234 : ℝ := v232*v233
+  have h234 : Bounds v234 156780368333661446017200 156780368333661446017200 := Bounds.mul h232 h233 (by norm_num)
+  let v235 : ℝ := v231*v234
+  have h235 : Bounds v235 (784685743509975537316086/5) (784685743509975537316086/5) := Bounds.mul h231 h234 (by norm_num)
+  let v236 : ℝ := v229*v235
+  have h236 : Bounds v236 (119892611704950107696767857/10000000000000000000000) (119908999425982360858450553/10000000000000000000000) := Bounds.mul h229 h235 (by norm_num)
+  let v237 : ℝ := v230+v22
+  have h237 : Bounds v237 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v238 : ℝ := v237*(covarianceMeanBound 25638 (mW 12819))
+  have h238 : Bounds v238 (33381200848911604639654173/5000000000000000) (100149952254309748340563329/10000000000000000) := Bounds.mul h237 covmean (by norm_num)
+  let v239 : ℝ := v236+v238
+  have h239 : Bounds v239 (667625215904349142294160427/100000000000000000) (25037518040827293580731047/2500000000000000) := Bounds.add h236 h238 (by norm_num)
+  let v240 : ℝ := Real.sqrt v239
+  have h240 : Bounds v240 (817083359213947730912230459/10000000000000000000000) (50037503975345626327257117/500000000000000000000) := Bounds.sqrt h239 (by norm_num)
+  let v241 : ℝ := v219+v240
+  have h241 : Bounds v241 (58261990682417553976594509/2000000000000000000) (29149362013238073467860547/1000000000000000000) := Bounds.add h219 h240 (by norm_num)
+  convert h241 using 1 <;>
+    simp only [v0, v1, v2, v22, v41, v208, v209, v210, v211, v212, v213, v214, v215, v216, v218, v219, v220, v222, v223, v224, v225, v226, v228, v229, v230, v231, v232, v233, v234, v235, v236, v237, v238, v239, v240, v241, e1FrobBound, rowEps, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem energy : Bounds (e1EnergyLower 25638 (mW 12819) (1/10^6)) (930261267288644948572431527/100000000000000000) (23256531682216123714310789/2500000000000000) := by
+  let v0 : ℝ := 25638
+  have h0 : Bounds v0 25638 25638 := Bounds.point _
+  let v1 : ℝ := 238500622208085
+  have h1 : Bounds v1 238500622208085 238500622208085 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v242 : ℝ := (1/1000000)
+  have h242 : Bounds v242 (1/1000000) (1/1000000) := Bounds.point _
+  let v243 : ℝ := -v242
+  have h243 : Bounds v243 (-1/1000000) (-1/1000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h242
+  let v244 : ℝ := v22+v243
+  have h244 : Bounds v244 (999999/1000000) (999999/1000000) := Bounds.add h22 h243 (by norm_num)
+  let v245 : ℝ := v244*v1
+  have h245 : Bounds v245 (47700076741492558383/200000) (47700076741492558383/200000) := Bounds.mul h244 h1 (by norm_num)
+  let v246 : ℝ := 1/v0
+  have h246 : Bounds v246 (19502301271550042905062797/500000000000000000000000000000) (7800920508620017162025119/200000000000000000000000000000) := Bounds.inv h0 (by norm_num)
+  let v247 : ℝ := v245/v0
+  have h247 : Bounds v247 (930261267288644948572431527/100000000000000000) (23256531682216123714310789/2500000000000000) := bounds_div h245 h246 (by norm_num)
+  convert h247 using 1 <;>
+    simp only [v0, v1, v22, v242, v243, v244, v245, v247, e1EnergyLower, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem direction : Bounds (directionMean 25638 (mW 12819)) (4921124334649747364203049/62500000000000000000) (19685623700728493598101211/250000000000000000000) := by
+  let v0 : ℝ := 25638
+  have h0 : Bounds v0 25638 25638 := Bounds.point _
+  let v1 : ℝ := 238500622208085
+  have h1 : Bounds v1 238500622208085 238500622208085 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v248 : ℝ := v1*v2
+  have h248 : Bounds v248 477001244416170 477001244416170 := Bounds.mul h1 h2 (by norm_num)
+  let v249 : ℝ := v248*(BstLean.Part137.cN 25638 ^ 2)
+  have h249 : Bounds v249 (148055827111745834593048521/50000000000000000) (29612320439138274426092449/10000000000000000) := Bounds.mul h248 cnsq_bounds (by norm_num)
+  let v250 : ℝ := v0+v2
+  have h250 : Bounds v250 25640 25640 := Bounds.add h0 h2 (by norm_num)
+  let v251 : ℝ := v249*v250
+  have h251 : Bounds v251 (151846056285806527958630563/2000000000000) (949074870074381695356263/12500000000) := Bounds.mul h249 h250 (by norm_num)
+  let v252 : ℝ := v0^2
+  have h252 : Bounds v252 657307044 657307044 := Bounds.pow h0 2 (by norm_num)
+  let v253 : ℝ := 1/v252
+  have h253 : Bounds v253 (15213590195452096813372959/10000000000000000000000000000000000) (95084938721575605083581/62500000000000000000000000000000) := Bounds.inv h252 (by norm_num)
+  let v254 : ℝ := v251/v252
+  have h254 : Bounds v254 (11550618365639067147942397/100000000000000000000) (115510689104908688044580031/1000000000000000000000) := bounds_div h251 h253 (by norm_num)
+  let v255 : ℝ := v0*v2
+  have h255 : Bounds v255 51276 51276 := Bounds.mul h0 h2 (by norm_num)
+  let v256 : ℝ := v255*(BstLean.Part137.cN 25638 ^ 2)
+  have h256 : Bounds v256 (15915494309189533576851107/50000000000000000000000000) (7958057555466732883032483/25000000000000000000000000) := Bounds.mul h255 cnsq_bounds (by norm_num)
+  let v257 : ℝ := -v256
+  have h257 : Bounds v257 (-7958057555466732883032483/25000000000000000000000000) (-15915494309189533576851107/50000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h256
+  let v258 : ℝ := v22+v257
+  have h258 : Bounds v258 (17041942444533267116967517/25000000000000000000000000) (34084505690810466423148893/50000000000000000000000000) := Bounds.add h22 h257 (by norm_num)
+  let v259 : ℝ := v254*v258
+  have h259 : Bounds v259 (4921124334649747364203049/62500000000000000000) (19685623700728493598101211/250000000000000000000) := Bounds.mul h254 h258 (by norm_num)
+  convert h259 using 1 <;>
+    simp only [v0, v1, v2, v22, v248, v249, v250, v251, v252, v254, v255, v256, v257, v258, v259, directionMean, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring <;> simp
+
+theorem inputvar : Bounds (e1InputVarianceBound 25638 (mW 12819) rowEps) (45366265195650447861539999/6250000000000000000) (725860243130407165784640041/100000000000000000000) := by
+  let v0 : ℝ := 25638
+  have h0 : Bounds v0 25638 25638 := Bounds.point _
+  let v1 : ℝ := 238500622208085
+  have h1 : Bounds v1 238500622208085 238500622208085 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v13 : ℝ := 3
+  have h13 : Bounds v13 3 3 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v260 : ℝ := v230+v22
+  have h260 : Bounds v260 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v261 : ℝ := v260+v13
+  have h261 : Bounds v261 (4001/1000) (4001/1000) := Bounds.add h260 h13 (by norm_num)
+  let v262 : ℝ := 5
+  have h262 : Bounds v262 5 5 := Bounds.point _
+  let v263 : ℝ := v1*v262
+  have h263 : Bounds v263 1192503111040425 1192503111040425 := Bounds.mul h1 h262 (by norm_num)
+  let v264 : ℝ := v0^2
+  have h264 : Bounds v264 657307044 657307044 := Bounds.pow h0 2 (by norm_num)
+  let v265 : ℝ := 1/v264
+  have h265 : Bounds v265 (15213590195452096813372959/10000000000000000000000000000000000) (95084938721575605083581/62500000000000000000000000000000) := Bounds.inv h264 (by norm_num)
+  let v266 : ℝ := v263/v264
+  have h266 : Bounds v266 (18142253638170732885071591/10000000000000000000) (181422536381707328850715923/100000000000000000000) := bounds_div h263 h265 (by norm_num)
+  let v267 : ℝ := v1*v2
+  have h267 : Bounds v267 477001244416170 477001244416170 := Bounds.mul h1 h2 (by norm_num)
+  let v268 : ℝ := v0^3
+  have h268 : Bounds v268 16852037994072 16852037994072 := Bounds.pow h0 3 (by norm_num)
+  let v269 : ℝ := 1/v268
+  have h269 : Bounds v269 (29670001941360669345059989/500000000000000000000000000000000000000) (59340003882721338690119979/1000000000000000000000000000000000000000) := Bounds.inv h268 (by norm_num)
+  let v270 : ℝ := v267/v268
+  have h270 : Bounds v270 (28305255695718438076404699/1000000000000000000000000) (283052556957184380764047001/10000000000000000000000000) := bounds_div h267 h269 (by norm_num)
+  let v271 : ℝ := -v270
+  have h271 : Bounds v271 (-283052556957184380764047001/10000000000000000000000000) (-28305255695718438076404699/1000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h270
+  let v272 : ℝ := v266+v271
+  have h272 : Bounds v272 (181419705856137757006908269/100000000000000000000) (181419705856137757006908283/100000000000000000000) := Bounds.add h266 h271 (by norm_num)
+  let v273 : ℝ := v261*v272
+  have h273 : Bounds v273 (45366265195650447861539999/6250000000000000000) (725860243130407165784640041/100000000000000000000) := Bounds.mul h261 h272 (by norm_num)
+  convert h273 using 1 <;>
+    simp only [v0, v1, v2, v13, v22, v230, v260, v261, v262, v263, v264, v266, v267, v268, v270, v271, v272, v273, e1InputVarianceBound, inputVarianceMean, rowEps, Matrix.cons_val_one, Matrix.cons_val_three, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem meanvalue : Bounds (meanMajorantValue 25638 (mW 12819) (1/10^6) (1/10^7) rowEps) (25188408985155714326715353/12500000000000000000000000000000) (5044019225992843052746333/2500000000000000000000000000000) := by
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v8 : ℝ := 6
+  have h8 : Bounds v8 6 6 := Bounds.point _
+  let v274 : ℝ := Real.sqrt (e1InputVarianceBound 25638 (mW 12819) rowEps)
+  have h274 : Bounds v274 (269417936138336410830730727/100000000000000000000000) (134708968069168205415365369/50000000000000000000000) := Bounds.sqrt inputvar (by norm_num)
+  let v275 : ℝ := 1/(e1EnergyLower 25638 (mW 12819) (1/10^6))
+  have h275 : Bounds v275 (53748341200672405097866349/500000000000000000000000000000000000) (10749668240134481019573271/100000000000000000000000000000000000) := Bounds.inv energy (by norm_num)
+  let v276 : ℝ := v274/(e1EnergyLower 25638 (mW 12819) (1/10^6))
+  have h276 : Bounds v276 (7240383578572136901714769/25000000000000000000000000000000) (14480767157144273803429541/50000000000000000000000000000000) := bounds_div h274 h275 (by norm_num)
+  let v277 : ℝ := (e1FrobBound 25638 (mW 12819) rowEps)^2
+  have h277 : Bounds v277 (3394459558278109876911337/4000000000) (84968530577880679156977149/100000000000) := Bounds.pow frob 2 (by norm_num)
+  let v278 : ℝ := (1/10000000)
+  have h278 : Bounds v278 (1/10000000) (1/10000000) := Bounds.point _
+  let v279 : ℝ := 1/v278
+  have h279 : Bounds v279 10000000 10000000 := Bounds.inv h278 (by norm_num)
+  let v280 : ℝ := (directionMean 25638 (mW 12819))/v278
+  have h280 : Bounds v280 (4921124334649747364203049/6250000000000) (19685623700728493598101211/25000000000000) := bounds_div direction h279 (by norm_num)
+  let v281 : ℝ := v280*v2
+  have h281 : Bounds v281 (4921124334649747364203049/3125000000000) (19685623700728493598101211/12500000000000) := Bounds.mul h280 h2 (by norm_num)
+  let v282 : ℝ := v277+v281
+  have h282 : Bounds v282 (42509482467830769419218961/50000000000) (85126015567486507105761959/100000000000) := Bounds.add h277 h281 (by norm_num)
+  let v283 : ℝ := (e1EnergyLower 25638 (mW 12819) (1/10^6))^2
+  have h283 : Bounds v283 (865386025417475720227595893/10000000) (21634650635436893005689899/250000) := Bounds.pow energy 2 (by norm_num)
+  let v284 : ℝ := 1/v283
+  have h284 : Bounds v284 (115555367272955950289997279/10000000000000000000000000000000000000000000000) (11555536727295595028999729/1000000000000000000000000000000000000000000000) := Bounds.inv h283 (by norm_num)
+  let v285 : ℝ := v282/v283
+  have h285 : Bounds v285 (24560994295767332187364751/2500000000000000000000000000000) (983676799338426906977881347/100000000000000000000000000000000) := bounds_div h282 h284 (by norm_num)
+  let v286 : ℝ := (10237/50000)
+  have h286 : Bounds v286 (10237/50000) (10237/50000) := Bounds.point _
+  let v287 : ℝ := Real.sqrt v285
+  have h287 : Bounds v287 (313438952880890872767929421/100000000000000000000000000000) (2450282986659312028791361/781250000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v288 : ℝ := Real.sqrt v2
+  have h288 : Bounds v288 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v289 : ℝ := v288*v276
+  have h289 : Bounds v289 (40957794614400639465264017/100000000000000000000000000000000) (40957794614400639465264027/100000000000000000000000000000000) := Bounds.mul h288 h276 (by norm_num)
+  let v290 : ℝ := v287+v289
+  have h290 : Bounds v290 (62695982135101054681478937/20000000000000000000000000000) (313677180087006340324759473/100000000000000000000000000000) := Bounds.add h287 h289 (by norm_num)
+  let v291 : ℝ := v290^2
+  have h291 : Bounds v291 (24567413599280691270214583/2500000000000000000000000000000) (491966866536681034789758873/50000000000000000000000000000000) := Bounds.pow h290 2 (by norm_num)
+  let v292 : ℝ := v286*v291
+  have h292 : Bounds v292 (50299322603167287306637337/25000000000000000000000000000000) (1573832753980001172857113/781250000000000000000000000000) := Bounds.mul h286 h291 (by norm_num)
+  let v293 : ℝ := v276^2
+  have h293 : Bounds v293 (20969261745942825335765667/250000000000000000000000000000000000000) (83877046983771301343062703/1000000000000000000000000000000000000000) := Bounds.pow h276 2 (by norm_num)
+  let v294 : ℝ := v293*v8
+  have h294 : Bounds v294 (62907785237828476007297001/125000000000000000000000000000000000000) (25163114095131390402918811/50000000000000000000000000000000000000) := Bounds.mul h293 h8 (by norm_num)
+  let v295 : ℝ := v292+v294
+  have h295 : Bounds v295 (201197340738897339489330153/100000000000000000000000000000000) (20145064283566834038849127/10000000000000000000000000000000) := Bounds.add h292 h294 (by norm_num)
+  let v296 : ℝ := Real.sqrt v2
+  have h296 : Bounds v296 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v297 : ℝ := v296+v2
+  have h297 : Bounds v297 (42677669529663688110021109/12500000000000000000000000) (341421356237309504880168873/100000000000000000000000000) := Bounds.add h296 h2 (by norm_num)
+  let v298 : ℝ := v297*v276
+  have h298 : Bounds v298 (98880863242977734678982169/100000000000000000000000000000000) (98880863242977734678982191/100000000000000000000000000000000) := Bounds.mul h297 h276 (by norm_num)
+  let v299 : ℝ := Real.sqrt v285
+  have h299 : Bounds v299 (313438952880890872767929421/100000000000000000000000000000) (2450282986659312028791361/781250000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v300 : ℝ := v298*v299
+  have h300 : Bounds v300 (309931142348375124392671561/100000000000000000000000000000000000) (31012620404538172136204929/10000000000000000000000000000000000) := Bounds.mul h298 h299 (by norm_num)
+  let v301 : ℝ := v295+v300
+  have h301 : Bounds v301 (25188408985155714326715353/12500000000000000000000000000000) (5044019225992843052746333/2500000000000000000000000000000) := Bounds.add h295 h300 (by norm_num)
+  convert h301 using 1 <;>
+    simp only [v2, v8, v274, v276, v277, v278, v280, v281, v282, v283, v285, v286, v287, v288, v289, v290, v291, v292, v293, v294, v295, v296, v297, v298, v299, v300, v301, meanMajorantValue, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+end BstLean.Part268.WorldRow12819
+namespace BstLean.Part268.WorldRow12820
+open Real MeasureTheory Set BstLean.Part130 BstLean.Part140 BstLean.Part137 BstLean.Part159
+open BstLean.Part227 BstLean.Part228 BstLean.Part218 BstLean.Part205 BstLean.Part214
+open BstLean.Part157 BstLean.Part192
+open BstLean.Part250 (bounds_div pi_bounds rowEps meanMajorantValue endpointPolynomial mean_majorant)
+theorem covmean : Bounds (covarianceMeanBound 25640 (mW 12820)) (33355658012210024383503679/5000000000000000) (100073318390506814883670533/10000000000000000) := by
+  let v1 : ℝ := 238565746911950
+  have h1 : Bounds v1 238565746911950 238565746911950 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v203 : ℝ := v1*v41
+  have h203 : Bounds v203 954262987647800 954262987647800 := Bounds.mul h1 h41 (by norm_num)
+  let v204 : ℝ := -v22
+  have h204 : Bounds v204 (-1) (-1) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h22
+  let v205 : ℝ := v1+v204
+  have h205 : Bounds v205 238565746911949 238565746911949 := Bounds.add h1 h204 (by norm_num)
+  let v206 : ℝ := v203*v205
+  have h206 : Bounds v206 227654462398625369581223562000 227654462398625369581223563000 := Bounds.mul h203 h205 (by norm_num)
+  let v207 : ℝ := v206*(angularJ2 25640 (angularOffset 25640))
+  have h207 : Bounds v207 (33355658012210024383503679/5000000000000000) (100073318390506814883670533/10000000000000000) := Bounds.mul h206 jsecond (by norm_num)
+  convert h207 using 1 <;>
+    simp only [v1, v22, v41, v203, v204, v205, v206, v207, covarianceMeanBound, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem frob : Bounds (e1FrobBound 25640 (mW 12820) rowEps) (291355373028516035286578729/10000000000000000000) (145769530619277909255061267/5000000000000000000) := by
+  let v0 : ℝ := 25640
+  have h0 : Bounds v0 25640 25640 := Bounds.point _
+  let v1 : ℝ := 238565746911950
+  have h1 : Bounds v1 238565746911950 238565746911950 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v208 : ℝ := (1/100000)
+  have h208 : Bounds v208 (1/100000) (1/100000) := Bounds.point _
+  let v209 : ℝ := v208+v22
+  have h209 : Bounds v209 (100001/100000) (100001/100000) := Bounds.add h208 h22 (by norm_num)
+  let v210 : ℝ := v1*v0
+  have h210 : Bounds v210 6116825750822398000 6116825750822398000 := Bounds.mul h1 h0 (by norm_num)
+  let v211 : ℝ := v1+v0
+  have h211 : Bounds v211 238565746937590 238565746937590 := Bounds.add h1 h0 (by norm_num)
+  let v212 : ℝ := v211+v22
+  have h212 : Bounds v212 238565746937591 238565746937591 := Bounds.add h211 h22 (by norm_num)
+  let v213 : ℝ := v210*v212
+  have h213 : Bounds v213 1459265104132036264918230960000000 1459265104132036264918230970000000 := Bounds.mul h210 h212 (by norm_num)
+  let v214 : ℝ := v209*v213
+  have h214 : Bounds v214 1459279696783077585280880140000000 1459279696783077585280880160000000 := Bounds.mul h209 h213 (by norm_num)
+  let v215 : ℝ := v0^4
+  have h215 : Bounds v215 432187382172160000 432187382172160000 := Bounds.pow h0 4 (by norm_num)
+  let v216 : ℝ := v215*v41
+  have h216 : Bounds v216 1728749528688640000 1728749528688640000 := Bounds.mul h215 h41 (by norm_num)
+  let v217 : ℝ := 1/v216
+  have h217 : Bounds v217 (28922639844725217647219757/50000000000000000000000000000000000000000000) (11569055937890087058887903/20000000000000000000000000000000000000000000) := Bounds.inv h216 (by norm_num)
+  let v218 : ℝ := v214/v216
+  have h218 : Bounds v218 (84412442205553547562649351/100000000000) (16882488441110709512529871/20000000000) := bounds_div h214 h217 (by norm_num)
+  let v219 : ℝ := Real.sqrt v218
+  have h219 : Bounds v219 (72634548514099657220742441/2500000000000000000) (72634548514099657220742443/2500000000000000000) := Bounds.sqrt h218 (by norm_num)
+  let v220 : ℝ := v0*v41
+  have h220 : Bounds v220 102560 102560 := Bounds.mul h0 h41 (by norm_num)
+  let v221 : ℝ := 1/v220
+  have h221 : Bounds v221 (380874609984399375975039/39062500000000000000000000000) (19500780031201248049921997/2000000000000000000000000000000) := Bounds.inv h220 (by norm_num)
+  let v222 : ℝ := v22/v220
+  have h222 : Bounds v222 (380874609984399375975039/39062500000000000000000000000) (19500780031201248049921997/2000000000000000000000000000000) := bounds_div h22 h221 (by norm_num)
+  let v223 : ℝ := -(BstLean.Part137.cN 25640 ^ 2)
+  have h223 : Bounds v223 (-25000000000000000000/4027364702269435442043797) (-1250000000000000000/201376089095105746585927) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg cnsq_bounds
+  let v224 : ℝ := v222+v223
+  have h224 : Bounds v224 (354285683989582525086615543/100000000000000000000000000000000) (8857747358434542144255941/2500000000000000000000000000000) := Bounds.add h222 h223 (by norm_num)
+  let v225 : ℝ := v224^2
+  have h225 : Bounds v225 (125518345879966331549626017/10000000000000000000000000000000000000) (3922984413292705461231713/312500000000000000000000000000000000) := Bounds.pow h224 2 (by norm_num)
+  let v226 : ℝ := v0^2
+  have h226 : Bounds v226 657409600 657409600 := Bounds.pow h0 2 (by norm_num)
+  let v227 : ℝ := 1/v226
+  have h227 : Bounds v227 (3042243374602378790939469/2000000000000000000000000000000000) (7605608436505946977348673/5000000000000000000000000000000000) := Bounds.inv h226 (by norm_num)
+  let v228 : ℝ := v41/v226
+  have h228 : Bounds v228 (3042243374602378790939469/500000000000000000000000000000000) (7605608436505946977348673/1250000000000000000000000000000000) := bounds_div h41 h227 (by norm_num)
+  let v229 : ℝ := v225*v228
+  have h229 : Bounds v229 (3818573561443773609318331/50000000000000000000000000000000000000000000) (19095477344013013311551097/250000000000000000000000000000000000000000000) := Bounds.mul h225 h228 (by norm_num)
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v231 : ℝ := v230+v22
+  have h231 : Bounds v231 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v232 : ℝ := v1*v0
+  have h232 : Bounds v232 6116825750822398000 6116825750822398000 := Bounds.mul h1 h0 (by norm_num)
+  let v233 : ℝ := v0+v2
+  have h233 : Bounds v233 25642 25642 := Bounds.add h0 h2 (by norm_num)
+  let v234 : ℝ := v232*v233
+  have h234 : Bounds v234 156847645902587929516000 156847645902587929516000 := Bounds.mul h232 h233 (by norm_num)
+  let v235 : ℝ := v231*v234
+  have h235 : Bounds v235 157004493548490517445516 157004493548490517445516 := Bounds.mul h231 h234 (by norm_num)
+  let v236 : ℝ := v229*v235
+  have h236 : Bounds v236 (119906641618427082431573381/10000000000000000000000) (95938423982830015669413/8000000000000000000) := Bounds.mul h229 h235 (by norm_num)
+  let v237 : ℝ := v230+v22
+  have h237 : Bounds v237 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v238 : ℝ := v237*(covarianceMeanBound 25640 (mW 12820))
+  have h238 : Bounds v238 (13355605468088893763154873/2000000000000000) (25043347927224330424638551/2500000000000000) := Bounds.mul h237 covmean (by norm_num)
+  let v239 : ℝ := v236+v238
+  have h239 : Bounds v239 (133556294494172174485713593/20000000000000000) (100173511631927300236073791/10000000000000000) := Bounds.add h236 h238 (by norm_num)
+  let v240 : ℝ := Real.sqrt v239
+  have h240 : Bounds v240 (8171789721174064036089659/100000000000000000000) (25021679553929740678819027/250000000000000000000) := Bounds.sqrt h239 (by norm_num)
+  let v241 : ℝ := v219+v240
+  have h241 : Bounds v241 (291355373028516035286578729/10000000000000000000) (145769530619277909255061267/5000000000000000000) := Bounds.add h219 h240 (by norm_num)
+  convert h241 using 1 <;>
+    simp only [v0, v1, v2, v22, v41, v208, v209, v210, v211, v212, v213, v214, v215, v216, v218, v219, v220, v222, v223, v224, v225, v226, v228, v229, v230, v231, v232, v233, v234, v235, v236, v237, v238, v239, v240, v241, e1FrobBound, rowEps, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem energy : Bounds (e1EnergyLower 25640 (mW 12820) (1/10^6)) (93044270025820237148985957/10000000000000000) (930442700258202371489859601/100000000000000000) := by
+  let v0 : ℝ := 25640
+  have h0 : Bounds v0 25640 25640 := Bounds.point _
+  let v1 : ℝ := 238565746911950
+  have h1 : Bounds v1 238565746911950 238565746911950 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v242 : ℝ := (1/1000000)
+  have h242 : Bounds v242 (1/1000000) (1/1000000) := Bounds.point _
+  let v243 : ℝ := -v242
+  have h243 : Bounds v243 (-1/1000000) (-1/1000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h242
+  let v244 : ℝ := v22+v243
+  have h244 : Bounds v244 (999999/1000000) (999999/1000000) := Bounds.add h22 h243 (by norm_num)
+  let v245 : ℝ := v244*v1
+  have h245 : Bounds v245 (4771310166924061761/20000) (4771310166924061761/20000) := Bounds.mul h244 h1 (by norm_num)
+  let v246 : ℝ := 1/v0
+  have h246 : Bounds v246 (39001560062402496099843993/1000000000000000000000000000000) (19500780031201248049921997/500000000000000000000000000000) := Bounds.inv h0 (by norm_num)
+  let v247 : ℝ := v245/v0
+  have h247 : Bounds v247 (93044270025820237148985957/10000000000000000) (930442700258202371489859601/100000000000000000) := bounds_div h245 h246 (by norm_num)
+  convert h247 using 1 <;>
+    simp only [v0, v1, v22, v242, v243, v244, v245, v247, e1EnergyLower, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem direction : Bounds (directionMean 25640 (mW 12820)) (39373601299381920035294523/500000000000000000000) (78751708222970535070153503/1000000000000000000000) := by
+  let v0 : ℝ := 25640
+  have h0 : Bounds v0 25640 25640 := Bounds.point _
+  let v1 : ℝ := 238565746911950
+  have h1 : Bounds v1 238565746911950 238565746911950 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v248 : ℝ := v1*v2
+  have h248 : Bounds v248 477131493823900 477131493823900 := Bounds.mul h1 h2 (by norm_num)
+  let v249 : ℝ := v248*(BstLean.Part137.cN 25640 ^ 2)
+  have h249 : Bounds v249 (148084703094566722637243677/50000000000000000) (29618095770854485498116259/10000000000000000) := Bounds.mul h248 cnsq_bounds (by norm_num)
+  let v250 : ℝ := v0+v2
+  have h250 : Bounds v250 25642 25642 := Bounds.add h0 h2 (by norm_num)
+  let v251 : ℝ := v249*v250
+  have h251 : Bounds v251 (75943759135017598037284047/1000000000000) (4746670073476566982141857/62500000000) := Bounds.mul h249 h250 (by norm_num)
+  let v252 : ℝ := v0^2
+  have h252 : Bounds v252 657409600 657409600 := Bounds.pow h0 2 (by norm_num)
+  let v253 : ℝ := 1/v252
+  have h253 : Bounds v253 (3042243374602378790939469/2000000000000000000000000000000000) (7605608436505946977348673/5000000000000000000000000000000000) := Bounds.inv h252 (by norm_num)
+  let v254 : ℝ := v251/v252
+  have h254 : Bounds v254 (4620787961418123376189459/40000000000000000000) (57762102329829889702150467/500000000000000000000) := bounds_div h251 h253 (by norm_num)
+  let v255 : ℝ := v0*v2
+  have h255 : Bounds v255 51280 51280 := Bounds.mul h0 h2 (by norm_num)
+  let v256 : ℝ := v255*(BstLean.Part137.cN 25640 ^ 2)
+  have h256 : Bounds v256 (15915494309189533576851107/50000000000000000000000000) (6366446025002841622711671/20000000000000000000000000) := Bounds.mul h255 cnsq_bounds (by norm_num)
+  let v257 : ℝ := -v256
+  have h257 : Bounds v257 (-6366446025002841622711671/20000000000000000000000000) (-15915494309189533576851107/50000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h256
+  let v258 : ℝ := v22+v257
+  have h258 : Bounds v258 (13633553974997158377288329/20000000000000000000000000) (34084505690810466423148893/50000000000000000000000000) := Bounds.add h22 h257 (by norm_num)
+  let v259 : ℝ := v254*v258
+  have h259 : Bounds v259 (39373601299381920035294523/500000000000000000000) (78751708222970535070153503/1000000000000000000000) := Bounds.mul h254 h258 (by norm_num)
+  convert h259 using 1 <;>
+    simp only [v0, v1, v2, v22, v248, v249, v250, v251, v252, v254, v255, v256, v257, v258, v259, directionMean, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring <;> simp
+
+theorem inputvar : Bounds (e1InputVarianceBound 25640 (mW 12820) rowEps) (181486295335291384143062123/25000000000000000000) (725945181341165536572248549/100000000000000000000) := by
+  let v0 : ℝ := 25640
+  have h0 : Bounds v0 25640 25640 := Bounds.point _
+  let v1 : ℝ := 238565746911950
+  have h1 : Bounds v1 238565746911950 238565746911950 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v13 : ℝ := 3
+  have h13 : Bounds v13 3 3 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v260 : ℝ := v230+v22
+  have h260 : Bounds v260 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v261 : ℝ := v260+v13
+  have h261 : Bounds v261 (4001/1000) (4001/1000) := Bounds.add h260 h13 (by norm_num)
+  let v262 : ℝ := 5
+  have h262 : Bounds v262 5 5 := Bounds.point _
+  let v263 : ℝ := v1*v262
+  have h263 : Bounds v263 1192828734559750 1192828734559750 := Bounds.mul h1 h262 (by norm_num)
+  let v264 : ℝ := v0^2
+  have h264 : Bounds v264 657409600 657409600 := Bounds.pow h0 2 (by norm_num)
+  let v265 : ℝ := 1/v264
+  have h265 : Bounds v265 (3042243374602378790939469/2000000000000000000000000000000000) (7605608436505946977348673/5000000000000000000000000000000000) := Bounds.inv h264 (by norm_num)
+  let v266 : ℝ := v263/v264
+  have h266 : Bounds v266 (3628875314749738975518459/2000000000000000000) (181443765737486948775922963/100000000000000000000) := bounds_div h263 h265 (by norm_num)
+  let v267 : ℝ := v1*v2
+  have h267 : Bounds v267 477131493823900 477131493823900 := Bounds.mul h1 h2 (by norm_num)
+  let v268 : ℝ := v0^3
+  have h268 : Bounds v268 16855982144000 16855982144000 := Bounds.pow h0 3 (by norm_num)
+  let v269 : ℝ := 1/v268
+  have h269 : Bounds v269 (29663059424750183218988583/500000000000000000000000000000000000000) (59326118849500366437977167/1000000000000000000000000000000000000000) := Bounds.inv h268 (by norm_num)
+  let v270 : ℝ := v267/v268
+  have h270 : Bounds v270 (28306359709436341462702489/1000000000000000000000000) (56612719418872682925404979/2000000000000000000000000) := bounds_div h267 h269 (by norm_num)
+  let v271 : ℝ := -v270
+  have h271 : Bounds v271 (-56612719418872682925404979/2000000000000000000000000) (-28306359709436341462702489/1000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h270
+  let v272 : ℝ := v266+v271
+  have h272 : Bounds v272 (181440935101516005141776679/100000000000000000000) (181440935101516005141776693/100000000000000000000) := Bounds.add h266 h271 (by norm_num)
+  let v273 : ℝ := v261*v272
+  have h273 : Bounds v273 (181486295335291384143062123/25000000000000000000) (725945181341165536572248549/100000000000000000000) := Bounds.mul h261 h272 (by norm_num)
+  convert h273 using 1 <;>
+    simp only [v0, v1, v2, v13, v22, v230, v260, v261, v262, v263, v264, v266, v267, v268, v270, v271, v272, v273, e1InputVarianceBound, inputVarianceMean, rowEps, Matrix.cons_val_one, Matrix.cons_val_three, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem meanvalue : Bounds (meanMajorantValue 25640 (mW 12820) (1/10^6) (1/10^7) rowEps) (201491401659745050755687219/100000000000000000000000000000000) (201744869097383522457572023/100000000000000000000000000000000) := by
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v8 : ℝ := 6
+  have h8 : Bounds v8 6 6 := Bounds.point _
+  let v274 : ℝ := Real.sqrt (e1InputVarianceBound 25640 (mW 12820) rowEps)
+  have h274 : Bounds v274 (134716849478931693187578361/50000000000000000000000) (134716849478931693187578367/50000000000000000000000) := Bounds.sqrt inputvar (by norm_num)
+  let v275 : ℝ := 1/(e1EnergyLower 25640 (mW 12820) (1/10^6))
+  have h275 : Bounds v275 (268689302340298639499003/2500000000000000000000000000000000) (10747572093611945579960121/100000000000000000000000000000000000) := Bounds.inv energy (by norm_num)
+  let v276 : ℝ := v274/(e1EnergyLower 25640 (mW 12820) (1/10^6))
+  have h276 : Bounds v276 (28957581039981744754816809/100000000000000000000000000000000) (14478790519990872377408407/50000000000000000000000000000000) := bounds_div h274 h275 (by norm_num)
+  let v277 : ℝ := (e1FrobBound 25640 (mW 12820) rowEps)^2
+  have h277 : Bounds v277 (6631871358795760093407639/7812500000) (21248756056964599926490991/25000000000) := Bounds.pow frob 2 (by norm_num)
+  let v278 : ℝ := (1/10000000)
+  have h278 : Bounds v278 (1/10000000) (1/10000000) := Bounds.point _
+  let v279 : ℝ := 1/v278
+  have h279 : Bounds v279 10000000 10000000 := Bounds.inv h278 (by norm_num)
+  let v280 : ℝ := (directionMean 25640 (mW 12820))/v278
+  have h280 : Bounds v280 (39373601299381920035294523/50000000000000) (78751708222970535070153503/100000000000000) := bounds_div direction h279 (by norm_num)
+  let v281 : ℝ := v280*v2
+  have h281 : Bounds v281 (39373601299381920035294523/25000000000000) (78751708222970535070153503/50000000000000) := Bounds.mul h280 h2 (by norm_num)
+  let v282 : ℝ := v277+v281
+  have h282 : Bounds v282 (85045447797783256875758957/100000000000) (5322032977769021298506517/6250000000) := Bounds.add h277 h281 (by norm_num)
+  let v283 : ℝ := (e1EnergyLower 25640 (mW 12820) (1/10^6))^2
+  have h283 : Bounds v283 (432861809231887511708762193/5000000) (173144723692755004683504889/2000000) := Bounds.pow energy 2 (by norm_num)
+  let v284 : ℝ := 1/v283
+  have h284 : Bounds v284 (115510305907386259124602657/10000000000000000000000000000000000000000000000) (57755152953693129562301333/5000000000000000000000000000000000000000000000) := Bounds.inv h283 (by norm_num)
+  let v285 : ℝ := v282/v283
+  have h285 : Bounds v285 (491181284557629652920974547/50000000000000000000000000000000) (24589986292451898575103429/2500000000000000000000000000000) := bounds_div h282 h284 (by norm_num)
+  let v286 : ℝ := (10237/50000)
+  have h286 : Bounds v286 (10237/50000) (10237/50000) := Bounds.point _
+  let v287 : ℝ := Real.sqrt v285
+  have h287 : Bounds v287 (62685327441603407671098427/20000000000000000000000000000) (313623891261185002057442287/100000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v288 : ℝ := Real.sqrt v2
+  have h288 : Bounds v288 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v289 : ℝ := v288*v276
+  have h289 : Bounds v289 (409522038402601777759751411/1000000000000000000000000000000000) (40952203840260177775975149/100000000000000000000000000000000) := Bounds.mul h288 h276 (by norm_num)
+  let v290 : ℝ := v287+v289
+  have h290 : Bounds v290 (31346758941185729853326811/10000000000000000000000000000) (313664843465025262235218263/100000000000000000000000000000) := Bounds.add h287 h289 (by norm_num)
+  let v291 : ℝ := v290^2
+  have h291 : Bounds v291 (491309648058403749680900079/50000000000000000000000000000000) (30745510633105875298854883/3125000000000000000000000000000) := Bounds.pow h290 2 (by norm_num)
+  let v292 : ℝ := v286*v291
+  have h292 : Bounds v292 (50295368671738791854833741/25000000000000000000000000000000) (5035868677617677526950039/2500000000000000000000000000000) := Bounds.mul h286 h291 (by norm_num)
+  let v293 : ℝ := v276^2
+  have h293 : Bounds v293 (838541499687110226116405687/10000000000000000000000000000000000000000) (41927074984355511305820299/500000000000000000000000000000000000000) := Bounds.pow h276 2 (by norm_num)
+  let v294 : ℝ := v293*v8
+  have h294 : Bounds v294 (50312489981226613566984341/100000000000000000000000000000000000000) (50312489981226613566984359/100000000000000000000000000000000000000) := Bounds.mul h293 h8 (by norm_num)
+  let v295 : ℝ := v292+v294
+  have h295 : Bounds v295 (20118152499944514864594853/10000000000000000000000000000000) (201434797417197082304615127/100000000000000000000000000000000) := Bounds.add h292 h294 (by norm_num)
+  let v296 : ℝ := Real.sqrt v2
+  have h296 : Bounds v296 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v297 : ℝ := v296+v2
+  have h297 : Bounds v297 (42677669529663688110021109/12500000000000000000000000) (341421356237309504880168873/100000000000000000000000000) := Bounds.add h296 h2 (by norm_num)
+  let v298 : ℝ := v297*v276
+  have h298 : Bounds v298 (98867365920223667285608759/100000000000000000000000000000000) (98867365920223667285608777/100000000000000000000000000000000) := Bounds.mul h297 h276 (by norm_num)
+  let v299 : ℝ := Real.sqrt v285
+  have h299 : Bounds v299 (62685327441603407671098427/20000000000000000000000000000) (313623891261185002057442287/100000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v300 : ℝ := v298*v299
+  have h300 : Bounds v300 (309876660299902109738689143/100000000000000000000000000000000000) (31007168018644015295689551/10000000000000000000000000000000000) := Bounds.mul h298 h299 (by norm_num)
+  let v301 : ℝ := v295+v300
+  have h301 : Bounds v301 (201491401659745050755687219/100000000000000000000000000000000) (201744869097383522457572023/100000000000000000000000000000000) := Bounds.add h295 h300 (by norm_num)
+  convert h301 using 1 <;>
+    simp only [v2, v8, v274, v276, v277, v278, v280, v281, v282, v283, v285, v286, v287, v288, v289, v290, v291, v292, v293, v294, v295, v296, v297, v298, v299, v300, v301, meanMajorantValue, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+end BstLean.Part268.WorldRow12820
+namespace BstLean.Part268.WorldRow12821
+open Real MeasureTheory Set BstLean.Part130 BstLean.Part140 BstLean.Part137 BstLean.Part159
+open BstLean.Part227 BstLean.Part228 BstLean.Part218 BstLean.Part205 BstLean.Part214
+open BstLean.Part157 BstLean.Part192
+open BstLean.Part250 (bounds_div pi_bounds rowEps meanMajorantValue endpointPolynomial mean_majorant)
+theorem covmean : Bounds (covarianceMeanBound 25642 (mW 12821)) (667269284924891513622095509/100000000000000000) (20019347616470736530797767/2000000000000000) := by
+  let v1 : ℝ := 238630884316879
+  have h1 : Bounds v1 238630884316879 238630884316879 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v203 : ℝ := v1*v41
+  have h203 : Bounds v203 954523537267516 954523537267516 := Bounds.mul h1 h41 (by norm_num)
+  let v204 : ℝ := -v22
+  have h204 : Bounds v204 (-1) (-1) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h22
+  let v205 : ℝ := v1+v204
+  have h205 : Bounds v205 238630884316878 238630884316878 := Bounds.add h1 h204 (by norm_num)
+  let v206 : ℝ := v203*v205
+  have h206 : Bounds v206 227778795799421797006399935000 227778795799421797006399936000 := Bounds.mul h203 h205 (by norm_num)
+  let v207 : ℝ := v206*(angularJ2 25642 (angularOffset 25642))
+  have h207 : Bounds v207 (667269284924891513622095509/100000000000000000) (20019347616470736530797767/2000000000000000) := Bounds.mul h206 jsecond (by norm_num)
+  convert h207 using 1 <;>
+    simp only [v1, v22, v41, v203, v204, v205, v206, v207, covarianceMeanBound, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem frob : Bounds (e1FrobBound 25642 (mW 12821) rowEps) (29140079618422553246722617/1000000000000000000) (29158450588485019747064489/1000000000000000000) := by
+  let v0 : ℝ := 25642
+  have h0 : Bounds v0 25642 25642 := Bounds.point _
+  let v1 : ℝ := 238630884316879
+  have h1 : Bounds v1 238630884316879 238630884316879 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v208 : ℝ := (1/100000)
+  have h208 : Bounds v208 (1/100000) (1/100000) := Bounds.point _
+  let v209 : ℝ := v208+v22
+  have h209 : Bounds v209 (100001/100000) (100001/100000) := Bounds.add h208 h22 (by norm_num)
+  let v210 : ℝ := v1*v0
+  have h210 : Bounds v210 6118973135653411318 6118973135653411318 := Bounds.mul h1 h0 (by norm_num)
+  let v211 : ℝ := v1+v0
+  have h211 : Bounds v211 238630884342521 238630884342521 := Bounds.add h1 h0 (by norm_num)
+  let v212 : ℝ := v211+v22
+  have h212 : Bounds v212 238630884342522 238630884342522 := Bounds.add h211 h22 (by norm_num)
+  let v213 : ℝ := v210*v212
+  have h213 : Bounds v213 1460175970629108376800222860000000 1460175970629108376800222870000000 := Bounds.mul h210 h212 (by norm_num)
+  let v214 : ℝ := v209*v213
+  have h214 : Bounds v214 1460190572388814667883990860000000 1460190572388814667883990880000000 := Bounds.mul h209 h213 (by norm_num)
+  let v215 : ℝ := v0^4
+  have h215 : Bounds v215 432322245807962896 432322245807962896 := Bounds.pow h0 4 (by norm_num)
+  let v216 : ℝ := v215*v41
+  have h216 : Bounds v216 1729288983231851584 1729288983231851584 := Bounds.mul h215 h41 (by norm_num)
+  let v217 : ℝ := 1/v216
+  have h217 : Bounds v217 (5782723475928873365332661/10000000000000000000000000000000000000000000) (57827234759288733653326611/100000000000000000000000000000000000000000000) := Bounds.inv h216 (by norm_num)
+  let v218 : ℝ := v214/v216
+  have h218 : Bounds v218 (84438783022828175383989053/100000000000) (84438783022828175383989057/100000000000) := bounds_div h214 h217 (by norm_num)
+  let v219 : ℝ := Real.sqrt v218
+  have h219 : Bounds v219 (11623340863819019938807747/400000000000000000) (290583521595475498470193683/10000000000000000000) := Bounds.sqrt h218 (by norm_num)
+  let v220 : ℝ := v0*v41
+  have h220 : Bounds v220 102568 102568 := Bounds.mul h0 h41 (by norm_num)
+  let v221 : ℝ := 1/v220
+  have h221 : Bounds v221 (48748147570392325091646517/5000000000000000000000000000000) (19499259028156930036658607/2000000000000000000000000000000) := Bounds.inv h220 (by norm_num)
+  let v222 : ℝ := v22/v220
+  have h222 : Bounds v222 (48748147570392325091646517/5000000000000000000000000000000) (19499259028156930036658607/2000000000000000000000000000000) := bounds_div h22 h221 (by norm_num)
+  let v223 : ℝ := -(BstLean.Part137.cN 25642 ^ 2)
+  have h223 : Bounds v223 (-25000000000000000000/4027678861534794421367643) (-25000000000000000000/4027835941167473911042387) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg cnsq_bounds
+  let v224 : ℝ := v222+v223
+  have h224 : Bounds v224 (354258052644555929043188603/100000000000000000000000000000000) (17714112960787899584956113/5000000000000000000000000000000) := Bounds.add h222 h223 (by norm_num)
+  let v225 : ℝ := v224^2
+  have h225 : Bounds v225 (62749383931756480035616391/5000000000000000000000000000000000000) (125515919195021538439488077/10000000000000000000000000000000000000) := Bounds.pow h224 2 (by norm_num)
+  let v226 : ℝ := v0^2
+  have h226 : Bounds v226 657512164 657512164 := Bounds.pow h0 2 (by norm_num)
+  let v227 : ℝ := 1/v226
+  have h227 : Bounds v227 (7604422052943190873043681/5000000000000000000000000000000000) (15208844105886381746087363/10000000000000000000000000000000000) := Bounds.inv h226 (by norm_num)
+  let v228 : ℝ := v41/v226
+  have h228 : Bounds v228 (7604422052943190873043681/1250000000000000000000000000000000) (15208844105886381746087363/2500000000000000000000000000000000) := bounds_div h41 h227 (by norm_num)
+  let v229 : ℝ := v225*v228
+  have h229 : Bounds v229 (9543455979584961721805711/125000000000000000000000000000000000000000000) (19089520478441146898612827/250000000000000000000000000000000000000000000) := Bounds.mul h225 h228 (by norm_num)
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v231 : ℝ := v230+v22
+  have h231 : Bounds v231 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v232 : ℝ := v1*v0
+  have h232 : Bounds v232 6118973135653411318 6118973135653411318 := Bounds.mul h1 h0 (by norm_num)
+  let v233 : ℝ := v0+v2
+  have h233 : Bounds v233 25644 25644 := Bounds.add h0 h2 (by norm_num)
+  let v234 : ℝ := v232*v233
+  have h234 : Bounds v234 156914947090696079838792 156914947090696079838792 := Bounds.mul h232 h233 (by norm_num)
+  let v235 : ℝ := v231*v234
+  have h235 : Bounds v235 (19633982754723346989828849/125) (19633982754723346989828849/125) := Bounds.mul h231 h234 (by norm_num)
+  let v236 : ℝ := v229*v235
+  have h236 : Bounds v236 (119920672079124828594611447/10000000000000000000000) (2398741221565770586794889/200000000000000000000) := Bounds.mul h229 h235 (by norm_num)
+  let v237 : ℝ := v230+v22
+  have h237 : Bounds v237 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v238 : ℝ := v237*(covarianceMeanBound 25642 (mW 12821))
+  have h238 : Bounds v238 (166984138552454101283929401/25000000000000000) (12524604352554504542080353/1250000000000000) := Bounds.mul h237 covmean (by norm_num)
+  let v239 : ℝ := v236+v238
+  have h239 : Bounds v239 (13358755068330743927680071/2000000000000000) (25049238689374278656293041/2500000000000000) := Bounds.add h236 h238 (by norm_num)
+  let v240 : ℝ := Real.sqrt v239
+  have h240 : Bounds v240 (40863729437501699851624793/500000000000000000000) (25024607234367475011280151/250000000000000000000) := Bounds.sqrt h239 (by norm_num)
+  let v241 : ℝ := v219+v240
+  have h241 : Bounds v241 (29140079618422553246722617/1000000000000000000) (29158450588485019747064489/1000000000000000000) := Bounds.add h219 h240 (by norm_num)
+  convert h241 using 1 <;>
+    simp only [v0, v1, v2, v22, v41, v208, v209, v210, v211, v212, v213, v214, v215, v216, v218, v219, v220, v222, v223, v224, v225, v226, v228, v229, v230, v231, v232, v233, v234, v235, v236, v237, v238, v239, v240, v241, e1FrobBound, rowEps, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem energy : Bounds (e1EnergyLower 25642 (mW 12821) (1/10^6)) (93062415445750987879650571/10000000000000000) (46531207722875493939825287/5000000000000000) := by
+  let v0 : ℝ := 25642
+  have h0 : Bounds v0 25642 25642 := Bounds.point _
+  let v1 : ℝ := 238630884316879
+  have h1 : Bounds v1 238630884316879 238630884316879 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v242 : ℝ := (1/1000000)
+  have h242 : Bounds v242 (1/1000000) (1/1000000) := Bounds.point _
+  let v243 : ℝ := -v242
+  have h243 : Bounds v243 (-1/1000000) (-1/1000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h242
+  let v244 : ℝ := v22+v243
+  have h244 : Bounds v244 (999999/1000000) (999999/1000000) := Bounds.add h22 h243 (by norm_num)
+  let v245 : ℝ := v244*v1
+  have h245 : Bounds v245 (238630645685994683121/1000000) (238630645685994683121/1000000) := Bounds.mul h244 h1 (by norm_num)
+  let v246 : ℝ := 1/v0
+  have h246 : Bounds v246 (38998518056313860073317213/1000000000000000000000000000000) (19499259028156930036658607/500000000000000000000000000000) := Bounds.inv h0 (by norm_num)
+  let v247 : ℝ := v245/v0
+  have h247 : Bounds v247 (93062415445750987879650571/10000000000000000) (46531207722875493939825287/5000000000000000) := bounds_div h245 h246 (by norm_num)
+  convert h247 using 1 <;>
+    simp only [v0, v1, v22, v242, v243, v244, v245, v247, e1EnergyLower, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem direction : Bounds (directionMean 25642 (mW 12821)) (19689104050613859690221127/250000000000000000000) (7876092200234396180731913/100000000000000000000) := by
+  let v0 : ℝ := 25642
+  have h0 : Bounds v0 25642 25642 := Bounds.point _
+  let v1 : ℝ := 238630884316879
+  have h1 : Bounds v1 238630884316879 238630884316879 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v248 : ℝ := v1*v2
+  have h248 : Bounds v248 477261768633758 477261768633758 := Bounds.mul h1 h2 (by norm_num)
+  let v249 : ℝ := v248*(BstLean.Part137.cN 25642 ^ 2)
+  have h249 : Bounds v249 (185141978070263320050763/62500000000000) (5924774355668115349955807/2000000000000000) := Bounds.mul h248 cnsq_bounds (by norm_num)
+  let v250 : ℝ := v0+v2
+  have h250 : Bounds v250 25644 25644 := Bounds.add h0 h2 (by norm_num)
+  let v251 : ℝ := v249*v250
+  have h251 : Bounds v251 (75964494170141321270108261/1000000000000) (37983728394188287508566679/500000000000) := Bounds.mul h249 h250 (by norm_num)
+  let v252 : ℝ := v0^2
+  have h252 : Bounds v252 657512164 657512164 := Bounds.pow h0 2 (by norm_num)
+  let v253 : ℝ := 1/v252
+  have h253 : Bounds v253 (7604422052943190873043681/5000000000000000000000000000000000) (15208844105886381746087363/10000000000000000000000000000000000) := Bounds.inv h252 (by norm_num)
+  let v254 : ℝ := v251/v252
+  have h254 : Bounds v254 (115533214941619424199897023/1000000000000000000000) (451319221646515418930983/3906250000000000000) := bounds_div h251 h253 (by norm_num)
+  let v255 : ℝ := v0*v2
+  have h255 : Bounds v255 51284 51284 := Bounds.mul h0 h2 (by norm_num)
+  let v256 : ℝ := v255*(BstLean.Part137.cN 25642 ^ 2)
+  have h256 : Bounds v256 (15915494309189533576851107/50000000000000000000000000) (7958057507044148433737279/25000000000000000000000000) := Bounds.mul h255 cnsq_bounds (by norm_num)
+  let v257 : ℝ := -v256
+  have h257 : Bounds v257 (-7958057507044148433737279/25000000000000000000000000) (-15915494309189533576851107/50000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h256
+  let v258 : ℝ := v22+v257
+  have h258 : Bounds v258 (17041942492955851566262721/25000000000000000000000000) (34084505690810466423148893/50000000000000000000000000) := Bounds.add h22 h257 (by norm_num)
+  let v259 : ℝ := v254*v258
+  have h259 : Bounds v259 (19689104050613859690221127/250000000000000000000) (7876092200234396180731913/100000000000000000000) := Bounds.mul h254 h258 (by norm_num)
+  convert h259 using 1 <;>
+    simp only [v0, v1, v2, v22, v248, v249, v250, v251, v252, v254, v255, v256, v257, v258, v259, directionMean, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring <;> simp
+
+theorem inputvar : Bounds (e1InputVarianceBound 25642 (mW 12821) rowEps) (90753765358093361557779283/12500000000000000000) (72603012286474689246223433/10000000000000000000) := by
+  let v0 : ℝ := 25642
+  have h0 : Bounds v0 25642 25642 := Bounds.point _
+  let v1 : ℝ := 238630884316879
+  have h1 : Bounds v1 238630884316879 238630884316879 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v13 : ℝ := 3
+  have h13 : Bounds v13 3 3 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v260 : ℝ := v230+v22
+  have h260 : Bounds v260 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v261 : ℝ := v260+v13
+  have h261 : Bounds v261 (4001/1000) (4001/1000) := Bounds.add h260 h13 (by norm_num)
+  let v262 : ℝ := 5
+  have h262 : Bounds v262 5 5 := Bounds.point _
+  let v263 : ℝ := v1*v262
+  have h263 : Bounds v263 1193154421584395 1193154421584395 := Bounds.mul h1 h262 (by norm_num)
+  let v264 : ℝ := v0^2
+  have h264 : Bounds v264 657512164 657512164 := Bounds.pow h0 2 (by norm_num)
+  let v265 : ℝ := 1/v264
+  have h265 : Bounds v265 (7604422052943190873043681/5000000000000000000000000000000000) (15208844105886381746087363/10000000000000000000000000000000000) := Bounds.inv h264 (by norm_num)
+  let v266 : ℝ := v263/v264
+  have h266 : Bounds v266 (90732497960630504776486537/50000000000000000000) (181464995921261009552973087/100000000000000000000) := bounds_div h263 h265 (by norm_num)
+  let v267 : ℝ := v1*v2
+  have h267 : Bounds v267 477261768633758 477261768633758 := Bounds.mul h1 h2 (by norm_num)
+  let v268 : ℝ := v0^3
+  have h268 : Bounds v268 16859926909288 16859926909288 := Bounds.pow h0 3 (by norm_num)
+  let v269 : ℝ := 1/v268
+  have h269 : Bounds v269 (59312238147907268333544037/1000000000000000000000000000000000000000) (29656119073953634166772019/500000000000000000000000000000000000000) := Bounds.inv h268 (by norm_num)
+  let v270 : ℝ := v267/v268
+  have h270 : Bounds v270 (5661492736019374761811811/200000000000000000000000) (283074636800968738090590559/10000000000000000000000000) := bounds_div h267 h269 (by norm_num)
+  let v271 : ℝ := -v270
+  have h271 : Bounds v271 (-283074636800968738090590559/10000000000000000000000000) (-5661492736019374761811811/200000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h270
+  let v272 : ℝ := v266+v271
+  have h272 : Bounds v272 (22682770646861624983199021/12500000000000000000) (90731082587446499932796091/50000000000000000000) := Bounds.add h266 h271 (by norm_num)
+  let v273 : ℝ := v261*v272
+  have h273 : Bounds v273 (90753765358093361557779283/12500000000000000000) (72603012286474689246223433/10000000000000000000) := Bounds.mul h261 h272 (by norm_num)
+  convert h273 using 1 <;>
+    simp only [v0, v1, v2, v13, v22, v230, v260, v261, v262, v263, v264, v266, v267, v268, v270, v271, v272, v273, e1InputVarianceBound, inputVarianceMean, rowEps, Matrix.cons_val_one, Matrix.cons_val_three, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem meanvalue : Bounds (meanMajorantValue 25642 (mW 12821) (1/10^6) (1/10^7) rowEps) (201475533945124724784299771/100000000000000000000000000000000) (40345794333548158563616371/20000000000000000000000000000000) := by
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v8 : ℝ := 6
+  have h8 : Bounds v8 6 6 := Bounds.point _
+  let v274 : ℝ := Real.sqrt (e1InputVarianceBound 25642 (mW 12821) rowEps)
+  have h274 : Bounds v274 (269449461470003107605623499/100000000000000000000000) (269449461470003107605623513/100000000000000000000000) := Bounds.sqrt inputvar (by norm_num)
+  let v275 : ℝ := 1/(e1EnergyLower 25642 (mW 12821) (1/10^6))
+  have h275 : Bounds v275 (53727382596410872546794621/500000000000000000000000000000000000) (429819060771286980374357/4000000000000000000000000000000000) := Bounds.inv energy (by norm_num)
+  let v276 : ℝ := v274/(e1EnergyLower 25642 (mW 12821) (1/10^6))
+  have h276 : Bounds v276 (1447681430679572692610291/5000000000000000000000000000000) (1158145144543658154088233/4000000000000000000000000000000) := bounds_div h274 h275 (by norm_num)
+  let v277 : ℝ := (e1FrobBound 25642 (mW 12821) rowEps)^2
+  have h277 : Bounds v277 (169828848033601099285772293/200000000000) (425107620360561197201101783/500000000000) := Bounds.pow frob 2 (by norm_num)
+  let v278 : ℝ := (1/10000000)
+  have h278 : Bounds v278 (1/10000000) (1/10000000) := Bounds.point _
+  let v279 : ℝ := 1/v278
+  have h279 : Bounds v279 10000000 10000000 := Bounds.inv h278 (by norm_num)
+  let v280 : ℝ := (directionMean 25642 (mW 12821))/v278
+  have h280 : Bounds v280 (19689104050613859690221127/25000000000000) (7876092200234396180731913/10000000000000) := bounds_div direction h279 (by norm_num)
+  let v281 : ℝ := v280*v2
+  have h281 : Bounds v281 (19689104050613859690221127/12500000000000) (7876092200234396180731913/5000000000000) := Bounds.mul h280 h2 (by norm_num)
+  let v282 : ℝ := v277+v281
+  have h282 : Bounds v282 (17014387369841092104081583/20000000000) (17035809183223385472766999/20000000000) := Bounds.add h277 h281 (by norm_num)
+  let v283 : ℝ := (e1EnergyLower 25642 (mW 12821) (1/10^6))^2
+  have h283 : Bounds v283 (433030658429877602006298309/5000000) (21651532921493880100314917/250000) := Bounds.pow energy 2 (by norm_num)
+  let v284 : ℝ := 1/v283
+  have h284 : Bounds v284 (57732632813222278245116477/5000000000000000000000000000000000000000000000) (115465265626444556490232963/10000000000000000000000000000000000000000000000) := Bounds.inv h283 (by norm_num)
+  let v285 : ℝ := v282/v283
+  have h285 : Bounds v285 (491142689282481264385077919/50000000000000000000000000000000) (9835221162511558430234017/1000000000000000000000000000000) := bounds_div h282 h284 (by norm_num)
+  let v286 : ℝ := (10237/50000)
+  have h286 : Bounds v286 (10237/50000) (10237/50000) := Bounds.point _
+  let v287 : ℝ := Real.sqrt v285
+  have h287 : Bounds v287 (39176790373992532457776073/12500000000000000000000000000) (313611561689162831639670901/100000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v288 : ℝ := Real.sqrt v2
+  have h288 : Bounds v288 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v289 : ℝ := v288*v276
+  have h289 : Bounds v289 (5118326783156843380707561/12500000000000000000000000000000) (40946614265254747045660497/100000000000000000000000000000000) := Bounds.mul h288 h276 (by norm_num)
+  let v290 : ℝ := v287+v289
+  have h290 : Bounds v290 (78363817401551378602313561/25000000000000000000000000000) (156826254151714043193358281/50000000000000000000000000000) := Bounds.add h287 h289 (by norm_num)
+  let v291 : ℝ := v290^2
+  have h291 : Bounds v291 (19650841208779797308871491/2000000000000000000000000000000) (98377895965032024677737219/10000000000000000000000000000000) := Bounds.pow h290 2 (by norm_num)
+  let v292 : ℝ := v286*v291
+  have h292 : Bounds v292 (201165661454278785050917453/100000000000000000000000000000000) (20141890419880656732519919/10000000000000000000000000000000) := Bounds.mul h286 h291 (by norm_num)
+  let v293 : ℝ := v276^2
+  have h293 : Bounds v293 (41915630494689088706317041/500000000000000000000000000000000000000) (163732931619879252759051/1953125000000000000000000000000000000) := Bounds.pow h276 2 (by norm_num)
+  let v294 : ℝ := v293*v8
+  have h294 : Bounds v294 (50298756593626906447580449/100000000000000000000000000000000000000) (12574689148406726611895117/25000000000000000000000000000000000000) := Bounds.mul h293 h8 (by norm_num)
+  let v295 : ℝ := v292+v294
+  have h295 : Bounds v295 (2011657117530353786778239/1000000000000000000000000000000) (100709477248781580476052819/50000000000000000000000000000000) := Bounds.add h292 h294 (by norm_num)
+  let v296 : ℝ := Real.sqrt v2
+  have h296 : Bounds v296 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v297 : ℝ := v296+v2
+  have h297 : Bounds v297 (42677669529663688110021109/12500000000000000000000000) (341421356237309504880168873/100000000000000000000000000) := Bounds.add h296 h2 (by norm_num)
+  let v298 : ℝ := v297*v276
+  have h298 : Bounds v298 (1544591742069338355469877/1562500000000000000000000000000) (98853871492437654750072147/100000000000000000000000000000000) := Bounds.mul h297 h276 (by norm_num)
+  let v299 : ℝ := Real.sqrt v285
+  have h299 : Bounds v299 (39176790373992532457776073/12500000000000000000000000000) (313611561689162831639670901/100000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v300 : ℝ := v298*v299
+  have h300 : Bounds v300 (61964438417869221295174283/20000000000000000000000000000000000) (77504292544407966494054163/25000000000000000000000000000000000) := Bounds.mul h298 h299 (by norm_num)
+  let v301 : ℝ := v295+v300
+  have h301 : Bounds v301 (201475533945124724784299771/100000000000000000000000000000000) (40345794333548158563616371/20000000000000000000000000000000) := Bounds.add h295 h300 (by norm_num)
+  convert h301 using 1 <;>
+    simp only [v2, v8, v274, v276, v277, v278, v280, v281, v282, v283, v285, v286, v287, v288, v289, v290, v291, v292, v293, v294, v295, v296, v297, v298, v299, v300, v301, meanMajorantValue, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+end BstLean.Part268.WorldRow12821
+namespace BstLean.Part268.WorldRow12822
+open Real MeasureTheory Set BstLean.Part130 BstLean.Part140 BstLean.Part137 BstLean.Part159
+open BstLean.Part227 BstLean.Part228 BstLean.Part218 BstLean.Part205 BstLean.Part214
+open BstLean.Part157 BstLean.Part192
+open BstLean.Part250 (bounds_div pi_bounds rowEps meanMajorantValue endpointPolynomial mean_majorant)
+theorem covmean : Bounds (covarianceMeanBound 25644 (mW 12822)) (66742543396228040537855633/10000000000000000) (100120161427782426078044787/10000000000000000) := by
+  let v1 : ℝ := 238696034424357
+  have h1 : Bounds v1 238696034424357 238696034424357 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v203 : ℝ := v1*v41
+  have h203 : Bounds v203 954784137697428 954784137697428 := Bounds.mul h1 h41 (by norm_num)
+  let v204 : ℝ := -v22
+  have h204 : Bounds v204 (-1) (-1) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h22
+  let v205 : ℝ := v1+v204
+  have h205 : Bounds v205 238696034424356 238696034424356 := Bounds.add h1 h204 (by norm_num)
+  let v206 : ℝ := v203*v205
+  have h206 : Bounds v206 227903187399654333137281756000 227903187399654333137281757000 := Bounds.mul h203 h205 (by norm_num)
+  let v207 : ℝ := v206*(angularJ2 25644 (angularOffset 25644))
+  have h207 : Bounds v207 (66742543396228040537855633/10000000000000000) (100120161427782426078044787/10000000000000000) := Bounds.mul h206 jsecond (by norm_num)
+  convert h207 using 1 <;>
+    simp only [v1, v22, v41, v203, v204, v205, v206, v207, covarianceMeanBound, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem frob : Bounds (e1FrobBound 25644 (mW 12822) rowEps) (291446222879214757020298947/10000000000000000000) (291629954071262333618345731/10000000000000000000) := by
+  let v0 : ℝ := 25644
+  have h0 : Bounds v0 25644 25644 := Bounds.point _
+  let v1 : ℝ := 238696034424357
+  have h1 : Bounds v1 238696034424357 238696034424357 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v208 : ℝ := (1/100000)
+  have h208 : Bounds v208 (1/100000) (1/100000) := Bounds.point _
+  let v209 : ℝ := v208+v22
+  have h209 : Bounds v209 (100001/100000) (100001/100000) := Bounds.add h208 h22 (by norm_num)
+  let v210 : ℝ := v1*v0
+  have h210 : Bounds v210 6121121106778210908 6121121106778210908 := Bounds.mul h1 h0 (by norm_num)
+  let v211 : ℝ := v1+v0
+  have h211 : Bounds v211 238696034450001 238696034450001 := Bounds.add h1 h0 (by norm_num)
+  let v212 : ℝ := v211+v22
+  have h212 : Bounds v212 238696034450002 238696034450002 := Bounds.add h211 h22 (by norm_num)
+  let v213 : ℝ := v210*v212
+  have h213 : Bounds v213 1461087334576166201647547330000000 1461087334576166201647547340000000 := Bounds.mul h210 h212 (by norm_num)
+  let v214 : ℝ := v209*v213
+  have h214 : Bounds v214 1461101945449511963309563800000000 1461101945449511963309563820000000 := Bounds.mul h209 h213 (by norm_num)
+  let v215 : ℝ := v0^4
+  have h215 : Bounds v215 432457141004349696 432457141004349696 := Bounds.pow h0 4 (by norm_num)
+  let v216 : ℝ := v215*v41
+  have h216 : Bounds v216 1729828564017398784 1729828564017398784 := Bounds.mul h215 h41 (by norm_num)
+  let v217 : ℝ := 1/v216
+  have h217 : Bounds v217 (57809196865010370051059121/100000000000000000000000000000000000000000000) (28904598432505185025529561/50000000000000000000000000000000000000000000) := Bounds.inv h216 (by norm_num)
+  let v218 : ℝ := v214/v216
+  have h218 : Bounds v218 (84465130004340479706912123/100000000000) (42232565002170239853456063/50000000000) := bounds_div h214 h217 (by norm_num)
+  let v219 : ℝ := Real.sqrt v218
+  have h219 : Bounds v219 (72657213167525768939259509/2500000000000000000) (145314426335051537878519021/5000000000000000000) := Bounds.sqrt h218 (by norm_num)
+  let v220 : ℝ := v0*v41
+  have h220 : Bounds v220 102576 102576 := Bounds.mul h0 h41 (by norm_num)
+  let v221 : ℝ := 1/v220
+  have h221 : Bounds v221 (24372172827951957572921541/2500000000000000000000000000000) (19497738262361566058337233/2000000000000000000000000000000) := Bounds.inv h220 (by norm_num)
+  let v222 : ℝ := v22/v220
+  have h222 : Bounds v222 (24372172827951957572921541/2500000000000000000000000000000) (19497738262361566058337233/2000000000000000000000000000000) := bounds_div h22 h221 (by norm_num)
+  let v223 : ℝ := -(BstLean.Part137.cN 25644 ^ 2)
+  have h223 : Bounds v223 (-25000000000000000000/4027993020800153400691489) (-12500000000000000000/2014075050216416445183117) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg cnsq_bounds
+  let v224 : ℝ := v222+v223
+  have h224 : Bounds v224 (354230425609224675147030969/100000000000000000000000000000000) (35425462840471324376652991/10000000000000000000000000000000) := Bounds.add h222 h223 (by norm_num)
+  let v225 : ℝ := v224^2
+  have h225 : Bounds v225 (6273959721364622828339707/500000000000000000000000000000000000) (62748170873080731699081777/5000000000000000000000000000000000000) := Bounds.pow h224 2 (by norm_num)
+  let v226 : ℝ := v0^2
+  have h226 : Bounds v226 657614736 657614736 := Bounds.pow h0 2 (by norm_num)
+  let v227 : ℝ := 1/v226
+  have h227 : Bounds v227 (760323594695116442767791/500000000000000000000000000000000) (15206471893902328855355821/10000000000000000000000000000000000) := Bounds.inv h226 (by norm_num)
+  let v228 : ℝ := v41/v226
+  have h228 : Bounds v228 (760323594695116442767791/125000000000000000000000000000000) (15206471893902328855355821/2500000000000000000000000000000000) := bounds_div h41 h227 (by norm_num)
+  let v229 : ℝ := v225*v228
+  have h229 : Bounds v229 (38161916866562569415048551/500000000000000000000000000000000000000000000) (47708914838764145105076979/625000000000000000000000000000000000000000000) := Bounds.mul h225 h228 (by norm_num)
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v231 : ℝ := v230+v22
+  have h231 : Bounds v231 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v232 : ℝ := v1*v0
+  have h232 : Bounds v232 6121121106778210908 6121121106778210908 := Bounds.mul h1 h0 (by norm_num)
+  let v233 : ℝ := v0+v2
+  have h233 : Bounds v233 25646 25646 := Bounds.add h0 h2 (by norm_num)
+  let v234 : ℝ := v232*v233
+  have h234 : Bounds v234 156982271904433996946568 156982271904433996946568 := Bounds.mul h232 h233 (by norm_num)
+  let v235 : ℝ := v231*v234
+  have h235 : Bounds v235 (19642406772042303867939321/125) (19642406772042303867939321/125) := Bounds.mul h231 h234 (by norm_num)
+  let v236 : ℝ := v229*v235
+  have h236 : Bounds v236 (119934703087021444885008663/10000000000000000000000) (119951092725213491655119629/10000000000000000000000) := Bounds.mul h229 h235 (by norm_num)
+  let v237 : ℝ := v230+v22
+  have h237 : Bounds v237 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v238 : ℝ := v237*(covarianceMeanBound 25644 (mW 12822))
+  have h238 : Bounds v238 (334046429698121342891967443/50000000000000000) (6263767599325638031507677/625000000000000) := Bounds.mul h237 covmean (by norm_num)
+  let v239 : ℝ := v236+v238
+  have h239 : Bounds v239 (83511757342909194499797967/12500000000000000) (12527550192537866714701811/1250000000000000) := Bounds.add h236 h238 (by norm_num)
+  let v240 : ℝ := Real.sqrt v239
+  have h240 : Bounds v240 (817370209111681263260911819/10000000000000000000000) (25027535028981446532692219/250000000000000000000) := Bounds.sqrt h239 (by norm_num)
+  let v241 : ℝ := v219+v240
+  have h241 : Bounds v241 (291446222879214757020298947/10000000000000000000) (291629954071262333618345731/10000000000000000000) := Bounds.add h219 h240 (by norm_num)
+  convert h241 using 1 <;>
+    simp only [v0, v1, v2, v22, v41, v208, v209, v210, v211, v212, v213, v214, v215, v216, v218, v219, v220, v222, v223, v224, v225, v226, v228, v229, v230, v231, v232, v233, v234, v235, v236, v237, v238, v239, v240, v241, e1FrobBound, rowEps, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem energy : Bounds (e1EnergyLower 25644 (mW 12822) (1/10^6)) (93080562988739110763921383/10000000000000000) (46540281494369555381960693/5000000000000000) := by
+  let v0 : ℝ := 25644
+  have h0 : Bounds v0 25644 25644 := Bounds.point _
+  let v1 : ℝ := 238696034424357
+  have h1 : Bounds v1 238696034424357 238696034424357 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v242 : ℝ := (1/1000000)
+  have h242 : Bounds v242 (1/1000000) (1/1000000) := Bounds.point _
+  let v243 : ℝ := -v242
+  have h243 : Bounds v243 (-1/1000000) (-1/1000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h242
+  let v244 : ℝ := v22+v243
+  have h244 : Bounds v244 (999999/1000000) (999999/1000000) := Bounds.add h22 h243 (by norm_num)
+  let v245 : ℝ := v244*v1
+  have h245 : Bounds v245 (238695795728322575643/1000000) (238695795728322575643/1000000) := Bounds.mul h244 h1 (by norm_num)
+  let v246 : ℝ := 1/v0
+  have h246 : Bounds v246 (7799095304944626423334893/200000000000000000000000000000) (19497738262361566058337233/500000000000000000000000000000) := Bounds.inv h0 (by norm_num)
+  let v247 : ℝ := v245/v0
+  have h247 : Bounds v247 (93080562988739110763921383/10000000000000000) (46540281494369555381960693/5000000000000000) := bounds_div h245 h246 (by norm_num)
+  convert h247 using 1 <;>
+    simp only [v0, v1, v22, v242, v243, v244, v245, v247, e1EnergyLower, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem direction : Bounds (directionMean 25644 (mW 12822)) (78765630165456373809209951/1000000000000000000000) (78770136141019875295225703/1000000000000000000000) := by
+  let v0 : ℝ := 25644
+  have h0 : Bounds v0 25644 25644 := Bounds.point _
+  let v1 : ℝ := 238696034424357
+  have h1 : Bounds v1 238696034424357 238696034424357 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v248 : ℝ := v1*v2
+  have h248 : Bounds v248 477392068848714 477392068848714 := Bounds.mul h1 h2 (by norm_num)
+  let v249 : ℝ := v248*(BstLean.Part137.cN 25644 ^ 2)
+  have h249 : Bounds v249 (2962849303936174417149381/1000000000000000) (29629648461622765180993089/10000000000000000) := Bounds.mul h248 cnsq_bounds (by norm_num)
+  let v250 : ℝ := v0+v2
+  have h250 : Bounds v250 25646 25646 := Bounds.add h0 h2 (by norm_num)
+  let v251 : ℝ := v249*v250
+  have h251 : Bounds v251 (3039409329949885164088521/40000000000) (75988196444677743583174877/1000000000000) := Bounds.mul h249 h250 (by norm_num)
+  let v252 : ℝ := v0^2
+  have h252 : Bounds v252 657614736 657614736 := Bounds.pow h0 2 (by norm_num)
+  let v253 : ℝ := 1/v252
+  have h253 : Bounds v253 (760323594695116442767791/500000000000000000000000000000000) (15206471893902328855355821/10000000000000000000000000000000000) := Bounds.inv h252 (by norm_num)
+  let v254 : ℝ := v251/v252
+  have h254 : Bounds v254 (7221670710929287279365823/62500000000000000000) (57775618675216048977934461/500000000000000000000) := bounds_div h251 h253 (by norm_num)
+  let v255 : ℝ := v0*v2
+  have h255 : Bounds v255 51288 51288 := Bounds.mul h0 h2 (by norm_num)
+  let v256 : ℝ := v255*(BstLean.Part137.cN 25644 ^ 2)
+  have h256 : Bounds v256 (15915494309189533576851107/50000000000000000000000000) (7958057482838521215264769/25000000000000000000000000) := Bounds.mul h255 cnsq_bounds (by norm_num)
+  let v257 : ℝ := -v256
+  have h257 : Bounds v257 (-7958057482838521215264769/25000000000000000000000000) (-15915494309189533576851107/50000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h256
+  let v258 : ℝ := v22+v257
+  have h258 : Bounds v258 (17041942517161478784735231/25000000000000000000000000) (34084505690810466423148893/50000000000000000000000000) := Bounds.add h22 h257 (by norm_num)
+  let v259 : ℝ := v254*v258
+  have h259 : Bounds v259 (78765630165456373809209951/1000000000000000000000) (78770136141019875295225703/1000000000000000000000) := Bounds.mul h254 h258 (by norm_num)
+  convert h259 using 1 <;>
+    simp only [v0, v1, v2, v22, v248, v249, v250, v251, v252, v254, v255, v256, v257, v258, v259, directionMean, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring <;> simp
+
+theorem inputvar : Bounds (e1InputVarianceBound 25644 (mW 12822) rowEps) (363057533850509324275303081/50000000000000000000) (726115067701018648550606219/100000000000000000000) := by
+  let v0 : ℝ := 25644
+  have h0 : Bounds v0 25644 25644 := Bounds.point _
+  let v1 : ℝ := 238696034424357
+  have h1 : Bounds v1 238696034424357 238696034424357 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v13 : ℝ := 3
+  have h13 : Bounds v13 3 3 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v260 : ℝ := v230+v22
+  have h260 : Bounds v260 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v261 : ℝ := v260+v13
+  have h261 : Bounds v261 (4001/1000) (4001/1000) := Bounds.add h260 h13 (by norm_num)
+  let v262 : ℝ := 5
+  have h262 : Bounds v262 5 5 := Bounds.point _
+  let v263 : ℝ := v1*v262
+  have h263 : Bounds v263 1193480172121785 1193480172121785 := Bounds.mul h1 h262 (by norm_num)
+  let v264 : ℝ := v0^2
+  have h264 : Bounds v264 657614736 657614736 := Bounds.pow h0 2 (by norm_num)
+  let v265 : ℝ := 1/v264
+  have h265 : Bounds v265 (760323594695116442767791/500000000000000000000000000000000) (15206471893902328855355821/10000000000000000000000000000000000) := Bounds.inv h264 (by norm_num)
+  let v266 : ℝ := v263/v264
+  have h266 : Bounds v266 (90743113466498186865447611/50000000000000000000) (36297245386599274746179047/20000000000000000000) := bounds_div h263 h265 (by norm_num)
+  let v267 : ℝ := v1*v2
+  have h267 : Bounds v267 477392068848714 477392068848714 := Bounds.mul h1 h2 (by norm_num)
+  let v268 : ℝ := v0^3
+  have h268 : Bounds v268 16863872289984 16863872289984 := Bounds.pow h0 3 (by norm_num)
+  let v269 : ℝ := 1/v268
+  have h269 : Bounds v269 (14824590444063259295893601/250000000000000000000000000000000000000) (11859672355250607436714881/200000000000000000000000000000000000000) := Bounds.inv h268 (by norm_num)
+  let v270 : ℝ := v267/v268
+  have h270 : Bounds v270 (56617135215409881057836601/2000000000000000000000000) (283085676077049405289183011/10000000000000000000000000) := bounds_div h267 h269 (by norm_num)
+  let v271 : ℝ := -v270
+  have h271 : Bounds v271 (-283085676077049405289183011/10000000000000000000000000) (-56617135215409881057836601/2000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h270
+  let v272 : ℝ := v266+v271
+  have h272 : Bounds v272 (18148339607623560323684233/10000000000000000000) (22685424509529450404605293/12500000000000000000) := Bounds.add h266 h271 (by norm_num)
+  let v273 : ℝ := v261*v272
+  have h273 : Bounds v273 (363057533850509324275303081/50000000000000000000) (726115067701018648550606219/100000000000000000000) := Bounds.mul h261 h272 (by norm_num)
+  convert h273 using 1 <;>
+    simp only [v0, v1, v2, v13, v22, v230, v260, v261, v262, v263, v264, v266, v267, v268, v270, v271, v272, v273, e1InputVarianceBound, inputVarianceMean, rowEps, Matrix.cons_val_one, Matrix.cons_val_three, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem meanvalue : Bounds (meanMajorantValue 25644 (mW 12822) (1/10^6) (1/10^7) rowEps) (5036491718419716086828769/2500000000000000000000000000000) (201713076750187851410149349/100000000000000000000000000000000) := by
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v8 : ℝ := 6
+  have h8 : Bounds v8 6 6 := Bounds.point _
+  let v274 : ℝ := Real.sqrt (e1InputVarianceBound 25644 (mW 12822) rowEps)
+  have h274 : Bounds v274 (33683152959348114422479189/12500000000000000000000) (269465223674784915379833523/100000000000000000000000) := Bounds.sqrt inputvar (by norm_num)
+  let v275 : ℝ := 1/(e1EnergyLower 25644 (mW 12822) (1/10^6))
+  have h275 : Bounds v275 (26858453792361033239647607/250000000000000000000000000000000000) (2685845379236103323964761/25000000000000000000000000000000000) := Bounds.inv energy (by norm_num)
+  let v276 : ℝ := v274/(e1EnergyLower 25644 (mW 12822) (1/10^6))
+  have h276 : Bounds v276 (144748385174348819758871263/500000000000000000000000000000000) (289496770348697639517742571/1000000000000000000000000000000000) := bounds_div h274 h275 (by norm_num)
+  let v277 : ℝ := (e1FrobBound 25644 (mW 12822) rowEps)^2
+  have h277 : Bounds v277 (849409008305609232934467997/1000000000000) (26577509409877055673493737/31250000000) := Bounds.pow frob 2 (by norm_num)
+  let v278 : ℝ := (1/10000000)
+  have h278 : Bounds v278 (1/10000000) (1/10000000) := Bounds.point _
+  let v279 : ℝ := 1/v278
+  have h279 : Bounds v279 10000000 10000000 := Bounds.inv h278 (by norm_num)
+  let v280 : ℝ := (directionMean 25644 (mW 12822))/v278
+  have h280 : Bounds v280 (78765630165456373809209951/100000000000000) (78770136141019875295225703/100000000000000) := bounds_div direction h279 (by norm_num)
+  let v281 : ℝ := v280*v2
+  have h281 : Bounds v281 (78765630165456373809209951/50000000000000) (78770136141019875295225703/50000000000000) := Bounds.mul h280 h2 (by norm_num)
+  let v282 : ℝ := v277+v281
+  have h282 : Bounds v282 (85098432090891836041065219/100000000000) (8520557038388861790577041/10000000000) := Bounds.add h277 h281 (by norm_num)
+  let v283 : ℝ := (e1EnergyLower 25644 (mW 12822) (1/10^6))^2
+  have h283 : Bounds v283 (433199560315031459008856623/5000000) (86639912063006291801771331/1000000) := Bounds.pow energy 2 (by norm_num)
+  let v284 : ℝ := 1/v283
+  have h284 : Bounds v284 (11542024641862284294928527/1000000000000000000000000000000000000000000000) (23084049283724568589857057/2000000000000000000000000000000000000000000000) := Bounds.inv h283 (by norm_num)
+  let v285 : ℝ := v282/v283
+  have h285 : Bounds v285 (30694006255528680148960139/3125000000000000000000000000000) (1229305991243467103062863/125000000000000000000000000000) := bounds_div h282 h284 (by norm_num)
+  let v286 : ℝ := (10237/50000)
+  have h286 : Bounds v286 (10237/50000) (10237/50000) := Bounds.point _
+  let v287 : ℝ := Real.sqrt v285
+  have h287 : Bounds v287 (313402010232371956425352407/100000000000000000000000000000) (313599233576036292335592591/100000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v288 : ℝ := Real.sqrt v2
+  have h288 : Bounds v288 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v289 : ℝ := v288*v276
+  have h289 : Bounds v289 (40941025889033748250455723/100000000000000000000000000000000) (81882051778067496500911461/200000000000000000000000000000000) := Bounds.mul h288 h276 (by norm_num)
+  let v290 : ℝ := v287+v289
+  have h290 : Bounds v290 (156721475629130495086801431/50000000000000000000000000000) (313640174601925326083843047/100000000000000000000000000000) := Bounds.add h287 h289 (by norm_num)
+  let v291 : ℝ := v290^2
+  have h291 : Bounds v291 (19649296738697714968618181/2000000000000000000000000000000) (983701591243262043782006419/100000000000000000000000000000000) := Bounds.pow h290 2 (by norm_num)
+  let v292 : ℝ := v286*v291
+  have h292 : Bounds v292 (100574925357024254066872159/50000000000000000000000000000000) (25175382973893183855491/12500000000000000000000000000) := Bounds.mul h286 h291 (by norm_num)
+  let v293 : ℝ := v276^2
+  have h293 : Bounds v293 (83808380042326580815611681/1000000000000000000000000000000000000000) (419041900211632904078058539/5000000000000000000000000000000000000000) := Bounds.pow h276 2 (by norm_num)
+  let v294 : ℝ := v293*v8
+  have h294 : Bounds v294 (1571407125793623390292719/3125000000000000000000000000000000000) (2011401121015837939574681/4000000000000000000000000000000000000) := Bounds.mul h293 h8 (by norm_num)
+  let v295 : ℝ := v292+v294
+  have h295 : Bounds v295 (201149900999076533529692807/100000000000000000000000000000000) (20140311407617349623987649/10000000000000000000000000000000) := Bounds.add h292 h294 (by norm_num)
+  let v296 : ℝ := Real.sqrt v2
+  have h296 : Bounds v296 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v297 : ℝ := v296+v2
+  have h297 : Bounds v297 (42677669529663688110021109/12500000000000000000000000) (341421356237309504880168873/100000000000000000000000000) := Bounds.add h296 h2 (by norm_num)
+  let v298 : ℝ := v297*v276
+  have h298 : Bounds v298 (24710094989693319038501057/25000000000000000000000000000000) (988403799587732761540042447/1000000000000000000000000000000000) := Bounds.mul h297 h276 (by norm_num)
+  let v299 : ℝ := Real.sqrt v285
+  have h299 : Bounds v299 (313402010232371956425352407/100000000000000000000000000000) (313599233576036292335592591/100000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v300 : ℝ := v298*v299
+  have h300 : Bounds v300 (38720967214013742932244167/12500000000000000000000000000000000) (309962674014355170272858911/100000000000000000000000000000000000) := Bounds.mul h298 h299 (by norm_num)
+  let v301 : ℝ := v295+v300
+  have h301 : Bounds v301 (5036491718419716086828769/2500000000000000000000000000000) (201713076750187851410149349/100000000000000000000000000000000) := Bounds.add h295 h300 (by norm_num)
+  convert h301 using 1 <;>
+    simp only [v2, v8, v274, v276, v277, v278, v280, v281, v282, v283, v285, v286, v287, v288, v289, v290, v291, v292, v293, v294, v295, v296, v297, v298, v299, v300, v301, meanMajorantValue, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+end BstLean.Part268.WorldRow12822
+namespace BstLean.Part268.WorldRow12823
+open Real MeasureTheory Set BstLean.Part130 BstLean.Part140 BstLean.Part137 BstLean.Part159
+open BstLean.Part227 BstLean.Part228 BstLean.Part218 BstLean.Part205 BstLean.Part214
+open BstLean.Part157 BstLean.Part192
+open BstLean.Part250 (bounds_div pi_bounds rowEps meanMajorantValue endpointPolynomial mean_majorant)
+theorem covmean : Bounds (covarianceMeanBound 25646 (mW 12823)) (4172385045989232277823631/625000000000000) (100143588427079545479974843/10000000000000000) := by
+  let v1 : ℝ := 238761197235872
+  have h1 : Bounds v1 238761197235872 238761197235872 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v203 : ℝ := v1*v41
+  have h203 : Bounds v203 955044788943488 955044788943488 := Bounds.mul h1 h41 (by norm_num)
+  let v204 : ℝ := -v22
+  have h204 : Bounds v204 (-1) (-1) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h22
+  let v205 : ℝ := v1+v204
+  have h205 : Bounds v205 238761197235871 238761197235871 := Bounds.add h1 h204 (by norm_num)
+  let v206 : ℝ := v203*v205
+  have h206 : Bounds v206 228027637222026929648025458000 228027637222026929648025459000 := Bounds.mul h203 h205 (by norm_num)
+  let v207 : ℝ := v206*(angularJ2 25646 (angularOffset 25646))
+  have h207 : Bounds v207 (4172385045989232277823631/625000000000000) (100143588427079545479974843/10000000000000000) := Bounds.mul h206 jsecond (by norm_num)
+  convert h207 using 1 <;>
+    simp only [v1, v22, v41, v203, v204, v205, v206, v207, covarianceMeanBound, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem frob : Bounds (e1FrobBound 25646 (mW 12823) rowEps) (291491653113485796987983513/10000000000000000000) (18229712862362142732923829/625000000000000000) := by
+  let v0 : ℝ := 25646
+  have h0 : Bounds v0 25646 25646 := Bounds.point _
+  let v1 : ℝ := 238761197235872
+  have h1 : Bounds v1 238761197235872 238761197235872 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v208 : ℝ := (1/100000)
+  have h208 : Bounds v208 (1/100000) (1/100000) := Bounds.point _
+  let v209 : ℝ := v208+v22
+  have h209 : Bounds v209 (100001/100000) (100001/100000) := Bounds.add h208 h22 (by norm_num)
+  let v210 : ℝ := v1*v0
+  have h210 : Bounds v210 6123269664311173312 6123269664311173312 := Bounds.mul h1 h0 (by norm_num)
+  let v211 : ℝ := v1+v0
+  have h211 : Bounds v211 238761197261518 238761197261518 := Bounds.add h1 h0 (by norm_num)
+  let v212 : ℝ := v211+v22
+  have h212 : Bounds v212 238761197261519 238761197261519 := Bounds.add h211 h22 (by norm_num)
+  let v213 : ℝ := v210*v212
+  have h213 : Bounds v213 1461999196206075279788568190000000 1461999196206075279788568200000000 := Bounds.mul h210 h212 (by norm_num)
+  let v214 : ℝ := v209*v213
+  have h214 : Bounds v214 1462013816198037340541366070000000 1462013816198037340541366090000000 := Bounds.mul h209 h213 (by norm_num)
+  let v215 : ℝ := v0^4
+  have h215 : Bounds v215 432592067766243856 432592067766243856 := Bounds.pow h0 4 (by norm_num)
+  let v216 : ℝ := v215*v41
+  have h216 : Bounds v216 1730368271064975424 1730368271064975424 := Bounds.mul h215 h41 (by norm_num)
+  let v217 : ℝ := 1/v216
+  have h217 : Bounds v217 (28895583001661787430416789/50000000000000000000000000000000000000000000) (57791166003323574860833579/100000000000000000000000000000000000000000000) := Bounds.inv h216 (by norm_num)
+  let v218 : ℝ := v214/v216
+  have h218 : Bounds v218 (660089712117604509274467/781250000) (844914831510533771871317793/1000000000000) := bounds_div h214 h217 (by norm_num)
+  let v219 : ℝ := Real.sqrt v218
+  have h219 : Bounds v219 (145337093640141793970660427/5000000000000000000) (290674187280283587941320861/10000000000000000000) := Bounds.sqrt h218 (by norm_num)
+  let v220 : ℝ := v0*v41
+  have h220 : Bounds v220 102584 102584 := Bounds.mul h0 h41 (by norm_num)
+  let v221 : ℝ := 1/v220
+  have h221 : Bounds v221 (19496217733759650627778211/2000000000000000000000000000000) (6092568041799890821180691/625000000000000000000000000000) := Bounds.inv h220 (by norm_num)
+  let v222 : ℝ := v22/v220
+  have h222 : Bounds v222 (19496217733759650627778211/2000000000000000000000000000000) (6092568041799890821180691/625000000000000000000000000000) := bounds_div h22 h221 (by norm_num)
+  let v223 : ℝ := -(BstLean.Part137.cN 25646 ^ 2)
+  have h223 : Bounds v223 (-5000000000000000000/805661436013102476003067) (-25000000000000000000/4028464259698191869690081) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg cnsq_bounds
+  let v224 : ℝ := v222+v223
+  have h224 : Bounds v224 (44275350360322569899428949/12500000000000000000000000000000) (17711350095161948107207543/5000000000000000000000000000000) := Bounds.add h222 h223 (by norm_num)
+  let v225 : ℝ := v224^2
+  have h225 : Bounds v225 (62729812784938109447222957/5000000000000000000000000000000000000) (125476768877357259309190801/10000000000000000000000000000000000000) := Bounds.pow h224 2 (by norm_num)
+  let v226 : ℝ := v0^2
+  have h226 : Bounds v226 657717316 657717316 := Bounds.pow h0 2 (by norm_num)
+  let v227 : ℝ := 1/v226
+  have h227 : Bounds v227 (15204100236886571494797013/10000000000000000000000000000000000) (7602050118443285747398507/5000000000000000000000000000000000) := Bounds.inv h226 (by norm_num)
+  let v228 : ℝ := v41/v226
+  have h228 : Bounds v228 (15204100236886571494797013/2500000000000000000000000000000000) (7602050118443285747398507/1250000000000000000000000000000000) := bounds_div h41 h227 (by norm_num)
+  let v229 : ℝ := v225*v228
+  have h229 : Bounds v229 (763000289138662232784796597/10000000000000000000000000000000000000000000000) (15262090971295912702920633/200000000000000000000000000000000000000000000) := Bounds.mul h225 h228 (by norm_num)
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v231 : ℝ := v230+v22
+  have h231 : Bounds v231 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v232 : ℝ := v1*v0
+  have h232 : Bounds v232 6123269664311173312 6123269664311173312 := Bounds.mul h1 h0 (by norm_num)
+  let v233 : ℝ := v0+v2
+  have h233 : Bounds v233 25648 25648 := Bounds.add h0 h2 (by norm_num)
+  let v234 : ℝ := v232*v233
+  have h234 : Bounds v234 157049620350252973106176 157049620350252973106176 := Bounds.mul h232 h233 (by norm_num)
+  let v235 : ℝ := v231*v234
+  have h235 : Bounds v235 (19650833746325403259910272/125) (19650833746325403259910272/125) := Bounds.mul h231 h234 (by norm_num)
+  let v236 : ℝ := v229*v235
+  have h236 : Bounds v236 (11994873464209651086961111/1000000000000000000000) (119965124919291989139811867/10000000000000000000000) := Bounds.mul h229 h235 (by norm_num)
+  let v237 : ℝ := v230+v22
+  have h237 : Bounds v237 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v238 : ℝ := v237*(covarianceMeanBound 25646 (mW 12823))
+  have h238 : Bounds v238 (33412459448281772080811637/5000000000000000) (50121866007753312512727409/5000000000000000) := Bounds.mul h237 covmean (by norm_num)
+  let v239 : ℝ := v236+v238
+  have h239 : Bounds v239 (167062597113245465645335359/25000000000000000) (50121925990315772158721979/5000000000000000) := Bounds.add h236 h238 (by norm_num)
+  let v240 : ℝ := Real.sqrt v239
+  have h240 : Bounds v240 (81746583320220904666265907/1000000000000000000000) (20024370350213915709208057/200000000000000000000) := Bounds.sqrt h239 (by norm_num)
+  let v241 : ℝ := v219+v240
+  have h241 : Bounds v241 (291491653113485796987983513/10000000000000000000) (18229712862362142732923829/625000000000000000) := Bounds.add h219 h240 (by norm_num)
+  convert h241 using 1 <;>
+    simp only [v0, v1, v2, v22, v41, v208, v209, v210, v211, v212, v213, v214, v215, v216, v218, v219, v220, v222, v223, v224, v225, v226, v228, v229, v230, v231, v232, v233, v234, v235, v236, v237, v238, v239, v240, v241, e1FrobBound, rowEps, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem energy : Bounds (e1EnergyLower 25646 (mW 12823) (1/10^6)) (46549356327434056797941199/5000000000000000) (46549356327434056797941201/5000000000000000) := by
+  let v0 : ℝ := 25646
+  have h0 : Bounds v0 25646 25646 := Bounds.point _
+  let v1 : ℝ := 238761197235872
+  have h1 : Bounds v1 238761197235872 238761197235872 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v242 : ℝ := (1/1000000)
+  have h242 : Bounds v242 (1/1000000) (1/1000000) := Bounds.point _
+  let v243 : ℝ := -v242
+  have h243 : Bounds v243 (-1/1000000) (-1/1000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h242
+  let v244 : ℝ := v22+v243
+  have h244 : Bounds v244 (999999/1000000) (999999/1000000) := Bounds.add h22 h243 (by norm_num)
+  let v245 : ℝ := v244*v1
+  have h245 : Bounds v245 (7461279952333586379/31250) (7461279952333586379/31250) := Bounds.mul h244 h1 (by norm_num)
+  let v246 : ℝ := 1/v0
+  have h246 : Bounds v246 (19496217733759650627778211/500000000000000000000000000000) (38992435467519301255556423/1000000000000000000000000000000) := Bounds.inv h0 (by norm_num)
+  let v247 : ℝ := v245/v0
+  have h247 : Bounds v247 (46549356327434056797941199/5000000000000000) (46549356327434056797941201/5000000000000000) := bounds_div h245 h246 (by norm_num)
+  convert h247 using 1 <;>
+    simp only [v0, v1, v22, v242, v243, v244, v245, v247, e1EnergyLower, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem direction : Bounds (directionMean 25646 (mW 12823)) (787748444877532376676527693/10000000000000000000000) (39389675319492434410799299/500000000000000000000) := by
+  let v0 : ℝ := 25646
+  have h0 : Bounds v0 25646 25646 := Bounds.point _
+  let v1 : ℝ := 238761197235872
+  have h1 : Bounds v1 238761197235872 238761197235872 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v248 : ℝ := v1*v2
+  have h248 : Bounds v248 477522394471744 477522394471744 := Bounds.mul h1 h2 (by norm_num)
+  let v249 : ℝ := v248*(BstLean.Part137.cN 25646 ^ 2)
+  have h249 : Bounds v249 (29634270263298764800575649/10000000000000000) (14817712910363815989042353/5000000000000000) := Bounds.mul h248 cnsq_bounds (by norm_num)
+  let v250 : ℝ := v0+v2
+  have h250 : Bounds v250 25648 25648 := Bounds.add h0 h2 (by norm_num)
+  let v251 : ℝ := v249*v250
+  have h251 : Bounds v251 (9500747046413583995064553/125000000000) (38004470072501115248695827/500000000000) := Bounds.mul h249 h250 (by norm_num)
+  let v252 : ℝ := v0^2
+  have h252 : Bounds v252 657717316 657717316 := Bounds.pow h0 2 (by norm_num)
+  let v253 : ℝ := 1/v252
+  have h253 : Bounds v253 (15204100236886571494797013/10000000000000000000000000000000000) (7602050118443285747398507/5000000000000000000000000000000000) := Bounds.inv h252 (by norm_num)
+  let v254 : ℝ := v251/v252
+  have h254 : Bounds v254 (14445031041897616688359399/125000000000000000000) (3611398577700392645650657/31250000000000000000) := bounds_div h251 h253 (by norm_num)
+  let v255 : ℝ := v0*v2
+  have h255 : Bounds v255 51292 51292 := Bounds.mul h0 h2 (by norm_num)
+  let v256 : ℝ := v255*(BstLean.Part137.cN 25646 ^ 2)
+  have h256 : Bounds v256 (15915494309189533576851107/50000000000000000000000000) (31832229834546677957747923/100000000000000000000000000) := Bounds.mul h255 cnsq_bounds (by norm_num)
+  let v257 : ℝ := -v256
+  have h257 : Bounds v257 (-31832229834546677957747923/100000000000000000000000000) (-15915494309189533576851107/50000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h256
+  let v258 : ℝ := v22+v257
+  have h258 : Bounds v258 (68167770165453322042252077/100000000000000000000000000) (34084505690810466423148893/50000000000000000000000000) := Bounds.add h22 h257 (by norm_num)
+  let v259 : ℝ := v254*v258
+  have h259 : Bounds v259 (787748444877532376676527693/10000000000000000000000) (39389675319492434410799299/500000000000000000000) := Bounds.mul h254 h258 (by norm_num)
+  convert h259 using 1 <;>
+    simp only [v0, v1, v2, v22, v248, v249, v250, v251, v252, v254, v255, v256, v257, v258, v259, directionMean, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring <;> simp
+
+theorem inputvar : Bounds (e1InputVarianceBound 25646 (mW 12823) rowEps) (18155000396246429636997007/2500000000000000000) (18155000396246429636997009/2500000000000000000) := by
+  let v0 : ℝ := 25646
+  have h0 : Bounds v0 25646 25646 := Bounds.point _
+  let v1 : ℝ := 238761197235872
+  have h1 : Bounds v1 238761197235872 238761197235872 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v13 : ℝ := 3
+  have h13 : Bounds v13 3 3 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v260 : ℝ := v230+v22
+  have h260 : Bounds v260 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v261 : ℝ := v260+v13
+  have h261 : Bounds v261 (4001/1000) (4001/1000) := Bounds.add h260 h13 (by norm_num)
+  let v262 : ℝ := 5
+  have h262 : Bounds v262 5 5 := Bounds.point _
+  let v263 : ℝ := v1*v262
+  have h263 : Bounds v263 1193805986179360 1193805986179360 := Bounds.mul h1 h262 (by norm_num)
+  let v264 : ℝ := v0^2
+  have h264 : Bounds v264 657717316 657717316 := Bounds.pow h0 2 (by norm_num)
+  let v265 : ℝ := 1/v264
+  have h265 : Bounds v265 (15204100236886571494797013/10000000000000000000000000000000000) (7602050118443285747398507/5000000000000000000000000000000000) := Bounds.inv h264 (by norm_num)
+  let v266 : ℝ := v263/v264
+  have h266 : Bounds v266 (18150745877266214471993617/10000000000000000000) (181507458772662144719936187/100000000000000000000) := bounds_div h263 h265 (by norm_num)
+  let v267 : ℝ := v1*v2
+  have h267 : Bounds v267 477522394471744 477522394471744 := Bounds.mul h1 h2 (by norm_num)
+  let v268 : ℝ := v0^3
+  have h268 : Bounds v268 16867818286136 16867818286136 := Bounds.pow h0 3 (by norm_num)
+  let v269 : ℝ := 1/v268
+  have h269 : Bounds v269 (29642244866424728017618759/500000000000000000000000000000000000000) (59284489732849456035237519/1000000000000000000000000000000000000000) := Bounds.inv h268 (by norm_num)
+  let v270 : ℝ := v267/v268
+  have h270 : Bounds v270 (28309671492265795012077701/1000000000000000000000000) (283096714922657950120777023/10000000000000000000000000) := bounds_div h267 h269 (by norm_num)
+  let v271 : ℝ := -v270
+  have h271 : Bounds v271 (-283096714922657950120777023/10000000000000000000000000) (-28309671492265795012077701/1000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h270
+  let v272 : ℝ := v266+v271
+  have h272 : Bounds v272 (90752313902756459070217481/50000000000000000000) (9075231390275645907021749/5000000000000000000) := Bounds.add h266 h271 (by norm_num)
+  let v273 : ℝ := v261*v272
+  have h273 : Bounds v273 (18155000396246429636997007/2500000000000000000) (18155000396246429636997009/2500000000000000000) := Bounds.mul h261 h272 (by norm_num)
+  convert h273 using 1 <;>
+    simp only [v0, v1, v2, v13, v22, v230, v260, v261, v262, v263, v264, v266, v267, v268, v270, v271, v272, v273, e1InputVarianceBound, inputVarianceMean, rowEps, Matrix.cons_val_one, Matrix.cons_val_three, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem meanvalue : Bounds (meanMajorantValue 25646 (mW 12823) (1/10^6) (1/10^7) rowEps) (201443806034140896503378999/100000000000000000000000000000000) (201697184344127199917189767/100000000000000000000000000000000) := by
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v8 : ℝ := 6
+  have h8 : Bounds v8 6 6 := Bounds.point _
+  let v274 : ℝ := Real.sqrt (e1InputVarianceBound 25646 (mW 12823) rowEps)
+  have h274 : Bounds v274 (134740492786119903061555189/50000000000000000000000) (134740492786119903061555197/50000000000000000000000) := Bounds.sqrt inputvar (by norm_num)
+  let v275 : ℝ := 1/(e1EnergyLower 25646 (mW 12823) (1/10^6))
+  have h275 : Bounds v275 (107412870863978611018680987/1000000000000000000000000000000000000) (3356652214499331594333781/31250000000000000000000000000000000) := Bounds.inv energy (by norm_num)
+  let v276 : ℝ := v274/(e1EnergyLower 25646 (mW 12823) (1/10^6))
+  have h276 : Bounds v276 (28945726303568677514575817/100000000000000000000000000000000) (565346216866575732706559/1953125000000000000000000000000) := bounds_div h274 h275 (by norm_num)
+  let v277 : ℝ := (e1FrobBound 25646 (mW 12823) rowEps)^2
+  have h277 : Bounds v277 (106209229793540917656223121/125000000000) (85074542347307967261863389/100000000000) := Bounds.pow frob 2 (by norm_num)
+  let v278 : ℝ := (1/10000000)
+  have h278 : Bounds v278 (1/10000000) (1/10000000) := Bounds.point _
+  let v279 : ℝ := 1/v278
+  have h279 : Bounds v279 10000000 10000000 := Bounds.inv h278 (by norm_num)
+  let v280 : ℝ := (directionMean 25646 (mW 12823))/v278
+  have h280 : Bounds v280 (787748444877532376676527693/1000000000000000) (39389675319492434410799299/50000000000000) := bounds_div direction h279 (by norm_num)
+  let v281 : ℝ := v280*v2
+  have h281 : Bounds v281 (78774844487753237667652769/50000000000000) (39389675319492434410799299/25000000000000) := Bounds.mul h280 h2 (by norm_num)
+  let v282 : ℝ := v277+v281
+  have h282 : Bounds v282 (42562466761904120300156901/50000000000) (85232101048585936999506587/100000000000) := Bounds.add h277 h281 (by norm_num)
+  let v283 : ℝ := (e1EnergyLower 25646 (mW 12823) (1/10^6))^2
+  have h283 : Bounds v283 (86673702979937002401449257/1000000) (17334740595987400480289853/200000) := Bounds.pow energy 2 (by norm_num)
+  let v284 : ℝ := 1/v283
+  have h284 : Bounds v284 (115375248272417452027193371/10000000000000000000000000000000000000000000000) (11537524827241745202719339/1000000000000000000000000000000000000000000000) := Bounds.inv h283 (by norm_num)
+  let v285 : ℝ := v282/v283
+  have h285 : Bounds v285 (98213103394824071582449299/10000000000000000000000000000000) (122920935240754679115131341/12500000000000000000000000000000) := bounds_div h282 h284 (by norm_num)
+  let v286 : ℝ := (10237/50000)
+  have h286 : Bounds v286 (10237/50000) (10237/50000) := Bounds.point _
+  let v287 : ℝ := Real.sqrt v285
+  have h287 : Bounds v287 (78347424732255906318658089/25000000000000000000000000000) (156793453460758162557744627/50000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v288 : ℝ := Real.sqrt v2
+  have h288 : Bounds v288 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v289 : ℝ := v288*v276
+  have h289 : Bounds v289 (51169298389058074884184817/125000000000000000000000000000000) (204677193556232299536739297/500000000000000000000000000000000) := Bounds.mul h288 h276 (by norm_num)
+  let v290 : ℝ := v287+v289
+  have h290 : Bounds v290 (313430634367734871734539703/100000000000000000000000000000) (31362784236022757157539661/10000000000000000000000000000) := Bounds.add h287 h289 (by norm_num)
+  let v291 : ℝ := v290^2
+  have h291 : Bounds v291 (196477525120321408237119707/20000000000000000000000000000000) (196724847007063511867896523/20000000000000000000000000000000) := Bounds.pow h290 2 (by norm_num)
+  let v292 : ℝ := v286*v291
+  have h292 : Bounds v292 (50283510616418256403084861/25000000000000000000000000000000) (201387225881130917099165671/100000000000000000000000000000000) := Bounds.mul h286 h291 (by norm_num)
+  let v293 : ℝ := v276^2
+  have h293 : Bounds v293 (418927535620553807596243589/5000000000000000000000000000000000000000) (4189275356205538075962437/50000000000000000000000000000000000000) := Bounds.pow h276 2 (by norm_num)
+  let v294 : ℝ := v293*v8
+  have h294 : Bounds v294 (5027130427446645691154923/10000000000000000000000000000000000000) (12567826068616614227887311/25000000000000000000000000000000000000) := Bounds.mul h293 h8 (by norm_num)
+  let v295 : ℝ := v292+v294
+  have h295 : Bounds v295 (40226818547395460015759271/20000000000000000000000000000000) (201387276152435191565622583/100000000000000000000000000000000) := Bounds.add h292 h294 (by norm_num)
+  let v296 : ℝ := Real.sqrt v2
+  have h296 : Bounds v296 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v297 : ℝ := v296+v2
+  have h297 : Bounds v297 (42677669529663688110021109/12500000000000000000000000) (341421356237309504880168873/100000000000000000000000000) := Bounds.add h296 h2 (by norm_num)
+  let v298 : ℝ := v297*v276
+  have h298 : Bounds v298 (98826891318383814936499487/100000000000000000000000000000000) (98826891318383814936499501/100000000000000000000000000000000) := Bounds.mul h297 h276 (by norm_num)
+  let v299 : ℝ := Real.sqrt v285
+  have h299 : Bounds v299 (78347424732255906318658089/25000000000000000000000000000) (156793453460758162557744627/50000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v300 : ℝ := v298*v299
+  have h300 : Bounds v300 (309713297163596424582644863/100000000000000000000000000000000000) (968463099037526098647449/312500000000000000000000000000000) := Bounds.mul h298 h299 (by norm_num)
+  let v301 : ℝ := v295+v300
+  have h301 : Bounds v301 (201443806034140896503378999/100000000000000000000000000000000) (201697184344127199917189767/100000000000000000000000000000000) := Bounds.add h295 h300 (by norm_num)
+  convert h301 using 1 <;>
+    simp only [v2, v8, v274, v276, v277, v278, v280, v281, v282, v283, v285, v286, v287, v288, v289, v290, v291, v292, v293, v294, v295, v296, v297, v298, v299, v300, v301, meanMajorantValue, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+end BstLean.Part268.WorldRow12823
+namespace BstLean.Part268.WorldRow12824
+open Real MeasureTheory Set BstLean.Part130 BstLean.Part140 BstLean.Part137 BstLean.Part159
+open BstLean.Part227 BstLean.Part228 BstLean.Part218 BstLean.Part205 BstLean.Part214
+open BstLean.Part157 BstLean.Part192
+open BstLean.Part250 (bounds_div pi_bounds rowEps meanMajorantValue endpointPolynomial mean_majorant)
+theorem covmean : Bounds (covarianceMeanBound 25648 (mW 12824)) (13354756102295381987572189/2000000000000000) (100167019080528137021876081/10000000000000000) := by
+  let v1 : ℝ := 238826372752908
+  have h1 : Bounds v1 238826372752908 238826372752908 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v203 : ℝ := v1*v41
+  have h203 : Bounds v203 955305491011632 955305491011632 := Bounds.mul h1 h41 (by norm_num)
+  let v204 : ℝ := -v22
+  have h204 : Bounds v204 (-1) (-1) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h22
+  let v205 : ℝ := v1+v204
+  have h205 : Bounds v205 238826372752907 238826372752907 := Bounds.add h1 h204 (by norm_num)
+  let v206 : ℝ := v203*v205
+  have h206 : Bounds v206 228152145289242871680198814000 228152145289242871680198815000 := Bounds.mul h203 h205 (by norm_num)
+  let v207 : ℝ := v206*(angularJ2 25648 (angularOffset 25648))
+  have h207 : Bounds v207 (13354756102295381987572189/2000000000000000) (100167019080528137021876081/10000000000000000) := Bounds.mul h206 jsecond (by norm_num)
+  convert h207 using 1 <;>
+    simp only [v1, v22, v41, v203, v204, v205, v206, v207, covarianceMeanBound, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem frob : Bounds (e1FrobBound 25648 (mW 12824) rowEps) (72884271721758946452092967/2500000000000000000) (29172086106444314684580473/1000000000000000000) := by
+  let v0 : ℝ := 25648
+  have h0 : Bounds v0 25648 25648 := Bounds.point _
+  let v1 : ℝ := 238826372752908
+  have h1 : Bounds v1 238826372752908 238826372752908 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v41 : ℝ := 4
+  have h41 : Bounds v41 4 4 := Bounds.point _
+  let v208 : ℝ := (1/100000)
+  have h208 : Bounds v208 (1/100000) (1/100000) := Bounds.point _
+  let v209 : ℝ := v208+v22
+  have h209 : Bounds v209 (100001/100000) (100001/100000) := Bounds.add h208 h22 (by norm_num)
+  let v210 : ℝ := v1*v0
+  have h210 : Bounds v210 6125418808366584384 6125418808366584384 := Bounds.mul h1 h0 (by norm_num)
+  let v211 : ℝ := v1+v0
+  have h211 : Bounds v211 238826372778556 238826372778556 := Bounds.add h1 h0 (by norm_num)
+  let v212 : ℝ := v211+v22
+  have h212 : Bounds v212 238826372778557 238826372778557 := Bounds.add h211 h22 (by norm_num)
+  let v213 : ℝ := v210*v212
+  have h213 : Bounds v213 1462911555751742285648037680000000 1462911555751742285648037690000000 := Bounds.mul h210 h212 (by norm_num)
+  let v214 : ℝ := v209*v213
+  have h214 : Bounds v214 1462926184867299803070894160000000 1462926184867299803070894180000000 := Bounds.mul h209 h213 (by norm_num)
+  let v215 : ℝ := v0^4
+  have h215 : Bounds v215 432727026098569216 432727026098569216 := Bounds.pow h0 4 (by norm_num)
+  let v216 : ℝ := v215*v41
+  have h216 : Bounds v216 1730908104394276864 1730908104394276864 := Bounds.mul h215 h41 (by norm_num)
+  let v217 : ℝ := 1/v216
+  have h217 : Bounds v217 (57773142170938375063160641/100000000000000000000000000000000000000000000) (28886571085469187531580321/50000000000000000000000000000000000000000000) := Bounds.inv h216 (by norm_num)
+  let v218 : ℝ := v214/v216
+  have h218 : Bounds v218 (42258921231963493778975989/50000000000) (42258921231963493778975991/50000000000) := bounds_div h214 h217 (by norm_num)
+  let v219 : ℝ := Real.sqrt v218
+  have h219 : Bounds v219 (290719525426014321495028199/10000000000000000000) (290719525426014321495028207/10000000000000000000) := Bounds.sqrt h218 (by norm_num)
+  let v220 : ℝ := v0*v41
+  have h220 : Bounds v220 102592 102592 := Bounds.mul h0 h41 (by norm_num)
+  let v221 : ℝ := 1/v220
+  have h221 : Bounds v221 (19494697442295695570804741/2000000000000000000000000000000) (48736743605739238927011853/5000000000000000000000000000000) := Bounds.inv h220 (by norm_num)
+  let v222 : ℝ := v22/v220
+  have h222 : Bounds v222 (19494697442295695570804741/2000000000000000000000000000000) (48736743605739238927011853/5000000000000000000000000000000) := bounds_div h22 h221 (by norm_num)
+  let v223 : ℝ := -(BstLean.Part137.cN 25648 ^ 2)
+  have h223 : Bounds v223 (-25000000000000000000/4028621339330871359339181) (-3125000000000000000/503597302370443856126741) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg cnsq_bounds
+  let v224 : ℝ := v222+v223
+  have h224 : Bounds v224 (35417518446361569143836283/10000000000000000000000000000000) (177099689855163490781910731/50000000000000000000000000000000) := Bounds.add h222 h223 (by norm_num)
+  let v225 : ℝ := v224^2
+  have h225 : Bounds v225 (125440061289836201855878269/10000000000000000000000000000000000000) (125457200587180393018264443/10000000000000000000000000000000000000) := Bounds.pow h224 2 (by norm_num)
+  let v226 : ℝ := v0^2
+  have h226 : Bounds v226 657819904 657819904 := Bounds.pow h0 2 (by norm_num)
+  let v227 : ℝ := 1/v226
+  have h227 : Bounds v227 (1520172913466601338958573/1000000000000000000000000000000000) (15201729134666013389585731/10000000000000000000000000000000000) := Bounds.inv h226 (by norm_num)
+  let v228 : ℝ := v41/v226
+  have h228 : Bounds v228 (1520172913466601338958573/250000000000000000000000000000000) (15201729134666013389585731/2500000000000000000000000000000000) := bounds_div h41 h227 (by norm_num)
+  let v229 : ℝ := v225*v228
+  have h229 : Bounds v229 (76276233374559734729995803/1000000000000000000000000000000000000000000000) (76286655252791130514813031/1000000000000000000000000000000000000000000000) := Bounds.mul h225 h228 (by norm_num)
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v231 : ℝ := v230+v22
+  have h231 : Bounds v231 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v232 : ℝ := v1*v0
+  have h232 : Bounds v232 6125418808366584384 6125418808366584384 := Bounds.mul h1 h0 (by norm_num)
+  let v233 : ℝ := v0+v2
+  have h233 : Bounds v233 25650 25650 := Bounds.add h0 h2 (by norm_num)
+  let v234 : ℝ := v232*v233
+  have h234 : Bounds v234 157116992434602889449600 157116992434602889449600 := Bounds.mul h232 h233 (by norm_num)
+  let v235 : ℝ := v231*v234
+  have h235 : Bounds v235 (786370547135187461695248/5) (786370547135187461695248/5) := Bounds.mul h231 h234 (by norm_num)
+  let v236 : ℝ := v229*v235
+  have h236 : Bounds v236 (14995345843040946215345697/1250000000000000000000) (119979157660501567729054411/10000000000000000000000) := Bounds.mul h229 h235 (by norm_num)
+  let v237 : ℝ := v230+v22
+  have h237 : Bounds v237 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v238 : ℝ := v237*(covarianceMeanBound 25648 (mW 12824))
+  have h238 : Bounds v238 (13368110858397677369559761/2000000000000000) (50133593049804332579448979/5000000000000000) := Bounds.mul h237 covmean (by norm_num)
+  let v239 : ℝ := v236+v238
+  have h239 : Bounds v239 (668406742547551311753685277/100000000000000000) (12533413259845790707558211/1250000000000000) := Bounds.add h236 h238 (by norm_num)
+  let v240 : ℝ := Real.sqrt v239
+  have h240 : Bounds v240 (817561461021464313343669559/10000000000000000000000) (1251669548036031688470653/12500000000000000000) := Bounds.sqrt h239 (by norm_num)
+  let v241 : ℝ := v219+v240
+  have h241 : Bounds v241 (72884271721758946452092967/2500000000000000000) (29172086106444314684580473/1000000000000000000) := Bounds.add h219 h240 (by norm_num)
+  convert h241 using 1 <;>
+    simp only [v0, v1, v2, v22, v41, v208, v209, v210, v211, v212, v213, v214, v215, v216, v218, v219, v220, v222, v223, v224, v225, v226, v228, v229, v230, v231, v232, v233, v234, v235, v236, v237, v238, v239, v240, v241, e1FrobBound, rowEps, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem energy : Bounds (e1EnergyLower 25648 (mW 12824) (1/10^6)) (93116864444219918548034933/10000000000000000) (93116864444219918548034937/10000000000000000) := by
+  let v0 : ℝ := 25648
+  have h0 : Bounds v0 25648 25648 := Bounds.point _
+  let v1 : ℝ := 238826372752908
+  have h1 : Bounds v1 238826372752908 238826372752908 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v242 : ℝ := (1/1000000)
+  have h242 : Bounds v242 (1/1000000) (1/1000000) := Bounds.point _
+  let v243 : ℝ := -v242
+  have h243 : Bounds v243 (-1/1000000) (-1/1000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h242
+  let v244 : ℝ := v22+v243
+  have h244 : Bounds v244 (999999/1000000) (999999/1000000) := Bounds.add h22 h243 (by norm_num)
+  let v245 : ℝ := v244*v1
+  have h245 : Bounds v245 (59706533481633811773/250000) (59706533481633811773/250000) := Bounds.mul h244 h1 (by norm_num)
+  let v246 : ℝ := 1/v0
+  have h246 : Bounds v246 (19494697442295695570804741/500000000000000000000000000000) (38989394884591391141609483/1000000000000000000000000000000) := Bounds.inv h0 (by norm_num)
+  let v247 : ℝ := v245/v0
+  have h247 : Bounds v247 (93116864444219918548034933/10000000000000000) (93116864444219918548034937/10000000000000000) := bounds_div h245 h246 (by norm_num)
+  convert h247 using 1 <;>
+    simp only [v0, v1, v22, v242, v243, v244, v245, v247, e1EnergyLower, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem direction : Bounds (directionMean 25648 (mW 12824)) (4924003698083205338265243/62500000000000000000) (787885654962241982213502069/10000000000000000000000) := by
+  let v0 : ℝ := 25648
+  have h0 : Bounds v0 25648 25648 := Bounds.point _
+  let v1 : ℝ := 238826372752908
+  have h1 : Bounds v1 238826372752908 238826372752908 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v248 : ℝ := v1*v2
+  have h248 : Bounds v248 477652745505816 477652745505816 := Bounds.mul h1 h2 (by norm_num)
+  let v249 : ℝ := v248*(BstLean.Part137.cN 25648 ^ 2)
+  have h249 : Bounds v249 (29640048163079269758849083/10000000000000000) (59282407711362507176463611/20000000000000000) := Bounds.mul h248 cnsq_bounds (by norm_num)
+  let v250 : ℝ := v0+v2
+  have h250 : Bounds v250 25650 25650 := Bounds.add h0 h2 (by norm_num)
+  let v251 : ℝ := v249*v250
+  have h251 : Bounds v251 (76026723538298326931447897/1000000000000) (38014843944911207726907291/500000000000) := Bounds.mul h249 h250 (by norm_num)
+  let v252 : ℝ := v0^2
+  have h252 : Bounds v252 657819904 657819904 := Bounds.pow h0 2 (by norm_num)
+  let v253 : ℝ := 1/v252
+  have h253 : Bounds v253 (1520172913466601338958573/1000000000000000000000000000000000) (15201729134666013389585731/10000000000000000000000000000000000) := Bounds.inv h252 (by norm_num)
+  let v254 : ℝ := v251/v252
+  have h254 : Bounds v254 (57786882911267402857004379/500000000000000000000) (2889456803735692963077877/25000000000000000000) := bounds_div h251 h253 (by norm_num)
+  let v255 : ℝ := v0*v2
+  have h255 : Bounds v255 51296 51296 := Bounds.mul h0 h2 (by norm_num)
+  let v256 : ℝ := v255*(BstLean.Part137.cN 25648 ^ 2)
+  have h256 : Bounds v256 (15915494309189533576851107/50000000000000000000000000) (1591611486887718474598887/5000000000000000000000000) := Bounds.mul h255 cnsq_bounds (by norm_num)
+  let v257 : ℝ := -v256
+  have h257 : Bounds v257 (-1591611486887718474598887/5000000000000000000000000) (-15915494309189533576851107/50000000000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h256
+  let v258 : ℝ := v22+v257
+  have h258 : Bounds v258 (3408388513112281525401113/5000000000000000000000000) (34084505690810466423148893/50000000000000000000000000) := Bounds.add h22 h257 (by norm_num)
+  let v259 : ℝ := v254*v258
+  have h259 : Bounds v259 (4924003698083205338265243/62500000000000000000) (787885654962241982213502069/10000000000000000000000) := Bounds.mul h254 h258 (by norm_num)
+  convert h259 using 1 <;>
+    simp only [v0, v1, v2, v22, v248, v249, v250, v251, v252, v254, v255, v256, v257, v258, v259, directionMean, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring <;> simp
+
+theorem inputvar : Bounds (e1InputVarianceBound 25648 (mW 12824) rowEps) (363142483655563277527455553/50000000000000000000) (72628496731112655505491117/10000000000000000000) := by
+  let v0 : ℝ := 25648
+  have h0 : Bounds v0 25648 25648 := Bounds.point _
+  let v1 : ℝ := 238826372752908
+  have h1 : Bounds v1 238826372752908 238826372752908 := Bounds.point _
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v13 : ℝ := 3
+  have h13 : Bounds v13 3 3 := Bounds.point _
+  let v22 : ℝ := 1
+  have h22 : Bounds v22 1 1 := Bounds.point _
+  let v230 : ℝ := (1/1000)
+  have h230 : Bounds v230 (1/1000) (1/1000) := Bounds.point _
+  let v260 : ℝ := v230+v22
+  have h260 : Bounds v260 (1001/1000) (1001/1000) := Bounds.add h230 h22 (by norm_num)
+  let v261 : ℝ := v260+v13
+  have h261 : Bounds v261 (4001/1000) (4001/1000) := Bounds.add h260 h13 (by norm_num)
+  let v262 : ℝ := 5
+  have h262 : Bounds v262 5 5 := Bounds.point _
+  let v263 : ℝ := v1*v262
+  have h263 : Bounds v263 1194131863764540 1194131863764540 := Bounds.mul h1 h262 (by norm_num)
+  let v264 : ℝ := v0^2
+  have h264 : Bounds v264 657819904 657819904 := Bounds.pow h0 2 (by norm_num)
+  let v265 : ℝ := 1/v264
+  have h265 : Bounds v265 (1520172913466601338958573/1000000000000000000000000000000000) (15201729134666013389585731/10000000000000000000000000000000000) := Bounds.inv h264 (by norm_num)
+  let v266 : ℝ := v263/v264
+  have h266 : Bounds v266 (22691086430028043055383133/12500000000000000000) (181528691440224344443065077/100000000000000000000) := bounds_div h263 h265 (by norm_num)
+  let v267 : ℝ := v1*v2
+  have h267 : Bounds v267 477652745505816 477652745505816 := Bounds.mul h1 h2 (by norm_num)
+  let v268 : ℝ := v0^3
+  have h268 : Bounds v268 16871764897792 16871764897792 := Bounds.pow h0 3 (by norm_num)
+  let v269 : ℝ := 1/v268
+  have h269 : Bounds v269 (14817655504002274436199441/250000000000000000000000000000000000000) (11854124403201819548959553/200000000000000000000000000000000000000) := Bounds.inv h268 (by norm_num)
+  let v270 : ℝ := v267/v268
+  have h270 : Bounds v270 (4423558645903782566941503/156250000000000000000000) (141553876668921042142128099/5000000000000000000000000) := bounds_div h267 h269 (by norm_num)
+  let v271 : ℝ := -v270
+  have h271 : Bounds v271 (-141553876668921042142128099/5000000000000000000000000) (-4423558645903782566941503/156250000000000000000000) := by simpa only [neg_div, neg_neg, neg_zero] using Bounds.neg h270
+  let v272 : ℝ := v266+v271
+  have h272 : Bounds v272 (181525860362690966022222221/100000000000000000000) (36305172072538193204444447/20000000000000000000) := Bounds.add h266 h271 (by norm_num)
+  let v273 : ℝ := v261*v272
+  have h273 : Bounds v273 (363142483655563277527455553/50000000000000000000) (72628496731112655505491117/10000000000000000000) := Bounds.mul h261 h272 (by norm_num)
+  convert h273 using 1 <;>
+    simp only [v0, v1, v2, v13, v22, v230, v260, v261, v262, v263, v264, v266, v267, v268, v270, v271, v272, v273, e1InputVarianceBound, inputVarianceMean, rowEps, Matrix.cons_val_one, Matrix.cons_val_three, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+theorem meanvalue : Bounds (meanMajorantValue 25648 (mW 12824) (1/10^6) (1/10^7) rowEps) (201427945836585772629699743/100000000000000000000000000000000) (1008406472244807698285059/500000000000000000000000000000) := by
+  let v2 : ℝ := 2
+  have h2 : Bounds v2 2 2 := Bounds.point _
+  let v8 : ℝ := 6
+  have h8 : Bounds v8 6 6 := Bounds.point _
+  let v274 : ℝ := Real.sqrt (e1InputVarianceBound 25648 (mW 12824) rowEps)
+  have h274 : Bounds v274 (67374186790599120144072877/25000000000000000000000) (269496747162396480576291521/100000000000000000000000) := Bounds.sqrt inputvar (by norm_num)
+  let v275 : ℝ := 1/(e1EnergyLower 25648 (mW 12824) (1/10^6))
+  have h275 : Bounds v275 (5369596613720992897882131/50000000000000000000000000000000000) (1342399153430248224470533/12500000000000000000000000000000000) := Bounds.inv energy (by norm_num)
+  let v276 : ℝ := v274/(e1EnergyLower 25648 (mW 12824) (1/10^6))
+  have h276 : Bounds v276 (144708882097202674377199937/500000000000000000000000000000000) (289417764194405348754399943/1000000000000000000000000000000000) := bounds_div h274 h275 (by norm_num)
+  let v277 : ℝ := (e1FrobBound 25648 (mW 12824) rowEps)^2
+  have h277 : Bounds v277 (42496936515289526565709131/50000000000) (425505303900900707854840497/500000000000) := Bounds.pow frob 2 (by norm_num)
+  let v278 : ℝ := (1/10000000)
+  have h278 : Bounds v278 (1/10000000) (1/10000000) := Bounds.point _
+  let v279 : ℝ := 1/v278
+  have h279 : Bounds v279 10000000 10000000 := Bounds.inv h278 (by norm_num)
+  let v280 : ℝ := (directionMean 25648 (mW 12824))/v278
+  have h280 : Bounds v280 (4924003698083205338265243/6250000000000) (787885654962241982213502069/1000000000000000) := bounds_div direction h279 (by norm_num)
+  let v281 : ℝ := v280*v2
+  have h281 : Bounds v281 (4924003698083205338265243/3125000000000) (78788565496224198221350207/50000000000000) := Bounds.mul h280 h2 (by norm_num)
+  let v282 : ℝ := v277+v281
+  have h282 : Bounds v282 (85151441148917715702242749/100000000000) (213146594777931474918527/250000000) := Bounds.add h277 h281 (by norm_num)
+  let v283 : ℝ := (e1EnergyLower 25648 (mW 12824) (1/10^6))^2
+  have h283 : Bounds v283 (216768761098080692009705717/2500000) (867075044392322768038822943/10000000) := Bounds.pow energy 2 (by norm_num)
+  let v284 : ℝ := 1/v283
+  have h284 : Bounds v284 (1153302711763358152577989/100000000000000000000000000000000000000000000) (23066054235267163051559783/2000000000000000000000000000000000000000000000) := Bounds.inv h283 (by norm_num)
+  let v285 : ℝ := v282/v283
+  have h285 : Bounds v285 (982053879876048030401150117/100000000000000000000000000000000) (49164509152102800762747347/5000000000000000000000000000000) := bounds_div h282 h284 (by norm_num)
+  let v286 : ℝ := (10237/50000)
+  have h286 : Bounds v286 (10237/50000) (10237/50000) := Bounds.point _
+  let v287 : ℝ := Real.sqrt v285
+  have h287 : Bounds v287 (156688694540803424105252959/50000000000000000000000000000) (313574581725313956489691297/100000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v288 : ℝ := Real.sqrt v2
+  have h288 : Bounds v288 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v289 : ℝ := v288*v276
+  have h289 : Bounds v289 (40929852731542638358999941/100000000000000000000000000000000) (51162315914428297948749939/125000000000000000000000000000000) := Bounds.mul h288 h276 (by norm_num)
+  let v290 : ℝ := v287+v289
+  have h290 : Bounds v290 (313418318934338390848864917/100000000000000000000000000000) (313615511578045499128050297/100000000000000000000000000000) := Bounds.add h287 h289 (by norm_num)
+  let v291 : ℝ := v290^2
+  have h291 : Bounds v291 (7674300206533332709245617/781250000000000000000000000000) (491773445511795952573618479/50000000000000000000000000000000) := Bounds.pow h290 2 (by norm_num)
+  let v292 : ℝ := v286*v291
+  have h292 : Bounds v292 (40223647341712244195608259/20000000000000000000000000000000) (40274278093634041331969059/20000000000000000000000000000000) := Bounds.mul h286 h291 (by norm_num)
+  let v293 : ℝ := v276^2
+  have h293 : Bounds v293 (83762642231288418730070633/1000000000000000000000000000000000000000) (83762642231288418730070673/1000000000000000000000000000000000000000) := Bounds.pow h276 2 (by norm_num)
+  let v294 : ℝ := v293*v8
+  have h294 : Bounds v294 (50257585338773051238042379/100000000000000000000000000000000000000) (12564396334693262809510601/25000000000000000000000000000000000000) := Bounds.mul h293 h8 (by norm_num)
+  let v295 : ℝ := v292+v294
+  have h295 : Bounds v295 (201118286966146559751092533/100000000000000000000000000000000) (100685720362877772716448267/50000000000000000000000000000000) := Bounds.add h292 h294 (by norm_num)
+  let v296 : ℝ := Real.sqrt v2
+  have h296 : Bounds v296 (17677669529663688110021109/12500000000000000000000000) (141421356237309504880168873/100000000000000000000000000) := Bounds.sqrt h2 (by norm_num)
+  let v297 : ℝ := v296+v2
+  have h297 : Bounds v297 (42677669529663688110021109/12500000000000000000000000) (341421356237309504880168873/100000000000000000000000000) := Bounds.add h296 h2 (by norm_num)
+  let v298 : ℝ := v297*v276
+  have h298 : Bounds v298 (19762681114084741621975983/20000000000000000000000000000000) (494067027852118540549399699/500000000000000000000000000000000) := Bounds.mul h297 h276 (by norm_num)
+  let v299 : ℝ := Real.sqrt v285
+  have h299 : Bounds v299 (156688694540803424105252959/50000000000000000000000000000) (313574581725313956489691297/100000000000000000000000000000) := Bounds.sqrt h285 (by norm_num)
+  let v300 : ℝ := v298*v299
+  have h300 : Bounds v300 (309658870439212878607210203/100000000000000000000000000000000000) (15492686160299711205763213/5000000000000000000000000000000000) := Bounds.mul h298 h299 (by norm_num)
+  let v301 : ℝ := v295+v300
+  have h301 : Bounds v301 (201427945836585772629699743/100000000000000000000000000000000) (1008406472244807698285059/500000000000000000000000000000) := Bounds.add h295 h300 (by norm_num)
+  convert h301 using 1 <;>
+    simp only [v2, v8, v274, v276, v277, v278, v280, v281, v282, v283, v285, v286, v287, v288, v289, v290, v291, v292, v293, v294, v295, v296, v297, v298, v299, v300, v301, meanMajorantValue, width] <;>
+      norm_num [Finset.sum_range_succ, Finset.prod_range_succ, Nat.doubleFactorial, Nat.choose] <;> ring
+
+end BstLean.Part268.WorldRow12824
