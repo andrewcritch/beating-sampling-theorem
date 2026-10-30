@@ -12,12 +12,15 @@
 \usepackage[colorlinks,citecolor=blue,linkcolor=black,urlcolor=black]{hyperref}
 
 % ---------------------------------------------------------------------------
-% Pointers to the Lean formalization. \leanrepo is the URL of the extracted
-% Lean project at the release tag v1.0. \leanref{Part157Defs,Part156Out} cites modules of bsp/lean under
+% Pointers to the Lean formalization, at the release tag \leanver. \leanrepo is
+% the folder of the BstLean modules; \leanblob is the lean/ folder, for links to
+% single files. \leanref{Part157Defs,Part156Out} cites modules of bsp/lean under
 % BstLean, printed as (BstLean:Part157Defs,Part156Out); \leanmod{BSP} cites a
 % module outside BstLean. check_coverage.py checks that the groups of the Lean
 % files appendix cover every module of the project.
-\newcommand{\leanrepo}{https://github.com/andrewcritch/beating-sampling-theorem/tree/v1.0/lean}
+\newcommand{\leanver}{v1.1}
+\newcommand{\leanrepo}{https://github.com/andrewcritch/beating-sampling-theorem/tree/\leanver/lean/BstLean}
+\newcommand{\leanblob}{https://github.com/andrewcritch/beating-sampling-theorem/blob/\leanver/lean}
 \newcommand{\leanmod}[1]{{\relscale{0.78}\color{gray}\hypersetup{urlcolor=gray}%
   \textup{(\href{\leanrepo}{\nolinkurl{#1}})}}}
 \newcommand{\leanref}[1]{\leanmod{BstLean:#1}}
@@ -30,7 +33,21 @@
 % Numbered Lean notes: \leanmark{1} in the text, and after the paragraph
 % \begin{leanitems}\leanitem[1]{Part157Paper,Part169Pass}\end{leanitems}.
 \newcommand{\leanmark}[1]{{\relscale{0.78}\color{gray}[#1]}}
-\newcommand{\leanlist}[1]{\href{\leanrepo}{\nolinkurl{BstLean:#1}}}
+% \leanlist{A,B} prints BstLean:A,B and links A and B to their files.
+\newcommand{\leanfile}[1]{\href{\leanblob/BstLean/#1.lean}{\nolinkurl{#1}}}
+\ExplSyntaxOn
+\NewDocumentCommand{\leanlist}{m}
+  {
+    \texttt{BstLean:}
+    \bool_set_false:N \l_tmpa_bool
+    \clist_map_inline:nn {#1}
+      {
+        \bool_if:NT \l_tmpa_bool { \texttt{,}\allowbreak }
+        \leanfile{##1}
+        \bool_set_true:N \l_tmpa_bool
+      }
+  }
+\ExplSyntaxOff
 % \leanitem[N]{Part1,Part2} lists BstLean modules; \leanitem*[N]{text} links other text to the repository.
 \NewDocumentCommand{\leanitem}{s O{1} m}{\item[{[#2]}] \IfBooleanTF{#1}{\href{\leanrepo}{#3}}{\leanlist{#3}}}
 \newenvironment{leanitems}{\par\smallskip\relscale{0.78}\color{gray}\hypersetup{urlcolor=gray}\raggedright%
@@ -165,7 +182,7 @@ For comparison, collecting a single $C(A(x))$ sample by evaluating $W$, $A$ and 
 operations (Section~\ref{sec:program}). Both bounds of the \bst{} are checked in Lean, using only the axioms
 \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}~\leanmark{1}.
 \begin{leanitems}
-\leanitem[1]{Part293FinalAudit,Part289Cost}; declarations \texttt{Part293.classifier\_stated2\_8000} and \texttt{Part289.progOut\_run2}; \href{\leanrepo}{\nolinkurl{BSP}}.
+\leanitem[1]{Part293FinalAudit,Part289Cost}; declarations \texttt{Part293.classifier\_stated2\_8000} and \texttt{Part289.progOut\_run2}; \href{\leanblob/BSP.lean}{\nolinkurl{BSP}}.
 \end{leanitems}
 
 \section{Comparison with estimation by naive sampling}\label{sec:comparison}
