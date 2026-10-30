@@ -2,7 +2,9 @@
 
 Andrew Critch (MAISI)
 
-This repository contains the paper ([`paper/main.pdf`](paper/main.pdf)) and its Lean 4 formalization ([`lean/`](lean/)).
+This repository contains the paper and its Lean 4 formalization ([`lean/`](lean/)).
+
+**[Download the paper (PDF)](https://github.com/andrewcritch/beating-sampling-theorem/raw/main/paper/main.pdf)**, and open it in a PDF viewer. The paper links each Lean reference to this repository. GitHub's built-in preview of [`paper/main.pdf`](paper/main.pdf) shows the paper, but its links do not open.
 
 ## Abstract
 
